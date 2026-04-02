@@ -18,7 +18,7 @@
 
 class NeuralArchitectureVis {
 
-    // ─── Architecture Catalogue ─────────────────────────────────────
+    // ─── Architecture Catalogue — Desktop ───────────────────────────
     static ARCHITECTURES = [
         {
             id: 'slp',
@@ -62,6 +62,38 @@ class NeuralArchitectureVis {
             structure: [16, 12, 8, 4, 2],
             type: 'cnn'
         }
+    ];
+
+    // ─── Architecture Catalogue — Mobile (reduced node density) ─────
+    static MOBILE_ARCHITECTURES = [
+        {
+            id: 'slp',
+            name: 'Single-Layer Perceptron',
+            desc: 'Rosenblatt, 1957 — Direct input → output linear classifier.',
+            structure: [8, 1],
+            type: 'feedforward'
+        },
+        {
+            id: 'mlp',
+            name: 'Multi-Layer Perceptron',
+            desc: 'Hierarchical hidden representations.',
+            structure: [4, 6, 6, 3],
+            type: 'feedforward'
+        },
+        {
+            id: 'autoencoder',
+            name: 'Autoencoder',
+            desc: 'Symmetric bottleneck — compressed latent representations.',
+            structure: [6, 4, 2, 4, 6],
+            type: 'feedforward'
+        },
+        {
+            id: 'hopfield',
+            name: 'Hopfield Network',
+            desc: 'Fully connected associative memory.',
+            structure: [10],
+            type: 'hopfield'
+        },
     ];
 
     // ─── Visual Constants ───────────────────────────────────────────
@@ -113,6 +145,9 @@ class NeuralArchitectureVis {
         if (!this.container) return;
         this.container.style.position = 'relative';
 
+        // Detect mobile once, reuse everywhere
+        this.isMobile = window.matchMedia('(max-width: 768px)').matches;
+
         // Canvas
         this.canvas = document.createElement('canvas');
         this.canvas.style.cssText =
@@ -132,8 +167,10 @@ class NeuralArchitectureVis {
         this._raf   = null;
         this._t0    = performance.now();
 
-        // Pick random architecture
-        const pool = NeuralArchitectureVis.ARCHITECTURES;
+        // Pick random architecture (smaller pool on mobile for performance)
+        const pool = this.isMobile
+            ? NeuralArchitectureVis.MOBILE_ARCHITECTURES
+            : NeuralArchitectureVis.ARCHITECTURES;
         this.arch = pool[Math.floor(Math.random() * pool.length)];
 
         this._resize();
@@ -385,15 +422,27 @@ class NeuralArchitectureVis {
             this.mouse.x = cx - r.left;
             this.mouse.y = cy - r.top;
         };
+
+        // ── Desktop: continuous mousemove spotlight (unchanged) ──
         this.container.addEventListener('mousemove', e => loc(e.clientX, e.clientY));
         this.container.addEventListener('mouseleave', () => { this.mouse.x = null; });
-        this.container.addEventListener('touchstart', e => {
-            loc(e.touches[0].clientX, e.touches[0].clientY);
-        }, { passive: true });
-        this.container.addEventListener('touchmove', e => {
-            loc(e.touches[0].clientX, e.touches[0].clientY);
-        }, { passive: true });
-        this.container.addEventListener('touchend', () => { this.mouse.x = null; });
+
+        if (this.isMobile) {
+            // ── Mobile: pointerdown tap → pulse, no continuous tracking ──
+            this.container.addEventListener('pointerdown', e => {
+                const r = this.container.getBoundingClientRect();
+                this._tapPulse(e.clientX - r.left, e.clientY - r.top);
+            });
+        } else {
+            // ── Non-mobile touch (e.g. touch-screen laptop): spotlight tracking ──
+            this.container.addEventListener('touchstart', e => {
+                loc(e.touches[0].clientX, e.touches[0].clientY);
+            }, { passive: true });
+            this.container.addEventListener('touchmove', e => {
+                loc(e.touches[0].clientX, e.touches[0].clientY);
+            }, { passive: true });
+            this.container.addEventListener('touchend', () => { this.mouse.x = null; });
+        }
 
         let resizeTimer;
         window.addEventListener('resize', () => {
@@ -420,15 +469,43 @@ class NeuralArchitectureVis {
             else { this._stopMobileCycle(); hideLabel(); }
         });
 
-        // Mobile: show label, cycle architectures every 4 s on tap or auto
+        // Mobile: show label, auto-cycle every 4 s (tap now triggers pulse, not cycle)
         if (!mq.matches) this._startMobileCycle();
+    }
 
-        // Tap cycles to next architecture on mobile
-        this.container.addEventListener('touchend', (e) => {
-            if (mq.matches) return;
-            e.preventDefault();
-            this._cycleArch();
-        }, { passive: false });
+    // ─── Tap Pulse (mobile only) ─────────────────────────────────────
+    _tapPulse(tapX, tapY) {
+        // Find node nearest to tap coordinates
+        let nearest = null, bestD2 = Infinity;
+        for (const n of this.nodes) {
+            const dx = tapX - n.x, dy = tapY - n.y;
+            const d2 = dx * dx + dy * dy;
+            if (d2 < bestD2) { bestD2 = d2; nearest = n; }
+        }
+        if (!nearest) return;
+
+        // Highlight tapped node immediately
+        nearest.activation = 1;
+
+        // First wave: spawn pulses along all outgoing edges from nearest node
+        const outEdges = this.edges.filter(e => e.src === nearest);
+        for (const edge of outEdges) this._spawnPulse(edge);
+
+        // Second wave: propagate to next layer after 350 ms
+        const nextNodes = [...new Set(outEdges.map(e => e.tgt))];
+        const wave2 = setTimeout(() => {
+            for (const n of nextNodes) {
+                n.activation = 0.7;
+                for (const edge of this.edges.filter(e => e.src === n)) {
+                    this._spawnPulse(edge);
+                }
+            }
+        }, 350);
+
+        // Decay — activation already decays naturally via actDecay in the loop,
+        // but force-clear after max pulse duration (800 ms) as a safety net
+        setTimeout(() => { nearest.activation = 0; }, 700);
+        setTimeout(() => { for (const n of nextNodes) n.activation = 0; }, 1000);
     }
 
     _startMobileCycle() {
@@ -446,7 +523,9 @@ class NeuralArchitectureVis {
     }
 
     _cycleArch() {
-        const pool = NeuralArchitectureVis.ARCHITECTURES;
+        const pool = this.isMobile
+            ? NeuralArchitectureVis.MOBILE_ARCHITECTURES
+            : NeuralArchitectureVis.ARCHITECTURES;
         const idx  = pool.indexOf(this.arch);
         this.arch  = pool[(idx + 1) % pool.length];
         this.nodes = [];
@@ -470,8 +549,9 @@ class NeuralArchitectureVis {
 
     // ─── Signal Pulses ──────────────────────────────────────────────
     _spawnPulse(edge) {
-        // Limit active pulses for performance
-        if (this.pulses.length > 60) return;
+        // Limit active pulses — tighter cap on mobile for battery/performance
+        const maxPulses = this.isMobile ? 30 : 60;
+        if (this.pulses.length > maxPulses) return;
         this.pulses.push({ edge, t: 0, alive: true });
     }
 

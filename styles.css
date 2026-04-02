@@ -148,6 +148,31 @@ body {
         display: flex;
         align-items: center;
     }
+
+    /* ── Neural canvas: pull out of absolute watermark, center it ── */
+    .neural-right-col {
+        position: relative !important;
+        top: auto !important;
+        right: auto !important;
+        height: auto !important;
+        width: 100% !important;
+        pointer-events: auto !important;
+        opacity: 1 !important;
+        -webkit-mask-image: none !important;
+        mask-image: none !important;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 1rem;
+    }
+
+    #neural-network-bg {
+        width: 90vw !important;
+        max-width: 90vw !important;
+        height: 260px !important;
+        margin: 0 auto;
+        touch-action: pan-y;
+    }
 }
 
 /* ===== Custom Animations ===== */
