@@ -1,0 +1,572 @@
+/* ===================================================
+   CCN Lab — Institutional Design System
+   University of Padova · Dept. of General Psychology
+   =================================================== */
+
+/* ===== Google Fonts: Playfair Display + JetBrains Mono ===== */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+/* ===== Base Layout ===== */
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 96px;
+    overflow-x: hidden;
+}
+
+body {
+    overflow-x: hidden;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* ===== Manrope Font Family (Local) ===== */
+@font-face {
+    font-family: 'Manrope';
+    src: url('Assets/Font_Manrope_Complete/Fonts/OTF/Manrope-ExtraLight.otf') format('opentype');
+    font-weight: 200;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Manrope';
+    src: url('Assets/Font_Manrope_Complete/Fonts/OTF/Manrope-Light.otf') format('opentype');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Manrope';
+    src: url('Assets/Font_Manrope_Complete/Fonts/OTF/Manrope-Regular.otf') format('opentype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Manrope';
+    src: url('Assets/Font_Manrope_Complete/Fonts/OTF/Manrope-Medium.otf') format('opentype');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Manrope';
+    src: url('Assets/Font_Manrope_Complete/Fonts/OTF/Manrope-SemiBold.otf') format('opentype');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Manrope';
+    src: url('Assets/Font_Manrope_Complete/Fonts/OTF/Manrope-Bold.otf') format('opentype');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Manrope';
+    src: url('Assets/Font_Manrope_Complete/Fonts/OTF/Manrope-ExtraBold.otf') format('opentype');
+    font-weight: 800;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* ===== Editorial Typography Utilities ===== */
+.font-display {
+    font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+}
+.font-mono-tech {
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    letter-spacing: 0.03em;
+}
+
+/* ===== Institutional Hierarchy Bar ===== */
+.inst-hierarchy-bar {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.625rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #9CA3AF;
+    background-color: #f0efeb;
+    border-bottom: 1px solid #e2dfda;
+    padding: 0.35rem 0;
+}
+
+/* ===== Logo: dark version for light header ===== */
+.logo-on-light {
+    filter: brightness(0) saturate(100%);
+}
+.logo-on-light:hover {
+    filter: brightness(0) saturate(100%) opacity(0.75);
+}
+
+/* ===== Neural Network Hero — Responsive ===== */
+@media (max-width: 1023px) {
+    .neural-right-col {
+        position: absolute;
+        top: 0;
+        right: -40px;
+        height: 100%;
+        pointer-events: none;
+        opacity: 0.07;
+        -webkit-mask-image: linear-gradient(
+            to right,
+            transparent 0%,
+            rgba(0, 0, 0, 0.3) 30%,
+            black 70%
+        );
+        mask-image: linear-gradient(
+            to right,
+            transparent 0%,
+            rgba(0, 0, 0, 0.3) 30%,
+            black 70%
+        );
+    }
+}
+@media (min-width: 1024px) {
+    .neural-right-col {
+        pointer-events: auto;
+        opacity: 1;
+    }
+}
+
+/* ===== Neural Network Canvas Mask ===== */
+#neural-network-bg {
+    mask-image: radial-gradient(ellipse 70% 75% at center, black 40%, transparent 85%);
+    -webkit-mask-image: radial-gradient(ellipse 70% 75% at center, black 40%, transparent 85%);
+    opacity: 0.75;
+}
+
+/* ===== Mobile Optimizations ===== */
+@media (max-width: 768px) {
+    #mobile-menu {
+        max-height: calc(100vh - 88px);
+        overflow-y: auto;
+    }
+    #mobile-menu a {
+        min-height: 48px;
+        display: flex;
+        align-items: center;
+    }
+}
+
+/* ===== Custom Animations ===== */
+@keyframes fade-in-up {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fade-in {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+@keyframes slide-in-right {
+    from { opacity: 0; transform: translateX(100%); }
+    to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes slide-in-left {
+    from { opacity: 0; transform: translateX(-40px); }
+    to   { opacity: 1; transform: translateX(0); }
+}
+
+.animate-fade-in-up            { animation: fade-in-up 0.8s ease-out forwards; }
+.animate-fade-in               { animation: fade-in 0.6s ease-out forwards; }
+.animate-slide-in-right        { animation: slide-in-right 0.3s ease-out forwards; }
+.animate-slide-in-left-delayed {
+    opacity: 0;
+    animation: slide-in-left 0.8s ease-out 0.4s forwards;
+}
+
+/* ===== Custom Scrollbar ===== */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #f0efeb; }
+::-webkit-scrollbar-thumb { background: #c5bfb6; border-radius: 0; }
+::-webkit-scrollbar-thumb:hover { background: #b20839; }
+
+/* ===== Selection ===== */
+::selection {
+    background-color: #b20839;
+    color: #ffffff;
+}
+
+/* ===== Focus States ===== */
+a:focus-visible,
+button:focus-visible {
+    outline: 2px solid #b20839;
+    outline-offset: 2px;
+}
+
+/* ===== Navigation Links ===== */
+.nav-link {
+    position: relative;
+}
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background-color: #b20839;
+    transition: width 0.25s ease;
+}
+.nav-link:hover::after { width: 100%; }
+.nav-link.active-page::after { width: 100%; }
+
+/* ===== Dropdown Menu ===== */
+.dropdown-container {
+    position: relative;
+    display: inline-block;
+}
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    transform: translateY(8px);
+    background-color: #ffffff;
+    border: 1px solid #e2dfda;
+    border-radius: 0;
+    padding: 0.5rem 0;
+    min-width: 220px;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.2s ease;
+    box-shadow: 4px 4px 0px #e2dfda;
+    z-index: 100;
+}
+.dropdown-container:hover .dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+.dropdown-item {
+    display: block;
+    padding: 0.6rem 1.25rem;
+    color: #6B7280;
+    font-size: 0.875rem;
+    transition: color 0.15s ease, padding-left 0.15s ease;
+}
+.dropdown-item:hover {
+    color: #b20839;
+    padding-left: 1.5rem;
+}
+
+/* ===== Buttons ===== */
+.btn-primary {
+    position: relative;
+    overflow: hidden;
+    border-radius: 0 !important;
+}
+.btn-primary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);
+    transition: left 0.4s ease;
+}
+.btn-primary:hover::before { left: 100%; }
+
+/* Text-link CTA (underline style) */
+.cta-link {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    color: #1a1a1a;
+    font-weight: 500;
+    padding-bottom: 2px;
+    border-bottom: 1px solid #1a1a1a;
+    transition: color 0.2s ease, border-color 0.2s ease;
+}
+.cta-link:hover {
+    color: #b20839;
+    border-bottom-color: #b20839;
+}
+.cta-link-red {
+    color: #b20839;
+    border-bottom-color: #b20839;
+}
+.cta-link-red:hover {
+    color: #8a0022;
+    border-bottom-color: #8a0022;
+}
+
+/* ===== Red Accent Separator ===== */
+.red-rule {
+    border: none;
+    border-top: 1px solid #b20839;
+}
+
+/* Section rule */
+.section-rule {
+    border: none;
+    border-top: 1px solid #e2dfda;
+}
+
+/* ===== Editorial Cards ===== */
+.card-editorial {
+    background: #ffffff;
+    border: 1px solid #e2dfda;
+    border-radius: 0;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.card-editorial:hover {
+    border-color: #b20839;
+    box-shadow: 3px 3px 0 #f0c6cf;
+}
+
+/* ===== Research Index Entries ===== */
+.research-index-entry {
+    border-bottom: 1px solid #e2dfda;
+    padding: 1.5rem 0;
+    transition: background 0.15s ease, padding-left 0.2s ease;
+    cursor: pointer;
+}
+.research-index-entry:first-of-type {
+    border-top: 2px solid #b20839;
+}
+.research-index-entry:hover {
+    background: #faf9f7;
+    padding-left: 0.75rem;
+}
+.research-entry-number {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: #b20839;
+    letter-spacing: 0.08em;
+    min-width: 3rem;
+    padding-top: 0.2rem;
+}
+.research-entry-keywords {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    color: #9CA3AF;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+/* ===== People Cards ===== */
+.people-photo {
+    filter: grayscale(55%) contrast(1.05);
+    transition: filter 0.45s ease;
+}
+.group:hover .people-photo {
+    filter: grayscale(0%) contrast(1.0);
+}
+.people-rank-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+/* ===== News List ===== */
+.news-entry {
+    border-bottom: 1px solid #e2dfda;
+    padding: 1.25rem 0;
+    display: grid;
+    grid-template-columns: 9rem 1fr;
+    gap: 1.5rem;
+    align-items: start;
+    transition: background 0.12s ease, padding-left 0.15s ease;
+    text-decoration: none;
+    color: inherit;
+}
+.news-entry:first-of-type {
+    border-top: 2px solid #b20839;
+}
+.news-entry:hover {
+    background: #faf9f7;
+    padding-left: 0.75rem;
+}
+.news-date-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: #9CA3AF;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+    padding-top: 0.2rem;
+    line-height: 1.5;
+}
+.news-source-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #b20839;
+    margin-bottom: 0.25rem;
+    display: block;
+}
+@media (max-width: 640px) {
+    .news-entry {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+    }
+}
+
+/* ===== Hard Shadow Card (for metrics/features) ===== */
+.card-hard {
+    background: #ffffff;
+    border: 1px solid #e2dfda;
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+.card-hard:hover {
+    box-shadow: 4px 4px 0 #b20839;
+    transform: translate(-2px, -2px);
+}
+
+/* ===== Mobile Menu ===== */
+#mobile-menu:not(.hidden) {
+    animation: slide-in-right 0.25s ease-out;
+}
+
+/* ===== Loading Skeleton ===== */
+.skeleton {
+    background: linear-gradient(90deg, #eeedea 25%, #e5e3df 50%, #eeedea 75%);
+    background-size: 200% 100%;
+    animation: skeleton-loading 1.5s infinite;
+}
+@keyframes skeleton-loading {
+    0%   { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+/* ===== Print Styles ===== */
+@media print {
+    header, footer, .no-print { display: none; }
+    body { background: white; color: black; }
+}
+
+/* ===== Gradient Text (Serif Display) ===== */
+.display-title {
+    font-family: 'Playfair Display', Georgia, serif;
+}
+
+/* ===== Hero Section Layout ===== */
+.hero-text-col {
+    position: relative;
+    z-index: 10;
+}
+.hero-canvas-col {
+    position: relative;
+}
+
+/* Thin red vertical rule before headline */
+.headline-rule {
+    display: inline-block;
+    width: 3px;
+    background-color: #b20839;
+    border-radius: 0;
+    margin-right: 1rem;
+    flex-shrink: 0;
+}
+
+/* ===== Partners Carousel ===== */
+.partners-carousel-container {
+    width: 100%;
+    overflow: hidden;
+    padding: 28px 0;
+    position: relative;
+    user-select: none;
+}
+.partners-carousel-track {
+    display: flex;
+    align-items: center;
+    gap: 3rem;
+    width: max-content;
+    will-change: transform;
+}
+
+.carousel-nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    background: rgba(248, 247, 244, 0.95);
+    backdrop-filter: blur(4px);
+    border: 1px solid #d8d5cf;
+    border-radius: 0;
+    color: #6B7280;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 25;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+.carousel-nav-btn:hover {
+    background: #ffffff;
+    border-color: #b20839;
+    color: #b20839;
+}
+.partners-carousel-container:hover .carousel-nav-btn {
+    opacity: 1;
+    visibility: visible;
+}
+.carousel-nav-btn.prev { left: 16px; }
+.carousel-nav-btn.next { right: 16px; }
+
+.partner-logo-wrapper {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 200px;
+    height: 100px;
+    background: #ffffff;
+    border-radius: 0;
+    padding: 12px 16px;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    border: 1px solid #e2dfda;
+}
+.partner-logo-wrapper:hover {
+    transform: translateY(-3px);
+    box-shadow: 3px 3px 0 #b20839;
+    border-color: #b20839;
+}
+.partner-logo {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+}
+
+@media (max-width: 768px) {
+    .partner-logo-wrapper { width: 120px; height: 60px; }
+    .partners-carousel-track { gap: 1.5rem; }
+}
+
+/* ===== Long-form Prose ===== */
+.prose-reading {
+    max-width: 65ch;
+    line-height: 1.8;
+}
+
+/* ===== Metric Display ===== */
+.metric-number {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-weight: 700;
+    color: #b20839;
+}
+.metric-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #6B7280;
+}
+
+/* ===== Responsive Adjustments ===== */
+@media (max-width: 768px) {
+    .hero-text { text-align: left; }
+}
+
+/* ===== Section Overrides ===== */
+.section-container { scroll-margin-top: 96px; }

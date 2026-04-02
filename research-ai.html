@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artificial Intelligence Research | CCNLab</title>
+    <link rel="icon" type="image/png" href="Assets/Logo.png">
+    <meta name="description"
+        content="AI research at CCNL — neural network models of cognition, emergent abilities in large-scale multimodal AI, and deep learning for neuroinformatics.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-dark':     '#1a1a1a',
+                        'primary-light':    '#FFFFFF',
+                        'accent-red':       '#b20839',
+                        'accent-red-hover': '#8a0022',
+                        'accent-gold':      '#b20839',
+                        'accent-gold-hover':'#8a0022',
+                        'neutral-gray':     '#6B7280',
+                        'light-gray':       '#F3F4F6',
+                        'surface':          '#f8f7f4',
+                        'surface-alt':      '#eeedea',
+                        'surface-border':   '#e2dfda',
+                    },
+                    fontFamily: {
+                        'manrope':   ['Manrope', 'sans-serif'],
+                        'display':   ['"Playfair Display"', 'Georgia', 'serif'],
+                        'mono-tech': ['"JetBrains Mono"', '"Courier New"', 'monospace'],
+                    },
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="font-manrope bg-surface text-primary-dark antialiased">
+
+    <!-- Header / Navigation -->
+    <header id="header" class="fixed top-0 left-0 right-0 z-50 bg-white border-b border-surface-border shadow-sm transition-all duration-300">
+        <div class="inst-hierarchy-bar">
+            <div class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16 flex justify-between items-center">
+                <span>University of Padova &nbsp;·&nbsp; Department of General Psychology &nbsp;·&nbsp; CCN Lab</span>
+                <a href="https://www.unipd.it" target="_blank" rel="noopener noreferrer" class="hover:text-accent-red transition-colors hidden sm:block">unipd.it ↗</a>
+            </div>
+        </div>
+        <nav class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16">
+            <div class="flex items-center justify-between h-16 lg:h-20 transition-all duration-300" id="nav-inner">
+                <a href="index.html" class="flex items-center gap-4 group">
+                    <img src="Assets/Logo_and_text.png" alt="CCN Lab Logo" id="header-logo"
+                        class="h-10 lg:h-12 object-contain -ml-2 transition-all duration-300 logo-on-light">
+                </a>
+                <div class="hidden md:flex items-center gap-4 lg:gap-8">
+                    <a href="index.html#about" class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-base font-medium">About</a>
+                    <div class="dropdown-container">
+                        <a href="research.html" class="nav-link text-accent-gold transition-colors duration-200 text-base font-medium">Research</a>
+                        <div class="dropdown-menu">
+                            <a href="research.html#research" class="dropdown-item">Research areas</a>
+                            <a href="research.html#facilities" class="dropdown-item">Lab facilities</a>
+                            <a href="research.html#publications" class="dropdown-item">Publications</a>
+                            <a href="software.html" class="dropdown-item">Software &amp; Downloads</a>
+                        </div>
+                    </div>
+                    <a href="people.html" class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-base font-medium">People</a>
+                    <a href="playground.html" class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-base font-medium">Playground</a>
+                    <a href="news.html" class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-base font-medium">News</a>
+                    <a href="join-us.html" class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-base font-medium">Join us</a>
+                    <a href="index.html#contact" class="btn-primary px-5 py-2.5 bg-accent-gold text-white font-semibold rounded-none hover:bg-accent-red-hover transition-all duration-200 hover:shadow-lg hover:shadow-accent-gold/20 text-base">Contact us</a>
+                </div>
+                <button id="mobile-menu-btn" class="md:hidden p-2 text-neutral-gray hover:text-accent-red transition-colors" aria-label="Open menu">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+                </button>
+            </div>
+        </nav>
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-surface-border">
+            <div class="px-6 py-4 space-y-4">
+                <a href="index.html#about" class="block text-neutral-gray hover:text-accent-red transition-colors py-2">About</a>
+                <a href="research.html" class="block text-accent-gold font-semibold transition-colors py-2">Research</a>
+                <a href="people.html" class="block text-neutral-gray hover:text-accent-red transition-colors py-2">People</a>
+                <a href="playground.html" class="block text-neutral-gray hover:text-accent-red transition-colors py-2">Playground</a>
+                <a href="news.html" class="block text-neutral-gray hover:text-accent-red transition-colors py-2">News</a>
+                <a href="join-us.html" class="block text-neutral-gray hover:text-accent-red transition-colors py-2">Join us</a>
+                <a href="software.html" class="block text-neutral-gray hover:text-accent-red transition-colors py-2">Software</a>
+                <a href="index.html#contact" class="block w-fit mx-auto text-center px-5 py-2 bg-accent-red text-white font-semibold rounded-none hover:bg-accent-red-hover transition-colors">Contact us</a>
+            </div>
+        </div>
+        <div class="h-px bg-accent-red"></div>
+    </header>
+
+    <!-- Hero -->
+    <section class="pt-20 pb-10 md:pt-32 md:pb-16 bg-surface border-b border-surface-border">
+        <div class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16">
+            <nav class="flex items-center gap-2 text-sm text-neutral-gray mb-10">
+                <a href="research.html" class="hover:text-accent-red transition-colors">Research</a>
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                <span class="text-accent-red font-medium">Artificial Intelligence</span>
+            </nav>
+            <div class="max-w-4xl">
+                <div class="flex flex-wrap items-center gap-3 mb-6">
+                    <span class="font-mono-tech text-xs text-neutral-gray uppercase tracking-widest border border-surface-border px-2 py-0.5">Generative Models</span>
+                    <span class="font-mono-tech text-xs text-neutral-gray uppercase tracking-widest border border-surface-border px-2 py-0.5">Multimodal AI</span>
+                    <span class="font-mono-tech text-xs text-accent-red uppercase tracking-widest border border-accent-red/30 px-2 py-0.5">ERC GENMOD · Nature Neuroscience</span>
+                </div>
+                <h1 class="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 text-primary-dark">
+                    Artificial<br>
+                    <span class="text-accent-gold">Intelligence</span>
+                </h1>
+                <p class="text-xl text-neutral-gray font-light leading-relaxed max-w-3xl">
+                    Building biologically-inspired AI systems that illuminate human cognition —
+                    from deep generative models that learn like brains, to probing emergent
+                    abilities in large-scale multimodal foundation models.
+                </p>
+            </div>
+            <div class="flex flex-wrap gap-4 mt-10">
+                <a href="research-deeplearning.html" class="inline-flex items-center gap-2 px-6 py-3 bg-accent-red text-white font-semibold rounded-none hover:bg-accent-red-hover transition-all duration-200 hover:shadow-lg hover:shadow-accent-gold/20">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"/></svg>
+                    Explore DBN Research
+                </a>
+                <a href="playground.html" class="inline-flex items-center gap-2 px-6 py-3 border border-neutral-gray/30 text-primary-dark font-medium rounded-none border border-neutral-gray/20 hover:border-accent-gold/50 transition-all duration-200">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    Interactive DBN Explorer
+                </a>
+                <a href="software.html" class="inline-flex items-center gap-2 px-6 py-3 border border-neutral-gray/30 text-primary-dark font-medium rounded-none border border-neutral-gray/20 hover:border-accent-gold/50 transition-all duration-200">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+                    Download Code
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Overview -->
+    <section class="py-12 md:py-20 bg-white border-t border-surface">
+        <div class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-8 md:gap-16 items-start">
+                <div>
+                    <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-6 md:mb-8">Overview</h2>
+                    <div class="space-y-5 text-neutral-gray text-lg font-light leading-relaxed">
+                        <p>
+                            AI research at the CCNL has a dual mandate: building AI systems that are genuinely
+                            illuminating about cognition, and using insights from cognitive science to build
+                            better AI. This has driven the lab's focus on
+                            <span class="text-accent-red font-medium">biologically-inspired generative models</span> —
+                            learning systems that, like the brain, discover structure in data through
+                            unsupervised experience.
+                        </p>
+                        <p>
+                            The lab pioneered the use of
+                            <span class="text-accent-red font-medium">Deep Belief Networks (DBNs)</span> for cognitive
+                            modeling through the ERC-funded GENMOD project, demonstrating emergent cognitive
+                            abilities (such as number sense and letter recognition) from purely unsupervised
+                            learning — without pre-programmed representations.
+                        </p>
+                        <p>
+                            Current research expands to
+                            <span class="text-accent-red font-medium">large-scale multimodal foundation models</span>:
+                            probing how vision-language models represent quantities, emotions, and abstract
+                            concepts — and whether their emergent capabilities reflect genuine cognitive
+                            competencies or sophisticated statistical pattern matching.
+                        </p>
+                    </div>
+                </div>
+                <div class="space-y-4">
+                    <div class="bg-white border border-surface-border p-6 rounded-none border-l-2 border-accent-gold">
+                        <h3 class="font-semibold text-lg mb-2">Neural Network Models of Cognition</h3>
+                        <p class="text-neutral-gray text-sm leading-relaxed">
+                            Biologically-inspired architectures (DBNs, iDBNs) trained to simulate human
+                            perceptual and cognitive processes. Models are evaluated against behavioral and
+                            neuroimaging data to ensure cognitive plausibility, not just task performance.
+                        </p>
+                    </div>
+                    <div class="bg-white border border-surface-border p-6 rounded-none border-l-2 border-accent-gold">
+                        <h3 class="font-semibold text-lg mb-2">Emergent Abilities in Large-Scale AI</h3>
+                        <p class="text-neutral-gray text-sm leading-relaxed">
+                            Systematic investigations of what large language models and vision-language
+                            models "know" about quantities, space, and number — probing whether emergent
+                            abilities parallel genuine human cognitive competencies or are artefacts of
+                            training data statistics.
+                        </p>
+                    </div>
+                    <div class="bg-white border border-surface-border p-6 rounded-none border-l-2 border-accent-gold">
+                        <h3 class="font-semibold text-lg mb-2">Machine Learning for Neuroinformatics</h3>
+                        <p class="text-neutral-gray text-sm leading-relaxed">
+                            Applying deep learning as a tool for neuroimaging data analysis — including
+                            EEG seizure prediction, stroke lesion segmentation, and fMRI connectivity
+                            classification — bridging AI methodology with clinical neuroscience applications.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Three Pillars -->
+    <section class="py-12 md:py-20 bg-white border-t border-surface">
+        <div class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16">
+            <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-8 md:mb-12">Research Highlights</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+                <div class="group bg-white border border-surface-border p-8 rounded-none hover:shadow-2xl hover:border-accent-red transition-all duration-300 hover:-translate-y-1">
+                    <div class="w-12 h-12 bg-accent-gold/10 rounded-none flex items-center justify-center mb-5 group-hover:bg-accent-gold/20 transition-colors">
+                        <svg class="w-6 h-6 text-accent-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"/></svg>
+                    </div>
+                    <h3 class="font-semibold text-lg mb-3">Deep Belief Networks (DBNs)</h3>
+                    <p class="text-neutral-gray text-sm leading-relaxed mb-4">
+                        Probabilistic generative models trained with contrastive divergence, building
+                        hierarchies of distributed representations through layerwise unsupervised learning.
+                        The CCNL developed optimized GPU/cluster implementations (Octave, MATLAB, Python)
+                        and the novel iDBN algorithm enabling joint layer updates.
+                    </p>
+                    <a href="research-deeplearning.html" class="text-accent-gold text-sm hover:underline">Full DBN research page →</a>
+                </div>
+
+                <div class="group bg-white border border-surface-border p-8 rounded-none hover:shadow-2xl hover:border-accent-red transition-all duration-300 hover:-translate-y-1">
+                    <div class="w-12 h-12 bg-accent-gold/10 rounded-none flex items-center justify-center mb-5 group-hover:bg-accent-gold/20 transition-colors">
+                        <svg class="w-6 h-6 text-accent-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                    </div>
+                    <h3 class="font-semibold text-lg mb-3">Vision-Language Models &amp; Numerosity</h3>
+                    <p class="text-neutral-gray text-sm leading-relaxed mb-4">
+                        Current research by Sina Shafiezadeh examining multimodal AI and vision-language
+                        models with emphasis on modality gap — understanding differences between image and
+                        text embeddings regarding numerosity perception and numerical understanding
+                        across modalities.
+                    </p>
+                    <p class="text-xs text-accent-gold/80 font-medium">Shafiezadeh &amp; Zorzi · Ongoing</p>
+                </div>
+
+                <div class="group bg-white border border-surface-border p-8 rounded-none hover:shadow-2xl hover:border-accent-red transition-all duration-300 hover:-translate-y-1">
+                    <div class="w-12 h-12 bg-accent-gold/10 rounded-none flex items-center justify-center mb-5 group-hover:bg-accent-gold/20 transition-colors">
+                        <svg class="w-6 h-6 text-accent-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+                    </div>
+                    <h3 class="font-semibold text-lg mb-3">Numerosity Emergence from Unsupervised Learning</h3>
+                    <p class="text-neutral-gray text-sm leading-relaxed mb-4">
+                        Landmark demonstration that training a DBN on natural images with objects
+                        spontaneously produces numerosity-sensitive units matching the signature Weber's
+                        Law properties of the human Approximate Number System — with no explicit number
+                        supervision.
+                    </p>
+                    <p class="text-xs text-accent-gold/80 font-medium">Stoianov &amp; Zorzi (2012) · Nature Neuroscience</p>
+                </div>
+
+                <div class="group bg-white border border-surface-border p-8 rounded-none hover:shadow-2xl hover:border-accent-red transition-all duration-300 hover:-translate-y-1">
+                    <div class="w-12 h-12 bg-accent-gold/10 rounded-none flex items-center justify-center mb-5 group-hover:bg-accent-gold/20 transition-colors">
+                        <svg class="w-6 h-6 text-accent-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"/></svg>
+                    </div>
+                    <h3 class="font-semibold text-lg mb-3">Letter Recognition in Deep Networks</h3>
+                    <p class="text-neutral-gray text-sm leading-relaxed mb-4">
+                        Deep unsupervised networks trained on natural images develop letter-like representations
+                        consistent with human letter confusion and similarity data. Confusion and similarity
+                        matrices released publicly for community benchmarking.
+                    </p>
+                    <p class="text-xs text-accent-gold/80 font-medium">Testolin, Stoianov &amp; Zorzi (2017)</p>
+                </div>
+
+                <div class="group bg-white border border-surface-border p-8 rounded-none hover:shadow-2xl hover:border-accent-red transition-all duration-300 hover:-translate-y-1">
+                    <div class="w-12 h-12 bg-accent-gold/10 rounded-none flex items-center justify-center mb-5 group-hover:bg-accent-gold/20 transition-colors">
+                        <svg class="w-6 h-6 text-accent-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+                    </div>
+                    <h3 class="font-semibold text-lg mb-3">iDBN: Iterative Deep Belief Networks</h3>
+                    <p class="text-neutral-gray text-sm leading-relaxed mb-4">
+                        Novel developmental learning algorithm enabling joint weight updates across all
+                        DBN layers simultaneously, rather than greedy layerwise pre-training.
+                        Produces more coherent hierarchical representations and is available
+                        on the lab GitHub.
+                    </p>
+                    <p class="text-xs text-accent-gold/80 font-medium">Zambra, Testolin &amp; Zorzi (2023) · Cognitive Computation</p>
+                </div>
+
+                <div class="group bg-white border border-surface-border p-8 rounded-none hover:shadow-2xl hover:border-accent-red transition-all duration-300 hover:-translate-y-1">
+                    <div class="w-12 h-12 bg-accent-gold/10 rounded-none flex items-center justify-center mb-5 group-hover:bg-accent-gold/20 transition-colors">
+                        <svg class="w-6 h-6 text-accent-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                    </div>
+                    <h3 class="font-semibold text-lg mb-3">AI for Neuroimaging &amp; EEG</h3>
+                    <p class="text-neutral-gray text-sm leading-relaxed mb-4">
+                        Deep learning applied to clinical neuroimaging: seizure prediction from EEG
+                        with cross-patient deep learning classifiers, stroke lesion analysis with
+                        machine learning, and fMRI connectivity classification — translating AI
+                        advances to neuroscience applications.
+                    </p>
+                    <p class="text-xs text-accent-gold/80 font-medium">Shafiezadeh, De Filippo De Grazia &amp; collaborators</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ERC GENMOD Callout -->
+    <section class="py-12 md:py-20 bg-white border-t border-surface">
+        <div class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16">
+            <div class="bg-white border border-surface-border rounded-none p-10 border border-accent-gold/20">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
+                    <div class="lg:col-span-2">
+                        <p class="text-accent-gold text-sm font-semibold uppercase tracking-wider mb-3">ERC Advanced Grant</p>
+                        <h2 class="text-2xl md:text-3xl font-bold mb-4">GENMOD Project (2008–2013)</h2>
+                        <p class="text-neutral-gray leading-relaxed">
+                            "Generative models of human cognition" — a European Research Council Advanced Grant
+                            that established the CCNL's program of biologically-inspired deep learning for
+                            cognitive science. The project produced foundational work on DBNs for numerosity,
+                            reading, and word recognition, and developed the open-source computational tools
+                            that remain in active use by the community.
+                        </p>
+                    </div>
+                    <div class="flex flex-col gap-4">
+                        <a href="https://erc.europa.eu/projects-statistics/science-stories/self-learning-ai-emulates-human-brain" target="_blank" rel="noopener noreferrer"
+                            class="inline-flex items-center gap-2 px-6 py-3 bg-accent-red text-white font-semibold rounded-none hover:bg-accent-red-hover transition-all duration-200 text-sm">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                            ERC Project Page
+                        </a>
+                        <a href="software.html" class="inline-flex items-center gap-2 px-6 py-3 bg-transparent text-primary-dark font-medium rounded-none border border-neutral-gray/30 hover:border-accent-gold/50 transition-all duration-200 text-sm">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                            Download GENMOD Code
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Key People -->
+    <section class="py-12 md:py-20 bg-white border-t border-surface">
+        <div class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16">
+            <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-8 md:mb-12">Key Researchers</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+                <div class="bg-white border border-surface-border p-6 rounded-none">
+                    <p class="font-semibold mb-1">Marco Zorzi</p>
+                    <p class="text-accent-gold text-sm mb-2">Lab Director · Full Professor</p>
+                    <p class="text-neutral-gray text-sm">Computational modeling, deep learning for cognitive science, ERC GENMOD PI.</p>
+                </div>
+                <div class="bg-white border border-surface-border p-6 rounded-none">
+                    <p class="font-semibold mb-1">Alberto Testolin</p>
+                    <p class="text-accent-gold text-sm mb-2">Associate Professor</p>
+                    <p class="text-neutral-gray text-sm">Deep learning, neuro-symbolic AI, cognitive modeling, visual perception, language.</p>
+                </div>
+                <div class="bg-white border border-surface-border p-6 rounded-none">
+                    <p class="font-semibold mb-1">Sina Shafiezadeh</p>
+                    <p class="text-accent-gold text-sm mb-2">Post-doc</p>
+                    <p class="text-neutral-gray text-sm">Multimodal AI, vision-language models, modality gap, numerosity in AI.</p>
+                </div>
+                <div class="bg-white border border-surface-border p-6 rounded-none">
+                    <p class="font-semibold mb-1">Michele De Filippo De Grazia</p>
+                    <p class="text-accent-gold text-sm mb-2">Research Fellow</p>
+                    <p class="text-neutral-gray text-sm">Machine learning, deep networks, SVMs, spatial transformations, parallel computing.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-surface-alt py-12 border-t border-surface-border">
+        <div class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16">
+            <div class="grid md:grid-cols-4 gap-8 md:gap-12 mb-8 md:mb-12">
+                <div class="md:col-span-2">
+                    <img src="Assets/Logo_and_text.png" alt="CCN Lab" class="h-14 mb-4 logo-on-light">
+                    <p class="text-neutral-gray text-sm leading-relaxed max-w-md">
+                        The Computational Cognitive Neuroscience Lab at the University of Padova, exploring the
+                        computational mechanisms underlying human cognition since 2000.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4 text-primary-dark">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="index.html#about" class="text-neutral-gray hover:text-accent-red transition-colors text-sm">About</a></li>
+                        <li><a href="research.html" class="text-neutral-gray hover:text-accent-red transition-colors text-sm">Research</a></li>
+                        <li><a href="people.html" class="text-neutral-gray hover:text-accent-red transition-colors text-sm">People</a></li>
+                        <li><a href="news.html" class="text-neutral-gray hover:text-accent-red transition-colors text-sm">News</a></li>
+                        <li><a href="software.html" class="text-neutral-gray hover:text-accent-red transition-colors text-sm">Software</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4 text-primary-dark">Affiliations</h4>
+                    <ul class="space-y-2 text-sm text-neutral-gray">
+                        <li><a href="http://www.unipd.it" class="hover:text-accent-red transition-colors">University of Padova</a></li>
+                        <li><a href="http://dpg.psy.unipd.it" class="hover:text-accent-red transition-colors">Dept. of General Psychology</a></li>
+                        <li><a href="http://pnc.unipd.it/" class="hover:text-accent-red transition-colors">Padova Neuroscience Center</a></li>
+                        <li><a href="https://hsancamillo.it" class="hover:text-accent-red transition-colors">San Camillo Research Hospital</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="pt-8 border-t border-neutral-gray/20">
+                <p class="text-neutral-gray text-xs">© 2000–2026 Computational Cognitive Neuroscience Lab. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+        mobileMenu.querySelectorAll('a').forEach(link => link.addEventListener('click', () => mobileMenu.classList.add('hidden')));
+
+        const header = document.getElementById('header');
+        const navInner = document.getElementById('nav-inner');
+        const headerLogo = document.getElementById('header-logo');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('shadow-md');
+                navInner.classList.replace('h-16', 'h-12');
+                navInner.classList.replace('lg:h-20', 'lg:h-16');
+                headerLogo.src = 'Assets/Logo.png';
+                headerLogo.classList.replace('h-10', 'h-8');
+                headerLogo.classList.replace('lg:h-12', 'lg:h-10');
+            } else {
+                header.classList.remove('shadow-md');
+                navInner.classList.replace('h-12', 'h-16');
+                navInner.classList.replace('lg:h-16', 'lg:h-20');
+                headerLogo.src = 'Assets/Logo_and_text.png';
+                headerLogo.classList.replace('h-8', 'h-10');
+                headerLogo.classList.replace('lg:h-10', 'lg:h-12');
+            }
+        });
+    </script>
+</body>
+</html>

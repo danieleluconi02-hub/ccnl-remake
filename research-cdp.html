@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CDP Reading Model | CCNLab</title>
+    <link rel="icon" type="image/png" href="Assets/Logo.png">
+    <meta name="description"
+        content="The Connectionist Dual Process model of reading aloud — architecture, multilingual versions, downloads, and scientific background.">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-dark':     '#1a1a1a',
+                        'primary-light':    '#FFFFFF',
+                        'accent-red':       '#b20839',
+                        'accent-red-hover': '#8a0022',
+                        'accent-gold':      '#b20839',
+                        'accent-gold-hover':'#8a0022',
+                        'neutral-gray':     '#6B7280',
+                        'light-gray':       '#F3F4F6',
+                        'surface':          '#f8f7f4',
+                        'surface-alt':      '#eeedea',
+                        'surface-border':   '#e2dfda',
+                    },
+                    fontFamily: {
+                        'manrope':   ['Manrope', 'sans-serif'],
+                        'display':   ['"Playfair Display"', 'Georgia', 'serif'],
+                        'mono-tech': ['"JetBrains Mono"', '"Courier New"', 'monospace'],
+                    },
+                }
+            }
+        }
+    </script>
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="font-manrope bg-surface text-primary-dark antialiased">
+
+    <!-- Header / Navigation -->
+    <header id="header" class="fixed top-0 left-0 right-0 z-50 bg-white border-b border-surface-border shadow-sm transition-all duration-300">
+        <div class="inst-hierarchy-bar">
+            <div class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16 flex justify-between items-center">
+                <span>University of Padova &nbsp;·&nbsp; Department of General Psychology &nbsp;·&nbsp; CCN Lab</span>
+                <a href="https://www.unipd.it" target="_blank" rel="noopener noreferrer" class="hover:text-accent-red transition-colors hidden sm:block">unipd.it ↗</a>
+            </div>
+        </div>
+        <nav class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16">
+            <div class="flex items-center justify-between h-16 lg:h-20 transition-all duration-300" id="nav-inner">
+
+                <!-- Logo -->
+                <a href="index.html" class="flex items-center gap-4 group">
+                    <img src="Assets/Logo_and_text.png" alt="CCN Lab Logo" id="header-logo"
+                        class="h-10 lg:h-12 object-contain -ml-2 transition-all duration-300 logo-on-light">
+                </a>
+
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex items-center gap-4 lg:gap-8">
+                    <a href="index.html#about"
+                        class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-base font-medium">About</a>
+                    <div class="dropdown-container">
+                        <a href="research.html"
+                            class="nav-link text-accent-gold hover:text-primary-dark transition-colors duration-200 text-base font-medium">Research</a>
+                        <div class="dropdown-menu">
+                            <a href="research.html#research" class="dropdown-item">Research areas</a>
+                            <a href="research.html#facilities" class="dropdown-item">Lab facilities</a>
+                            <a href="research.html#publications" class="dropdown-item">Publications</a>
+                            <a href="software.html" class="dropdown-item">Software &amp; Downloads</a>
+                        </div>
+                    </div>
+                    <a href="people.html"
+                        class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-base font-medium">People</a>
+                    <a href="playground.html"
+                        class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-base font-medium">Playground</a>
+                    <a href="news.html"
+                        class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-base font-medium">News</a>
+                    <a href="join-us.html"
+                        class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-base font-medium">Join us</a>
+                    <a href="index.html#contact"
+                        class="btn-primary px-5 py-2.5 bg-accent-gold text-white font-semibold rounded-none hover:bg-accent-red-hover transition-all duration-200 hover:shadow-lg hover:shadow-accent-gold/20 text-base">
+                        Contact us
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn"
+                    class="md:hidden p-2 text-neutral-gray hover:text-accent-red transition-colors"
+                    aria-label="Open menu">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-surface-border">
+            <div class="px-6 py-4 space-y-4">
+                <a href="index.html#about"
+                    class="block text-neutral-gray hover:text-accent-red transition-colors py-2">About</a>
+                <a href="research.html"
+                    class="block text-neutral-gray hover:text-accent-red transition-colors py-2">Research</a>
+                <a href="people.html"
+                    class="block text-neutral-gray hover:text-accent-red transition-colors py-2">People</a>
+                <a href="playground.html"
+                    class="block text-neutral-gray hover:text-accent-red transition-colors py-2">Playground</a>
+                <a href="news.html"
+                    class="block text-neutral-gray hover:text-accent-red transition-colors py-2">News</a>
+                <a href="join-us.html"
+                    class="block text-neutral-gray hover:text-accent-red transition-colors py-2">Join us</a>
+                <a href="index.html#contact"
+                    class="block w-fit mx-auto text-center px-5 py-2 bg-accent-red text-white font-semibold rounded-none hover:bg-accent-red-hover transition-colors">
+                    Contact us
+                </a>
+            </div>
+        </div>
+
+        <!-- Gold accent line -->
+        <div class="h-px bg-accent-red"></div>
+    </header>
+
+    <!-- Hero -->
+    <section class="pt-20 pb-10 md:pt-32 md:pb-16 bg-surface border-b border-surface-border">
+        <div class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16">
+
+            <!-- Breadcrumb -->
+            <nav class="flex items-center gap-2 text-sm text-neutral-gray mb-10">
+                <a href="research.html" class="hover:text-accent-red transition-colors">Research</a>
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
+                <span class="text-accent-red font-medium">CDP Reading Model</span>
+            </nav>
+
+            <!-- Title block -->
+            <div class="max-w-4xl">
+                <div class="flex flex-wrap items-center gap-3 mb-6">
+                    <span class="font-mono-tech text-xs text-neutral-gray uppercase tracking-widest border border-surface-border px-2 py-0.5">Dual-Route Architecture</span>
+                    <span class="px-3 py-1 text-xs font-semibold bg-green-500/15 text-green-400 border border-green-500/30 rounded-full uppercase tracking-wider">EN · IT · FR · DE</span>
+                    <span class="px-3 py-1 text-xs font-semibold bg-accent-gold/10 text-accent-gold border border-surface-border rounded-full uppercase tracking-wider">Psychological Review 2007</span>
+                </div>
+                <h1 class="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6" text-primary-dark">
+                    CDP: The Connectionist<br>
+                    <span class="text-accent-gold">Dual Process Model</span>
+                </h1>
+                <p class="text-xl text-neutral-gray font-light leading-relaxed max-w-3xl">
+                    The leading computational framework for simulating human reading aloud —
+                    modeling how lexical knowledge and grapheme-to-phoneme rules interact
+                    across English, Italian, French, and German.
+                </p>
+            </div>
+
+            <!-- Quick action buttons -->
+            <div class="flex flex-wrap gap-4 mt-10">
+                <a href="playground.html#cdp-model"
+                    class="inline-flex items-center gap-2 px-6 py-3 bg-accent-red text-white font-semibold rounded-none hover:bg-accent-red-hover transition-all duration-200 hover:shadow-lg hover:shadow-accent-gold/20">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    Try Interactive Demo
+                </a>
+                <a href="#downloads"
+                    class="inline-flex items-center gap-2 px-6 py-3 border border-neutral-gray/30 text-primary-dark rounded-none hover:border-accent-red hover:text-accent-red transition-all duration-200">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+                    </svg>
+                    Download Software
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gold divider -->
+    <div class="h-px bg-surface-border"></div>
+
+    <!-- Main Content -->
+    <main class="py-12 md:py-20 bg-white border-t border-surface-border">
+        <div class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16">
+            <div class="grid lg:grid-cols-3 gap-16">
+
+                <!-- Left column: main article -->
+                <article class="lg:col-span-2 prose-reading">
+
+                    <!-- Model diagram (original image from CCNL site) -->
+                    <figure class="mb-16">
+                        <img src="Assets/cdp-model-diagram.jpg"
+                             alt="CDP model architecture diagram — lexical and sublexical routes converging on phonological output"
+                             class="w-full rounded-none border border-surface-border"
+                             style="max-width:623px; height:auto;">
+                        <figcaption class="mt-3 text-xs text-neutral-gray/60 italic">
+                            CDP model architecture. The lexical route (blue) and sublexical TLA network (green)
+                            process orthographic input in parallel, competing in the phonological output buffer.
+                            From Perry, Ziegler &amp; Zorzi (2007), <em>Psychological Review</em>.
+                        </figcaption>
+                    </figure>
+
+                    <!-- Overview -->
+                    <section class="mb-16">
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="w-1 h-8 bg-accent-red"></div>
+                            <h2 class="text-2xl font-bold">Overview</h2>
+                        </div>
+                        <div class="space-y-5 text-neutral-gray leading-relaxed">
+                            <p>
+                                The Connectionist Dual Process (CDP) model is the leading computational framework for
+                                simulating reading aloud in English and other European languages. It builds on the classic
+                                dual-route framework — distinguishing a <strong class="text-accent-red font-medium">lexical route</strong>
+                                (whole-word retrieval from an orthographic lexicon) from a
+                                <strong class="text-accent-red font-medium">sublexical route</strong> (rule-governed grapheme-to-phoneme conversion) —
+                                and implements both as connectionist networks that interact in parallel.
+                            </p>
+                            <p>
+                                Unlike purely symbolic dual-route models, CDP's two pathways are connectionist: they
+                                develop their own internal representations through exposure to lexical and sublexical statistics,
+                                and their outputs compete in a common phonological output buffer. This allows the model to
+                                capture the full spectrum of human reading phenomena: frequency effects, regularity effects,
+                                consistency effects, length effects, and their interactions.
+                            </p>
+                            <p>
+                                The CDP family was developed collaboratively by Conrad Perry, Johannes Ziegler, and Marco Zorzi,
+                                and has been validated against large-scale human naming-latency databases in multiple languages.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- Dual-Route Architecture -->
+                    <section class="mb-16">
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="w-1 h-8 bg-accent-red"></div>
+                            <h2 class="text-2xl font-bold">Dual-Route Architecture</h2>
+                        </div>
+
+                        <!-- Route diagram (text-based) -->
+                        <div class="p-6 rounded-none border border-surface-border bg-surface mb-8 font-mono text-sm">
+                            <div class="text-center space-y-2 text-neutral-gray/80">
+                                <div class="text-primary-dark font-bold tracking-wider">VISUAL INPUT</div>
+                                <div class="text-neutral-gray/50">↓</div>
+                                <div class="text-primary-dark">ORTHOGRAPHIC ANALYSIS</div>
+                                <div class="flex justify-center gap-6 md:gap-20 mt-2">
+                                    <div class="text-blue-400">↙</div>
+                                    <div class="text-green-400">↘</div>
+                                </div>
+                                <div class="flex justify-center gap-8">
+                                    <div class="text-blue-400 text-center">
+                                        <div class="font-semibold">LEXICAL ROUTE</div>
+                                        <div class="text-xs text-blue-400/70 mt-1">Orthographic Lexicon<br>→ Phonological Lexicon</div>
+                                    </div>
+                                    <div class="text-green-400 text-center">
+                                        <div class="font-semibold">SUBLEXICAL ROUTE</div>
+                                        <div class="text-xs text-green-400/70 mt-1">TLA Network<br>(Grapheme-Phoneme Rules)</div>
+                                    </div>
+                                </div>
+                                <div class="flex justify-center gap-6 md:gap-20 mt-2">
+                                    <div class="text-purple-400">↘</div>
+                                    <div class="text-purple-400">↙</div>
+                                </div>
+                                <div class="text-purple-400 font-semibold">PHONOLOGICAL OUTPUT BUFFER</div>
+                                <div class="text-neutral-gray/50">↓</div>
+                                <div class="text-accent-gold font-bold">SPEECH OUTPUT</div>
+                            </div>
+                        </div>
+
+                        <div class="space-y-6">
+                            <!-- Lexical route -->
+                            <div class="p-6 rounded-none border border-blue-500/20 bg-blue-500/[0.03]">
+                                <div class="flex items-center gap-3 mb-3">
+                                    <div class="w-2 h-2 rounded-full bg-blue-400"></div>
+                                    <h3 class="font-semibold text-blue-400">Lexical Route</h3>
+                                </div>
+                                <p class="text-neutral-gray text-sm leading-relaxed">
+                                    Maps orthographic input directly onto stored whole-word phonological representations
+                                    via an orthographic lexicon and a phonological output lexicon. This route is dominant
+                                    for <strong class="text-accent-red font-medium">high-frequency words</strong> and is the only route
+                                    capable of correctly pronouncing <strong class="text-accent-red font-medium">irregular words</strong>
+                                    (e.g., <em>pint</em>, <em>yacht</em>, <em>choir</em>) whose spelling-sound correspondences
+                                    violate general grapheme-to-phoneme rules.
+                                </p>
+                            </div>
+                            <!-- Sublexical route -->
+                            <div class="p-6 rounded-none border border-green-500/20 bg-green-500/[0.03]">
+                                <div class="flex items-center gap-3 mb-3">
+                                    <div class="w-2 h-2 rounded-full bg-green-400"></div>
+                                    <h3 class="font-semibold text-green-400">Sublexical Route (TLA Network)</h3>
+                                </div>
+                                <p class="text-neutral-gray text-sm leading-relaxed">
+                                    The Temporal Letter Assembly (TLA) network applies learned grapheme-to-phoneme
+                                    correspondences to assemble pronunciations letter by letter. It is the only route
+                                    available for <strong class="text-accent-red font-medium">nonwords</strong> (novel letter strings
+                                    never seen before) and provides a critical consistency check for words:
+                                    when its output matches the lexical route, pronunciation is fast and accurate;
+                                    when they conflict (irregular words), naming latency increases.
+                                </p>
+                            </div>
+                            <!-- Competition -->
+                            <div class="p-6 rounded-none border border-purple-500/20 bg-purple-500/[0.03]">
+                                <div class="flex items-center gap-3 mb-3">
+                                    <div class="w-2 h-2 rounded-full bg-purple-400"></div>
+                                    <h3 class="font-semibold text-purple-400">Frequency-Weighted Pathway Competition</h3>
+                                </div>
+                                <p class="text-neutral-gray text-sm leading-relaxed">
+                                    The model implements <strong class="text-accent-red font-medium">pathway competition</strong>:
+                                    for high-frequency words, lexical dominance suppresses conflicting sublexical output;
+                                    for rare or novel items, sublexical assembly determines pronunciation.
+                                    This captures the critical <strong class="text-accent-red font-medium">regularity × frequency interaction</strong>:
+                                    irregular words are hardest to read aloud precisely when they are low-frequency,
+                                    because lexical suppression of the incorrect GPC output is weak.
+                                </p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Model Versions -->
+                    <section class="mb-16" id="versions">
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="w-1 h-8 bg-accent-red"></div>
+                            <h2 class="text-2xl font-bold">Model Versions</h2>
+                        </div>
+                        <div class="space-y-6">
+
+                            <div class="p-6 rounded-none border border-surface-border bg-surface">
+                                <div class="flex items-start justify-between gap-4 mb-3">
+                                    <div>
+                                        <h3 class="font-bold text-primary-dark text-lg">CDP+</h3>
+                                        <p class="text-neutral-gray text-sm">Perry, Ziegler, &amp; Zorzi (2007)</p>
+                                    </div>
+                                    <span class="px-2 py-1 text-xs bg-blue-500/15 text-blue-400 border border-blue-500/25 rounded-full whitespace-nowrap">English</span>
+                                </div>
+                                <p class="text-neutral-gray text-sm leading-relaxed mb-3">
+                                    The foundational version. Includes a complete lexical pathway with a
+                                    graphemic buffer for orthographic representation, yielding superior predictions for
+                                    monosyllabic English word naming. The first connectionist model to outperform purely
+                                    symbolic dual-route models on standard benchmarks.
+                                </p>
+                                <p class="text-xs text-neutral-gray/60 italic">
+                                    Perry, C., Ziegler, J.C., &amp; Zorzi, M. (2007). Nested incremental modeling in the development
+                                    of computational theories: The CDP+ model of reading aloud.
+                                    <em>Psychological Review, 114</em>, 273–315.
+                                </p>
+                            </div>
+
+                            <div class="p-6 rounded-none border border-surface-border bg-surface">
+                                <div class="flex items-start justify-between gap-4 mb-3">
+                                    <div>
+                                        <h3 class="font-bold text-primary-dark text-lg">CDP++</h3>
+                                        <p class="text-neutral-gray text-sm">Perry, Ziegler, &amp; Zorzi (2010)</p>
+                                    </div>
+                                    <span class="px-2 py-1 text-xs bg-blue-500/15 text-blue-400 border border-blue-500/25 rounded-full whitespace-nowrap">English</span>
+                                </div>
+                                <p class="text-neutral-gray text-sm leading-relaxed mb-3">
+                                    Extends CDP+ to multisyllabic words and nonwords, adds a stress assignment mechanism,
+                                    and incorporates a lexicon of more than 32,000 words. Accounts for approximately
+                                    <strong class="text-accent-red font-medium">49% of reaction time variance</strong> in large-scale
+                                    naming databases — the highest of any computational reading model at the time.
+                                </p>
+                                <p class="text-xs text-neutral-gray/60 italic">
+                                    Perry, C., Ziegler, J.C., &amp; Zorzi, M. (2010). Beyond single syllables: Large-scale modeling
+                                    of reading aloud with the Connectionist Dual Process (CDP++) model.
+                                    <em>Cognitive Psychology, 61</em>, 106–151.
+                                </p>
+                            </div>
+
+                            <div class="p-6 rounded-none border border-surface-border bg-surface">
+                                <div class="flex items-start justify-between gap-4 mb-3">
+                                    <div>
+                                        <h3 class="font-bold text-primary-dark text-lg">CDP++.parser</h3>
+                                        <p class="text-neutral-gray text-sm">Perry, Ziegler, &amp; Zorzi (2013)</p>
+                                    </div>
+                                    <span class="px-2 py-1 text-xs bg-blue-500/15 text-blue-400 border border-blue-500/25 rounded-full whitespace-nowrap">English</span>
+                                </div>
+                                <p class="text-neutral-gray text-sm leading-relaxed mb-3">
+                                    Adds a learned graphemic parsing mechanism that categorizes letter-string positions
+                                    as onset, vowel, or coda elements. This allows the model to apply position-specific
+                                    grapheme-to-phoneme rules and improves nonword pronunciation accuracy.
+                                </p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Multilingual Implementations -->
+                    <section class="mb-16" id="multilingual">
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="w-1 h-8 bg-accent-red"></div>
+                            <h2 class="text-2xl font-bold">Multilingual Implementations</h2>
+                        </div>
+                        <p class="text-neutral-gray mb-6 leading-relaxed">
+                            The CDP architecture has been adapted for three additional languages, each requiring its own
+                            lexicon and grapheme-to-phoneme rules. Cross-linguistic comparisons allow the model to
+                            make specific predictions about reading difficulty as a function of orthographic transparency.
+                        </p>
+                        <div class="grid md:grid-cols-3 gap-4">
+                            <div class="p-5 rounded-none border border-surface-border bg-surface text-center">
+                                <div class="text-2xl mb-3">🇩🇪</div>
+                                <h3 class="font-semibold text-primary-dark mb-2">German CDP+</h3>
+                                <p class="text-neutral-gray text-xs leading-relaxed">
+                                    Transparent orthography; regularity effects are attenuated relative to English.
+                                    Perry et al. (2010).
+                                </p>
+                            </div>
+                            <div class="p-5 rounded-none border border-surface-border bg-surface text-center">
+                                <div class="text-2xl mb-3">🇫🇷</div>
+                                <h3 class="font-semibold text-primary-dark mb-2">French CDP++</h3>
+                                <p class="text-neutral-gray text-xs leading-relaxed">
+                                    Lexicon of 100,000+ words. Semi-transparent orthography with large asymmetry
+                                    between reading and spelling. Perry et al. (2014).
+                                </p>
+                            </div>
+                            <div class="p-5 rounded-none border border-surface-border bg-surface text-center">
+                                <div class="text-2xl mb-3">🇮🇹</div>
+                                <h3 class="font-semibold text-primary-dark mb-2">Italian CDP++</h3>
+                                <p class="text-neutral-gray text-xs leading-relaxed">
+                                    Lexicon of 60,000+ words. Highly transparent orthography; sublexical route
+                                    is dominant for most words. Perry et al. (2014).
+                                </p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Clinical & developmental applications -->
+                    <section class="mb-16">
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="w-1 h-8 bg-accent-red"></div>
+                            <h2 class="text-2xl font-bold">Developmental &amp; Clinical Applications</h2>
+                        </div>
+                        <div class="space-y-5 text-neutral-gray leading-relaxed">
+                            <p>
+                                Beyond adult reading, the CDP framework has been used to model the
+                                <strong class="text-accent-red font-medium">development of reading</strong> through phonological decoding.
+                                Simulations show how phoneme-level representations become progressively more robust with
+                                exposure, replicating developmental trajectories observed in children learning to read.
+                            </p>
+                            <p>
+                                The model also provides a mechanistic account of
+                                <strong class="text-accent-red font-medium">developmental dyslexia</strong>:
+                                simulated phonological deficits (reduced quality of phoneme representations) and
+                                visual attention deficits (attenuated orthographic input) each independently impair
+                                reading aloud in ways consistent with observed clinical profiles — providing a
+                                computational bridge between neurological impairment and reading behavior.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- Key Citations -->
+                    <section class="mb-16">
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="w-1 h-8 bg-accent-red"></div>
+                            <h2 class="text-2xl font-bold">Key References</h2>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="p-5 rounded-none border border-surface-border bg-surface">
+                                <p class="font-mono-tech text-xs text-accent-red uppercase tracking-wider mb-2">CDP+ (English, monosyllables)</p>
+                                <p class="text-neutral-gray text-sm leading-relaxed">
+                                    Perry, C., Ziegler, J.C., &amp; Zorzi, M. (2007). Nested incremental modeling in the
+                                    development of computational theories: The CDP+ model of reading aloud.
+                                    <em>Psychological Review, 114</em>, 273–315.
+                                </p>
+                            </div>
+                            <div class="p-5 rounded-none border border-surface-border bg-surface">
+                                <p class="font-mono-tech text-xs text-accent-red uppercase tracking-wider mb-2">CDP++ (English, multisyllabic)</p>
+                                <p class="text-neutral-gray text-sm leading-relaxed">
+                                    Perry, C., Ziegler, J.C., &amp; Zorzi, M. (2010). Beyond single syllables: Large-scale
+                                    modeling of reading aloud with the Connectionist Dual Process (CDP++) model.
+                                    <em>Cognitive Psychology, 61</em>, 106–151.
+                                </p>
+                            </div>
+                            <div class="p-5 rounded-none border border-surface-border bg-surface">
+                                <p class="font-mono-tech text-xs text-accent-red uppercase tracking-wider mb-2">Multilingual extensions</p>
+                                <p class="text-neutral-gray text-sm leading-relaxed">
+                                    Perry, C., Ziegler, J.C., &amp; Zorzi, M. (2014). CDP++ for French and Italian.
+                                    <em>Psychological Review.</em>
+                                </p>
+                            </div>
+                            <div class="p-5 rounded-none border border-surface-border bg-surface">
+                                <p class="font-mono-tech text-xs text-accent-red uppercase tracking-wider mb-2">Original dual-route connectionist framework</p>
+                                <p class="text-neutral-gray text-sm leading-relaxed">
+                                    Zorzi, M., Houghton, G., &amp; Butterworth, B. (1998). Two routes or one in reading aloud?
+                                    A connectionist dual-process model. <em>Journal of Experimental Psychology: Human
+                                    Perception and Performance, 24</em>, 1131–1161.
+                                </p>
+                            </div>
+                        </div>
+                    </section>
+
+                </article>
+
+                <!-- Right sidebar -->
+                <aside class="lg:col-span-1 space-y-8">
+                    <div class="sticky top-28 space-y-6">
+
+                        <!-- Interactive Demo -->
+                        <div class="p-6 rounded-none border border-surface-border bg-surface">
+                            <h3 class="font-semibold text-primary-dark mb-3 flex items-center gap-2">
+                                <svg class="w-5 h-5 text-accent-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                                Interactive Demo
+                            </h3>
+                            <p class="text-neutral-gray text-sm mb-4 leading-relaxed">
+                                Type any English word or nonword and watch the dual routes compete in real time.
+                                Regular words, irregular exceptions, and novel nonwords all handled.
+                            </p>
+                            <a href="playground.html#cdp-model"
+                                class="block w-full text-center px-4 py-2.5 bg-accent-red text-white font-semibold rounded-none hover:bg-accent-red-hover transition-all duration-200 text-sm">
+                                Open CDP Explorer →
+                            </a>
+                        </div>
+
+                        <!-- Downloads -->
+                        <div class="p-6 rounded-none border border-surface-border bg-surface" id="downloads">
+                            <h3 class="font-semibold text-primary-dark mb-4 flex items-center gap-2">
+                                <svg class="w-5 h-5 text-neutral-gray" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+                                </svg>
+                                Download Software
+                            </h3>
+                            <p class="text-neutral-gray text-xs mb-4 leading-relaxed">
+                                All CDP versions are available as stand-alone Windows programs — no installation required.
+                                Program files, user manuals, and stimulus sets are included.
+                            </p>
+                            <div class="space-y-2">
+                                <div class="flex items-center gap-3 p-3 rounded-none border border-surface-border bg-surface">
+                                    <span class="text-blue-400 font-bold text-sm w-16 flex-shrink-0">CDP+</span>
+                                    <div class="flex-1">
+                                        <p class="text-xs text-neutral-gray">English monosyllables · v1.0</p>
+                                    </div>
+                                    <span class="text-xs text-neutral-gray/50">Windows</span>
+                                </div>
+                                <div class="flex items-center gap-3 p-3 rounded-none border border-surface-border bg-surface">
+                                    <span class="text-blue-400 font-bold text-sm w-16 flex-shrink-0">CDP++</span>
+                                    <div class="flex-1">
+                                        <p class="text-xs text-neutral-gray">English multisyllabic · 32k words</p>
+                                    </div>
+                                    <span class="text-xs text-neutral-gray/50">Windows</span>
+                                </div>
+                                <div class="flex items-center gap-3 p-3 rounded-none border border-surface-border bg-surface">
+                                    <span class="text-green-400 font-bold text-sm w-16 flex-shrink-0">IT</span>
+                                    <div class="flex-1">
+                                        <p class="text-xs text-neutral-gray">Italian CDP++ · 60k words</p>
+                                    </div>
+                                    <span class="text-xs text-neutral-gray/50">Windows</span>
+                                </div>
+                                <div class="flex items-center gap-3 p-3 rounded-none border border-surface-border bg-surface">
+                                    <span class="text-green-400 font-bold text-sm w-16 flex-shrink-0">FR</span>
+                                    <div class="flex-1">
+                                        <p class="text-xs text-neutral-gray">French CDP++ · 100k words</p>
+                                    </div>
+                                    <span class="text-xs text-neutral-gray/50">Windows</span>
+                                </div>
+                                <div class="flex items-center gap-3 p-3 rounded-none border border-surface-border bg-surface">
+                                    <span class="text-green-400 font-bold text-sm w-16 flex-shrink-0">DE</span>
+                                    <div class="flex-1">
+                                        <p class="text-xs text-neutral-gray">German CDP+</p>
+                                    </div>
+                                    <span class="text-xs text-neutral-gray/50">Windows</span>
+                                </div>
+                            </div>
+                            <div class="mt-5 pt-4 border-t border-neutral-gray/15">
+                                <p class="text-xs text-neutral-gray/60 leading-relaxed">
+                                    To obtain software packages, please contact:<br>
+                                    <a href="mailto:conradperry@gmail.com" class="text-accent-red hover:underline">Conrad Perry</a>
+                                    (technical) ·
+                                    <a href="mailto:marco.zorzi@unipd.it" class="text-accent-red hover:underline">Marco Zorzi</a>
+                                    (research)
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Phenomena explained -->
+                        <div class="p-6 rounded-none border border-surface-border bg-surface">
+                            <h3 class="font-semibold text-primary-dark mb-4">Phenomena Captured</h3>
+                            <ul class="space-y-3 text-sm text-neutral-gray">
+                                <li class="flex items-start gap-2">
+                                    <span class="text-accent-gold mt-0.5 flex-shrink-0">✓</span>
+                                    <span><strong class="text-accent-red font-medium">Frequency effect</strong> — high-freq words named faster</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <span class="text-accent-gold mt-0.5 flex-shrink-0">✓</span>
+                                    <span><strong class="text-accent-red font-medium">Regularity effect</strong> — irregular words slower/more errors</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <span class="text-accent-gold mt-0.5 flex-shrink-0">✓</span>
+                                    <span><strong class="text-accent-red font-medium">Frequency × Regularity</strong> — interaction only at low freq</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <span class="text-accent-gold mt-0.5 flex-shrink-0">✓</span>
+                                    <span><strong class="text-accent-red font-medium">Consistency effect</strong> — body-neighbour inconsistency costs</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <span class="text-accent-gold mt-0.5 flex-shrink-0">✓</span>
+                                    <span><strong class="text-accent-red font-medium">Length effect</strong> — sublexical serial assembly cost</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <span class="text-accent-gold mt-0.5 flex-shrink-0">✓</span>
+                                    <span><strong class="text-accent-red font-medium">Nonword reading</strong> — sublexical route only</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </main>
+
+    <!-- Related -->
+    <section class="py-16 border-t border-surface-border bg-surface">
+        <div class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16">
+            <h2 class="text-xl font-bold mb-8 text-neutral-gray">Related Research</h2>
+            <div class="grid md:grid-cols-2 gap-6 max-w-3xl">
+                <a href="research-deeplearning.html"
+                    class="flex items-start gap-4 p-5 rounded-none border border-surface-border hover:border-accent-gold/40 transition-all duration-200 group">
+                    <svg class="w-6 h-6 mt-1 flex-shrink-0 text-neutral-gray/60 group-hover:text-accent-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"/></svg>
+                    <div>
+                        <p class="font-semibold text-primary-dark group-hover:text-accent-red transition-colors mb-1">Deep Unsupervised Learning</p>
+                        <p class="text-sm text-neutral-gray">DBN-based models of visual word form and numerosity perception.</p>
+                    </div>
+                </a>
+                <a href="playground.html#cdp-model"
+                    class="flex items-start gap-4 p-5 rounded-none border border-surface-border hover:border-purple-400/40 transition-all duration-200 group">
+                    <svg class="w-6 h-6 mt-1 flex-shrink-0 text-purple-400/60 group-hover:text-purple-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+                    <div>
+                        <p class="font-semibold text-primary-dark group-hover:text-purple-400 transition-colors mb-1">CDP Explorer</p>
+                        <p class="text-sm text-neutral-gray">Try the dual-route model interactively with any English word or nonword.</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="footer" class="bg-surface-alt py-12 border-t border-surface-border">
+        <div class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16">
+            <div class="grid md:grid-cols-4 gap-8 md:gap-12 mb-8 md:mb-12">
+                <div class="md:col-span-2">
+                    <img src="Assets/Logo_and_text.png" alt="CCN Lab" class="h-14 mb-4 logo-on-light">
+                    <p class="text-neutral-gray text-sm leading-relaxed max-w-md">
+                        The Computational Cognitive Neuroscience Lab at the University of Padova, exploring the
+                        computational mechanisms underlying human cognition since 2000.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4 text-primary-dark">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="index.html#about" class="text-neutral-gray hover:text-accent-red transition-colors text-sm">About</a></li>
+                        <li><a href="research.html" class="text-neutral-gray hover:text-accent-red transition-colors text-sm">Research</a></li>
+                        <li><a href="people.html" class="text-neutral-gray hover:text-accent-red transition-colors text-sm">People</a></li>
+                        <li><a href="playground.html" class="text-neutral-gray hover:text-accent-red transition-colors text-sm">Playground</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4 text-primary-dark">Affiliations</h4>
+                    <ul class="space-y-2 text-sm text-neutral-gray">
+                        <li><a href="http://www.unipd.it" class="hover:text-accent-red transition-colors">University of Padova</a></li>
+                        <li><a href="http://dpg.psy.unipd.it" class="hover:text-accent-red transition-colors">Dept. of General Psychology</a></li>
+                        <li><a href="http://pnc.unipd.it/" class="hover:text-accent-red transition-colors">Padova Neuroscience Center</a></li>
+                        <li><a href="https://hsancamillo.it" class="hover:text-accent-red transition-colors">San Camillo Research Hospital</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="pt-8 border-t border-surface-border flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-neutral-gray text-xs">
+                    © 2000–2026 Computational Cognitive Neuroscience Lab. All rights reserved.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Mobile Menu Script -->
+    <script>
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        if (mobileMenuBtn && mobileMenu) {
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+        }
+
+        const header    = document.getElementById('header');
+        const navInner  = document.getElementById('nav-inner');
+        const headerLogo = document.getElementById('header-logo');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('shadow-md');
+                navInner.classList.remove('h-16', 'lg:h-20');
+                navInner.classList.add('h-12', 'lg:h-14');
+                headerLogo.src = 'Assets/Logo.png';
+                headerLogo.classList.remove('h-10', 'lg:h-12');
+                headerLogo.classList.add('h-8', 'lg:h-10');
+            } else {
+                header.classList.remove('shadow-md');
+                navInner.classList.add('h-16', 'lg:h-20');
+                navInner.classList.remove('h-12', 'lg:h-14');
+                headerLogo.src = 'Assets/Logo_and_text.png';
+                headerLogo.classList.add('h-10', 'lg:h-12');
+                headerLogo.classList.remove('h-8', 'lg:h-10');
+            }
+        });
+    </script>
+
+</body>
+</html>

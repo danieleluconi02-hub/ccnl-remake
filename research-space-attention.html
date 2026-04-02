@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Space and Attention | CCNLab</title>
+    <link rel="icon" type="image/png" href="Assets/Logo.png">
+    <meta name="description"
+        content="Research on visuospatial attention at CCNL — multitasking, neglect, space-time-number interactions, and rehabilitation.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-dark':     '#1a1a1a',
+                        'primary-light':    '#FFFFFF',
+                        'accent-red':       '#b20839',
+                        'accent-red-hover': '#8a0022',
+                        'accent-gold':      '#b20839',
+                        'accent-gold-hover':'#8a0022',
+                        'neutral-gray':     '#6B7280',
+                        'light-gray':       '#F3F4F6',
+                        'surface':          '#f8f7f4',
+                        'surface-alt':      '#eeedea',
+                        'surface-border':   '#e2dfda',
+                    },
+                    fontFamily: {
+                        'manrope':   ['Manrope', 'sans-serif'],
+                        'display':   ['"Playfair Display"', 'Georgia', 'serif'],
+                        'mono-tech': ['"JetBrains Mono"', '"Courier New"', 'monospace'],
+                    },
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="font-manrope bg-surface text-primary-dark antialiased">
+
+    <!-- Header / Navigation -->
+    <header id="header" class="fixed top-0 left-0 right-0 z-50 bg-white border-b border-surface-border shadow-sm transition-all duration-300">
+        <div class="inst-hierarchy-bar">
+            <div class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16 flex justify-between items-center">
+                <span>University of Padova &nbsp;·&nbsp; Department of General Psychology &nbsp;·&nbsp; CCN Lab</span>
+                <a href="https://www.unipd.it" target="_blank" rel="noopener noreferrer" class="hover:text-accent-red transition-colors hidden sm:block">unipd.it ↗</a>
+            </div>
+        </div>
+        <nav class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16">
+            <div class="flex items-center justify-between h-16 lg:h-20 transition-all duration-300" id="nav-inner">
+                <a href="index.html" class="flex items-center gap-4 group">
+                    <img src="Assets/Logo_and_text.png" alt="CCN Lab Logo" id="header-logo"
+                        class="h-10 lg:h-12 object-contain -ml-2 transition-all duration-300 logo-on-light">
+                </a>
+                <div class="hidden md:flex items-center gap-4 lg:gap-8">
+                    <a href="index.html#about" class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-base font-medium">About</a>
+                    <div class="dropdown-container">
+                        <a href="research.html" class="nav-link text-accent-gold transition-colors duration-200 text-base font-medium">Research</a>
+                        <div class="dropdown-menu">
+                            <a href="research.html#research" class="dropdown-item">Research areas</a>
+                            <a href="research.html#facilities" class="dropdown-item">Lab facilities</a>
+                            <a href="research.html#publications" class="dropdown-item">Publications</a>
+                            <a href="software.html" class="dropdown-item">Software &amp; Downloads</a>
+                        </div>
+                    </div>
+                    <a href="people.html" class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-base font-medium">People</a>
+                    <a href="playground.html" class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-base font-medium">Playground</a>
+                    <a href="news.html" class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-base font-medium">News</a>
+                    <a href="join-us.html" class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-base font-medium">Join us</a>
+                    <a href="index.html#contact" class="btn-primary px-5 py-2.5 bg-accent-gold text-white font-semibold rounded-none hover:bg-accent-red-hover transition-all duration-200 hover:shadow-lg hover:shadow-accent-gold/20 text-base">Contact us</a>
+                </div>
+                <button id="mobile-menu-btn" class="md:hidden p-2 text-neutral-gray hover:text-accent-red transition-colors" aria-label="Open menu">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+                </button>
+            </div>
+        </nav>
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-surface-border">
+            <div class="px-6 py-4 space-y-4">
+                <a href="index.html#about" class="block text-neutral-gray hover:text-accent-red transition-colors py-2">About</a>
+                <a href="research.html" class="block text-accent-gold font-semibold transition-colors py-2">Research</a>
+                <a href="people.html" class="block text-neutral-gray hover:text-accent-red transition-colors py-2">People</a>
+                <a href="playground.html" class="block text-neutral-gray hover:text-accent-red transition-colors py-2">Playground</a>
+                <a href="news.html" class="block text-neutral-gray hover:text-accent-red transition-colors py-2">News</a>
+                <a href="join-us.html" class="block text-neutral-gray hover:text-accent-red transition-colors py-2">Join us</a>
+                <a href="software.html" class="block text-neutral-gray hover:text-accent-red transition-colors py-2">Software</a>
+                <a href="index.html#contact" class="block w-fit mx-auto text-center px-5 py-2 bg-accent-red text-white font-semibold rounded-none hover:bg-accent-red-hover transition-colors">Contact us</a>
+            </div>
+        </div>
+        <div class="h-px bg-accent-red"></div>
+    </header>
+
+    <!-- Hero -->
+    <section class="pt-20 pb-10 md:pt-32 md:pb-16 bg-surface border-b border-surface-border">
+        <div class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16">
+            <nav class="flex items-center gap-2 text-sm text-neutral-gray mb-10">
+                <a href="research.html" class="hover:text-accent-red transition-colors">Research</a>
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                <span class="text-accent-red font-medium">Space and Attention</span>
+            </nav>
+            <div class="max-w-4xl">
+                <div class="flex flex-wrap items-center gap-3 mb-6">
+                    <span class="font-mono-tech text-xs text-neutral-gray uppercase tracking-widest border border-surface-border px-2 py-0.5">Cognitive Neuroscience</span>
+                    <span class="font-mono-tech text-xs text-neutral-gray uppercase tracking-widest border border-surface-border px-2 py-0.5">Experimental &amp; Clinical</span>
+                    <span class="font-mono-tech text-xs text-accent-red uppercase tracking-widest border border-accent-red/30 px-2 py-0.5">fMRI · EEG · Eye-tracking</span>
+                </div>
+                <h1 class="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 text-primary-dark">
+                    Space and<br>
+                    <span class="text-accent-gold">Attention</span>
+                </h1>
+                <p class="text-xl text-neutral-gray font-light leading-relaxed max-w-3xl">
+                    Investigating the neural and computational mechanisms of visuospatial attention —
+                    from multitasking in healthy brains to neglect rehabilitation in stroke patients,
+                    and the surprising interactions between space, time, and number.
+                </p>
+            </div>
+            <div class="flex flex-wrap gap-4 mt-10">
+                <a href="people.html" class="inline-flex items-center gap-2 px-6 py-3 bg-accent-red text-white font-semibold rounded-none hover:bg-accent-red-hover transition-all duration-200 hover:shadow-lg hover:shadow-accent-gold/20">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                    Meet the Researchers
+                </a>
+                <a href="research.html#facilities" class="inline-flex items-center gap-2 px-6 py-3 border border-neutral-gray/30 text-primary-dark font-medium rounded-none border border-neutral-gray/20 hover:border-accent-gold/50 transition-all duration-200">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12c0 1.657-4.03 3-9 3s-9-1.343-9-3 4.03-3 9-3 9 1.343 9 3z"/></svg>
+                    Eye-tracking Lab
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Overview -->
+    <section class="py-12 md:py-20 bg-white border-t border-surface">
+        <div class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-8 md:gap-16 items-start">
+                <div>
+                    <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-6 md:mb-8">Overview</h2>
+                    <div class="space-y-5 text-neutral-gray text-lg font-light leading-relaxed">
+                        <p>
+                            Spatial attention is the cognitive mechanism that selectively prioritizes processing of
+                            information at specific locations in the visual field. The CCNL investigates how attention
+                            is deployed, maintained, and divided across space and time — and what happens when
+                            these mechanisms break down following brain injury.
+                        </p>
+                        <p>
+                            A central theme is the study of <span class="text-accent-red font-medium">hemispatial neglect</span>,
+                            a severe attentional disorder that typically follows right-hemisphere stroke, in which
+                            patients fail to attend to information in the contralesional hemispace. The lab combines
+                            neuropsychological assessment with neuroimaging and brain stimulation to characterize
+                            neglect and develop novel rehabilitation approaches.
+                        </p>
+                        <p>
+                            A second major focus is the <span class="text-accent-red font-medium">interaction between spatial
+                            and numerical representations</span> — captured in phenomena like the SNARC effect
+                            (Spatial-Numerical Association of Response Codes) — revealing deep connections between
+                            how the brain maps number and space.
+                        </p>
+                    </div>
+                </div>
+                <div class="space-y-4">
+                    <div class="bg-white border border-surface-border p-6 rounded-none border-l-2 border-accent-gold">
+                        <h3 class="font-semibold text-lg mb-2">Attention and Multitasking</h3>
+                        <p class="text-neutral-gray text-sm leading-relaxed">
+                            Psychophysical and eye-tracking paradigms probing the limits of attentional resources
+                            when multiple objects or tasks compete for processing. Research by Sebastiano Cinetto
+                            combines eye-tracking with machine learning for stroke rehabilitation applications.
+                        </p>
+                    </div>
+                    <div class="bg-white border border-surface-border p-6 rounded-none border-l-2 border-accent-gold">
+                        <h3 class="font-semibold text-lg mb-2">Space, Time and Number</h3>
+                        <p class="text-neutral-gray text-sm leading-relaxed">
+                            Experimental work on the surprising links between spatial, temporal, and numerical
+                            processing — including the mental number line, SNARC effect, and how visuospatial
+                            biases modulate numerical estimation.
+                        </p>
+                    </div>
+                    <div class="bg-white border border-surface-border p-6 rounded-none border-l-2 border-accent-gold">
+                        <h3 class="font-semibold text-lg mb-2">Neglect &amp; Brain-Behavior Mapping</h3>
+                        <p class="text-neutral-gray text-sm leading-relaxed">
+                            Systematic lesion-deficit mapping in stroke patients with hemispatial neglect.
+                            Studies use voxel-based morphometry, resting-state fMRI connectivity, and
+                            high-density EEG to identify the neural substrates of attentional failure
+                            and recovery.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Key Research Highlights -->
+    <section class="py-12 md:py-20 bg-white border-t border-surface">
+        <div class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16">
+            <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-8 md:mb-12">Key Research Highlights</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+                <div class="group bg-white border border-surface-border p-8 rounded-none hover:shadow-2xl hover:border-accent-red transition-all duration-300 hover:-translate-y-1">
+                    <div class="w-12 h-12 bg-accent-gold/10 rounded-none flex items-center justify-center mb-5 group-hover:bg-accent-gold/20 transition-colors">
+                        <svg class="w-6 h-6 text-accent-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                    </div>
+                    <h3 class="font-semibold text-lg mb-3">Hemispatial Neglect Characterization</h3>
+                    <p class="text-neutral-gray text-sm leading-relaxed mb-4">
+                        Large-scale neuropsychological and neuroimaging studies in stroke patients with
+                        right-hemisphere damage, identifying key lesion sites and white-matter tract
+                        disruptions associated with hemispatial neglect severity and recovery.
+                    </p>
+                    <p class="text-xs text-accent-gold/80 font-medium">Bonato, Priftis, Zorzi &amp; collaborators</p>
+                </div>
+
+                <div class="group bg-white border border-surface-border p-8 rounded-none hover:shadow-2xl hover:border-accent-red transition-all duration-300 hover:-translate-y-1">
+                    <div class="w-12 h-12 bg-accent-gold/10 rounded-none flex items-center justify-center mb-5 group-hover:bg-accent-gold/20 transition-colors">
+                        <svg class="w-6 h-6 text-accent-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/></svg>
+                    </div>
+                    <h3 class="font-semibold text-lg mb-3">SNARC and Mental Number Line</h3>
+                    <p class="text-neutral-gray text-sm leading-relaxed mb-4">
+                        Research on the spatial-numerical association of response codes, showing that small
+                        numbers are mentally represented on the left and large numbers on the right — and
+                        how this mapping is modulated by context, task, and individual differences.
+                    </p>
+                    <p class="text-xs text-accent-gold/80 font-medium">Ranzini, Zorzi &amp; collaborators</p>
+                </div>
+
+                <div class="group bg-white border border-surface-border p-8 rounded-none hover:shadow-2xl hover:border-accent-red transition-all duration-300 hover:-translate-y-1">
+                    <div class="w-12 h-12 bg-accent-gold/10 rounded-none flex items-center justify-center mb-5 group-hover:bg-accent-gold/20 transition-colors">
+                        <svg class="w-6 h-6 text-accent-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                    </div>
+                    <h3 class="font-semibold text-lg mb-3">TMS &amp; Non-invasive Brain Stimulation</h3>
+                    <p class="text-neutral-gray text-sm leading-relaxed mb-4">
+                        Transcranial magnetic stimulation and transcranial electrical stimulation (TES)
+                        protocols used to causally investigate the role of right parietal and frontal
+                        areas in spatial attention, and to assess therapeutic potential in neglect.
+                    </p>
+                    <p class="text-xs text-accent-gold/80 font-medium">Bonato &amp; collaborators</p>
+                </div>
+
+                <div class="group bg-white border border-surface-border p-8 rounded-none hover:shadow-2xl hover:border-accent-red transition-all duration-300 hover:-translate-y-1">
+                    <div class="w-12 h-12 bg-accent-gold/10 rounded-none flex items-center justify-center mb-5 group-hover:bg-accent-gold/20 transition-colors">
+                        <svg class="w-6 h-6 text-accent-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    </div>
+                    <h3 class="font-semibold text-lg mb-3">Space-Time Interactions</h3>
+                    <p class="text-neutral-gray text-sm leading-relaxed mb-4">
+                        Experimental investigation of how spatial and temporal processing interact at neural
+                        and behavioural levels — including STEARC effects, temporal order judgements,
+                        and the shared parietal resources for space and time representation.
+                    </p>
+                    <p class="text-xs text-accent-gold/80 font-medium">Bonato, Ranzini &amp; collaborators</p>
+                </div>
+
+                <div class="group bg-white border border-surface-border p-8 rounded-none hover:shadow-2xl hover:border-accent-red transition-all duration-300 hover:-translate-y-1">
+                    <div class="w-12 h-12 bg-accent-gold/10 rounded-none flex items-center justify-center mb-5 group-hover:bg-accent-gold/20 transition-colors">
+                        <svg class="w-6 h-6 text-accent-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                    </div>
+                    <h3 class="font-semibold text-lg mb-3">Eye-tracking &amp; Machine Learning</h3>
+                    <p class="text-neutral-gray text-sm leading-relaxed mb-4">
+                        Combining high-resolution eye-tracking with machine learning classifiers to
+                        objectively characterize attentional biases in stroke patients, supporting
+                        both diagnosis and longitudinal monitoring of rehabilitation outcomes.
+                    </p>
+                    <p class="text-xs text-accent-gold/80 font-medium">Cinetto, Bonato &amp; collaborators</p>
+                </div>
+
+                <div class="group bg-white border border-surface-border p-8 rounded-none hover:shadow-2xl hover:border-accent-red transition-all duration-300 hover:-translate-y-1">
+                    <div class="w-12 h-12 bg-accent-gold/10 rounded-none flex items-center justify-center mb-5 group-hover:bg-accent-gold/20 transition-colors">
+                        <svg class="w-6 h-6 text-accent-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+                    </div>
+                    <h3 class="font-semibold text-lg mb-3">Default Mode &amp; EEG Markers</h3>
+                    <p class="text-neutral-gray text-sm leading-relaxed mb-4">
+                        Research by Zaira Romeo examining Default Mode Network dynamics and EEG/ERP
+                        markers of visuospatial attention — linking resting-state brain dynamics to
+                        individual differences in spatial cognition.
+                    </p>
+                    <p class="text-xs text-accent-gold/80 font-medium">Romeo, Zorzi &amp; collaborators</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Key People -->
+    <section class="py-12 md:py-20 bg-white border-t border-surface">
+        <div class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16">
+            <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-8 md:mb-12">Key Researchers</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+                <div class="bg-white border border-surface-border p-6 rounded-none">
+                    <p class="font-semibold mb-1">Mario Bonato</p>
+                    <p class="text-accent-gold text-sm mb-2">Associate Professor</p>
+                    <p class="text-neutral-gray text-sm">Visuospatial attention, neglect, space-time-number interactions, clinical neuropsychology.</p>
+                </div>
+                <div class="bg-white border border-surface-border p-6 rounded-none">
+                    <p class="font-semibold mb-1">Mariagrazia Ranzini</p>
+                    <p class="text-accent-gold text-sm mb-2">Associate Professor</p>
+                    <p class="text-neutral-gray text-sm">Spatial-numerical associations, embodied cognition, mental number line.</p>
+                </div>
+                <div class="bg-white border border-surface-border p-6 rounded-none">
+                    <p class="font-semibold mb-1">Sebastiano Cinetto</p>
+                    <p class="text-accent-gold text-sm mb-2">Post-doc</p>
+                    <p class="text-neutral-gray text-sm">Eye-tracking, stroke rehabilitation, visuo-spatial attention, machine learning.</p>
+                </div>
+                <div class="bg-white border border-surface-border p-6 rounded-none">
+                    <p class="font-semibold mb-1">Konstantinos Priftis</p>
+                    <p class="text-accent-gold text-sm mb-2">Full Professor (Collaborator)</p>
+                    <p class="text-neutral-gray text-sm">Clinical neuropsychology of spatial disorders, BCI, mathematical cognition.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Methods & Facilities -->
+    <section class="py-12 md:py-20 bg-white border-t border-surface">
+        <div class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16">
+            <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-6 md:mb-10">Methods &amp; Facilities</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-white border border-surface-border p-6 rounded-none">
+                    <div class="w-10 h-10 bg-accent-gold/10 rounded-none flex items-center justify-center mb-4">
+                        <svg class="w-5 h-5 text-accent-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12c0 1.657-4.03 3-9 3s-9-1.343-9-3 4.03-3 9-3 9 1.343 9 3z"/></svg>
+                    </div>
+                    <h3 class="font-semibold mb-2">Eye-tracking Lab</h3>
+                    <p class="text-neutral-gray text-sm leading-relaxed">Two dedicated rooms with Tobii eye-trackers running E-Prime or OpenSesame for precise oculomotor and attentional measurement.</p>
+                </div>
+                <div class="bg-white border border-surface-border p-6 rounded-none">
+                    <div class="w-10 h-10 bg-accent-gold/10 rounded-none flex items-center justify-center mb-4">
+                        <svg class="w-5 h-5 text-accent-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l.707.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.989-2.386l-.548-.547z"/></svg>
+                    </div>
+                    <h3 class="font-semibold mb-2">Neuroimaging &amp; Stimulation</h3>
+                    <p class="text-neutral-gray text-sm leading-relaxed">3T MRI (Philips Ingenia), 256-channel EEG, TMS, and TES protocols for both basic science and clinical populations.</p>
+                </div>
+                <div class="bg-white border border-surface-border p-6 rounded-none">
+                    <div class="w-10 h-10 bg-accent-gold/10 rounded-none flex items-center justify-center mb-4">
+                        <svg class="w-5 h-5 text-accent-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+                    </div>
+                    <h3 class="font-semibold mb-2">San Camillo Partnership</h3>
+                    <p class="text-neutral-gray text-sm leading-relaxed">Computational Neuroimaging Laboratory at IRCCS San Camillo Hospital, Venice — providing access to clinical stroke populations and advanced rehabilitation resources.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-surface-alt py-12 border-t border-surface-border">
+        <div class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16">
+            <div class="grid md:grid-cols-4 gap-8 md:gap-12 mb-8 md:mb-12">
+                <div class="md:col-span-2">
+                    <img src="Assets/Logo_and_text.png" alt="CCN Lab" class="h-14 mb-4 logo-on-light">
+                    <p class="text-neutral-gray text-sm leading-relaxed max-w-md">
+                        The Computational Cognitive Neuroscience Lab at the University of Padova, exploring the
+                        computational mechanisms underlying human cognition since 2000.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4 text-primary-dark">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="index.html#about" class="text-neutral-gray hover:text-accent-red transition-colors text-sm">About</a></li>
+                        <li><a href="research.html" class="text-neutral-gray hover:text-accent-red transition-colors text-sm">Research</a></li>
+                        <li><a href="people.html" class="text-neutral-gray hover:text-accent-red transition-colors text-sm">People</a></li>
+                        <li><a href="news.html" class="text-neutral-gray hover:text-accent-red transition-colors text-sm">News</a></li>
+                        <li><a href="software.html" class="text-neutral-gray hover:text-accent-red transition-colors text-sm">Software</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4 text-primary-dark">Affiliations</h4>
+                    <ul class="space-y-2 text-sm text-neutral-gray">
+                        <li><a href="http://www.unipd.it" class="hover:text-accent-red transition-colors">University of Padova</a></li>
+                        <li><a href="http://dpg.psy.unipd.it" class="hover:text-accent-red transition-colors">Dept. of General Psychology</a></li>
+                        <li><a href="http://pnc.unipd.it/" class="hover:text-accent-red transition-colors">Padova Neuroscience Center</a></li>
+                        <li><a href="https://hsancamillo.it" class="hover:text-accent-red transition-colors">San Camillo Research Hospital</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="pt-8 border-t border-neutral-gray/20">
+                <p class="text-neutral-gray text-xs">© 2000–2026 Computational Cognitive Neuroscience Lab. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+        mobileMenu.querySelectorAll('a').forEach(link => link.addEventListener('click', () => mobileMenu.classList.add('hidden')));
+
+        const header = document.getElementById('header');
+        const navInner = document.getElementById('nav-inner');
+        const headerLogo = document.getElementById('header-logo');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('shadow-md');
+                navInner.classList.replace('h-16', 'h-12');
+                navInner.classList.replace('lg:h-20', 'lg:h-16');
+                headerLogo.src = 'Assets/Logo.png';
+                headerLogo.classList.replace('h-10', 'h-8');
+                headerLogo.classList.replace('lg:h-12', 'lg:h-10');
+            } else {
+                header.classList.remove('shadow-md');
+                navInner.classList.replace('h-12', 'h-16');
+                navInner.classList.replace('lg:h-16', 'lg:h-20');
+                headerLogo.src = 'Assets/Logo_and_text.png';
+                headerLogo.classList.replace('h-8', 'h-10');
+                headerLogo.classList.replace('lg:h-10', 'lg:h-12');
+            }
+        });
+    </script>
+</body>
+</html>

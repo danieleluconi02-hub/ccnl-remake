@@ -1,0 +1,1497 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Research Playground | CCNLab · University of Padova</title>
+    <link rel="icon" type="image/png" href="Assets/Logo.png">
+    <meta name="description"
+        content="Interactive simulations and educational research tools from the Computational Cognitive Neuroscience Lab.">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-dark':     '#1a1a1a',
+                        'primary-light':    '#FFFFFF',
+                        'accent-red':       '#b20839',
+                        'accent-red-hover': '#8a0022',
+                        'accent-gold':      '#b20839',
+                        'accent-gold-hover':'#8a0022',
+                        'neutral-gray':     '#6B7280',
+                        'light-gray':       '#F3F4F6',
+                        'surface':          '#f8f7f4',
+                        'surface-alt':      '#eeedea',
+                        'surface-border':   '#e2dfda',
+                    },
+                    fontFamily: {
+                        'manrope':   ['Manrope', 'sans-serif'],
+                        'display':   ['"Playfair Display"', 'Georgia', 'serif'],
+                        'mono-tech': ['"JetBrains Mono"', '"Courier New"', 'monospace'],
+                    },
+                }
+            }
+        }
+    </script>
+
+    <!-- KaTeX for formula rendering -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+        onload="renderMathInElement(document.body, {delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}]});"></script>
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="js/gara-styles.css">
+    <link rel="stylesheet" href="js/dbn-styles.css">
+    <link rel="stylesheet" href="js/cdp-styles.css">
+
+    <style>
+        /* ── Playground-specific overrides ─────────────────────────── */
+
+        /* Station section rule */
+        .lab-station {
+            border-top: 1px solid #e2dfda;
+            padding-top: 5rem;
+            padding-bottom: 5rem;
+        }
+
+        /* Inspector panel — ASCII-frame */
+        .inspector-panel {
+            font-family: 'JetBrains Mono', 'Courier New', monospace;
+            font-size: 0.7rem;
+            line-height: 1.8;
+            color: #1a1a1a;
+            background: #f8f7f4;
+            border: 1px solid #e2dfda;
+            border-left: 3px solid #b20839;
+            padding: 0.75rem 1rem;
+            box-shadow: 3px 3px 0 #e2dfda;
+            white-space: pre;
+            overflow-x: auto;
+        }
+
+        /* Theory/formula box */
+        .formula-box {
+            font-family: 'JetBrains Mono', 'Courier New', monospace;
+            font-size: 0.75rem;
+            background: #1a1a1a;
+            color: #f8f7f4;
+            padding: 1rem 1.25rem;
+            border-left: 3px solid #b20839;
+            box-shadow: 3px 3px 0 #b20839;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            line-height: 1.8;
+        }
+        .formula-box .katex-display {
+            margin: 0.4em 0;
+        }
+        .formula-box .katex {
+            font-size: 0.95em;
+            color: #f8f7f4;
+        }
+
+        /* Parameter slider styling */
+        .param-slider {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            height: 3px;
+            background: #e2dfda;
+            outline: none;
+            cursor: pointer;
+        }
+        .param-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 14px;
+            height: 14px;
+            background: #b20839;
+            cursor: pointer;
+            border-radius: 0;
+            box-shadow: 1px 1px 0 #8a0022;
+        }
+        .param-slider::-moz-range-thumb {
+            width: 14px;
+            height: 14px;
+            background: #b20839;
+            cursor: pointer;
+            border-radius: 0;
+            border: none;
+        }
+
+        /* Details/summary styling */
+        details.inspector > summary {
+            cursor: pointer;
+            list-style: none;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.65rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: #b20839;
+            border: 1px solid #e2dfda;
+            padding: 0.5rem 0.75rem;
+            background: #f8f7f4;
+            border-left: 3px solid #b20839;
+            user-select: none;
+        }
+        details.inspector > summary::-webkit-details-marker { display: none; }
+        details.inspector > summary::before {
+            content: '▶ ';
+            color: #b20839;
+        }
+        details.inspector[open] > summary::before {
+            content: '▼ ';
+        }
+        details.inspector[open] > summary {
+            border-bottom: none;
+        }
+
+        /* Tag pills — light, no rounded */
+        .station-tag {
+            display: inline-block;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.6rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 0.2rem 0.5rem;
+            border: 1px solid #e2dfda;
+            color: #6B7280;
+            background: #f8f7f4;
+        }
+        .station-tag-red {
+            border-color: #b20839;
+            color: #b20839;
+        }
+
+        /* Game wrapper on light background */
+        .game-well {
+            background: #1a1a1a;
+            border: 1px solid #e2dfda;
+            box-shadow: 3px 3px 0 #e2dfda;
+            overflow: hidden;
+        }
+
+        /* Station system status bar */
+        .station-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.6rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: #6B7280;
+            border: 1px solid #e2dfda;
+            padding: 0.3rem 0.6rem;
+            background: #f8f7f4;
+        }
+        .station-status .status-dot {
+            width: 5px; height: 5px;
+            background: #6B7280;
+            flex-shrink: 0;
+        }
+        .station-status.running .status-dot {
+            background: #b20839;
+            animation: rtPulse 1.4s ease-in-out infinite;
+        }
+        .station-status.running { color: #b20839; border-color: #b20839; background: rgba(178,8,57,0.04); }
+
+        /* Deep-dive collapsible */
+        details.deep-dive > summary {
+            cursor: pointer;
+            list-style: none;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.6rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: #6B7280;
+            border: 1px solid #e2dfda;
+            padding: 0.4rem 0.75rem;
+            background: #f8f7f4;
+            user-select: none;
+            margin-bottom: 0;
+        }
+        details.deep-dive > summary::-webkit-details-marker { display: none; }
+        details.deep-dive > summary::before { content: '▶  '; color: #6B7280; }
+        details.deep-dive[open] > summary::before { content: '▼  '; }
+        details.deep-dive[open] > summary { border-bottom: none; }
+        details.deep-dive > .formula-box { margin-top: 0; }
+
+        /* Slider pulse — brief red border flash when a param changes */
+        @keyframes sliderPulse {
+            0%   { box-shadow: 3px 3px 0 #e2dfda; border-color: #e2dfda; }
+            25%  { box-shadow: 3px 3px 0 #b20839; border-color: #b20839; }
+            100% { box-shadow: 3px 3px 0 #e2dfda; border-color: #e2dfda; }
+        }
+        .game-well.param-changed {
+            animation: sliderPulse 0.6s ease-out forwards;
+        }
+
+        /* Live debug log — appears below each inspector ASCII box */
+        .debug-log {
+            font-family: 'JetBrains Mono', 'Courier New', monospace;
+            font-size: 0.62rem;
+            line-height: 1.6;
+            color: #6B7280;
+            background: #f8f7f4;
+            border: 1px solid #e2dfda;
+            border-top: none;
+            border-left: 3px solid rgba(178,8,57,0.25);
+            padding: 0.4rem 1rem;
+            max-height: 90px;
+            overflow-y: auto;
+            white-space: pre;
+        }
+        .debug-log:empty { display: none; }
+        .debug-log .dbg-ts { color: rgba(178,8,57,0.55); }
+
+        /* Section divider bar */
+        .station-number-bar {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2.5rem;
+        }
+        .station-number-bar::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: #e2dfda;
+        }
+
+        /* Live RT display */
+        .rt-display {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            color: #b20839;
+            border: 1px solid #e2dfda;
+            padding: 0.4rem 0.75rem;
+            background: #f8f7f4;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        .rt-dot {
+            width: 6px;
+            height: 6px;
+            background: #b20839;
+            animation: rtPulse 1.2s ease-in-out infinite;
+        }
+        @keyframes rtPulse {
+            0%, 100% { opacity: 1; }
+            50%       { opacity: 0.2; }
+        }
+
+        /* Auth inputs on light surface */
+        .auth-input-light {
+            width: 100%;
+            background: #ffffff;
+            border: 1px solid #e2dfda;
+            padding: 0.65rem 0.9rem;
+            font-family: 'Manrope', sans-serif;
+            font-size: 0.875rem;
+            color: #1a1a1a;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .auth-input-light:focus { border-color: #b20839; }
+
+        /* Scientific tooltip terms */
+        .station-meta [title] {
+            text-decoration-style: dotted;
+            text-decoration-color: rgba(107,114,128,0.4);
+            text-underline-offset: 2px;
+        }
+
+        /* Responsive: stack station columns on mobile */
+        @media (max-width: 900px) {
+            .station-columns { flex-direction: column; }
+            .station-meta { width: 100% !important; }
+        }
+    </style>
+</head>
+
+<body class="font-manrope bg-surface text-primary-dark antialiased">
+
+    <!-- ===== HEADER ===== -->
+    <header id="header" class="fixed top-0 left-0 right-0 z-50 bg-white border-b border-surface-border transition-all duration-300">
+        <div class="inst-hierarchy-bar">
+            <div class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16 flex justify-between items-center">
+                <span>University of Padova &nbsp;·&nbsp; Department of General Psychology &nbsp;·&nbsp; Computational Cognitive Neuroscience Lab</span>
+                <a href="https://www.unipd.it" target="_blank" rel="noopener noreferrer" class="hover:text-accent-red transition-colors hidden sm:block">unipd.it ↗</a>
+            </div>
+        </div>
+        <nav class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16">
+            <div class="flex items-center justify-between h-14 lg:h-16 transition-all duration-300" id="nav-inner">
+                <a href="index.html" class="flex items-center gap-3 group">
+                    <img src="Assets/Logo_and_text.png" alt="CCN Lab Logo" id="header-logo"
+                        class="h-10 lg:h-12 object-contain -ml-2 transition-all duration-300 logo-on-light">
+                </a>
+                <div class="hidden md:flex items-center gap-4 lg:gap-7">
+                    <a href="index.html#about" class="nav-link text-neutral-gray hover:text-primary-dark text-sm font-medium">About</a>
+                    <div class="dropdown-container">
+                        <a href="research.html" class="nav-link text-neutral-gray hover:text-primary-dark text-sm font-medium">Research</a>
+                        <div class="dropdown-menu">
+                            <a href="research.html#research"     class="dropdown-item">Research areas</a>
+                            <a href="research.html#facilities"   class="dropdown-item">Lab facilities</a>
+                            <a href="research.html#publications" class="dropdown-item">Publications</a>
+                            <a href="software.html"              class="dropdown-item">Software &amp; Downloads</a>
+                        </div>
+                    </div>
+                    <a href="people.html"     class="nav-link text-neutral-gray hover:text-primary-dark text-sm font-medium">People</a>
+                    <a href="playground.html" class="nav-link text-primary-dark font-semibold text-sm active-page">Playground</a>
+                    <a href="news.html"       class="nav-link text-neutral-gray hover:text-primary-dark text-sm font-medium">News</a>
+                    <a href="join-us.html"    class="nav-link text-neutral-gray hover:text-primary-dark text-sm font-medium">Join us</a>
+                    <a href="index.html#contact" class="btn-primary px-5 py-2 bg-accent-red text-white text-sm font-semibold hover:bg-accent-red-hover rounded-none">Contact</a>
+                </div>
+                <button id="mobile-menu-btn" class="md:hidden p-2 text-neutral-gray hover:text-accent-red transition-colors" aria-label="Open menu">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                </button>
+            </div>
+        </nav>
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-surface-border">
+            <div class="px-6 py-4 space-y-1">
+                <a href="index.html#about" class="block text-neutral-gray hover:text-accent-red py-2.5 text-sm border-b border-surface-border">About</a>
+                <a href="research.html"    class="block text-neutral-gray hover:text-accent-red py-2.5 text-sm border-b border-surface-border">Research</a>
+                <a href="people.html"      class="block text-neutral-gray hover:text-accent-red py-2.5 text-sm border-b border-surface-border">People</a>
+                <a href="playground.html"  class="block text-accent-red font-semibold py-2.5 text-sm border-b border-surface-border">Playground</a>
+                <a href="news.html"        class="block text-neutral-gray hover:text-accent-red py-2.5 text-sm border-b border-surface-border">News</a>
+                <a href="join-us.html"     class="block text-neutral-gray hover:text-accent-red py-2.5 text-sm border-b border-surface-border">Join us</a>
+                <a href="index.html#contact" class="block w-fit mt-3 px-5 py-2 bg-accent-red text-white text-sm font-semibold rounded-none">Contact</a>
+            </div>
+        </div>
+        <div class="h-px bg-accent-red"></div>
+    </header>
+
+    <!-- ===== HERO ===== -->
+    <section class="pt-[88px] pb-12 bg-surface border-b border-surface-border">
+        <div class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16 pt-10">
+            <p class="font-mono-tech text-xs text-accent-red uppercase tracking-widest mb-5 flex items-center gap-2">
+                <span class="w-6 h-px bg-accent-red"></span>
+                Technical Laboratory Workbench
+            </p>
+            <div class="max-w-3xl">
+                <h1 class="font-display text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-5 text-primary-dark">
+                    Research <em class="text-accent-red">Playground</em>
+                </h1>
+                <p class="text-base text-neutral-gray font-light leading-relaxed max-w-2xl mb-6">
+                    Interactive simulations and educational research tools from the CCN Lab. Each demo is grounded in peer-reviewed computational neuroscience and runs entirely in the browser.
+                </p>
+                <!-- Station index -->
+                <div class="flex flex-wrap gap-4">
+                    <a href="#gara-dei-numeri" class="flex items-center gap-2 font-mono-tech text-xs text-neutral-gray hover:text-accent-red transition-colors border border-surface-border px-3 py-1.5 hover:border-accent-red">
+                        <span class="text-accent-red">01</span> GARA — Numerical Cognition
+                    </a>
+                    <a href="#dbn-explorer" class="flex items-center gap-2 font-mono-tech text-xs text-neutral-gray hover:text-accent-red transition-colors border border-surface-border px-3 py-1.5 hover:border-accent-red">
+                        <span class="text-accent-red">02</span> DBN — Deep Belief Networks
+                    </a>
+                    <a href="#cdp-model" class="flex items-center gap-2 font-mono-tech text-xs text-neutral-gray hover:text-accent-red transition-colors border border-surface-border px-3 py-1.5 hover:border-accent-red">
+                        <span class="text-accent-red">03</span> CDP — Reading Model
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================================================================
+         LAB STATION 01 — GARA: Graphical Attention & Reaction Assessment
+         ================================================================ -->
+    <section id="gara-dei-numeri" class="lab-station bg-surface">
+        <div class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16">
+
+            <!-- Station header -->
+            <div class="station-number-bar">
+                <span class="font-mono-tech text-xs text-accent-red uppercase tracking-widest">Lab Station 01</span>
+            </div>
+
+            <!-- Two-column layout -->
+            <div class="flex gap-10 xl:gap-16 station-columns">
+
+                <!-- Left: metadata (35%) -->
+                <div class="station-meta" style="width:35%;flex-shrink:0;">
+
+                    <div class="mb-6">
+                        <div class="flex items-center gap-3 mb-3">
+                            <p class="font-mono-tech text-xs text-accent-red uppercase tracking-widest">Cognitive Task</p>
+                            <span class="station-status" id="gara-status">
+                                <span class="status-dot"></span>System: Idle
+                            </span>
+                        </div>
+                        <h2 class="font-display text-3xl font-bold text-primary-dark leading-tight mb-2">
+                            La Gara dei Numeri
+                        </h2>
+                        <p class="font-mono-tech text-xs text-neutral-gray italic mb-4">The Number Race</p>
+
+                        <!-- Layer 1: The Hook -->
+                        <p class="text-sm text-primary-dark font-medium leading-relaxed mb-3">
+                            Your brain can tell "more" from "less" without counting — this game trains that instinct.
+                        </p>
+
+                        <!-- Layer 2: The Mechanism -->
+                        <p class="text-sm text-neutral-gray leading-relaxed mb-3">
+                            Two quantities appear side by side. Choose the larger one, as fast as you can. The game tracks how quickly your brain resolves the comparison and adjusts difficulty in real time — harder when you're fast and accurate, easier when you hesitate. This targets the <span title="The Approximate Number System (ANS): a core cognitive faculty present from infancy, shared with many animals. It represents magnitudes approximately, with precision that degrades as quantities grow closer together — described by the Weber fraction." class="underline decoration-dotted decoration-neutral-gray/40 cursor-help">Approximate Number System</span>, whose precision predicts arithmetic ability in children.
+                        </p>
+                        <p class="text-sm text-neutral-gray leading-relaxed">
+                            GARA records <strong class="text-primary-dark">reaction time</strong>, <strong class="text-primary-dark">accuracy</strong>, and <strong class="text-primary-dark">difficulty level</strong> per trial. Authenticated users accumulate longitudinal score histories.
+                        </p>
+                    </div>
+
+                    <!-- Tags -->
+                    <div class="flex flex-wrap gap-2 mb-6">
+                        <span class="station-tag station-tag-red">Neuro-Cognitive</span>
+                        <span class="station-tag">Adaptive Difficulty</span>
+                        <span class="station-tag">Ages 5–8</span>
+                        <span class="station-tag">GPL Licensed</span>
+                    </div>
+
+                    <!-- Theory: deep dive -->
+                    <div class="mb-6">
+                        <details class="deep-dive">
+                            <summary>Technical Foundation — Estimation Precision &amp; Weber's Law</summary>
+                            <div class="formula-box">$$w = \frac{\sigma(n)}{\mu(n)}$$
+$$P(\text{correct}) = \Phi\!\left(\frac{\Delta n}{w \cdot \bar{n}}\right)$$
+
+where:
+  $\Delta n = |n_1 - n_2|$ &nbsp; (numerical distance)
+  $\bar{n} = (n_1 + n_2)/2$ &nbsp; (mean numerosity)
+  $w$ = Weber fraction ($\approx 0.15\text{–}0.30$)
+  $\Phi$ = cumulative normal CDF
+
+Adaptive staircase:
+  correct  → difficulty $+= 0.025$
+  incorrect → difficulty $-= 0.050$
+  $\text{deadline} = \max(3000,\; 8000 - \text{difficulty} \times 4000)$ ms</div>
+                        </details>
+                    </div>
+
+                    <!-- Live RT display -->
+                    <div class="mb-6">
+                        <p class="font-mono-tech text-xs text-neutral-gray uppercase tracking-widest mb-2">Live Metrics</p>
+                        <div class="flex flex-wrap gap-2">
+                            <div class="rt-display">
+                                <div class="rt-dot"></div>
+                                RT: <span id="gara-rt-display" class="font-mono-tech text-xs text-accent-red">— ms</span>
+                            </div>
+                            <div class="rt-display">
+                                ACC: <span id="gara-acc-display" class="font-mono-tech text-xs text-accent-red">—%</span>
+                            </div>
+                            <div class="rt-display">
+                                LVL: <span id="gara-lvl-display" class="font-mono-tech text-xs text-accent-red">—</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Inspector -->
+                    <details class="inspector">
+                        <summary>Inspector — Session State</summary>
+                        <div class="inspector-panel">┌─ INSPECTOR ───────────────────────────┐
+│ task     = ANS number comparison      │
+│ mode     = adaptive                   │
+│ RT_last  = <span id="insp-gara-rt">—</span> ms                    │
+│ accuracy = <span id="insp-gara-acc">—</span> %                     │
+│ level    = <span id="insp-gara-lvl">—</span>                        │
+│ w (Weber)= <span id="insp-gara-weber">—</span>                     │
+│ jnd      = <span id="insp-gara-jnd">—</span>                        │
+│ user     = <span id="insp-gara-user">guest</span>                 │
+└───────────────────────────────────────┘</div>
+                        <div class="debug-log" id="dbg-gara"></div>
+                    </details>
+
+                    <!-- Reference -->
+                    <div class="mt-6 pt-5 border-t border-surface-border">
+                        <p class="font-mono-tech text-xs text-neutral-gray uppercase tracking-widest mb-2">Reference</p>
+                        <p class="text-xs text-neutral-gray leading-relaxed italic">
+                            Wilson, A.J., Dehaene, S., et al. (2006). Principles underlying the design of "The Number Race", an adaptive computer game for remediation of dyscalculia. <em>Behavioral and Brain Functions, 2</em>, 19.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Right: game (65%) -->
+                <div class="flex-1 min-w-0">
+
+                    <!-- PRE-GAME PANEL -->
+                    <div id="pregame-panel">
+
+                        <!-- Step 1: Language selector -->
+                        <div id="step-lang" class="border border-surface-border p-8 bg-white" style="box-shadow:3px 3px 0 #e2dfda;">
+                            <p class="font-mono-tech text-xs text-accent-red uppercase tracking-widest mb-6">Step 1 of 2 — Choose Language</p>
+                            <h3 class="font-display text-2xl font-bold text-primary-dark mb-2">Scegli la lingua</h3>
+                            <p class="text-neutral-gray text-sm mb-8">Select your preferred language to continue</p>
+                            <div class="flex gap-4">
+                                <button data-lang="it" class="lang-btn flex flex-col items-center gap-2 px-8 py-5 border border-surface-border hover:border-accent-red transition-all duration-200 group bg-surface hover:bg-white" style="box-shadow:2px 2px 0 #e2dfda;">
+                                    <span class="text-3xl">🇮🇹</span>
+                                    <span class="font-mono-tech text-xs text-neutral-gray group-hover:text-accent-red transition-colors uppercase tracking-widest">Italiano</span>
+                                </button>
+                                <button data-lang="en" class="lang-btn flex flex-col items-center gap-2 px-8 py-5 border border-surface-border hover:border-accent-red transition-all duration-200 group bg-surface hover:bg-white" style="box-shadow:2px 2px 0 #e2dfda;">
+                                    <span class="text-3xl">🇬🇧</span>
+                                    <span class="font-mono-tech text-xs text-neutral-gray group-hover:text-accent-red transition-colors uppercase tracking-widest">English</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Step 2: Auth (hidden initially) -->
+                        <div id="step-auth" class="hidden border border-surface-border p-8 bg-white" style="box-shadow:3px 3px 0 #e2dfda;">
+                            <p class="font-mono-tech text-xs text-accent-red uppercase tracking-widest mb-6">Step 2 of 2 — Authentication</p>
+
+                            <!-- Logged-in state -->
+                            <div id="auth-loggedin" class="hidden text-center">
+                                <div class="w-14 h-14 border border-accent-red flex items-center justify-center mx-auto mb-4 bg-surface" style="box-shadow:2px 2px 0 #b20839;">
+                                    <span class="font-mono-tech text-xl font-bold text-accent-red" id="auth-avatar-letter">?</span>
+                                </div>
+                                <p class="text-neutral-gray text-sm mb-1" id="auth-welcome-msg"></p>
+                                <p class="font-display text-xl font-bold text-primary-dark mb-6" id="auth-display-name"></p>
+                                <div id="auth-score-section" class="mb-6 text-left max-w-sm mx-auto">
+                                    <p class="font-mono-tech text-xs text-neutral-gray uppercase tracking-widest mb-3" id="auth-score-label">Score History</p>
+                                    <div id="auth-score-list" class="space-y-1 max-h-36 overflow-y-auto"></div>
+                                </div>
+                                <div class="flex flex-col sm:flex-row justify-center gap-3">
+                                    <button id="auth-play-auth" class="px-8 py-3 bg-accent-red text-white font-semibold hover:bg-accent-red-hover transition-all duration-200 text-sm rounded-none font-mono-tech uppercase tracking-widest">
+                                        ▶ Play
+                                    </button>
+                                    <button id="auth-logout" class="px-6 py-3 border border-surface-border text-neutral-gray font-medium hover:border-accent-red hover:text-accent-red transition-all duration-200 text-sm rounded-none font-mono-tech text-xs uppercase tracking-widest">
+                                        Sign out
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Login / Register form -->
+                            <div id="auth-form-section">
+                                <h3 class="font-display text-xl font-bold text-primary-dark text-center mb-1" id="auth-title">Sign in</h3>
+                                <p class="text-neutral-gray text-sm text-center mb-6" id="auth-subtitle">Sign in to save your scores</p>
+                                <div class="max-w-sm mx-auto space-y-4">
+                                    <div>
+                                        <label class="block font-mono-tech text-xs text-neutral-gray uppercase tracking-widest mb-1.5" id="lbl-username">Username</label>
+                                        <input id="auth-username" type="text" autocomplete="username"
+                                            class="auth-input-light"
+                                            placeholder="username">
+                                    </div>
+                                    <div>
+                                        <label class="block font-mono-tech text-xs text-neutral-gray uppercase tracking-widest mb-1.5" id="lbl-password">Password</label>
+                                        <input id="auth-password" type="password" autocomplete="current-password"
+                                            class="auth-input-light"
+                                            placeholder="••••••••">
+                                    </div>
+                                    <p id="auth-error" class="text-accent-red text-xs hidden font-mono-tech"></p>
+                                    <button id="auth-submit"
+                                        class="w-full py-3 bg-accent-red text-white font-semibold hover:bg-accent-red-hover transition-all duration-200 text-sm rounded-none font-mono-tech uppercase tracking-widest">
+                                        Sign In
+                                    </button>
+                                    <div class="flex gap-3">
+                                        <button id="auth-toggle-mode"
+                                            class="flex-1 py-2.5 border border-surface-border text-neutral-gray hover:border-accent-red hover:text-accent-red transition-all duration-200 rounded-none font-mono-tech text-xs uppercase tracking-widest">
+                                            Register instead
+                                        </button>
+                                        <button id="auth-guest"
+                                            class="flex-1 py-2.5 border border-surface-border text-neutral-gray hover:border-neutral-gray/60 transition-all duration-200 rounded-none font-mono-tech text-xs uppercase tracking-widest">
+                                            Play as Guest
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- GAME CONTAINER (hidden until launched) -->
+                    <div id="gara-wrapper" class="hidden">
+                        <div class="flex items-center justify-between mb-4">
+                            <button id="back-to-pregame"
+                                class="inline-flex items-center gap-2 font-mono-tech text-xs text-neutral-gray hover:text-accent-red transition-colors uppercase tracking-widest">
+                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                                </svg>
+                                <span id="lbl-back-playground">Back to Playground</span>
+                            </button>
+                            <button id="open-credits"
+                                class="font-mono-tech text-xs text-neutral-gray hover:text-accent-red transition-colors uppercase tracking-widest">
+                                About this game
+                            </button>
+                        </div>
+                        <div class="game-well">
+                            <div id="gara-container"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Credits / About modal -->
+    <div id="credits-modal" class="fixed inset-0 z-[200] bg-black/70 hidden items-center justify-center p-4">
+        <div class="bg-white p-8 max-w-2xl w-full border border-surface-border relative max-h-[90vh] overflow-y-auto" style="box-shadow:4px 4px 0 #e2dfda;">
+            <button id="close-credits"
+                class="absolute top-4 right-4 text-neutral-gray hover:text-accent-red transition-colors font-mono-tech text-xs uppercase tracking-widest">
+                [close ✕]
+            </button>
+
+            <!-- EN credits -->
+            <div id="credits-en">
+                <p class="font-mono-tech text-xs text-accent-red uppercase tracking-widest mb-2">Credits &amp; Acknowledgments</p>
+                <h2 class="font-display text-2xl font-bold text-primary-dark mb-6">About The Number Race</h2>
+                <div class="space-y-5 text-sm text-neutral-gray leading-relaxed">
+                    <div>
+                        <p class="font-semibold text-primary-dark mb-1">Original Game</p>
+                        <p>"The Number Race" was developed by <strong class="text-primary-dark">Anna J. Wilson</strong>, <strong class="text-primary-dark">Stanislas Dehaene</strong>, <strong class="text-primary-dark">Susannah K. Revkin</strong>, <strong class="text-primary-dark">Dominique Cohen</strong>, <strong class="text-primary-dark">Laurent Cohen</strong>, and <strong class="text-primary-dark">Philippe Pinel</strong> (2006) at the <strong class="text-primary-dark">INSERM-CEA Cognitive Neuroimaging Unit</strong>, Orsay, France.</p>
+                    </div>
+                    <div>
+                        <p class="font-semibold text-primary-dark mb-1">Scientific Purpose</p>
+                        <p>Designed for the remediation of developmental dyscalculia, the game is grounded in research on the neural foundations of numerical cognition, in particular the Approximate Number System (ANS) and its role in arithmetic learning.</p>
+                    </div>
+                    <div>
+                        <p class="font-semibold text-primary-dark mb-1">License</p>
+                        <p>Published under the GNU General Public License (GPL). Original game assets and validated cognitive mechanics are preserved in this web version.</p>
+                    </div>
+                    <div>
+                        <p class="font-semibold text-primary-dark mb-1">Web Adaptation</p>
+                        <p>This web version was developed by the <strong class="text-primary-dark">Computational Cognitive Neuroscience Lab (CCNL)</strong> at the University of Padova, under the direction of <strong class="text-primary-dark">Prof. Marco Zorzi</strong>.</p>
+                    </div>
+                    <div>
+                        <p class="font-semibold text-primary-dark mb-1">Reference</p>
+                        <p class="italic">Wilson, A.J., Dehaene, S., Pinel, P., Revkin, S.K., Cohen, L., &amp; Cohen, D. (2006). Principles underlying the design of "The Number Race", an adaptive computer game for remediation of dyscalculia. <em>Behavioral and Brain Functions, 2</em>, 19.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- IT credits -->
+            <div id="credits-it" class="hidden">
+                <p class="font-mono-tech text-xs text-accent-red uppercase tracking-widest mb-2">Crediti &amp; Ringraziamenti</p>
+                <h2 class="font-display text-2xl font-bold text-primary-dark mb-6">Informazioni su La Gara dei Numeri</h2>
+                <div class="space-y-5 text-sm text-neutral-gray leading-relaxed">
+                    <div>
+                        <p class="font-semibold text-primary-dark mb-1">Gioco Originale</p>
+                        <p>"The Number Race" è stato sviluppato da <strong class="text-primary-dark">Anna J. Wilson</strong>, <strong class="text-primary-dark">Stanislas Dehaene</strong>, <strong class="text-primary-dark">Susannah K. Revkin</strong>, <strong class="text-primary-dark">Dominique Cohen</strong>, <strong class="text-primary-dark">Laurent Cohen</strong> e <strong class="text-primary-dark">Philippe Pinel</strong> (2006) presso l'<strong class="text-primary-dark">Unità di Neuroimmagine Cognitiva INSERM-CEA</strong>, Orsay, Francia.</p>
+                    </div>
+                    <div>
+                        <p class="font-semibold text-primary-dark mb-1">Scopo Scientifico</p>
+                        <p>Concepito per la riabilitazione della discalculia evolutiva, il gioco si basa sulla ricerca sulle fondamenta neurali della cognizione numerica, in particolare il Sistema di Numerosità Approssimata (ANS) e il suo ruolo nell'apprendimento aritmetico.</p>
+                    </div>
+                    <div>
+                        <p class="font-semibold text-primary-dark mb-1">Licenza</p>
+                        <p>Distribuito sotto licenza GNU General Public License (GPL). Tutti gli asset originali del gioco e i meccanismi cognitivi validati sono preservati in questa versione web.</p>
+                    </div>
+                    <div>
+                        <p class="font-semibold text-primary-dark mb-1">Versione Italiana</p>
+                        <p>La traduzione e l'adattamento de <em>La Gara dei Numeri</em> sono stati curati dal <strong class="text-primary-dark">Computational Cognitive Neuroscience Lab (CCNL)</strong> dell'Università di Padova, sotto la direzione del <strong class="text-primary-dark">Prof. Marco Zorzi</strong>.</p>
+                    </div>
+                    <div>
+                        <p class="font-semibold text-primary-dark mb-1">Riferimento Bibliografico</p>
+                        <p class="italic">Wilson, A.J., Dehaene, S., Pinel, P., Revkin, S.K., Cohen, L., &amp; Cohen, D. (2006). Principles underlying the design of "The Number Race", an adaptive computer game for remediation of dyscalculia. <em>Behavioral and Brain Functions, 2</em>, 19.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-8 pt-6 border-t border-surface-border text-center">
+                <a href="Assets/Playground_media/gara_dei_numeri/Manuale_ita.pdf" target="_blank"
+                    class="font-mono-tech text-xs text-accent-red hover:underline uppercase tracking-widest">
+                    Leggi il Manuale / Read the Manual (PDF) →
+                </a>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ================================================================
+         LAB STATION 02 — DBN Explorer: Deep Belief Networks
+         ================================================================ -->
+    <section id="dbn-explorer" class="lab-station bg-white">
+        <div class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16">
+
+            <!-- Station header -->
+            <div class="station-number-bar">
+                <span class="font-mono-tech text-xs text-accent-red uppercase tracking-widest">Lab Station 02</span>
+            </div>
+
+            <!-- Two-column layout -->
+            <div class="flex gap-10 xl:gap-16 station-columns">
+
+                <!-- Left: metadata (35%) -->
+                <div class="station-meta" style="width:35%;flex-shrink:0;">
+
+                    <div class="mb-6">
+                        <div class="flex items-center gap-3 mb-3">
+                            <p class="font-mono-tech text-xs text-accent-red uppercase tracking-widest">Generative Model</p>
+                            <span class="station-status running" id="dbn-status">
+                                <span class="status-dot"></span>System: Running
+                            </span>
+                        </div>
+                        <h2 class="font-display text-3xl font-bold text-primary-dark leading-tight mb-2">
+                            DBN Explorer
+                        </h2>
+                        <p class="font-mono-tech text-xs text-neutral-gray italic mb-4">Deep Belief Networks</p>
+
+                        <!-- Layer 1: The Hook -->
+                        <p class="text-sm text-primary-dark font-medium leading-relaxed mb-3">
+                            A neural network learns to "see" numbers the same way a developing brain might — purely through observation, with no labels or instructions.
+                        </p>
+
+                        <!-- Layer 2: The Mechanism -->
+                        <p class="text-sm text-neutral-gray leading-relaxed mb-3">
+                            Stacked layers of simulated neurons adjust their connections to find recurring patterns in pixel inputs. The bottom layer detects edges and strokes; the top layer encodes abstract quantity. Draw any digit or dot pattern on the canvas and watch the network reconstruct its internal representation — the gap between input and reconstruction measures how well it has learned.
+                        </p>
+                        <p class="text-sm text-neutral-gray leading-relaxed">
+                            Training runs in your browser via <span title="Contrastive Divergence (CD-k): an efficient approximation to maximum-likelihood learning. Instead of running the Markov chain to equilibrium, it takes k Gibbs sampling steps. Proposed by Hinton (2002)." class="underline decoration-dotted decoration-neutral-gray/40 cursor-help">Contrastive Divergence</span>. Adjust η and k with the sliders below — watch the inspector for live reconstruction error.
+                        </p>
+                    </div>
+
+                    <!-- Tags -->
+                    <div class="flex flex-wrap gap-2 mb-6">
+                        <span class="station-tag station-tag-red">Unsupervised Learning</span>
+                        <span class="station-tag">Generative Model</span>
+                        <span class="station-tag">Numerosity</span>
+                        <span class="station-tag">Nat. Neurosci. 2012</span>
+                    </div>
+
+                    <!-- Theory: deep dive -->
+                    <div class="mb-6">
+                        <details class="deep-dive">
+                            <summary>Technical Foundation — RBM Energy &amp; CD-k</summary>
+                            <div class="formula-box">$$E(\mathbf{v},\mathbf{h}) = -\sum_i a_i v_i - \sum_j b_j h_j - \sum_{ij} v_i W_{ij} h_j$$
+$$P(\mathbf{v}) = \frac{1}{Z}\sum_{\mathbf{h}} \exp(-E(\mathbf{v},\mathbf{h}))$$
+
+CD-$k$ update:
+  $\Delta W = \eta \cdot \left(\langle \mathbf{v}\mathbf{h}^\top \rangle_{\text{data}} - \langle \mathbf{v}\mathbf{h}^\top \rangle_k\right)$
+
+where:
+  $\mathbf{v}$ = visible units (pixels), $\mathbf{h}$ = hidden units
+  $W$ = weight matrix, $\eta$ = learning rate, $k$ = CD steps
+  $a_i, b_j$ = visible / hidden bias terms</div>
+                        </details>
+                    </div>
+
+                    <!-- DBN Parameter Controls -->
+                    <div class="mb-6">
+                        <p class="font-mono-tech text-xs text-neutral-gray uppercase tracking-widest mb-3">Parameter Controls</p>
+                        <div class="space-y-4">
+                            <div>
+                                <div class="flex justify-between items-center mb-1">
+                                    <label class="font-mono-tech text-xs text-neutral-gray uppercase tracking-widest" title="Learning rate η: how large each weight update step is. Too high → unstable; too low → slow convergence.">η — Learning Rate</label>
+                                    <span class="font-mono-tech text-xs text-accent-red" id="dbn-lr-val">0.010</span>
+                                </div>
+                                <input type="range" id="dbn-lr-ctrl" class="param-slider" min="1" max="100" value="10" step="1" title="Controls step size of weight updates. High η learns fast but may overshoot.">
+                                <div class="flex justify-between font-mono-tech text-xs text-neutral-gray mt-0.5">
+                                    <span>0.001</span><span>0.100</span>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between items-center mb-1">
+                                    <label class="font-mono-tech text-xs text-neutral-gray uppercase tracking-widest" title="CD steps k: number of Gibbs sampling iterations for the negative phase. Higher k = more accurate gradient, but slower.">k — CD Steps</label>
+                                    <span class="font-mono-tech text-xs text-accent-red" id="dbn-cd-val">1</span>
+                                </div>
+                                <input type="range" id="dbn-cd-ctrl" class="param-slider" min="1" max="10" value="1" step="1" title="Gibbs chain length for the negative phase. CD-1 is standard; CD-10 gives a better gradient estimate.">
+                                <div class="flex justify-between font-mono-tech text-xs text-neutral-gray mt-0.5">
+                                    <span>1</span><span>10</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Inspector -->
+                    <details class="inspector">
+                        <summary>Inspector — Network State</summary>
+                        <div class="inspector-panel">┌─ INSPECTOR ───────────────────────────┐
+│ η  = <span id="insp-dbn-lr">0.010</span>                        │
+│ k  = <span id="insp-dbn-cd">1</span>                           │
+│ h  = <span id="insp-dbn-h">50 units</span>                  │
+│ ε  = <span id="insp-dbn-err">—</span> (reconstruction err) │
+│ F  = <span id="insp-dbn-fe">—</span> (free energy)         │
+│ ep = <span id="insp-dbn-ep">0</span> (epoch)                │
+└───────────────────────────────────────┘</div>
+                        <div class="debug-log" id="dbg-dbn"></div>
+                    </details>
+
+                    <!-- Learn more links -->
+                    <div class="mt-6 pt-5 border-t border-surface-border">
+                        <p class="font-mono-tech text-xs text-neutral-gray uppercase tracking-widest mb-3">Reference</p>
+                        <p class="text-xs text-neutral-gray leading-relaxed italic mb-3">
+                            Stoianov, I. &amp; Zorzi, M. (2012). Emergence of a 'visual number sense' in hierarchical generative models. <em>Nature Neuroscience, 15</em>, 194–196.
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <a href="research-deeplearning.html"
+                                class="font-mono-tech text-xs text-neutral-gray hover:text-accent-red transition-colors border border-surface-border px-2 py-1 hover:border-accent-red">
+                                Research page →
+                            </a>
+                            <a href="https://github.com/CCNL-UniPD/iDBN" target="_blank" rel="noopener"
+                                class="font-mono-tech text-xs text-neutral-gray hover:text-accent-red transition-colors border border-surface-border px-2 py-1 hover:border-accent-red">
+                                iDBN on GitHub →
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: demo (65%) -->
+                <div class="flex-1 min-w-0">
+                    <div class="game-well">
+                        <div id="dbn-container"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ================================================================
+         LAB STATION 03 — CDP: Connectionist Dual Process Reading Model
+         ================================================================ -->
+    <section id="cdp-model" class="lab-station bg-surface">
+        <div class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16">
+
+            <!-- Station header -->
+            <div class="station-number-bar">
+                <span class="font-mono-tech text-xs text-accent-red uppercase tracking-widest">Lab Station 03</span>
+            </div>
+
+            <!-- Two-column layout -->
+            <div class="flex gap-10 xl:gap-16 station-columns">
+
+                <!-- Left: metadata (35%) -->
+                <div class="station-meta" style="width:35%;flex-shrink:0;">
+
+                    <div class="mb-6">
+                        <div class="flex items-center gap-3 mb-3">
+                            <p class="font-mono-tech text-xs text-accent-red uppercase tracking-widest">Connectionist Model</p>
+                            <span class="station-status" id="cdp-status">
+                                <span class="status-dot"></span>System: Idle
+                            </span>
+                        </div>
+                        <h2 class="font-display text-3xl font-bold text-primary-dark leading-tight mb-2">
+                            CDP Reading Model
+                        </h2>
+                        <p class="font-mono-tech text-xs text-neutral-gray italic mb-4">Connectionist Dual Process</p>
+
+                        <!-- Layer 1: The Hook -->
+                        <p class="text-sm text-primary-dark font-medium leading-relaxed mb-3">
+                            Reading a word activates two competing brain pathways at once — one recognises the whole word, the other sounds it out letter by letter.
+                        </p>
+
+                        <!-- Layer 2: The Mechanism -->
+                        <p class="text-sm text-neutral-gray leading-relaxed mb-3">
+                            Type any English word. The <span title="Lexical route: direct lookup in the orthographic lexicon. Strength is modulated by word frequency — common words activate this route strongly; rare words weakly." class="underline decoration-dotted decoration-neutral-gray/40 cursor-help">lexical route</span> instantly retrieves the whole-word pronunciation from memory; the <span title="Sub-lexical route: rule-based grapheme-to-phoneme conversion via the TLA network. Works on any letter string, including nonwords it has never seen." class="underline decoration-dotted decoration-neutral-gray/40 cursor-help">sub-lexical route</span> assembles sounds letter by letter. The route diagram shows which pathway wins.
+                        </p>
+                        <p class="text-sm text-neutral-gray leading-relaxed">
+                            For <strong class="text-primary-dark">irregular words</strong> (e.g. "have"), the routes conflict — the model predicts longer reaction times and higher error rates, exactly matching human data. Try a nonword like "splorn" to activate the sub-lexical route exclusively.
+                        </p>
+                    </div>
+
+                    <!-- Tags -->
+                    <div class="flex flex-wrap gap-2 mb-6">
+                        <span class="station-tag station-tag-red">Dual-Route</span>
+                        <span class="station-tag">GPC Rules</span>
+                        <span class="station-tag">EN · IT · FR · DE</span>
+                        <span class="station-tag">Psych. Review 2007</span>
+                    </div>
+
+                    <!-- Theory: deep dive -->
+                    <div class="mb-6">
+                        <details class="deep-dive">
+                            <summary>Technical Foundation — Dual Route Integration</summary>
+                            <div class="formula-box">$$P(\text{word}) = \lambda \cdot P_{\text{lex}} + (1-\lambda) \cdot P_{\text{phon}}$$
+
+Lexical route:
+  $P_{\text{lex}} = f\!\left(\sum_{ij} w_{ij} \cdot a_i\right)$ &nbsp; (orthographic lexicon)
+
+Sub-lexical route:
+  $P_{\text{phon}} = \text{GPC}(\text{grapheme} \to \text{phoneme})$
+
+Integration:
+  $\lambda = \sigma\!\left((\text{Zipf} - \theta) \cdot 1.2\right)$
+  $\text{output} = \arg\max\left[P(\text{word})\right]$
+
+RT model (Perry et al. 2007, Table 2):
+  $RT \approx 450 - 22(\text{freq}-3) + 18\max(0,\,L-3) + \delta_{\text{irreg}}$ ms</div>
+                        </details>
+                    </div>
+
+                    <!-- CDP Parameter Controls -->
+                    <div class="mb-6">
+                        <p class="font-mono-tech text-xs text-neutral-gray uppercase tracking-widest mb-3">Parameter Controls</p>
+                        <div class="space-y-4">
+                            <div>
+                                <div class="flex justify-between items-center mb-1">
+                                    <label class="font-mono-tech text-xs text-neutral-gray uppercase tracking-widest" title="λ: the balance between whole-word lookup (lexical) and letter-by-letter assembly (sub-lexical). Slide right to simulate deep-dyslexia (pure lexical); left for surface-dyslexia (pure sub-lexical).">λ — Lexical Bias</label>
+                                    <span class="font-mono-tech text-xs text-accent-red" id="cdp-lambda-val">0.50</span>
+                                </div>
+                                <input type="range" id="cdp-lambda-ctrl" class="param-slider" min="0" max="100" value="50" step="1" title="Shifts route dominance. Full left = sub-lexical only (nonword reading). Full right = lexical only (irregular word reading).">
+                                <div class="flex justify-between font-mono-tech text-xs text-neutral-gray mt-0.5">
+                                    <span>Sub-lexical</span><span>Lexical</span>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between items-center mb-1">
+                                    <label class="font-mono-tech text-xs text-neutral-gray uppercase tracking-widest" title="Frequency threshold θ (Zipf scale): the word frequency at which the lexical route starts dominating. Low-frequency words fall below this threshold and rely more on sub-lexical processing.">Freq Threshold θ (Zipf)</label>
+                                    <span class="font-mono-tech text-xs text-accent-red" id="cdp-freq-thresh-val">3.5</span>
+                                </div>
+                                <input type="range" id="cdp-freq-thresh-ctrl" class="param-slider" min="20" max="60" value="35" step="1" title="Zipf frequency threshold. Words above this frequency lean lexical; words below lean sub-lexical.">
+                                <div class="flex justify-between font-mono-tech text-xs text-neutral-gray mt-0.5">
+                                    <span>2.0</span><span>6.0</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Phoneme activation inspector -->
+                    <details class="inspector" id="cdp-inspector-details">
+                        <summary>Inspector — Phoneme Activations</summary>
+                        <div class="inspector-panel">┌─ INSPECTOR ───────────────────────────┐
+│ word     = <span id="insp-cdp-word">—</span>                    │
+│ phonemes = <span id="insp-cdp-ph">—</span>              │
+│ λ_lex    = <span id="insp-cdp-lex">—</span>                    │
+│ λ_phon   = <span id="insp-cdp-phon">—</span>                    │
+│ route    = <span id="insp-cdp-route">—</span>               │
+│ RT_pred  = <span id="insp-cdp-rt">—</span> ms                  │
+└───────────────────────────────────────┘</div>
+                        <div class="debug-log" id="dbg-cdp"></div>
+                    </details>
+
+                    <!-- Reference -->
+                    <div class="mt-6 pt-5 border-t border-surface-border">
+                        <p class="font-mono-tech text-xs text-neutral-gray uppercase tracking-widest mb-2">Reference</p>
+                        <p class="text-xs text-neutral-gray leading-relaxed italic mb-3">
+                            Perry, C., Ziegler, J.C., &amp; Zorzi, M. (2007). Nested incremental modeling in the development of computational theories: The CDP+ model of reading aloud. <em>Psychological Review, 114</em>, 273–315.
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <a href="research-cdp.html"
+                                class="font-mono-tech text-xs text-neutral-gray hover:text-accent-red transition-colors border border-surface-border px-2 py-1 hover:border-accent-red">
+                                CDP Research →
+                            </a>
+                            <a href="research-cdp.html#downloads"
+                                class="font-mono-tech text-xs text-neutral-gray hover:text-accent-red transition-colors border border-surface-border px-2 py-1 hover:border-accent-red">
+                                Download Software →
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: demo (65%) -->
+                <div class="flex-1 min-w-0">
+                    <div class="game-well">
+                        <div id="cdp-container"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ===== FOOTER ===== -->
+    <footer id="footer" class="bg-surface-alt py-12 border-t border-surface-border">
+        <div class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16">
+            <div class="grid md:grid-cols-4 gap-8 md:gap-12 mb-8">
+
+                <!-- Column 1: Logo & Description -->
+                <div class="md:col-span-2">
+                    <img src="Assets/Logo_and_text.png" alt="CCN Lab" class="h-10 mb-4 logo-on-light opacity-70">
+                    <p class="text-neutral-gray text-sm leading-relaxed max-w-sm">
+                        The Computational Cognitive Neuroscience Lab at the University of Padova, exploring the
+                        computational mechanisms underlying human cognition since 2000.
+                    </p>
+                </div>
+
+                <!-- Column 2: Quick Links -->
+                <div>
+                    <h4 class="font-mono-tech text-xs text-primary-dark uppercase tracking-widest mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="index.html#about"  class="text-neutral-gray hover:text-accent-red transition-colors text-sm">About</a></li>
+                        <li><a href="research.html"     class="text-neutral-gray hover:text-accent-red transition-colors text-sm">Research</a></li>
+                        <li><a href="people.html"       class="text-neutral-gray hover:text-accent-red transition-colors text-sm">People</a></li>
+                        <li><a href="playground.html"   class="text-accent-red text-sm">Playground</a></li>
+                        <li><a href="news.html"         class="text-neutral-gray hover:text-accent-red transition-colors text-sm">News</a></li>
+                        <li><a href="join-us.html"      class="text-neutral-gray hover:text-accent-red transition-colors text-sm">Join Us</a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 3: Affiliations -->
+                <div>
+                    <h4 class="font-mono-tech text-xs text-primary-dark uppercase tracking-widest mb-4">Affiliations</h4>
+                    <ul class="space-y-2 text-sm text-neutral-gray">
+                        <li><a href="http://www.unipd.it"      class="hover:text-accent-red transition-colors">University of Padova</a></li>
+                        <li><a href="http://dpg.psy.unipd.it"  class="hover:text-accent-red transition-colors">Dept. of General Psychology</a></li>
+                        <li><a href="http://pnc.unipd.it/"     class="hover:text-accent-red transition-colors">Padova Neuroscience Center</a></li>
+                        <li><a href="https://hsancamillo.it"   class="hover:text-accent-red transition-colors">San Camillo Research Hospital</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <hr class="section-rule mb-6">
+
+            <div class="flex flex-col md:flex-row justify-between items-center gap-3">
+                <p class="font-mono-tech text-xs text-neutral-gray">
+                    © 2000–2026 Computational Cognitive Neuroscience Lab · University of Padova
+                </p>
+                <p class="font-mono-tech text-xs text-neutral-gray/50">
+                    Dept. General Psychology · Via Venezia 8 · 35131 Padova, IT
+                </p>
+            </div>
+        </div>
+    </footer>
+
+
+    <!-- ===================================================
+         SCRIPTS
+         =================================================== -->
+
+    <!-- Mobile Menu & Header scroll -->
+    <script>
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu    = document.getElementById('mobile-menu');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
+        });
+
+        // Header scroll — keep white (light) background, just compact height
+        const header    = document.getElementById('header');
+        const navInner  = document.getElementById('nav-inner');
+        const headerLogo = document.getElementById('header-logo');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('shadow-md');
+                navInner.classList.remove('h-14', 'lg:h-16');
+                navInner.classList.add('h-12', 'lg:h-14');
+                headerLogo.classList.remove('h-10', 'lg:h-12');
+                headerLogo.classList.add('h-8', 'lg:h-10');
+            } else {
+                header.classList.remove('shadow-md');
+                navInner.classList.add('h-14', 'lg:h-16');
+                navInner.classList.remove('h-12', 'lg:h-14');
+                headerLogo.classList.add('h-10', 'lg:h-12');
+                headerLogo.classList.remove('h-8', 'lg:h-10');
+            }
+        });
+    </script>
+
+    <!-- Deep Belief Networks Demo -->
+    <script src="js/dbn-demo.js"></script>
+    <!-- CDP Reading Model Demo -->
+    <script src="js/cdp-demo.js"></script>
+
+    <!-- La Gara dei Numeri Game Scripts -->
+    <script src="js/gara-config.js"></script>
+    <script src="js/gara-i18n.js"></script>
+    <script src="js/gara-sound.js"></script>
+    <script src="js/gara-algorithm.js"></script>
+    <script src="js/gara-engine.js"></script>
+
+    <!-- ── Auth helpers (localStorage-based) ─────────────────────────── -->
+    <script>
+    const AUTH_KEY    = 'gara_users';
+    const SESSION_KEY = 'gara_session';
+
+    function getUsers()  { try { return JSON.parse(localStorage.getItem(AUTH_KEY))    || {}; } catch { return {}; } }
+    function saveUsers(u){ localStorage.setItem(AUTH_KEY, JSON.stringify(u)); }
+    function getSession(){ try { return JSON.parse(localStorage.getItem(SESSION_KEY)); } catch { return null; } }
+    function setSession(user){ localStorage.setItem(SESSION_KEY, JSON.stringify(user)); }
+    function clearSession()  { localStorage.removeItem(SESSION_KEY); }
+    function getScores(username){ const u = getUsers(); return u[username]?.scores || []; }
+    function addScore(username, result){
+        const users = getUsers();
+        if (!users[username]) return;
+        if (!users[username].scores) users[username].scores = [];
+        users[username].scores.unshift(result);
+        if (users[username].scores.length > 20) users[username].scores.length = 20;
+        saveUsers(users);
+    }
+
+    // ── i18n helpers for pre-game UI ──────────────────────────────────
+    function applyPreGameLang(lang) {
+        GARA_I18N.setLang(lang);
+        const t  = (k) => GARA_I18N.t(k);
+        const el = (id) => document.getElementById(id);
+        if (el('auth-title'))    el('auth-title').textContent    = t('loginTitle');
+        if (el('auth-subtitle')) el('auth-subtitle').textContent = t('loginSub');
+        if (el('lbl-username'))  el('lbl-username').textContent  = t('usernameLabel');
+        if (el('lbl-password'))  el('lbl-password').textContent  = t('passwordLabel');
+        if (el('auth-submit'))   el('auth-submit').textContent   = t('loginBtn');
+        if (el('auth-guest'))    el('auth-guest').textContent    = t('guestBtn');
+        if (el('auth-score-label')) el('auth-score-label').textContent = t('scoreHistory');
+        if (el('lbl-back-playground')) el('lbl-back-playground').textContent =
+            lang === 'it' ? '← Torna al Playground' : '← Back to Playground';
+        if (el('credits-en')) el('credits-en').classList.toggle('hidden', lang === 'it');
+        if (el('credits-it')) el('credits-it').classList.toggle('hidden', lang === 'en');
+        const session = getSession();
+        if (session && el('auth-welcome-msg'))
+            el('auth-welcome-msg').textContent = t('welcomeBack');
+        updateToggleModeLabel();
+    }
+
+    let authMode = 'login';
+    function updateToggleModeLabel() {
+        const btn  = document.getElementById('auth-toggle-mode');
+        if (!btn) return;
+        const lang = GARA_I18N.currentLang;
+        btn.textContent = authMode === 'login'
+            ? (lang === 'it' ? 'Registrati' : 'Register instead')
+            : (lang === 'it' ? 'Accedi'     : 'Sign in instead');
+    }
+
+    // ── DBN parameter bridge ──────────────────────────────────────────
+    // The sliders in the left column mirror values into the DBN demo internals.
+    // We expose a lightweight bridge that the DBN demo can optionally read.
+    window._ccnl_dbn_params = { lr: 0.010, cd: 1 };
+
+    // ── Pulse helper: flash game-well border on param change ──────────
+    function pulseWell(wellSelector) {
+        const el = document.querySelector(wellSelector);
+        if (!el) return;
+        el.classList.remove('param-changed');
+        void el.offsetWidth; // force reflow to restart animation
+        el.classList.add('param-changed');
+        el.addEventListener('animationend', () => el.classList.remove('param-changed'), { once: true });
+    }
+
+    function syncDBNParams() {
+        const lrSlider = document.getElementById('dbn-lr-ctrl');
+        const cdSlider = document.getElementById('dbn-cd-ctrl');
+        if (!lrSlider || !cdSlider) return;
+
+        const lrRaw = parseInt(lrSlider.value, 10);      // 1–100
+        const lr    = (lrRaw / 1000).toFixed(3);         // 0.001–0.100
+        const cd    = parseInt(cdSlider.value, 10);
+
+        window._ccnl_dbn_params.lr = parseFloat(lr);
+        window._ccnl_dbn_params.cd = cd;
+
+        // Update display labels
+        document.getElementById('dbn-lr-val').textContent  = lr;
+        document.getElementById('dbn-cd-val').textContent  = cd;
+        document.getElementById('insp-dbn-lr').textContent = lr;
+        document.getElementById('insp-dbn-cd').textContent = cd;
+
+        // Sync into DBN demo sliders if they exist
+        const demoLrSlider = document.querySelector('.dbn-slider[data-param="lr"]');
+        const demoCdSlider = document.querySelector('.dbn-slider[data-param="cd"]');
+        if (demoLrSlider) { demoLrSlider.value = lrRaw; demoLrSlider.dispatchEvent(new Event('input')); }
+        if (demoCdSlider) { demoCdSlider.value = cd;    demoCdSlider.dispatchEvent(new Event('input')); }
+
+        // Visual feedback
+        pulseWell('#dbn-explorer .game-well');
+    }
+
+    // ── CDP parameter bridge ─────────────────────────────────────────
+    window._ccnl_cdp_params = { lambda: 0.50, freqThreshold: 3.5 };
+
+    function syncCDPParams() {
+        const lambdaSlider = document.getElementById('cdp-lambda-ctrl');
+        const freqSlider   = document.getElementById('cdp-freq-thresh-ctrl');
+        if (!lambdaSlider || !freqSlider) return;
+
+        const lambda = (parseInt(lambdaSlider.value, 10) / 100).toFixed(2);
+        const freq   = (parseInt(freqSlider.value, 10) / 10).toFixed(1);
+
+        window._ccnl_cdp_params.lambda = parseFloat(lambda);
+        window._ccnl_cdp_params.freqThreshold = parseFloat(freq);
+
+        document.getElementById('cdp-lambda-val').textContent      = lambda;
+        document.getElementById('cdp-freq-thresh-val').textContent = freq;
+
+        // Visual feedback
+        pulseWell('#cdp-model .game-well');
+    }
+
+    // ── Main controller ───────────────────────────────────────────────
+    document.addEventListener('DOMContentLoaded', () => {
+        let selectedLang  = null;
+        let gameInstance  = null;
+
+        const pregamePanel = document.getElementById('pregame-panel');
+        const garaWrapper  = document.getElementById('gara-wrapper');
+        const stepLang     = document.getElementById('step-lang');
+        const stepAuth     = document.getElementById('step-auth');
+
+        // ── DBN slider listeners ─────────────────────────────────────
+        document.getElementById('dbn-lr-ctrl').addEventListener('input', syncDBNParams);
+        document.getElementById('dbn-cd-ctrl').addEventListener('input', syncDBNParams);
+
+        // ── CDP slider listeners ─────────────────────────────────────
+        document.getElementById('cdp-lambda-ctrl').addEventListener('input', syncCDPParams);
+        document.getElementById('cdp-freq-thresh-ctrl').addEventListener('input', syncCDPParams);
+
+        // ── Debug log helper ─────────────────────────────────────────────
+        function dbgPush(id, line) {
+            const el = document.getElementById(id);
+            if (!el) return;
+            const ts = new Date().toLocaleTimeString('en-GB', { hour12: false });
+            const row = document.createElement('div');
+            row.innerHTML = `<span class="dbg-ts">[${ts}]</span> ${line}`;
+            el.insertBefore(row, el.firstChild);
+            // Keep at most 20 lines
+            while (el.children.length > 20) el.removeChild(el.lastChild);
+        }
+
+        // Poll DBN demo state into inspector (every 1.5 s)
+        setInterval(() => {
+            if (window._ccnl_dbn_state) {
+                const s = window._ccnl_dbn_state;
+                const errEl = document.getElementById('insp-dbn-err');
+                const feEl  = document.getElementById('insp-dbn-fe');
+                const epEl  = document.getElementById('insp-dbn-ep');
+                const hEl   = document.getElementById('insp-dbn-h');
+                if (errEl && s.reconErr  !== undefined) errEl.textContent = s.reconErr.toFixed(4);
+                if (feEl  && s.freeEnergy!== undefined) feEl.textContent  = s.freeEnergy.toFixed(3);
+                if (epEl  && s.epoch     !== undefined) epEl.textContent  = s.epoch;
+                if (hEl   && s.hiddenUnits!==undefined) hEl.textContent   = s.hiddenUnits + ' units';
+                if (s.epoch !== undefined)
+                    dbgPush('dbg-dbn', `ep=${s.epoch} η=${(s.lr||0).toFixed(4)} k=${s.cdK||'—'} ε=${(s.reconErr||0).toFixed(4)} F=${(s.freeEnergy||0).toFixed(3)} phase=${s.phase||'—'}`);
+            }
+        }, 1500);
+
+        // Poll CDP demo state into inspector (every 1 s)
+        setInterval(() => {
+            if (window._ccnl_cdp_state) {
+                const s = window._ccnl_cdp_state;
+                const set = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
+                set('insp-cdp-word',  s.word  || '—');
+                set('insp-cdp-ph',    s.phonemes || '—');
+                set('insp-cdp-lex',   s.lexWeight  !== undefined ? s.lexWeight.toFixed(2)  : '—');
+                set('insp-cdp-phon',  s.phonWeight !== undefined ? s.phonWeight.toFixed(2) : '—');
+                set('insp-cdp-route', s.route  || '—');
+                set('insp-cdp-rt',    s.rtPred !== undefined ? s.rtPred : '—');
+                // Expand inspector and update status when a word is processed
+                if (s.word) {
+                    const det = document.getElementById('cdp-inspector-details');
+                    if (det && !det.open) det.open = true;
+                    setStationStatus('cdp-status', true);
+                    dbgPush('dbg-cdp', `word="${s.word}" λ_lex=${(s.lexWeight||0).toFixed(2)} λ_sub=${(s.phonWeight||0).toFixed(2)} route=${s.route||'—'} RT=${s.rtPred||'—'}ms`);
+                }
+            }
+        }, 1000);
+
+        // Poll GARA demo state into inspector (every 2 s)
+        setInterval(() => {
+            if (window._ccnl_gara_state) {
+                const s = window._ccnl_gara_state;
+                const el = (id) => document.getElementById(id);
+                if (el('insp-gara-weber')) el('insp-gara-weber').textContent = s.weberEstimate !== undefined ? s.weberEstimate.toFixed(3) : '—';
+                if (el('insp-gara-jnd'))   el('insp-gara-jnd').textContent   = s.jnd !== undefined ? s.jnd : '—';
+                dbgPush('dbg-gara', `trial=${s.trial} diff=${s.difficulty.toFixed(3)} w=${s.weberEstimate.toFixed(3)} jnd=${s.jnd} acc=${s.accuracy}% ok=${s.lastCorrect?'✓':'✗'}`);
+            }
+        }, 2000);
+
+        // ── Step 1: Language selection ───────────────────────────────
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                selectedLang = btn.dataset.lang;
+                applyPreGameLang(selectedLang);
+                document.querySelectorAll('.lang-btn').forEach(b =>
+                    b.classList.toggle('border-accent-red', b === btn));
+                stepLang.classList.add('hidden');
+                stepAuth.classList.remove('hidden');
+                const session = getSession();
+                if (session) showLoggedIn(session);
+                else         showAuthForm();
+            });
+        });
+
+        // ── Step 2: Auth ─────────────────────────────────────────────
+        function showLoggedIn(user) {
+            document.getElementById('auth-form-section').classList.add('hidden');
+            document.getElementById('auth-loggedin').classList.remove('hidden');
+            document.getElementById('auth-avatar-letter').textContent = user.username[0].toUpperCase();
+            document.getElementById('auth-display-name').textContent  = user.username;
+            document.getElementById('auth-welcome-msg').textContent   = GARA_I18N.t('welcomeBack');
+            renderScoreHistory(user.username);
+            // Update inspector
+            document.getElementById('insp-gara-user').textContent = user.username;
+        }
+
+        function showAuthForm() {
+            document.getElementById('auth-loggedin').classList.add('hidden');
+            document.getElementById('auth-form-section').classList.remove('hidden');
+            applyPreGameLang(selectedLang);
+        }
+
+        function renderScoreHistory(username) {
+            const scores = getScores(username);
+            const listEl = document.getElementById('auth-score-list');
+            const noScore = GARA_I18N.t('noScores');
+            if (!scores.length) {
+                listEl.innerHTML = `<p class="text-neutral-gray/60 text-xs font-mono-tech">${noScore}</p>`;
+                return;
+            }
+            listEl.innerHTML = scores.slice(0, 10).map(s => {
+                const date = new Date(s.timestamp).toLocaleDateString();
+                const win  = s.won ? '★' : '—';
+                return `<div class="flex justify-between items-center font-mono-tech text-xs py-1 border-b border-surface-border">
+                    <span class="text-neutral-gray">${date} ${win}</span>
+                    <span class="text-accent-red font-medium">${s.accuracy}% · Lv${s.level}</span>
+                </div>`;
+            }).join('');
+        }
+
+        // Auth form toggle (login ↔ register)
+        document.getElementById('auth-toggle-mode').addEventListener('click', () => {
+            authMode = authMode === 'login' ? 'register' : 'login';
+            const isReg = authMode === 'register';
+            const lang  = GARA_I18N.currentLang;
+            document.getElementById('auth-title').textContent    = isReg
+                ? (lang === 'it' ? 'Crea Account' : 'Create Account')
+                : GARA_I18N.t('loginTitle');
+            document.getElementById('auth-subtitle').textContent = isReg
+                ? (lang === 'it' ? 'Crea un account per salvare i punteggi' : 'Create an account to save your scores')
+                : GARA_I18N.t('loginSub');
+            document.getElementById('auth-submit').textContent   = isReg
+                ? GARA_I18N.t('registerBtn')
+                : GARA_I18N.t('loginBtn');
+            document.getElementById('auth-error').classList.add('hidden');
+            updateToggleModeLabel();
+        });
+
+        // Auth submit
+        document.getElementById('auth-submit').addEventListener('click', () => {
+            const username = document.getElementById('auth-username').value.trim();
+            const password = document.getElementById('auth-password').value;
+            const errorEl  = document.getElementById('auth-error');
+            const lang     = GARA_I18N.currentLang;
+
+            if (!username || !password) {
+                errorEl.textContent = lang === 'it' ? 'Compila tutti i campi.' : 'Please fill in all fields.';
+                errorEl.classList.remove('hidden');
+                return;
+            }
+            const users = getUsers();
+            if (authMode === 'register') {
+                if (users[username]) {
+                    errorEl.textContent = lang === 'it' ? 'Nome utente già in uso.' : 'Username already taken.';
+                    errorEl.classList.remove('hidden');
+                    return;
+                }
+                users[username] = { password, scores: [] };
+                saveUsers(users);
+            } else {
+                if (!users[username] || users[username].password !== password) {
+                    errorEl.textContent = lang === 'it' ? 'Credenziali non valide.' : 'Invalid username or password.';
+                    errorEl.classList.remove('hidden');
+                    return;
+                }
+            }
+            const session = { username };
+            setSession(session);
+            showLoggedIn(session);
+        });
+
+        // Guest play
+        document.getElementById('auth-guest').addEventListener('click', () => {
+            launchGame(null);
+        });
+
+        // Logout
+        document.getElementById('auth-logout').addEventListener('click', () => {
+            clearSession();
+            document.getElementById('insp-gara-user').textContent = 'guest';
+            showAuthForm();
+        });
+
+        // Logged-in play button
+        document.getElementById('auth-play-auth').addEventListener('click', () => {
+            launchGame(getSession());
+        });
+
+        // ── Launch game ──────────────────────────────────────────────
+        function setStationStatus(id, running) {
+            const el = document.getElementById(id);
+            if (!el) return;
+            const dot  = el.querySelector('.status-dot');
+            el.classList.toggle('running', running);
+            el.innerHTML = `<span class="status-dot"></span>System: ${running ? 'Running' : 'Idle'}`;
+        }
+
+        function launchGame(user) {
+            pregamePanel.classList.add('hidden');
+            garaWrapper.classList.remove('hidden');
+            setStationStatus('gara-status', true);
+
+            const container = document.getElementById('gara-container');
+            gameInstance = new GaraEngine(container);
+            gameInstance.init({
+                user,
+                onTrialEnd: user ? (trialData) => {
+                    // Update live RT display
+                    if (trialData && trialData.rt !== undefined) {
+                        const rt  = Math.round(trialData.rt);
+                        const acc = trialData.accuracy !== undefined ? trialData.accuracy : '—';
+                        const lvl = trialData.level    !== undefined ? trialData.level    : '—';
+                        document.getElementById('gara-rt-display').textContent  = rt  + ' ms';
+                        document.getElementById('gara-acc-display').textContent = acc + '%';
+                        document.getElementById('gara-lvl-display').textContent = lvl;
+                        document.getElementById('insp-gara-rt').textContent  = rt;
+                        document.getElementById('insp-gara-acc').textContent = acc;
+                        document.getElementById('insp-gara-lvl').textContent = lvl;
+                    }
+                } : null,
+                onGameOver: user ? (result) => {
+                    addScore(user.username, result);
+                    // Final stats update
+                    if (result) {
+                        document.getElementById('gara-acc-display').textContent = (result.accuracy || '—') + '%';
+                        document.getElementById('gara-lvl-display').textContent = result.level || '—';
+                        document.getElementById('insp-gara-acc').textContent = result.accuracy || '—';
+                        document.getElementById('insp-gara-lvl').textContent = result.level    || '—';
+                    }
+                } : null
+            });
+        }
+
+        // Back to playground
+        document.getElementById('back-to-pregame').addEventListener('click', () => {
+            garaWrapper.classList.add('hidden');
+            pregamePanel.classList.remove('hidden');
+            stepLang.classList.remove('hidden');
+            stepAuth.classList.add('hidden');
+            document.getElementById('gara-container').innerHTML = '';
+            setStationStatus('gara-status', false);
+            // Reset live display
+            ['gara-rt-display','gara-acc-display','gara-lvl-display'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.textContent = id.includes('rt') ? '— ms' : id.includes('acc') ? '—%' : '—';
+            });
+            gameInstance = null;
+        });
+
+        // ── Credits modal ────────────────────────────────────────────
+        document.getElementById('open-credits').addEventListener('click', () => {
+            const modal = document.getElementById('credits-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        });
+        document.getElementById('close-credits').addEventListener('click', () => {
+            const modal = document.getElementById('credits-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        });
+        document.getElementById('credits-modal').addEventListener('click', (e) => {
+            if (e.target === e.currentTarget) {
+                e.currentTarget.classList.add('hidden');
+                e.currentTarget.classList.remove('flex');
+            }
+        });
+    });
+    </script>
+
+    <!-- Initialize DBN and CDP demos -->
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const dbnContainer = document.getElementById('dbn-container');
+        if (dbnContainer) new DBNDemo(dbnContainer);
+
+        const cdpContainer = document.getElementById('cdp-container');
+        if (cdpContainer) new CDPDemo(cdpContainer);
+    });
+    </script>
+
+</body>
+</html>

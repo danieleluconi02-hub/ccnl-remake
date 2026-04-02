@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join Us | CCNLab · University of Padova</title>
+    <link rel="icon" type="image/png" href="Assets/Logo.png">
+    <meta name="description" content="Join the Computational Cognitive Neuroscience Lab at the University of Padova. Open positions for postdoctoral researchers, PhD students, and visiting scholars.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-dark':     '#1a1a1a',
+                        'primary-light':    '#FFFFFF',
+                        'accent-red':       '#b20839',
+                        'accent-red-hover': '#8a0022',
+                        'accent-gold':      '#b20839',
+                        'accent-gold-hover':'#8a0022',
+                        'neutral-gray':     '#6B7280',
+                        'light-gray':       '#F3F4F6',
+                        'surface':          '#f8f7f4',
+                        'surface-alt':      '#eeedea',
+                        'surface-border':   '#e2dfda',
+                    },
+                    fontFamily: {
+                        'manrope':   ['Manrope', 'sans-serif'],
+                        'display':   ['"Playfair Display"', 'Georgia', 'serif'],
+                        'mono-tech': ['"JetBrains Mono"', '"Courier New"', 'monospace'],
+                    },
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="font-manrope bg-surface text-primary-dark antialiased">
+
+    <!-- ===== HEADER ===== -->
+    <header id="header" class="fixed top-0 left-0 right-0 z-50 bg-white border-b border-surface-border transition-all duration-300">
+        <div class="inst-hierarchy-bar">
+            <div class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16 flex justify-between items-center">
+                <span>University of Padova &nbsp;·&nbsp; Department of General Psychology &nbsp;·&nbsp; Computational Cognitive Neuroscience Lab</span>
+                <a href="https://www.unipd.it" target="_blank" rel="noopener noreferrer" class="hover:text-accent-red transition-colors hidden sm:block">unipd.it ↗</a>
+            </div>
+        </div>
+        <nav class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16">
+            <div class="flex items-center justify-between h-14 lg:h-16 transition-all duration-300" id="nav-inner">
+                <a href="index.html" class="flex items-center gap-3 group">
+                    <img src="Assets/Logo_and_text.png" alt="CCN Lab Logo" id="header-logo"
+                        class="h-10 lg:h-12 object-contain -ml-2 transition-all duration-300 logo-on-light">
+                </a>
+                <div class="hidden md:flex items-center gap-4 lg:gap-7">
+                    <a href="index.html#about" class="nav-link text-neutral-gray hover:text-primary-dark text-sm font-medium">About</a>
+                    <div class="dropdown-container">
+                        <a href="research.html" class="nav-link text-neutral-gray hover:text-primary-dark text-sm font-medium">Research</a>
+                        <div class="dropdown-menu">
+                            <a href="research.html#research"     class="dropdown-item">Research areas</a>
+                            <a href="research.html#facilities"   class="dropdown-item">Lab facilities</a>
+                            <a href="research.html#publications" class="dropdown-item">Publications</a>
+                            <a href="software.html"              class="dropdown-item">Software &amp; Downloads</a>
+                        </div>
+                    </div>
+                    <a href="people.html"     class="nav-link text-neutral-gray hover:text-primary-dark text-sm font-medium">People</a>
+                    <a href="playground.html" class="nav-link text-neutral-gray hover:text-primary-dark text-sm font-medium">Playground</a>
+                    <a href="news.html"       class="nav-link text-neutral-gray hover:text-primary-dark text-sm font-medium">News</a>
+                    <a href="join-us.html"    class="nav-link text-primary-dark font-semibold text-sm active-page">Join us</a>
+                    <a href="index.html#contact" class="btn-primary px-5 py-2 bg-accent-red text-white text-sm font-semibold hover:bg-accent-red-hover">Contact</a>
+                </div>
+                <button id="mobile-menu-btn" class="md:hidden p-2 text-neutral-gray hover:text-accent-red transition-colors" aria-label="Open menu">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                </button>
+            </div>
+        </nav>
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-surface-border">
+            <div class="px-6 py-4 space-y-1">
+                <a href="index.html#about" class="block text-neutral-gray hover:text-accent-red py-2.5 text-sm border-b border-surface-border">About</a>
+                <a href="research.html"    class="block text-neutral-gray hover:text-accent-red py-2.5 text-sm border-b border-surface-border">Research</a>
+                <a href="people.html"      class="block text-neutral-gray hover:text-accent-red py-2.5 text-sm border-b border-surface-border">People</a>
+                <a href="playground.html"  class="block text-neutral-gray hover:text-accent-red py-2.5 text-sm border-b border-surface-border">Playground</a>
+                <a href="news.html"        class="block text-neutral-gray hover:text-accent-red py-2.5 text-sm border-b border-surface-border">News</a>
+                <a href="join-us.html"     class="block text-accent-red font-semibold py-2.5 text-sm border-b border-surface-border">Join us</a>
+                <a href="index.html#contact" class="block w-fit mt-3 px-5 py-2 bg-accent-red text-white text-sm font-semibold">Contact</a>
+            </div>
+        </div>
+        <div class="h-px bg-accent-red"></div>
+    </header>
+
+    <!-- ===== PAGE HERO ===== -->
+    <section class="pt-[88px] pb-10 bg-white border-b border-surface-border">
+        <div class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16 pt-10">
+            <p class="font-mono-tech text-xs text-accent-red uppercase tracking-widest mb-5 flex items-center gap-2">
+                <span class="w-6 h-px bg-accent-red"></span>
+                Opportunities
+            </p>
+            <div class="max-w-2xl">
+                <h1 class="font-display text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-5">
+                    Join the <span class="italic text-accent-red">Lab</span>
+                </h1>
+                <p class="text-base text-neutral-gray font-light leading-relaxed">
+                    Become part of a dynamic research group at the forefront of computational cognitive neuroscience. We believe in fostering an inclusive and rigorous research environment where curiosity drives discovery.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== OPEN POSITIONS ===== -->
+    <section class="py-12 md:py-16 bg-white section-container">
+        <div class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16">
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
+
+                <!-- Left: Description -->
+                <div>
+                    <p class="font-mono-tech text-xs text-accent-red uppercase tracking-widest mb-6 flex items-center gap-2">
+                        <span class="w-6 h-px bg-accent-red"></span>
+                        Open Positions
+                    </p>
+                    <h2 class="font-display text-3xl md:text-4xl font-bold mb-6 leading-snug">
+                        We are recruiting
+                    </h2>
+                    <p class="text-base text-neutral-gray leading-relaxed mb-5">
+                        The CCNL at the University of Padova is actively recruiting talented and motivated researchers at all career levels. We regularly seek postdoctoral researchers, PhD students, and visiting scholars who share our passion for understanding the computational mechanisms underlying human cognition.
+                    </p>
+                    <p class="text-base text-neutral-gray leading-relaxed mb-8">
+                        Whether your background is in AI, behavioural experiments, neuroimaging, or a combination of approaches, we have opportunities that match your interests and expertise.
+                    </p>
+
+                    <!-- Position index entries -->
+                    <div class="space-y-0">
+                        <div class="research-index-entry">
+                            <div class="flex items-center gap-4">
+                                <span class="research-entry-number">01.</span>
+                                <div>
+                                    <h3 class="font-semibold text-primary-dark">Postdoctoral Researchers</h3>
+                                    <p class="text-xs text-neutral-gray mt-0.5">Experienced researchers leading independent projects and mentoring students</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="research-index-entry">
+                            <div class="flex items-center gap-4">
+                                <span class="research-entry-number">02.</span>
+                                <div>
+                                    <h3 class="font-semibold text-primary-dark">PhD Students</h3>
+                                    <p class="text-xs text-neutral-gray mt-0.5">Graduate students pursuing doctoral research in cognitive neuroscience</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="research-index-entry">
+                            <div class="flex items-center gap-4">
+                                <span class="research-entry-number">03.</span>
+                                <div>
+                                    <h3 class="font-semibold text-primary-dark">Visiting Scholars</h3>
+                                    <p class="text-xs text-neutral-gray mt-0.5">Researchers from other institutions seeking short or long-term collaborations</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: Research Areas -->
+                <div>
+                    <p class="font-mono-tech text-xs text-neutral-gray uppercase tracking-widest mb-6">Research Areas We Recruit For</p>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+
+                        <div class="card-editorial p-5">
+                            <p class="font-mono-tech text-xs text-accent-red uppercase tracking-widest mb-2">Area 01</p>
+                            <h4 class="font-semibold text-sm text-primary-dark mb-1">Computational Modeling &amp; AI</h4>
+                            <p class="text-xs text-neutral-gray">Deep neural networks, generative models, ML applications in cognitive science</p>
+                        </div>
+
+                        <div class="card-editorial p-5">
+                            <p class="font-mono-tech text-xs text-accent-red uppercase tracking-widest mb-2">Area 02</p>
+                            <h4 class="font-semibold text-sm text-primary-dark mb-1">Numerical Cognition</h4>
+                            <p class="text-xs text-neutral-gray">How the brain processes numbers, magnitude, and mathematical concepts</p>
+                        </div>
+
+                        <div class="card-editorial p-5">
+                            <p class="font-mono-tech text-xs text-accent-red uppercase tracking-widest mb-2">Area 03</p>
+                            <h4 class="font-semibold text-sm text-primary-dark mb-1">Reading &amp; Dyslexia</h4>
+                            <p class="text-xs text-neutral-gray">Cognitive and neural mechanisms of reading acquisition and disorders</p>
+                        </div>
+
+                        <div class="card-editorial p-5">
+                            <p class="font-mono-tech text-xs text-accent-red uppercase tracking-widest mb-2">Area 04</p>
+                            <h4 class="font-semibold text-sm text-primary-dark mb-1">Visuospatial Attention</h4>
+                            <p class="text-xs text-neutral-gray">Spatial cognition, visual attention, and awareness in the human brain</p>
+                        </div>
+
+                        <div class="card-editorial p-5">
+                            <p class="font-mono-tech text-xs text-accent-red uppercase tracking-widest mb-2">Area 05</p>
+                            <h4 class="font-semibold text-sm text-primary-dark mb-1">Neuroimaging Methods</h4>
+                            <p class="text-xs text-neutral-gray">fMRI, EEG, fNIRS, and non-invasive brain stimulation</p>
+                        </div>
+
+                        <div class="card-editorial p-5">
+                            <p class="font-mono-tech text-xs text-accent-red uppercase tracking-widest mb-2">Area 06</p>
+                            <h4 class="font-semibold text-sm text-primary-dark mb-1">Clinical Applications</h4>
+                            <p class="text-xs text-neutral-gray">Translating research into clinical tools for learning and neurological disorders</p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== HOW TO APPLY ===== -->
+    <section class="py-12 md:py-16 bg-surface border-y border-surface-border">
+        <div class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16">
+
+            <p class="font-mono-tech text-xs text-accent-red uppercase tracking-widest mb-6 flex items-center gap-2">
+                <span class="w-6 h-px bg-accent-red"></span>
+                Application Procedure
+            </p>
+            <h2 class="font-display text-3xl md:text-4xl font-bold mb-12 leading-snug">How to Apply</h2>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
+
+                <!-- Application materials -->
+                <div>
+                    <h3 class="font-semibold text-lg text-primary-dark mb-6">Required Materials</h3>
+                    <ul class="space-y-4">
+                        <li class="border-b border-surface-border pb-4">
+                            <div class="flex items-start gap-4">
+                                <span class="font-mono-tech text-xs text-accent-red uppercase tracking-widest min-w-[4rem] pt-0.5">CV</span>
+                                <span class="text-sm text-neutral-gray">Your curriculum vitae with research experience and publications</span>
+                            </div>
+                        </li>
+                        <li class="border-b border-surface-border pb-4">
+                            <div class="flex items-start gap-4">
+                                <span class="font-mono-tech text-xs text-accent-red uppercase tracking-widest min-w-[4rem] pt-0.5">Statement</span>
+                                <span class="text-sm text-neutral-gray">A research statement outlining your interests and goals</span>
+                            </div>
+                        </li>
+                        <li class="border-b border-surface-border pb-4">
+                            <div class="flex items-start gap-4">
+                                <span class="font-mono-tech text-xs text-accent-red uppercase tracking-widest min-w-[4rem] pt-0.5">References</span>
+                                <span class="text-sm text-neutral-gray">Names and contact information for 2–3 academic references</span>
+                            </div>
+                        </li>
+                        <li class="pb-4">
+                            <div class="flex items-start gap-4">
+                                <span class="font-mono-tech text-xs text-accent-red uppercase tracking-widest min-w-[4rem] pt-0.5">Samples</span>
+                                <span class="text-sm text-neutral-gray">Representative publications or writing samples (where applicable)</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Application form -->
+                <div class="card-editorial p-8">
+                    <p class="font-mono-tech text-xs text-accent-red uppercase tracking-widest mb-5">Application Form</p>
+                    <form class="space-y-4">
+                        <div>
+                            <label class="block font-mono-tech text-xs uppercase tracking-widest text-neutral-gray mb-1.5">Full Name</label>
+                            <input type="text"
+                                class="w-full bg-surface border border-surface-border px-4 py-2.5 text-sm text-primary-dark placeholder-neutral-gray/40 focus:outline-none focus:border-accent-red transition-colors"
+                                placeholder="Your full name">
+                        </div>
+                        <div>
+                            <label class="block font-mono-tech text-xs uppercase tracking-widest text-neutral-gray mb-1.5">Email</label>
+                            <input type="email"
+                                class="w-full bg-surface border border-surface-border px-4 py-2.5 text-sm text-primary-dark placeholder-neutral-gray/40 focus:outline-none focus:border-accent-red transition-colors"
+                                placeholder="your@email.com">
+                        </div>
+                        <div>
+                            <label class="block font-mono-tech text-xs uppercase tracking-widest text-neutral-gray mb-1.5">Position of Interest</label>
+                            <select class="w-full bg-surface border border-surface-border px-4 py-2.5 text-sm text-primary-dark focus:outline-none focus:border-accent-red transition-colors appearance-none">
+                                <option value="">Select position type</option>
+                                <option>Postdoctoral Researcher</option>
+                                <option>PhD Student</option>
+                                <option>Visiting Scholar</option>
+                                <option>Other</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block font-mono-tech text-xs uppercase tracking-widest text-neutral-gray mb-1.5">Research Interests</label>
+                            <textarea rows="4"
+                                class="w-full bg-surface border border-surface-border px-4 py-2.5 text-sm text-primary-dark placeholder-neutral-gray/40 focus:outline-none focus:border-accent-red transition-colors resize-none"
+                                placeholder="Briefly describe your research interests and why you'd like to join the CCNL..."></textarea>
+                        </div>
+                        <button type="button"
+                            class="btn-primary w-full px-8 py-3.5 bg-accent-red text-white text-sm font-semibold tracking-wide uppercase hover:bg-accent-red-hover transition-all duration-200">
+                            Submit Application
+                        </button>
+                    </form>
+                    <p class="font-mono-tech text-xs text-neutral-gray/60 mt-4 text-center">
+                        Or email directly: <a href="mailto:marco.zorzi@unipd.it" class="text-accent-red hover:underline">marco.zorzi@unipd.it</a>
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="bg-surface-alt py-12 border-t border-surface-border">
+        <div class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16">
+            <div class="grid md:grid-cols-4 gap-8 mb-8">
+                <div class="md:col-span-2">
+                    <img src="Assets/Logo_and_text.png" alt="CCN Lab" class="h-10 mb-4 logo-on-light opacity-70">
+                    <p class="text-neutral-gray text-sm leading-relaxed max-w-sm">
+                        The Computational Cognitive Neuroscience Lab at the University of Padova, exploring the computational mechanisms underlying human cognition since 2000.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="font-mono-tech text-xs text-primary-dark uppercase tracking-widest mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="index.html#about" class="text-neutral-gray hover:text-accent-red transition-colors text-sm">About</a></li>
+                        <li><a href="research.html"    class="text-neutral-gray hover:text-accent-red transition-colors text-sm">Research</a></li>
+                        <li><a href="people.html"      class="text-neutral-gray hover:text-accent-red transition-colors text-sm">People</a></li>
+                        <li><a href="news.html"        class="text-neutral-gray hover:text-accent-red transition-colors text-sm">News</a></li>
+                        <li><a href="join-us.html"     class="text-neutral-gray hover:text-accent-red transition-colors text-sm">Join Us</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-mono-tech text-xs text-primary-dark uppercase tracking-widest mb-4">Affiliations</h4>
+                    <ul class="space-y-2 text-sm text-neutral-gray">
+                        <li><a href="http://www.unipd.it"     class="hover:text-accent-red transition-colors">University of Padova</a></li>
+                        <li><a href="http://dpg.psy.unipd.it" class="hover:text-accent-red transition-colors">Dept. of General Psychology</a></li>
+                        <li><a href="http://pnc.unipd.it/"    class="hover:text-accent-red transition-colors">Padova Neuroscience Center</a></li>
+                        <li><a href="https://hsancamillo.it"  class="hover:text-accent-red transition-colors">San Camillo Research Hospital</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="section-rule mb-6">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-3">
+                <p class="font-mono-tech text-xs text-neutral-gray">© 2000–2026 Computational Cognitive Neuroscience Lab · University of Padova</p>
+                <p class="font-mono-tech text-xs text-neutral-gray/50">Dept. General Psychology · Via Venezia 8 · 35131 Padova, IT</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu    = document.getElementById('mobile-menu');
+        mobileMenuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+        mobileMenu.querySelectorAll('a').forEach(l => l.addEventListener('click', () => mobileMenu.classList.add('hidden')));
+        const header = document.getElementById('header');
+        window.addEventListener('scroll', () => {
+            header.classList.toggle('shadow-md', window.scrollY > 50);
+        });
+    </script>
+</body>
+</html>

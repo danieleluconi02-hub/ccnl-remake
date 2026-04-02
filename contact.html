@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CCNLab | University of Padova</title>
+    <link rel="icon" type="image/png" href="Assets/Logo.png">
+    <meta name="description"
+        content="Contact the Computational Cognitive Neuroscience Lab at the University of Padova.">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-dark':     '#1a1a1a',
+                        'primary-light':    '#FFFFFF',
+                        'accent-red':       '#b20839',
+                        'accent-red-hover': '#8a0022',
+                        'accent-gold':      '#b20839',
+                        'accent-gold-hover':'#8a0022',
+                        'neutral-gray':     '#6B7280',
+                        'light-gray':       '#F3F4F6',
+                        'surface':          '#f8f7f4',
+                        'surface-alt':      '#eeedea',
+                        'surface-border':   '#e2dfda',
+                    },
+                    fontFamily: {
+                        'manrope':   ['Manrope', 'sans-serif'],
+                        'display':   ['"Playfair Display"', 'Georgia', 'serif'],
+                        'mono-tech': ['"JetBrains Mono"', '"Courier New"', 'monospace'],
+                    },
+                }
+            }
+        }
+    </script>
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="font-manrope bg-surface text-primary-dark antialiased">
+
+    <!-- Header / Navigation -->
+    <header id="header" class="fixed top-0 left-0 right-0 z-50 bg-white border-b border-surface-border shadow-sm transition-all duration-300">
+        <div class="inst-hierarchy-bar">
+            <div class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16 flex justify-between items-center">
+                <span>University of Padova &nbsp;·&nbsp; Department of General Psychology &nbsp;·&nbsp; CCN Lab</span>
+                <a href="https://www.unipd.it" target="_blank" rel="noopener noreferrer" class="hover:text-accent-red transition-colors hidden sm:block">unipd.it ↗</a>
+            </div>
+        </div>
+        <nav class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16">
+            <div class="flex items-center justify-between h-16 lg:h-20 transition-all duration-300" id="nav-inner">
+
+                <!-- Logo -->
+                <a href="index.html" class="flex items-center gap-4 group">
+                    <!-- Adjusted logo size with negative margin -->
+                    <img src="Assets/Logo_and_text.png" alt="CCN Lab Logo" id="header-logo"
+                        class="h-10 lg:h-12 object-contain -ml-2 transition-all duration-300 logo-on-light">
+                </a>
+
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex items-center gap-4 lg:gap-8">
+                    <a href="index.html#about"
+                        class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-base font-medium">About</a>
+                    <div class="dropdown-container">
+                        <a href="research.html"
+                            class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-base font-medium">Research</a>
+                        <div class="dropdown-menu">
+                            <a href="research.html#research" class="dropdown-item">Research areas</a>
+                            <a href="research.html#facilities" class="dropdown-item">Lab facilities</a>
+                            <a href="research.html#publications" class="dropdown-item">Publications</a>
+                            <a href="software.html" class="dropdown-item">Software &amp; Downloads</a>
+                        </div>
+                    </div>
+                    <a href="people.html"
+                        class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-base font-medium">People</a>
+                    <a href="playground.html"
+                        class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-base font-medium">Playground</a>
+                    <a href="news.html"
+                        class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-base font-medium">News</a>
+                    <a href="join-us.html"
+                        class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-base font-medium">Join
+                        us</a>
+
+                    <a href="index.html#contact"
+                        class="btn-primary px-5 py-2.5 bg-accent-gold text-white font-semibold rounded-none hover:bg-accent-red-hover transition-all duration-200 hover:shadow-lg hover:shadow-accent-gold/20 text-base">
+                        Contact us
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn"
+                    class="md:hidden p-2 text-neutral-gray hover:text-accent-red transition-colors"
+                    aria-label="Open menu">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-surface-border">
+            <div class="px-6 py-4 space-y-4">
+                <a href="index.html#about"
+                    class="block text-neutral-gray hover:text-accent-red transition-colors py-2">About</a>
+                <a href="research.html"
+                    class="block text-neutral-gray hover:text-accent-red transition-colors py-2">Research</a>
+                <a href="people.html"
+                    class="block text-neutral-gray hover:text-accent-red transition-colors py-2">People</a>
+                <a href="playground.html"
+                    class="block text-neutral-gray hover:text-accent-red transition-colors py-2">Playground</a>
+                <a href="news.html"
+                    class="block text-neutral-gray hover:text-accent-red transition-colors py-2">News</a>
+                <a href="join-us.html"
+                    class="block text-neutral-gray hover:text-accent-red transition-colors py-2">Join us</a>
+
+                <a href="index.html#contact"
+                    class="block w-fit mx-auto text-center px-5 py-2 bg-accent-red text-white font-semibold rounded-none hover:bg-accent-red-hover transition-colors">
+                    Contact us
+                </a>
+            </div>
+        </div>
+
+        <!-- Gold accent line -->
+        <div class="h-px bg-accent-red"></div>
+    </header>
+
+    <!-- Contact Section -->
+    <section id="contact-page" class="pt-32 pb-32 bg-white section-container min-h-screen">
+        <div class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16">
+            <div class="text-center mb-24">
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-primary-dark">Contact Us</h1>
+                <p class="text-neutral-gray text-xl max-w-3xl mx-auto font-light">
+                    Get in touch with the CCN Lab
+                </p>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-16 max-w-6xl mx-auto">
+                <!-- Contact Info -->
+                <div class="space-y-12">
+                    <div>
+                        <h3 class="text-2xl font-bold text-primary-dark mb-6">Visit Us</h3>
+                        <p class="text-neutral-gray text-lg leading-relaxed">
+                            Computational Cognitive Neuroscience Lab<br>
+                            Department of General Psychology<br>
+                            University of Padova<br>
+                            Via Venezia 8<br>
+                            35131 Padova, Italy
+                        </p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-2xl font-bold text-primary-dark mb-6">Connect</h3>
+                        <ul class="space-y-4 text-lg text-neutral-gray">
+                            <li class="flex items-center gap-4">
+                                <span class="text-accent-gold">Email:</span>
+                                <a href="mailto:info@ccnl.psy.unipd.it"
+                                    class="hover:text-accent-red transition-colors">info@ccnl.psy.unipd.it</a>
+                            </li>
+                            <li class="flex items-center gap-4">
+                                <span class="text-accent-gold">GitHub:</span>
+                                <a href="https://github.com/CCNL-UniPD" target="_blank"
+                                    class="hover:text-accent-red transition-colors">CCNL-UniPD</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Contact Form -->
+                <div
+                    class="bg-white border border-surface-border p-8 md:p-12 rounded-none hover:shadow-2xl hover:border-accent-red transition-all duration-300">
+                    <form class="space-y-6">
+                        <div>
+                            <label for="name" class="block text-sm font-medium text-neutral-gray mb-2">Name</label>
+                            <input type="text" id="name"
+                                class="w-full bg-surface border border-surface-border rounded-none px-4 py-3 text-primary-dark focus:outline-none focus:border-accent-red transition-colors"
+                                placeholder="Your name">
+                        </div>
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-neutral-gray mb-2">Email</label>
+                            <input type="email" id="email"
+                                class="w-full bg-surface border border-surface-border rounded-none px-4 py-3 text-primary-dark focus:outline-none focus:border-accent-red transition-colors"
+                                placeholder="your@email.com">
+                        </div>
+                        <div>
+                            <label for="message"
+                                class="block text-sm font-medium text-neutral-gray mb-2">Message</label>
+                            <textarea id="message" rows="4"
+                                class="w-full bg-surface border border-surface-border rounded-none px-4 py-3 text-primary-dark focus:outline-none focus:border-accent-red transition-colors"
+                                placeholder="How can we help?"></textarea>
+                        </div>
+                        <button type="button"
+                            class="w-full btn-primary px-8 py-4 bg-accent-gold text-white font-bold rounded-none hover:bg-accent-red-hover transition-all duration-200">
+                            Send message
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Key Contacts -->
+            <div class="mt-24 max-w-6xl mx-auto">
+                <h2 class="text-2xl font-bold text-primary-dark mb-2">Key Contacts</h2>
+                <p class="text-neutral-gray mb-10">Reach out directly to our team members.</p>
+                <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+
+                    <!-- Marco Zorzi -->
+                    <div class="bg-white border border-surface-border p-6 rounded-none hover:shadow-2xl hover:border-accent-red transition-all duration-300 group flex items-start gap-5">
+                        <div class="w-16 h-16 rounded-full flex-shrink-0 overflow-hidden bg-neutral-gray/20 flex items-center justify-center relative">
+                            <img src="Assets/People/marco-zorzi.jpg" alt="Marco Zorzi"
+                                class="absolute inset-0 w-full h-full object-cover object-top"
+                                onerror="this.style.display='none'">
+                            <span class="text-lg font-bold text-neutral-gray/40">MZ</span>
+                        </div>
+                        <div class="min-w-0">
+                            <h4 class="font-bold text-primary-dark leading-tight">Marco Zorzi</h4>
+                            <p class="text-accent-gold text-xs font-medium mb-1">Lab Director · Full Professor</p>
+                            <a href="profile.html?id=marco-zorzi"
+                                class="text-xs text-neutral-gray opacity-0 group-hover:opacity-100 transition-opacity hover:text-accent-red">
+                                View profile →
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Alberto Testolin -->
+                    <div class="bg-white border border-surface-border p-6 rounded-none hover:shadow-2xl hover:border-accent-red transition-all duration-300 group flex items-start gap-5">
+                        <div class="w-16 h-16 rounded-full flex-shrink-0 overflow-hidden bg-neutral-gray/20 flex items-center justify-center relative">
+                            <img src="Assets/People/alberto-testolin.png" alt="Alberto Testolin"
+                                class="absolute inset-0 w-full h-full object-cover object-top"
+                                onerror="this.style.display='none'">
+                            <span class="text-lg font-bold text-neutral-gray/40">AT</span>
+                        </div>
+                        <div class="min-w-0">
+                            <h4 class="font-bold text-primary-dark leading-tight">Alberto Testolin</h4>
+                            <p class="text-accent-gold text-xs font-medium mb-1">Associate Professor</p>
+                            <a href="profile.html?id=alberto-testolin"
+                                class="text-xs text-neutral-gray opacity-0 group-hover:opacity-100 transition-opacity hover:text-accent-red">
+                                View profile →
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Mario Bonato -->
+                    <div class="bg-white border border-surface-border p-6 rounded-none hover:shadow-2xl hover:border-accent-red transition-all duration-300 group flex items-start gap-5">
+                        <div class="w-16 h-16 rounded-full flex-shrink-0 overflow-hidden bg-neutral-gray/20 flex items-center justify-center relative">
+                            <img src="Assets/People/mario-bonato.jpg" alt="Mario Bonato"
+                                class="absolute inset-0 w-full h-full object-cover object-top"
+                                onerror="this.style.display='none'">
+                            <span class="text-lg font-bold text-neutral-gray/40">MB</span>
+                        </div>
+                        <div class="min-w-0">
+                            <h4 class="font-bold text-primary-dark leading-tight">Mario Bonato</h4>
+                            <p class="text-accent-gold text-xs font-medium mb-1">Associate Professor</p>
+                            <a href="profile.html?id=mario-bonato"
+                                class="text-xs text-neutral-gray opacity-0 group-hover:opacity-100 transition-opacity hover:text-accent-red">
+                                View profile →
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Mariagrazia Ranzini -->
+                    <div class="bg-white border border-surface-border p-6 rounded-none hover:shadow-2xl hover:border-accent-red transition-all duration-300 group flex items-start gap-5">
+                        <div class="w-16 h-16 rounded-full flex-shrink-0 overflow-hidden bg-neutral-gray/20 flex items-center justify-center relative">
+                            <img src="Assets/People/mariagrazia-ranzini.jpg" alt="Mariagrazia Ranzini"
+                                class="absolute inset-0 w-full h-full object-cover object-top"
+                                onerror="this.style.display='none'">
+                            <span class="text-lg font-bold text-neutral-gray/40">MR</span>
+                        </div>
+                        <div class="min-w-0">
+                            <h4 class="font-bold text-primary-dark leading-tight">Mariagrazia Ranzini</h4>
+                            <p class="text-accent-gold text-xs font-medium mb-1">Assistant Professor</p>
+                            <a href="profile.html?id=mariagrazia-ranzini"
+                                class="text-xs text-neutral-gray opacity-0 group-hover:opacity-100 transition-opacity hover:text-accent-red">
+                                View profile →
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Simone Cutini -->
+                    <div class="bg-white border border-surface-border p-6 rounded-none hover:shadow-2xl hover:border-accent-red transition-all duration-300 group flex items-start gap-5">
+                        <div class="w-16 h-16 rounded-full flex-shrink-0 overflow-hidden bg-neutral-gray/20 flex items-center justify-center relative">
+                            <img src="Assets/People/simone-cutini.jpg" alt="Simone Cutini"
+                                class="absolute inset-0 w-full h-full object-cover object-top"
+                                onerror="this.style.display='none'">
+                            <span class="text-lg font-bold text-neutral-gray/40">SC</span>
+                        </div>
+                        <div class="min-w-0">
+                            <h4 class="font-bold text-primary-dark leading-tight">Simone Cutini</h4>
+                            <p class="text-accent-gold text-xs font-medium mb-1">Researcher</p>
+                            <a href="profile.html?id=simone-cutini"
+                                class="text-xs text-neutral-gray opacity-0 group-hover:opacity-100 transition-opacity hover:text-accent-red">
+                                View profile →
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Ivilin Stoianov -->
+                    <div class="bg-white border border-surface-border p-6 rounded-none hover:shadow-2xl hover:border-accent-red transition-all duration-300 group flex items-start gap-5">
+                        <div class="w-16 h-16 rounded-full flex-shrink-0 overflow-hidden bg-neutral-gray/20 flex items-center justify-center relative">
+                            <img src="Assets/People/ivilin-stoianov.jpg" alt="Ivilin Stoianov"
+                                class="absolute inset-0 w-full h-full object-cover object-top"
+                                onerror="this.style.display='none'">
+                            <span class="text-lg font-bold text-neutral-gray/40">IS</span>
+                        </div>
+                        <div class="min-w-0">
+                            <h4 class="font-bold text-primary-dark leading-tight">Ivilin Stoianov</h4>
+                            <p class="text-accent-gold text-xs font-medium mb-1">Researcher</p>
+                            <a href="profile.html?id=ivilin-stoianov"
+                                class="text-xs text-neutral-gray opacity-0 group-hover:opacity-100 transition-opacity hover:text-accent-red">
+                                View profile →
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-10 text-center">
+                    <a href="people.html"
+                        class="inline-flex items-center gap-2 text-sm text-accent-gold border border-accent-gold/30 hover:border-accent-gold px-6 py-2.5 rounded-full transition-colors">
+                        View full team →
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact" class="bg-surface-alt py-12 border-t border-surface-border">
+        <div class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16">
+            <div class="grid md:grid-cols-4 gap-8 md:gap-12 mb-8 md:mb-12">
+
+                <!-- Column 1: Logo & Description -->
+                <div class="md:col-span-2">
+                    <img src="Assets/Logo_and_text.png" alt="CCN Lab" class="h-14 mb-4 logo-on-light">
+                    <p class="text-neutral-gray text-sm leading-relaxed max-w-md">
+                        The Computational Cognitive Neuroscience Lab at the University of Padova, exploring the
+                        computational mechanisms underlying human cognition since 2000.
+                    </p>
+                </div>
+
+                <!-- Column 2: Quick Links -->
+                <div>
+                    <h4 class="font-semibold mb-4 text-primary-dark">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="index.html#about"
+                                class="text-neutral-gray hover:text-accent-red transition-colors text-sm">About</a>
+                        </li>
+                        <li><a href="research.html"
+                                class="text-neutral-gray hover:text-accent-red transition-colors text-sm">Research</a>
+                        </li>
+                        <li><a href="people.html"
+                                class="text-neutral-gray hover:text-accent-red transition-colors text-sm">People</a>
+                        </li>
+
+                    </ul>
+                </div>
+
+                <!-- Column 3: Contact & Affiliations -->
+                <div>
+                    <h4 class="font-semibold mb-4 text-primary-dark">Affiliations</h4>
+                    <ul class="space-y-2 text-sm text-neutral-gray">
+                        <li><a href="http://www.unipd.it" class="hover:text-accent-red transition-colors">University of
+                                Padova</a></li>
+                        <li><a href="http://dpg.psy.unipd.it" class="hover:text-accent-red transition-colors">Dept. of
+                                General Psychology</a></li>
+                        <li><a href="http://pnc.unipd.it/" class="hover:text-accent-red transition-colors">Padova
+                                Neuroscience Center</a></li>
+                        <li><a href="https://hsancamillo.it" class="hover:text-accent-red transition-colors">San
+                                Camillo Research Hospital</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Bottom Bar -->
+            <div
+                class="pt-8 border-t border-neutral-gray/20 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-neutral-gray text-xs">
+                    © 2000–2026 Computational Cognitive Neuroscience Lab. All rights reserved.
+                </p>
+
+            </div>
+        </div>
+    </footer>
+
+    <!-- Mobile Menu Script -->
+    <script>
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu when clicking a link
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // Header scroll effect
+        const header = document.getElementById('header');
+        const navInner = document.getElementById('nav-inner');
+        const headerLogo = document.getElementById('header-logo');
+        const originalLogo = "Assets/Logo_and_text.png";
+        const scrolledLogo = "Assets/Logo.png";
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('shadow-md');
+                navInner.classList.remove('h-16', 'lg:h-20');
+                navInner.classList.add('h-12', 'lg:h-14');
+                headerLogo.src = scrolledLogo;
+                headerLogo.classList.remove('h-10', 'lg:h-12');
+                headerLogo.classList.add('h-8', 'lg:h-10');
+            } else {
+                header.classList.remove('shadow-md');
+                navInner.classList.add('h-16', 'lg:h-20');
+                navInner.classList.remove('h-12', 'lg:h-14');
+                headerLogo.src = originalLogo;
+                headerLogo.classList.add('h-10', 'lg:h-12');
+                headerLogo.classList.remove('h-8', 'lg:h-10');
+            }
+        });
+    </script>
+</body>
+
+</html>

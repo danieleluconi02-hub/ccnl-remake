@@ -1,0 +1,3 @@
+DataLine, LastName,FirstName,Age,ClassLevel,Sex,LastSession,gamesWon,gamesPlayedlev1char1,lev1char2,lev1char3,lev1char4,lev1char5,lev1char6lev2char1,lev2char2,lev2char3,lev2char4,lev2char5,lev2char6lev1rew1,lev1rew2,lev1rew3,lev1rew4,lev1rew5,lev1rew6,lev1rew7lev2rew1,lev2rew2,lev2rew3,lev2rew4,lev2rew5,lev2rew6,lev2rew7, startLevel
+0,Demo,LivelloBase,5,1,Mas,6,0,0,true,false,false,false,false,false,true,false,false,false,false,false,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1
+1,Demo,LivelloAvanzato,8,3,Fem,2,0,0,true,false,false,false,false,false,true,false,false,false,false,false,0,0,0,0,0,0,0,0,0,0,0,0,0,0,7

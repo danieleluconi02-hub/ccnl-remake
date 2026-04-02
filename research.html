@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Research | CCNLab · University of Padova</title>
+    <link rel="icon" type="image/png" href="Assets/Logo.png">
+    <meta name="description" content="Research areas of the Computational Cognitive Neuroscience Lab at the University of Padova.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-dark':     '#1a1a1a',
+                        'primary-light':    '#FFFFFF',
+                        'accent-red':       '#b20839',
+                        'accent-red-hover': '#8a0022',
+                        'accent-gold':      '#b20839',
+                        'accent-gold-hover':'#8a0022',
+                        'neutral-gray':     '#6B7280',
+                        'light-gray':       '#F3F4F6',
+                        'surface':          '#f8f7f4',
+                        'surface-alt':      '#eeedea',
+                        'surface-border':   '#e2dfda',
+                    },
+                    fontFamily: {
+                        'manrope':   ['Manrope', 'sans-serif'],
+                        'display':   ['"Playfair Display"', 'Georgia', 'serif'],
+                        'mono-tech': ['"JetBrains Mono"', '"Courier New"', 'monospace'],
+                    },
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="font-manrope bg-surface text-primary-dark antialiased">
+
+    <!-- ===== HEADER ===== -->
+    <header id="header" class="fixed top-0 left-0 right-0 z-50 bg-white border-b border-surface-border transition-all duration-300">
+        <div class="inst-hierarchy-bar">
+            <div class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16 flex justify-between items-center">
+                <span>University of Padova &nbsp;·&nbsp; Department of General Psychology &nbsp;·&nbsp; Computational Cognitive Neuroscience Lab</span>
+                <a href="https://www.unipd.it" target="_blank" rel="noopener noreferrer" class="hover:text-accent-red transition-colors hidden sm:block">unipd.it ↗</a>
+            </div>
+        </div>
+        <nav class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16">
+            <div class="flex items-center justify-between h-14 lg:h-16 transition-all duration-300" id="nav-inner">
+                <a href="index.html" class="flex items-center gap-3 group">
+                    <img src="Assets/Logo_and_text.png" alt="CCN Lab Logo" id="header-logo"
+                        class="h-10 lg:h-12 object-contain -ml-2 transition-all duration-300 logo-on-light">
+                </a>
+                <div class="hidden md:flex items-center gap-4 lg:gap-7">
+                    <a href="index.html#about" class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-sm font-medium">About</a>
+                    <div class="dropdown-container">
+                        <a href="research.html" class="nav-link text-primary-dark font-semibold transition-colors duration-200 text-sm active-page">Research</a>
+                        <div class="dropdown-menu">
+                            <a href="#research"     class="dropdown-item">Research areas</a>
+                            <a href="#facilities"   class="dropdown-item">Lab facilities</a>
+                            <a href="#publications" class="dropdown-item">Publications</a>
+                            <a href="software.html" class="dropdown-item">Software &amp; Downloads</a>
+                        </div>
+                    </div>
+                    <a href="people.html"     class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-sm font-medium">People</a>
+                    <a href="playground.html" class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-sm font-medium">Playground</a>
+                    <a href="news.html"       class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-sm font-medium">News</a>
+                    <a href="join-us.html"    class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-sm font-medium">Join us</a>
+                    <a href="index.html#contact" class="btn-primary px-5 py-2 bg-accent-red text-white text-sm font-semibold hover:bg-accent-red-hover transition-all duration-200">Contact</a>
+                </div>
+                <button id="mobile-menu-btn" class="md:hidden p-2 text-neutral-gray hover:text-accent-red transition-colors" aria-label="Open menu">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                </button>
+            </div>
+        </nav>
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-surface-border">
+            <div class="px-6 py-4 space-y-1">
+                <a href="index.html#about" class="block text-neutral-gray hover:text-accent-red py-2.5 text-sm border-b border-surface-border">About</a>
+                <a href="research.html"    class="block text-accent-red font-semibold py-2.5 text-sm border-b border-surface-border">Research</a>
+                <a href="people.html"      class="block text-neutral-gray hover:text-accent-red py-2.5 text-sm border-b border-surface-border">People</a>
+                <a href="playground.html"  class="block text-neutral-gray hover:text-accent-red py-2.5 text-sm border-b border-surface-border">Playground</a>
+                <a href="news.html"        class="block text-neutral-gray hover:text-accent-red py-2.5 text-sm border-b border-surface-border">News</a>
+                <a href="join-us.html"     class="block text-neutral-gray hover:text-accent-red py-2.5 text-sm border-b border-surface-border">Join us</a>
+                <a href="index.html#contact" class="block w-fit mt-3 px-5 py-2 bg-accent-red text-white text-sm font-semibold">Contact</a>
+            </div>
+        </div>
+        <div class="h-px bg-accent-red"></div>
+    </header>
+
+    <!-- ===== PAGE HERO ===== -->
+    <section class="pt-[88px] pb-10 bg-white border-b border-surface-border">
+        <div class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16 pt-10">
+            <p class="font-mono-tech text-xs text-accent-red uppercase tracking-widest mb-5 flex items-center gap-2">
+                <span class="w-6 h-px bg-accent-red"></span>
+                Research Programme
+            </p>
+            <div class="max-w-3xl">
+                <h1 class="font-display text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6">
+                    Research<br>
+                    <span class="italic text-accent-red">Areas &amp; Methods</span>
+                </h1>
+                <p class="text-base md:text-lg text-neutral-gray leading-relaxed font-light max-w-2xl">
+                    Our lab focuses on modelling human perception and cognition through biologically-inspired generative models and deep neural networks—a foundation established during the pioneering <a href="https://erc.europa.eu/projects-statistics/science-stories/self-learning-ai-emulates-human-brain" target="_blank" rel="noopener noreferrer" class="text-accent-red hover:underline">ERC GENMOD project</a>. This computational framework integrates with empirical research using psychophysical and neuroimaging methods.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== RESEARCH INDEX ===== -->
+    <section id="research" class="py-12 md:py-16 bg-white section-container">
+        <div class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16">
+
+            <div class="grid grid-cols-1 lg:grid-cols-[1fr_52%] gap-12 lg:gap-20 items-start">
+
+                <!-- Index Column -->
+                <div>
+                    <p class="font-mono-tech text-xs text-neutral-gray uppercase tracking-widest mb-6">
+                        Index of Research Areas — Vol. 2000–2026
+                    </p>
+
+                    <!-- Entry 01: AI & Foundation Models -->
+                    <a href="research-ai.html" class="research-index-entry block group">
+                        <div class="flex items-start gap-4">
+                            <span class="research-entry-number">01.</span>
+                            <div class="flex-1">
+                                <h3 class="font-display text-xl font-semibold text-primary-dark group-hover:text-accent-red transition-colors leading-snug mb-2">
+                                    Artificial Intelligence &amp; Foundation Models
+                                </h3>
+                                <p class="text-neutral-gray text-sm leading-relaxed mb-3">
+                                    Emergent cognitive abilities in large-scale multimodal AI models. Comparative analysis of representational structures in neural networks and biological cognition.
+                                </p>
+                                <p class="research-entry-keywords">deep learning · llms · cognitive emergence · neural representations</p>
+                            </div>
+                            <svg class="w-4 h-4 text-neutral-gray/30 group-hover:text-accent-red transition-colors mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                            </svg>
+                        </div>
+                    </a>
+
+                    <!-- Entry 02: Numerical Cognition -->
+                    <a href="research-numerical-cognition.html" class="research-index-entry block group">
+                        <div class="flex items-start gap-4">
+                            <span class="research-entry-number">02.</span>
+                            <div class="flex-1">
+                                <h3 class="font-display text-xl font-semibold text-primary-dark group-hover:text-accent-red transition-colors leading-snug mb-2">
+                                    Numerical Cognition &amp; Dyscalculia
+                                </h3>
+                                <p class="text-neutral-gray text-sm leading-relaxed mb-3">
+                                    How the brain encodes, processes, and manipulates numerical information—from infant number sense to adult skilled arithmetic. Computational and empirical investigations of developmental dyscalculia.
+                                </p>
+                                <p class="research-entry-keywords">number sense · magnitude · dyscalculia · development · cariparo grant</p>
+                            </div>
+                            <svg class="w-4 h-4 text-neutral-gray/30 group-hover:text-accent-red transition-colors mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                            </svg>
+                        </div>
+                    </a>
+
+                    <!-- Entry 03: Space & Attention -->
+                    <a href="research-space-attention.html" class="research-index-entry block group">
+                        <div class="flex items-start gap-4">
+                            <span class="research-entry-number">03.</span>
+                            <div class="flex-1">
+                                <h3 class="font-display text-xl font-semibold text-primary-dark group-hover:text-accent-red transition-colors leading-snug mb-2">
+                                    Visuospatial Attention &amp; Awareness
+                                </h3>
+                                <p class="text-neutral-gray text-sm leading-relaxed mb-3">
+                                    Neural and computational mechanisms of visuospatial attention. Studies of spatial neglect, hemispatial biases, and top-down attentional control using neuroimaging and brain stimulation.
+                                </p>
+                                <p class="research-entry-keywords">attention · neglect · fmri · tms · spatial cognition</p>
+                            </div>
+                            <svg class="w-4 h-4 text-neutral-gray/30 group-hover:text-accent-red transition-colors mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                            </svg>
+                        </div>
+                    </a>
+
+                    <!-- Entry 04: Language & Reading -->
+                    <a href="research-language.html" class="research-index-entry block group">
+                        <div class="flex items-start gap-4">
+                            <span class="research-entry-number">04.</span>
+                            <div class="flex-1">
+                                <h3 class="font-display text-xl font-semibold text-primary-dark group-hover:text-accent-red transition-colors leading-snug mb-2">
+                                    Language Processing &amp; Dyslexia
+                                </h3>
+                                <p class="text-neutral-gray text-sm leading-relaxed mb-3">
+                                    Connectionist and deep learning models of reading aloud (CDP+). Attentional basis of developmental dyslexia. Eye-tracking and neuroimaging studies of normal and impaired reading.
+                                </p>
+                                <p class="research-entry-keywords">cdp model · reading · dyslexia · eye-tracking · phonology</p>
+                            </div>
+                            <svg class="w-4 h-4 text-neutral-gray/30 group-hover:text-accent-red transition-colors mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                            </svg>
+                        </div>
+                    </a>
+
+                    <!-- Entry 05: Deep Learning Models -->
+                    <a href="research-deeplearning.html" class="research-index-entry block group">
+                        <div class="flex items-start gap-4">
+                            <span class="research-entry-number">05.</span>
+                            <div class="flex-1">
+                                <h3 class="font-display text-xl font-semibold text-primary-dark group-hover:text-accent-red transition-colors leading-snug mb-2">
+                                    Generative Deep Learning
+                                </h3>
+                                <p class="text-neutral-gray text-sm leading-relaxed mb-3">
+                                    Biologically-inspired generative models (DBNs, VAEs, diffusion models) as theories of perception and cognition. ERC-funded GENMOD programme—self-learning AI that emulates the human brain.
+                                </p>
+                                <p class="research-entry-keywords">erc genmod · dbn · vae · unsupervised learning · perception</p>
+                            </div>
+                            <svg class="w-4 h-4 text-neutral-gray/30 group-hover:text-accent-red transition-colors mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                            </svg>
+                        </div>
+                    </a>
+
+                    <!-- Entry 06: Clinical Neuroscience -->
+                    <a href="research-clinical.html" class="research-index-entry block group">
+                        <div class="flex items-start gap-4">
+                            <span class="research-entry-number">06.</span>
+                            <div class="flex-1">
+                                <h3 class="font-display text-xl font-semibold text-primary-dark group-hover:text-accent-red transition-colors leading-snug mb-2">
+                                    Clinical Neuroscience &amp; Rehabilitation
+                                </h3>
+                                <p class="text-neutral-gray text-sm leading-relaxed mb-3">
+                                    Translating computational models into clinical tools for patients with neurological and neurodevelopmental disorders. Work at San Camillo Research Hospital (Venice-Lido).
+                                </p>
+                                <p class="research-entry-keywords">stroke · rehabilitation · irccs san camillo · neuroplasticity</p>
+                            </div>
+                            <svg class="w-4 h-4 text-neutral-gray/30 group-hover:text-accent-red transition-colors mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                            </svg>
+                        </div>
+                    </a>
+
+                    <!-- Entry 07: CDP Model -->
+                    <a href="research-cdp.html" class="research-index-entry block group">
+                        <div class="flex items-start gap-4">
+                            <span class="research-entry-number">07.</span>
+                            <div class="flex-1">
+                                <h3 class="font-display text-xl font-semibold text-primary-dark group-hover:text-accent-red transition-colors leading-snug mb-2">
+                                    Connectionist Dual-Process Model
+                                </h3>
+                                <p class="text-neutral-gray text-sm leading-relaxed mb-3">
+                                    The CDP+ model of reading aloud: dual-route connectionist architecture simulating both sublexical (phonological) and lexical processing pathways in skilled and beginning readers.
+                                </p>
+                                <p class="research-entry-keywords">cdp+ · dual route · phonology · lexical · reading aloud</p>
+                            </div>
+                            <svg class="w-4 h-4 text-neutral-gray/30 group-hover:text-accent-red transition-colors mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                            </svg>
+                        </div>
+                    </a>
+
+                    <!-- GitHub link -->
+                    <div class="mt-8 pt-4">
+                        <a href="https://github.com/CCNL-UniPD" target="_blank" rel="noopener noreferrer"
+                            class="cta-link text-sm font-semibold tracking-wide uppercase text-neutral-gray border-neutral-gray/40 hover:text-accent-red hover:border-accent-red">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                            </svg>
+                            View source code on GitHub
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Summary / Context Panel -->
+                <div class="lg:sticky lg:top-24 space-y-6">
+                    <!-- Programme overview card -->
+                    <div class="card-editorial p-8">
+                        <p class="font-mono-tech text-xs text-accent-red uppercase tracking-widest mb-4">Research Programme</p>
+                        <h3 class="font-display text-2xl font-bold mb-4 leading-snug">Computation as a Theory of Mind</h3>
+                        <p class="text-neutral-gray text-sm leading-relaxed mb-4">
+                            The lab treats computational modelling not as a tool, but as a scientific language for expressing theories of cognition. Every model makes quantitative, falsifiable predictions.
+                        </p>
+                        <p class="text-neutral-gray text-sm leading-relaxed">
+                            This computational framework integrates with empirical research—psychophysics, eye-tracking, fMRI, and EEG—to triangulate on mechanisms across levels of analysis.
+                        </p>
+                    </div>
+
+                    <!-- Grant highlights -->
+                    <div class="card-editorial p-6">
+                        <p class="font-mono-tech text-xs text-accent-red uppercase tracking-widest mb-4">Funding Highlights</p>
+                        <ul class="space-y-4">
+                            <li class="border-l-2 border-accent-red pl-4">
+                                <p class="font-semibold text-sm text-primary-dark">ERC Advanced Grant — GENMOD</p>
+                                <p class="font-mono-tech text-xs text-neutral-gray mt-1">Self-learning AI emulating human brain · European Research Council</p>
+                            </li>
+                            <li class="border-l-2 border-surface-border pl-4">
+                                <p class="font-semibold text-sm text-primary-dark">Cariparo Foundation</p>
+                                <p class="font-mono-tech text-xs text-neutral-gray mt-1">Numerical cognition &amp; dyscalculia programme</p>
+                            </li>
+                            <li class="border-l-2 border-surface-border pl-4">
+                                <p class="font-semibold text-sm text-primary-dark">PRIN / MUR Grants</p>
+                                <p class="font-mono-tech text-xs text-neutral-gray mt-1">Italian Ministry of Education &amp; Research</p>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Stats -->
+                    <div class="grid grid-cols-3 gap-3">
+                        <div class="card-editorial p-4 text-center">
+                            <p class="font-display text-2xl font-bold text-accent-red">200+</p>
+                            <p class="metric-label mt-1">Papers</p>
+                        </div>
+                        <div class="card-editorial p-4 text-center">
+                            <p class="font-display text-2xl font-bold text-accent-red">25+</p>
+                            <p class="metric-label mt-1">Years</p>
+                        </div>
+                        <div class="card-editorial p-4 text-center">
+                            <p class="font-display text-2xl font-bold text-accent-red">7</p>
+                            <p class="metric-label mt-1">Areas</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== LAB FACILITIES ===== -->
+    <section id="facilities" class="py-12 md:py-16 bg-surface border-y border-surface-border section-container">
+        <div class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16">
+            <p class="font-mono-tech text-xs text-accent-red uppercase tracking-widest mb-6 flex items-center gap-2">
+                <span class="w-6 h-px bg-accent-red"></span>
+                Infrastructure
+            </p>
+            <h2 class="font-display text-3xl md:text-4xl font-bold mb-10 leading-snug">Lab Facilities</h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Eye-tracking -->
+                <div class="card-editorial group overflow-hidden">
+                    <div class="relative h-44 overflow-hidden bg-surface-alt">
+                        <img src="https://images.unsplash.com/photo-1576086213369-97a306d36557?auto=format&fit=crop&w=800&q=80"
+                            alt="Eye-tracking apparatus"
+                            class="w-full h-full object-cover people-photo group-hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <div class="p-7">
+                        <p class="font-mono-tech text-xs text-accent-red uppercase tracking-widest mb-2">Facility 01</p>
+                        <h3 class="font-display text-xl font-bold mb-3">Eye-Tracking Laboratory</h3>
+                        <p class="text-neutral-gray text-sm leading-relaxed">
+                            High-speed eye-tracking systems for studying visual attention, reading processes, and cognitive effort in real time.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Computational -->
+                <div class="card-editorial group overflow-hidden">
+                    <div class="relative h-44 overflow-hidden bg-surface-alt">
+                        <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=800&q=80"
+                            alt="GPU computing cluster"
+                            class="w-full h-full object-cover people-photo group-hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <div class="p-7">
+                        <p class="font-mono-tech text-xs text-accent-red uppercase tracking-widest mb-2">Facility 02</p>
+                        <h3 class="font-display text-xl font-bold mb-3">Computational Resources</h3>
+                        <p class="text-neutral-gray text-sm leading-relaxed">
+                            High-performance GPU clusters and dedicated servers for deep neural network training and large-scale data analysis.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Neuroimaging -->
+                <div class="card-editorial group overflow-hidden">
+                    <div class="relative h-44 overflow-hidden bg-surface-alt">
+                        <img src="https://images.unsplash.com/photo-1530497610245-94d3c16cda28?auto=format&fit=crop&w=800&q=80"
+                            alt="fMRI scanner"
+                            class="w-full h-full object-cover people-photo group-hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <div class="p-7">
+                        <p class="font-mono-tech text-xs text-accent-red uppercase tracking-widest mb-2">Facility 03</p>
+                        <h3 class="font-display text-xl font-bold mb-3">Neuroimaging Suite</h3>
+                        <p class="text-neutral-gray text-sm leading-relaxed">
+                            Access to clinical and research-grade fMRI, high-density EEG, fNIRS, and non-invasive brain stimulation facilities.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== PUBLICATIONS ===== -->
+    <section id="publications" class="py-12 md:py-20 bg-white section-container">
+        <div class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16">
+            <p class="font-mono-tech text-xs text-accent-red uppercase tracking-widest mb-6 flex items-center gap-2">
+                <span class="w-6 h-px bg-accent-red"></span>
+                Output
+            </p>
+            <h2 class="font-display text-3xl md:text-4xl font-bold mb-10 leading-snug">Publications &amp; Output</h2>
+
+            <!-- Featured research highlights -->
+            <div class="space-y-0 mb-12">
+                <div class="research-index-entry">
+                    <div class="flex items-start gap-4">
+                        <span class="research-entry-number">I.</span>
+                        <div class="flex-1">
+                            <h4 class="font-semibold text-primary-dark mb-1">Deep Learning &amp; Generative Models of Cognition</h4>
+                            <p class="text-neutral-gray text-sm leading-relaxed">Pioneering work on biologically-inspired generative models and deep neural networks to model human perception and cognition, notably through the ERC GENMOD project.</p>
+                            <p class="research-entry-keywords mt-2">erc advanced grant · genmod · self-organising representations</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="research-index-entry">
+                    <div class="flex items-start gap-4">
+                        <span class="research-entry-number">II.</span>
+                        <div class="flex-1">
+                            <h4 class="font-semibold text-primary-dark mb-1">Numerical Cognition &amp; Developmental Dyscalculia</h4>
+                            <p class="text-neutral-gray text-sm leading-relaxed">Computational and empirical investigations into how the brain processes numbers, from development to skilled performance, including studies on children with learning disabilities.</p>
+                            <p class="research-entry-keywords mt-2">cariparo · jerome lejeune · ministry of health</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="research-index-entry">
+                    <div class="flex items-start gap-4">
+                        <span class="research-entry-number">III.</span>
+                        <div class="flex-1">
+                            <h4 class="font-semibold text-primary-dark mb-1">Reading, Dyslexia &amp; Language Processing</h4>
+                            <p class="text-neutral-gray text-sm leading-relaxed">Connectionist models of reading aloud, investigations into the attentional basis of dyslexia, combining psychophysics with neuroimaging methods (Perry, Ziegler &amp; Zorzi, 2007; 2010).</p>
+                            <p class="research-entry-keywords mt-2">cdp+ · phonology · eye movements · fnirs</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Publication links -->
+            <div class="flex flex-wrap gap-4">
+                <a href="https://ccnl.psy.unipd.it/publications" target="_blank" rel="noopener noreferrer"
+                    class="btn-primary inline-flex items-center gap-2 px-7 py-3 bg-accent-red text-white text-sm font-semibold hover:bg-accent-red-hover transition-all">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+                    Full Publication List
+                </a>
+                <a href="https://scholar.google.com/citations?user=MgF3uIMAAAAJ" target="_blank" rel="noopener noreferrer"
+                    class="btn-primary inline-flex items-center gap-2 px-7 py-3 bg-surface text-primary-dark border border-surface-border text-sm font-semibold hover:border-accent-red transition-all">
+                    Google Scholar Profile
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="bg-surface-alt py-12 border-t border-surface-border">
+        <div class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16">
+            <div class="grid md:grid-cols-4 gap-8 mb-8">
+                <div class="md:col-span-2">
+                    <img src="Assets/Logo_and_text.png" alt="CCN Lab" class="h-10 mb-4 logo-on-light opacity-70">
+                    <p class="text-neutral-gray text-sm leading-relaxed max-w-sm">
+                        The Computational Cognitive Neuroscience Lab at the University of Padova, exploring the computational mechanisms underlying human cognition since 2000.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="font-mono-tech text-xs text-primary-dark uppercase tracking-widest mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="index.html#about" class="text-neutral-gray hover:text-accent-red transition-colors text-sm">About</a></li>
+                        <li><a href="research.html"    class="text-neutral-gray hover:text-accent-red transition-colors text-sm">Research</a></li>
+                        <li><a href="people.html"      class="text-neutral-gray hover:text-accent-red transition-colors text-sm">People</a></li>
+                        <li><a href="news.html"        class="text-neutral-gray hover:text-accent-red transition-colors text-sm">News</a></li>
+                        <li><a href="software.html"    class="text-neutral-gray hover:text-accent-red transition-colors text-sm">Software</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-mono-tech text-xs text-primary-dark uppercase tracking-widest mb-4">Affiliations</h4>
+                    <ul class="space-y-2 text-sm text-neutral-gray">
+                        <li><a href="http://www.unipd.it"     class="hover:text-accent-red transition-colors">University of Padova</a></li>
+                        <li><a href="http://dpg.psy.unipd.it" class="hover:text-accent-red transition-colors">Dept. of General Psychology</a></li>
+                        <li><a href="http://pnc.unipd.it/"    class="hover:text-accent-red transition-colors">Padova Neuroscience Center</a></li>
+                        <li><a href="https://hsancamillo.it"  class="hover:text-accent-red transition-colors">San Camillo Research Hospital</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="section-rule mb-6">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-3">
+                <p class="font-mono-tech text-xs text-neutral-gray">© 2000–2026 Computational Cognitive Neuroscience Lab · University of Padova</p>
+                <p class="font-mono-tech text-xs text-neutral-gray/50">Dept. General Psychology · Via Venezia 8 · 35131 Padova, IT</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu    = document.getElementById('mobile-menu');
+        mobileMenuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+        mobileMenu.querySelectorAll('a').forEach(l => l.addEventListener('click', () => mobileMenu.classList.add('hidden')));
+
+        const header   = document.getElementById('header');
+        const navInner = document.getElementById('nav-inner');
+        const logo     = document.getElementById('header-logo');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('shadow-md');
+            } else {
+                header.classList.remove('shadow-md');
+            }
+        });
+    </script>
+</body>
+</html>

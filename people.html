@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>People | CCNLab · University of Padova</title>
+    <link rel="icon" type="image/png" href="Assets/Logo.png">
+    <meta name="description" content="Meet the researchers of the Computational Cognitive Neuroscience Lab at the University of Padova.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-dark':     '#1a1a1a',
+                        'primary-light':    '#FFFFFF',
+                        'accent-red':       '#b20839',
+                        'accent-red-hover': '#8a0022',
+                        'accent-gold':      '#b20839',
+                        'accent-gold-hover':'#8a0022',
+                        'neutral-gray':     '#6B7280',
+                        'light-gray':       '#F3F4F6',
+                        'surface':          '#f8f7f4',
+                        'surface-alt':      '#eeedea',
+                        'surface-border':   '#e2dfda',
+                    },
+                    fontFamily: {
+                        'manrope':   ['Manrope', 'sans-serif'],
+                        'display':   ['"Playfair Display"', 'Georgia', 'serif'],
+                        'mono-tech': ['"JetBrains Mono"', '"Courier New"', 'monospace'],
+                    },
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Square avatar for people cards */
+        .avatar-square {
+            width: 80px;
+            height: 80px;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+        .avatar-square img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: top;
+        }
+        .avatar-square-lg {
+            width: 120px;
+            height: 120px;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+        .avatar-square-lg img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: top;
+        }
+    </style>
+</head>
+
+<body class="font-manrope bg-surface text-primary-dark antialiased">
+
+    <!-- ===== HEADER ===== -->
+    <header id="header" class="fixed top-0 left-0 right-0 z-50 bg-white border-b border-surface-border transition-all duration-300">
+        <div class="inst-hierarchy-bar">
+            <div class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16 flex justify-between items-center">
+                <span>University of Padova &nbsp;·&nbsp; Department of General Psychology &nbsp;·&nbsp; Computational Cognitive Neuroscience Lab</span>
+                <a href="https://www.unipd.it" target="_blank" rel="noopener noreferrer" class="hover:text-accent-red transition-colors hidden sm:block">unipd.it ↗</a>
+            </div>
+        </div>
+        <nav class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16">
+            <div class="flex items-center justify-between h-14 lg:h-16 transition-all duration-300" id="nav-inner">
+                <a href="index.html" class="flex items-center gap-3 group">
+                    <img src="Assets/Logo_and_text.png" alt="CCN Lab Logo" id="header-logo"
+                        class="h-10 lg:h-12 object-contain -ml-2 transition-all duration-300 logo-on-light">
+                </a>
+                <div class="hidden md:flex items-center gap-4 lg:gap-7">
+                    <a href="index.html#about" class="nav-link text-neutral-gray hover:text-primary-dark text-sm font-medium">About</a>
+                    <div class="dropdown-container">
+                        <a href="research.html" class="nav-link text-neutral-gray hover:text-primary-dark text-sm font-medium">Research</a>
+                        <div class="dropdown-menu">
+                            <a href="research.html#research"     class="dropdown-item">Research areas</a>
+                            <a href="research.html#facilities"   class="dropdown-item">Lab facilities</a>
+                            <a href="research.html#publications" class="dropdown-item">Publications</a>
+                            <a href="software.html"              class="dropdown-item">Software &amp; Downloads</a>
+                        </div>
+                    </div>
+                    <a href="people.html"     class="nav-link text-primary-dark font-semibold text-sm active-page">People</a>
+                    <a href="playground.html" class="nav-link text-neutral-gray hover:text-primary-dark text-sm font-medium">Playground</a>
+                    <a href="news.html"       class="nav-link text-neutral-gray hover:text-primary-dark text-sm font-medium">News</a>
+                    <a href="join-us.html"    class="nav-link text-neutral-gray hover:text-primary-dark text-sm font-medium">Join us</a>
+                    <a href="index.html#contact" class="btn-primary px-5 py-2 bg-accent-red text-white text-sm font-semibold hover:bg-accent-red-hover">Contact</a>
+                </div>
+                <button id="mobile-menu-btn" class="md:hidden p-2 text-neutral-gray hover:text-accent-red transition-colors" aria-label="Open menu">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                </button>
+            </div>
+        </nav>
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-surface-border">
+            <div class="px-6 py-4 space-y-1">
+                <a href="index.html#about" class="block text-neutral-gray hover:text-accent-red py-2.5 text-sm border-b border-surface-border">About</a>
+                <a href="research.html"    class="block text-neutral-gray hover:text-accent-red py-2.5 text-sm border-b border-surface-border">Research</a>
+                <a href="people.html"      class="block text-accent-red font-semibold py-2.5 text-sm border-b border-surface-border">People</a>
+                <a href="playground.html"  class="block text-neutral-gray hover:text-accent-red py-2.5 text-sm border-b border-surface-border">Playground</a>
+                <a href="news.html"        class="block text-neutral-gray hover:text-accent-red py-2.5 text-sm border-b border-surface-border">News</a>
+                <a href="join-us.html"     class="block text-neutral-gray hover:text-accent-red py-2.5 text-sm border-b border-surface-border">Join us</a>
+                <a href="index.html#contact" class="block w-fit mt-3 px-5 py-2 bg-accent-red text-white text-sm font-semibold">Contact</a>
+            </div>
+        </div>
+        <div class="h-px bg-accent-red"></div>
+    </header>
+
+    <!-- ===== PAGE HERO ===== -->
+    <section class="pt-[88px] pb-10 bg-white border-b border-surface-border">
+        <div class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16 pt-10">
+            <p class="font-mono-tech text-xs text-accent-red uppercase tracking-widest mb-5 flex items-center gap-2">
+                <span class="w-6 h-px bg-accent-red"></span>
+                Research Personnel
+            </p>
+            <div class="max-w-2xl">
+                <h1 class="font-display text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-5">
+                    Our <span class="italic text-accent-red">Team</span>
+                </h1>
+                <p class="text-base text-neutral-gray font-light leading-relaxed">
+                    Meet the researchers behind the Computational Cognitive Neuroscience Lab.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== PEOPLE DIRECTORY ===== -->
+    <section id="people" class="py-12 md:py-16 bg-white section-container">
+        <div class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16">
+
+            <!-- ── Lab Director ── -->
+            <div class="mb-14">
+                <div class="flex items-center gap-4 mb-6">
+                    <p class="font-mono-tech text-xs text-accent-red uppercase tracking-widest">Principal Investigator</p>
+                    <div class="flex-1 h-px bg-accent-red"></div>
+                </div>
+
+                <div class="card-editorial p-8 flex flex-col md:flex-row items-start gap-8 group max-w-3xl">
+                    <div class="avatar-square-lg people-photo">
+                        <img src="Assets/People/marco-zorzi.jpg" alt="Marco Zorzi"
+                            onerror="this.parentElement.style.background='#eeedea'">
+                    </div>
+                    <div>
+                        <h3 class="font-display text-2xl font-bold text-primary-dark mb-1">Marco Zorzi</h3>
+                        <p class="people-rank-label text-accent-red mb-3">Full Professor · Principal Investigator</p>
+                        <p class="text-sm text-neutral-gray leading-relaxed mb-3">
+                            Full Professor of Artificial Intelligence and Cognitive Psychology at the University of Padova and Senior Researcher at IRCCS San Camillo Neurorehabilitation Hospital. Founded the CCNL in 2001.
+                        </p>
+                        <p class="font-mono-tech text-xs text-neutral-gray/70 mb-4">Computational modeling · Deep learning · Numerical cognition · Reading &amp; dyslexia · Neuroimaging</p>
+                        <div class="flex gap-5">
+                            <a href="profile.html?id=marco-zorzi" class="cta-link cta-link-red text-xs uppercase tracking-wide">Profile</a>
+                            <a href="mailto:marco.zorzi@unipd.it" class="cta-link text-xs uppercase tracking-wide text-neutral-gray border-neutral-gray/30 hover:text-accent-red hover:border-accent-red">Email</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── Faculty ── -->
+            <div class="mb-14">
+                <div class="flex items-center gap-4 mb-6">
+                    <p class="font-mono-tech text-xs text-neutral-gray uppercase tracking-widest">Faculty</p>
+                    <div class="flex-1 h-px bg-surface-border"></div>
+                </div>
+
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+
+                    <!-- Alberto Testolin -->
+                    <div class="card-editorial p-6 group flex gap-5 items-start">
+                        <div class="avatar-square people-photo">
+                            <img src="Assets/People/alberto-testolin.png" alt="Alberto Testolin"
+                                onerror="this.parentElement.style.background='#eeedea'">
+                        </div>
+                        <div class="min-w-0">
+                            <h3 class="font-semibold text-primary-dark text-base mb-0.5">Alberto Testolin</h3>
+                            <p class="people-rank-label text-accent-red mb-2">Associate Professor</p>
+                            <p class="text-xs text-neutral-gray leading-relaxed mb-2">
+                                AI, cognitive science, and computational neuroscience. Deep learning, LLMs, statistical-symbolic integration.
+                            </p>
+                            <div class="flex gap-3">
+                                <a href="profile.html?id=alberto-testolin" class="text-xs text-accent-red opacity-0 group-hover:opacity-100 transition-opacity hover:underline">Profile</a>
+                                <a href="mailto:alberto.testolin@unipd.it" class="text-xs text-neutral-gray opacity-0 group-hover:opacity-100 transition-opacity hover:text-accent-red">Email</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Mario Bonato -->
+                    <div class="card-editorial p-6 group flex gap-5 items-start">
+                        <div class="avatar-square people-photo">
+                            <img src="Assets/People/mario-bonato.jpg" alt="Mario Bonato"
+                                onerror="this.parentElement.style.background='#eeedea'">
+                        </div>
+                        <div class="min-w-0">
+                            <h3 class="font-semibold text-primary-dark text-base mb-0.5">Mario Bonato</h3>
+                            <p class="people-rank-label text-accent-red mb-2">Associate Professor</p>
+                            <p class="text-xs text-neutral-gray leading-relaxed mb-2">
+                                Visuospatial attention and numerical cognition in healthy and impaired cognitive architectures.
+                            </p>
+                            <div class="flex gap-3">
+                                <a href="profile.html?id=mario-bonato" class="text-xs text-accent-red opacity-0 group-hover:opacity-100 transition-opacity hover:underline">Profile</a>
+                                <a href="mailto:mario.bonato@unipd.it" class="text-xs text-neutral-gray opacity-0 group-hover:opacity-100 transition-opacity hover:text-accent-red">Email</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Mariagrazia Ranzini -->
+                    <div class="card-editorial p-6 group flex gap-5 items-start">
+                        <div class="avatar-square people-photo">
+                            <img src="Assets/People/mariagrazia-ranzini.jpg" alt="Mariagrazia Ranzini"
+                                onerror="this.parentElement.style.background='#eeedea'">
+                        </div>
+                        <div class="min-w-0">
+                            <h3 class="font-semibold text-primary-dark text-base mb-0.5">Mariagrazia Ranzini</h3>
+                            <p class="people-rank-label text-accent-red mb-2">Assistant Professor</p>
+                            <p class="text-xs text-neutral-gray leading-relaxed mb-2">
+                                Experimental psychologist with expertise in cognitive neurosciences and numerical cognition.
+                            </p>
+                            <div class="flex gap-3">
+                                <a href="profile.html?id=mariagrazia-ranzini" class="text-xs text-accent-red opacity-0 group-hover:opacity-100 transition-opacity hover:underline">Profile</a>
+                                <a href="mailto:mariagrazia.ranzini@unipd.it" class="text-xs text-neutral-gray opacity-0 group-hover:opacity-100 transition-opacity hover:text-accent-red">Email</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Simone Cutini -->
+                    <div class="card-editorial p-6 group flex gap-5 items-start">
+                        <div class="avatar-square people-photo">
+                            <img src="Assets/People/simone-cutini.jpg" alt="Simone Cutini"
+                                onerror="this.parentElement.style.background='#eeedea'">
+                        </div>
+                        <div class="min-w-0">
+                            <h3 class="font-semibold text-primary-dark text-base mb-0.5">Simone Cutini</h3>
+                            <p class="people-rank-label text-accent-red mb-2">Researcher</p>
+                            <p class="text-xs text-neutral-gray leading-relaxed mb-2">
+                                fNIRS methodology applied to cognitive neuroscience research.
+                            </p>
+                            <div class="flex gap-3">
+                                <a href="profile.html?id=simone-cutini" class="text-xs text-accent-red opacity-0 group-hover:opacity-100 transition-opacity hover:underline">Profile</a>
+                                <a href="mailto:simone.cutini@unipd.it" class="text-xs text-neutral-gray opacity-0 group-hover:opacity-100 transition-opacity hover:text-accent-red">Email</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Carlo Umiltà -->
+                    <div class="card-editorial p-6 group flex gap-5 items-start">
+                        <div class="avatar-square people-photo">
+                            <img src="Assets/People/carlo-umilta.jpg" alt="Carlo Umiltà"
+                                onerror="this.parentElement.style.background='#eeedea'">
+                        </div>
+                        <div class="min-w-0">
+                            <h3 class="font-semibold text-primary-dark text-base mb-0.5">Carlo Umiltà</h3>
+                            <p class="people-rank-label text-neutral-gray mb-2">Professor Emeritus</p>
+                            <p class="text-xs text-neutral-gray leading-relaxed mb-2">
+                                Pioneering contributions to cognitive psychology, attention, and computational cognition.
+                            </p>
+                            <div class="flex gap-3">
+                                <a href="profile.html?id=carlo-umilta" class="text-xs text-accent-red opacity-0 group-hover:opacity-100 transition-opacity hover:underline">Profile</a>
+                                <a href="mailto:carlo.umilta@unipd.it" class="text-xs text-neutral-gray opacity-0 group-hover:opacity-100 transition-opacity hover:text-accent-red">Email</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Ivilin Stoianov -->
+                    <div class="card-editorial p-6 group flex gap-5 items-start">
+                        <div class="avatar-square people-photo">
+                            <img src="Assets/People/ivilin-stoianov.jpg" alt="Ivilin Stoianov"
+                                onerror="this.parentElement.style.background='#eeedea'">
+                        </div>
+                        <div class="min-w-0">
+                            <h3 class="font-semibold text-primary-dark text-base mb-0.5">Ivilin Stoianov</h3>
+                            <p class="people-rank-label text-accent-red mb-2">Researcher</p>
+                            <p class="text-xs text-neutral-gray leading-relaxed mb-2">
+                                Computational modelling of cognition, probabilistic graphical models, neural network approaches.
+                            </p>
+                            <div class="flex gap-3">
+                                <a href="profile.html?id=ivilin-stoianov" class="text-xs text-accent-red opacity-0 group-hover:opacity-100 transition-opacity hover:underline">Profile</a>
+                                <a href="mailto:ivilin.stoianov@gmail.com" class="text-xs text-neutral-gray opacity-0 group-hover:opacity-100 transition-opacity hover:text-accent-red">Email</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- ── Post-Doctoral Researchers ── -->
+            <div class="mb-14">
+                <div class="flex items-center gap-4 mb-6">
+                    <p class="font-mono-tech text-xs text-neutral-gray uppercase tracking-widest">Post-Doctoral Researchers</p>
+                    <div class="flex-1 h-px bg-surface-border"></div>
+                </div>
+
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+
+                    <div class="card-editorial p-5 group">
+                        <div class="avatar-square people-photo mb-4">
+                            <img src="Assets/People/mariagrazia-dibono.jpeg" alt="Maria Grazia Di Bono"
+                                onerror="this.parentElement.style.background='#eeedea'">
+                        </div>
+                        <h3 class="font-semibold text-primary-dark text-sm mb-0.5">Maria Grazia Di Bono</h3>
+                        <p class="people-rank-label text-accent-red mb-2">Post-Doc</p>
+                        <p class="text-xs text-neutral-gray leading-relaxed mb-3">Ph.D. in Psychology/Cognitive Science (Padova), M.Sc. in Computer Science (Pisa).</p>
+                        <div class="flex gap-3">
+                            <a href="profile.html?id=maria-grazia-di-bono" class="text-xs text-accent-red opacity-0 group-hover:opacity-100 transition-opacity hover:underline">Profile</a>
+                        </div>
+                    </div>
+
+                    <div class="card-editorial p-5 group">
+                        <div class="avatar-square people-photo mb-4">
+                            <img src="Assets/People/gisella-decarli.png" alt="Gisella Decarli"
+                                onerror="this.parentElement.style.background='#eeedea'">
+                        </div>
+                        <h3 class="font-semibold text-primary-dark text-sm mb-0.5">Gisella Decarli</h3>
+                        <p class="people-rank-label text-accent-red mb-2">Post-Doc</p>
+                        <p class="text-xs text-neutral-gray leading-relaxed mb-3">Mathematical cognition in typical and atypical development, developmental dyscalculia.</p>
+                        <div class="flex gap-3">
+                            <a href="profile.html?id=gisella-decarli" class="text-xs text-accent-red opacity-0 group-hover:opacity-100 transition-opacity hover:underline">Profile</a>
+                            <a href="mailto:gisella.decarli@unipd.it" class="text-xs text-neutral-gray opacity-0 group-hover:opacity-100 transition-opacity hover:text-accent-red">Email</a>
+                        </div>
+                    </div>
+
+                    <div class="card-editorial p-5 group">
+                        <div class="avatar-square people-photo mb-4">
+                            <img src="Assets/People/francesco-sella.jpg" alt="Francesco Sella"
+                                onerror="this.parentElement.style.background='#eeedea'">
+                        </div>
+                        <h3 class="font-semibold text-primary-dark text-sm mb-0.5">Francesco Sella</h3>
+                        <p class="people-rank-label text-neutral-gray mb-2">Affiliate Researcher</p>
+                        <p class="text-xs text-neutral-gray leading-relaxed mb-3">Numerical cognition research spanning developmental and experimental approaches.</p>
+                        <div class="flex gap-3">
+                            <a href="profile.html?id=francesco-sella" class="text-xs text-accent-red opacity-0 group-hover:opacity-100 transition-opacity hover:underline">Profile</a>
+                        </div>
+                    </div>
+
+                    <div class="card-editorial p-5 group">
+                        <div class="avatar-square people-photo mb-4">
+                            <img src="Assets/People/serena-dolfi.png" alt="Serena Dolfi"
+                                onerror="this.parentElement.style.background='#eeedea'">
+                        </div>
+                        <h3 class="font-semibold text-primary-dark text-sm mb-0.5">Serena Dolfi</h3>
+                        <p class="people-rank-label text-accent-red mb-2">Post-Doc</p>
+                        <p class="text-xs text-neutral-gray leading-relaxed mb-3">Research in cognitive neuroscience and computational approaches to cognition.</p>
+                        <div class="flex gap-3">
+                            <a href="profile.html?id=serena-dolfi" class="text-xs text-accent-red opacity-0 group-hover:opacity-100 transition-opacity hover:underline">Profile</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- ── PhD Students ── -->
+            <div class="mb-8">
+                <div class="flex items-center gap-4 mb-6">
+                    <p class="font-mono-tech text-xs text-neutral-gray uppercase tracking-widest">Doctoral Researchers</p>
+                    <div class="flex-1 h-px bg-surface-border"></div>
+                </div>
+
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+
+                    <div class="card-editorial p-5 group">
+                        <div class="avatar-square people-photo mb-4">
+                            <img src="Assets/People/wanlu-fu.png" alt="Wanlu Fu"
+                                onerror="this.parentElement.style.background='#eeedea'">
+                        </div>
+                        <h3 class="font-semibold text-primary-dark text-sm mb-0.5">Wanlu Fu</h3>
+                        <p class="people-rank-label text-neutral-gray mb-2">PhD Student</p>
+                        <p class="text-xs text-neutral-gray leading-relaxed mb-3">Visual attentional deficits in developmental dyslexia at behavioral and neural levels.</p>
+                        <div class="flex gap-3">
+                            <a href="profile.html?id=wanlu-fu" class="text-xs text-accent-red opacity-0 group-hover:opacity-100 transition-opacity hover:underline">Profile</a>
+                            <a href="mailto:wanlu.fu@unipd.it" class="text-xs text-neutral-gray opacity-0 group-hover:opacity-100 transition-opacity hover:text-accent-red">Email</a>
+                        </div>
+                    </div>
+
+                    <div class="card-editorial p-5 group">
+                        <div class="avatar-square people-photo mb-4">
+                            <img src="Assets/People/kuinan-hou.png" alt="Kuinan Hou"
+                                onerror="this.parentElement.style.background='#eeedea'">
+                        </div>
+                        <h3 class="font-semibold text-primary-dark text-sm mb-0.5">Kuinan Hou</h3>
+                        <p class="people-rank-label text-neutral-gray mb-2">PhD Student</p>
+                        <p class="text-xs text-neutral-gray leading-relaxed mb-3">Computational modelling, generative AI, and the interplay between cognitive neuroscience and AI.</p>
+                        <div class="flex gap-3">
+                            <a href="profile.html?id=kuinan-hou" class="text-xs text-accent-red opacity-0 group-hover:opacity-100 transition-opacity hover:underline">Profile</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Join Us CTA -->
+            <div class="pt-8 border-t border-surface-border">
+                <p class="font-mono-tech text-xs text-neutral-gray uppercase tracking-widest mb-3">Join the Team</p>
+                <p class="text-sm text-neutral-gray mb-4">We are recruiting postdoctoral researchers, PhD students, and visiting scholars.</p>
+                <a href="join-us.html" class="cta-link cta-link-red text-sm font-semibold tracking-wide uppercase">
+                    Open positions
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                    </svg>
+                </a>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="bg-surface-alt py-12 border-t border-surface-border">
+        <div class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16">
+            <div class="grid md:grid-cols-4 gap-8 mb-8">
+                <div class="md:col-span-2">
+                    <img src="Assets/Logo_and_text.png" alt="CCN Lab" class="h-10 mb-4 logo-on-light opacity-70">
+                    <p class="text-neutral-gray text-sm leading-relaxed max-w-sm">
+                        The Computational Cognitive Neuroscience Lab at the University of Padova, exploring the computational mechanisms underlying human cognition since 2000.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="font-mono-tech text-xs text-primary-dark uppercase tracking-widest mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="index.html#about" class="text-neutral-gray hover:text-accent-red transition-colors text-sm">About</a></li>
+                        <li><a href="research.html"    class="text-neutral-gray hover:text-accent-red transition-colors text-sm">Research</a></li>
+                        <li><a href="people.html"      class="text-neutral-gray hover:text-accent-red transition-colors text-sm">People</a></li>
+                        <li><a href="news.html"        class="text-neutral-gray hover:text-accent-red transition-colors text-sm">News</a></li>
+                        <li><a href="join-us.html"     class="text-neutral-gray hover:text-accent-red transition-colors text-sm">Join Us</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-mono-tech text-xs text-primary-dark uppercase tracking-widest mb-4">Affiliations</h4>
+                    <ul class="space-y-2 text-sm text-neutral-gray">
+                        <li><a href="http://www.unipd.it"     class="hover:text-accent-red transition-colors">University of Padova</a></li>
+                        <li><a href="http://dpg.psy.unipd.it" class="hover:text-accent-red transition-colors">Dept. of General Psychology</a></li>
+                        <li><a href="http://pnc.unipd.it/"    class="hover:text-accent-red transition-colors">Padova Neuroscience Center</a></li>
+                        <li><a href="https://hsancamillo.it"  class="hover:text-accent-red transition-colors">San Camillo Research Hospital</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="section-rule mb-6">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-3">
+                <p class="font-mono-tech text-xs text-neutral-gray">© 2000–2026 Computational Cognitive Neuroscience Lab · University of Padova</p>
+                <p class="font-mono-tech text-xs text-neutral-gray/50">Dept. General Psychology · Via Venezia 8 · 35131 Padova, IT</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu    = document.getElementById('mobile-menu');
+        mobileMenuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+        mobileMenu.querySelectorAll('a').forEach(l => l.addEventListener('click', () => mobileMenu.classList.add('hidden')));
+        const header = document.getElementById('header');
+        window.addEventListener('scroll', () => {
+            header.classList.toggle('shadow-md', window.scrollY > 50);
+        });
+    </script>
+</body>
+</html>

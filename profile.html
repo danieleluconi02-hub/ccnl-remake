@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile | CCNLab</title>
+    <link rel="icon" type="image/png" href="Assets/Logo.png">
+    <meta name="description" content="Researcher profile — Computational Cognitive Neuroscience Lab, University of Padova.">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-dark':     '#1a1a1a',
+                        'primary-light':    '#FFFFFF',
+                        'accent-red':       '#b20839',
+                        'accent-red-hover': '#8a0022',
+                        'accent-gold':      '#b20839',
+                        'accent-gold-hover':'#8a0022',
+                        'neutral-gray':     '#6B7280',
+                        'light-gray':       '#F3F4F6',
+                        'surface':          '#f8f7f4',
+                        'surface-alt':      '#eeedea',
+                        'surface-border':   '#e2dfda',
+                    },
+                    fontFamily: {
+                        'manrope':   ['Manrope', 'sans-serif'],
+                        'display':   ['"Playfair Display"', 'Georgia', 'serif'],
+                        'mono-tech': ['"JetBrains Mono"', '"Courier New"', 'monospace'],
+                    },
+                }
+            }
+        }
+    </script>
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="font-manrope bg-surface text-primary-dark antialiased">
+
+    <!-- Header / Navigation -->
+    <header id="header" class="fixed top-0 left-0 right-0 z-50 bg-white border-b border-surface-border shadow-sm transition-all duration-300">
+        <div class="inst-hierarchy-bar">
+            <div class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16 flex justify-between items-center">
+                <span>University of Padova &nbsp;·&nbsp; Department of General Psychology &nbsp;·&nbsp; CCN Lab</span>
+                <a href="https://www.unipd.it" target="_blank" rel="noopener noreferrer" class="hover:text-accent-red transition-colors hidden sm:block">unipd.it ↗</a>
+            </div>
+        </div>
+        <nav class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16">
+            <div class="flex items-center justify-between h-16 lg:h-20 transition-all duration-300" id="nav-inner">
+
+                <!-- Logo -->
+                <a href="index.html" class="flex items-center gap-4 group">
+                    <img src="Assets/Logo_and_text.png" alt="CCN Lab Logo" id="header-logo"
+                        class="h-10 lg:h-12 object-contain -ml-2 transition-all duration-300 logo-on-light">
+                </a>
+
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex items-center gap-4 lg:gap-8">
+                    <a href="index.html#about"
+                        class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-base font-medium">About</a>
+                    <div class="dropdown-container">
+                        <a href="research.html"
+                            class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-base font-medium">Research</a>
+                        <div class="dropdown-menu">
+                            <a href="research.html#research" class="dropdown-item">Research areas</a>
+                            <a href="research.html#facilities" class="dropdown-item">Lab facilities</a>
+                            <a href="research.html#publications" class="dropdown-item">Publications</a>
+                            <a href="software.html" class="dropdown-item">Software &amp; Downloads</a>
+                        </div>
+                    </div>
+                    <a href="people.html"
+                        class="nav-link text-accent-red font-semibold transition-colors duration-200 text-base">People</a>
+                    <a href="playground.html"
+                        class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-base font-medium">Playground</a>
+                    <a href="news.html"
+                        class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-base font-medium">News</a>
+                    <a href="join-us.html"
+                        class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-base font-medium">Join
+                        us</a>
+                    <a href="index.html#contact"
+                        class="btn-primary px-5 py-2.5 bg-accent-gold text-white font-semibold rounded-none hover:bg-accent-red-hover transition-all duration-200 hover:shadow-lg hover:shadow-accent-gold/20 text-base">
+                        Contact us
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn"
+                    class="md:hidden p-2 text-neutral-gray hover:text-accent-red transition-colors"
+                    aria-label="Open menu">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-surface-border">
+            <div class="px-6 py-4 space-y-4">
+                <a href="index.html#about"
+                    class="block text-neutral-gray hover:text-accent-red transition-colors py-2">About</a>
+                <a href="research.html"
+                    class="block text-neutral-gray hover:text-accent-red transition-colors py-2">Research</a>
+                <a href="people.html" class="block text-accent-red font-semibold transition-colors py-2">People</a>
+                <a href="playground.html"
+                    class="block text-neutral-gray hover:text-accent-red transition-colors py-2">Playground</a>
+                <a href="news.html"
+                    class="block text-neutral-gray hover:text-accent-red transition-colors py-2">News</a>
+                <a href="join-us.html"
+                    class="block text-neutral-gray hover:text-accent-red transition-colors py-2">Join us</a>
+                <a href="index.html#contact"
+                    class="block w-fit mx-auto text-center px-5 py-2 bg-accent-red text-white font-semibold rounded-none hover:bg-accent-red-hover transition-colors">
+                    Contact us
+                </a>
+            </div>
+        </div>
+
+        <!-- Gold accent line -->
+        <div class="h-px bg-accent-red"></div>
+    </header>
+
+    <!-- Profile Section -->
+    <section class="pt-32 pb-32 bg-white section-container min-h-screen">
+        <div class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16">
+
+            <!-- Back link -->
+            <a href="people.html"
+                class="inline-flex items-center gap-2 text-neutral-gray hover:text-accent-red transition-colors text-sm mb-12">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                </svg>
+                Back to People
+            </a>
+
+            <!-- Profile Hero -->
+            <div id="profile-hero" class="flex flex-col md:flex-row items-center md:items-start gap-10 mb-20 max-w-5xl">
+                <!-- Photo -->
+                <div id="profile-avatar-wrap"
+                    class="w-44 h-44 md:w-56 md:h-56 overflow-hidden bg-neutral-gray/10 flex-shrink-0 flex items-center justify-center relative border border-surface-border">
+                    <img id="profile-photo" src="" alt=""
+                        class="absolute inset-0 w-full h-full object-cover object-top hidden">
+                    <span id="profile-initials" class="text-6xl font-bold text-neutral-gray/40"></span>
+                </div>
+
+                <!-- Identity -->
+                <div class="flex-1 text-center md:text-left">
+                    <p id="profile-role" class="text-accent-gold text-sm font-semibold uppercase tracking-widest mb-2"></p>
+                    <h1 id="profile-name" class="text-4xl md:text-5xl font-bold text-primary-dark mb-3"></h1>
+                    <p id="profile-title" class="text-neutral-gray text-xl mb-6 font-light"></p>
+                    <div id="profile-links" class="flex flex-wrap gap-3 justify-center md:justify-start"></div>
+                </div>
+            </div>
+
+            <!-- Profile Body -->
+            <div class="grid lg:grid-cols-3 gap-12 max-w-5xl">
+
+                <!-- Bio -->
+                <div class="lg:col-span-2">
+                    <h2 class="text-2xl font-bold text-primary-dark mb-6 border-b border-neutral-gray/20 pb-4">About</h2>
+                    <p id="profile-bio" class="text-neutral-gray text-lg leading-relaxed"></p>
+                </div>
+
+                <!-- Research Areas -->
+                <div>
+                    <h2 class="text-2xl font-bold text-primary-dark mb-6 border-b border-neutral-gray/20 pb-4">Research Areas</h2>
+                    <ul id="profile-research" class="space-y-2"></ul>
+                </div>
+            </div>
+
+            <!-- Contact Section -->
+            <div id="profile-contact" class="mt-16 max-w-5xl">
+                <h2 class="text-2xl font-bold text-primary-dark mb-8 border-b border-neutral-gray/20 pb-4">Contact</h2>
+                <div class="grid sm:grid-cols-2 gap-8">
+                    <div>
+                        <h3 class="text-sm font-semibold text-neutral-gray uppercase tracking-widest mb-4">Direct Contact</h3>
+                        <ul class="space-y-3 text-sm">
+                            <li id="profile-email-item" class="hidden">
+                                <span class="text-neutral-gray/60">Email</span><br>
+                                <a id="profile-email" href="#" class="text-accent-gold hover:underline break-all"></a>
+                            </li>
+                            <li id="profile-phone-item" class="hidden">
+                                <span class="text-neutral-gray/60">Phone</span><br>
+                                <a id="profile-phone" href="tel:" class="text-accent-gold hover:underline"></a>
+                            </li>
+                            <li id="profile-office-item" class="hidden">
+                                <span class="text-neutral-gray/60">Office</span><br>
+                                <span id="profile-office" class="text-primary-dark"></span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div id="profile-contact-links-wrap">
+                        <h3 class="text-sm font-semibold text-neutral-gray uppercase tracking-widest mb-4">Online Profiles</h3>
+                        <ul id="profile-contact-links" class="space-y-2"></ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Not Found State (hidden by default) -->
+            <div id="profile-not-found" class="hidden text-center py-24">
+                <p class="text-neutral-gray text-2xl mb-6">Profile not found.</p>
+                <a href="people.html" class="text-accent-gold hover:underline">← Back to People</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact" class="bg-surface-alt py-12 border-t border-surface-border">
+        <div class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16">
+            <div class="grid md:grid-cols-4 gap-8 md:gap-12 mb-8 md:mb-12">
+                <div class="md:col-span-2">
+                    <img src="Assets/Logo_and_text.png" alt="CCN Lab" class="h-14 mb-4 -ml-3 logo-on-light">
+                    <p class="text-neutral-gray text-sm leading-relaxed max-w-md">
+                        The Computational Cognitive Neuroscience Lab at the University of Padova, exploring the
+                        computational mechanisms underlying human cognition since 2000.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4 text-primary-dark">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="index.html#about" class="text-neutral-gray hover:text-accent-red transition-colors text-sm">About</a></li>
+                        <li><a href="research.html" class="text-neutral-gray hover:text-accent-red transition-colors text-sm">Research</a></li>
+                        <li><a href="people.html" class="text-neutral-gray hover:text-accent-red transition-colors text-sm">People</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4 text-primary-dark">Affiliations</h4>
+                    <ul class="space-y-2 text-sm text-neutral-gray">
+                        <li><a href="http://www.unipd.it" class="hover:text-accent-red transition-colors">University of Padova</a></li>
+                        <li><a href="http://dpg.psy.unipd.it" class="hover:text-accent-red transition-colors">Dept. of General Psychology</a></li>
+                        <li><a href="http://pnc.unipd.it/" class="hover:text-accent-red transition-colors">Padova Neuroscience Center</a></li>
+                        <li><a href="https://hsancamillo.it" class="hover:text-accent-red transition-colors">San Camillo Research Hospital</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="pt-8 border-t border-neutral-gray/20 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-neutral-gray text-xs">
+                    © 2000–2026 Computational Cognitive Neuroscience Lab. All rights reserved.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // ── Profile data ────────────────────────────────────────────────
+        // links[] only contains verified, real external URLs.
+        // Generic homepages (scholar.google.com, researchgate.net root) are excluded.
+        const profiles = {
+            'marco-zorzi': {
+                name: 'Marco Zorzi',
+                initials: 'MZ',
+                role: 'Lab Director',
+                title: 'Full Professor · Principal Investigator',
+                image: 'Assets/People/marco-zorzi.jpg',
+                bio: 'Full Professor of Artificial Intelligence and Cognitive Psychology at the University of Padova and Senior Researcher at IRCCS San Camillo Neurorehabilitation Hospital. Founded the CCNL in 2001. His research spans computational modeling of cognition, deep learning applied to cognitive and neural processes, numerical cognition, reading and dyslexia, and neuroimaging methods.',
+                research: ['Computational modeling', 'Deep learning', 'Numerical cognition', 'Reading & dyslexia', 'Neuroimaging'],
+                email: 'marco.zorzi@unipd.it',
+                phone: '+39 049 827 6618',
+                office: 'Psico2, Ground Floor, via Venezia 12/2',
+                links: [
+                    { label: 'Dept. page', url: 'https://www.dpg.unipd.it/en/marco-zorzi' },
+                ]
+            },
+            'alberto-testolin': {
+                name: 'Alberto Testolin',
+                initials: 'AT',
+                role: 'Faculty',
+                title: 'Associate Professor',
+                image: 'Assets/People/alberto-testolin.png',
+                bio: 'Research at the intersection of artificial intelligence, cognitive science, and computational neuroscience. Focus on deep learning architectures, large language models, and the integration of statistical and symbolic approaches to model cognition.',
+                research: ['Deep learning', 'Large language models', 'Statistical-symbolic integration', 'Cognitive science', 'Computational neuroscience'],
+                email: 'alberto.testolin@unipd.it',
+                phone: '+39 049 827 6528',
+                office: 'Psico1, 6th Floor, via Venezia 8',
+                links: []
+            },
+            'mario-bonato': {
+                name: 'Mario Bonato',
+                initials: 'MB',
+                role: 'Faculty',
+                title: 'Associate Professor',
+                image: 'Assets/People/mario-bonato.jpg',
+                bio: 'Investigates visuospatial attention and numerical cognition in both healthy and neurologically impaired individuals. His work bridges experimental cognitive psychology and computational approaches to understand how the brain represents and processes space and number.',
+                research: ['Visuospatial attention', 'Numerical cognition', 'Neuropsychology', 'Spatial cognition'],
+                email: 'mario.bonato@unipd.it',
+                phone: '+39 328 4341010',
+                office: 'via Venezia 12/2',
+                links: []
+            },
+            'mariagrazia-ranzini': {
+                name: 'Mariagrazia Ranzini',
+                initials: 'MR',
+                role: 'Faculty',
+                title: 'Assistant Professor',
+                image: 'Assets/People/mariagrazia-ranzini.jpg',
+                bio: 'Experimental psychologist with expertise in cognitive neurosciences and numerical cognition. Her research examines the cognitive and neural mechanisms underlying the mental number line, spatial-numerical associations, and embodied numerical processing.',
+                research: ['Numerical cognition', 'Spatial-numerical associations', 'Mental number line', 'Embodied cognition'],
+                email: 'mariagrazia.ranzini@unipd.it',
+                phone: '+39 049 827 6528',
+                office: 'Psico1, via Venezia 8',
+                links: []
+            },
+            'simone-cutini': {
+                name: 'Simone Cutini',
+                initials: 'SC',
+                role: 'Faculty',
+                title: 'Researcher',
+                image: 'Assets/People/simone-cutini.jpg',
+                bio: 'Specialist in functional near-infrared spectroscopy (fNIRS) methodology and its application to cognitive neuroscience research. Develops and applies neuroimaging methods to study attention, language, and numerical cognition in typical and atypical populations.',
+                research: ['fNIRS neuroimaging', 'Attention', 'Language', 'Numerical cognition', 'Neuroimaging methodology'],
+                email: 'simone.cutini@unipd.it',
+                phone: '+39 049 827 6528',
+                office: 'Psico2, Room P13, Ground Floor',
+                links: []
+            },
+            'carlo-umilta': {
+                name: 'Carlo Umiltà',
+                initials: 'CU',
+                role: 'Faculty',
+                title: 'Professor Emeritus',
+                image: 'Assets/People/carlo-umilta.jpg',
+                bio: 'Pioneering figure in cognitive psychology, with foundational contributions to the study of attention, action control, and the computational study of cognition. Professor Emeritus at the University of Padova, whose work has shaped the theoretical landscape of the field.',
+                research: ['Attention', 'Action control', 'Computational cognition', 'Cognitive psychology'],
+                email: 'carlo.umilta@unipd.it',
+                phone: '+39 049 827 6610',
+                office: 'Psico2, Room 011, Ground Floor',
+                links: []
+            },
+            'ivilin-stoianov': {
+                name: 'Ivilin Stoianov',
+                initials: 'IS',
+                role: 'Faculty',
+                title: 'Researcher',
+                image: 'Assets/People/ivilin-stoianov.jpg',
+                bio: 'Focuses on computational modeling of cognition using probabilistic graphical models and neural network approaches. His research explores how the brain learns statistical regularities in the environment and how these shape cognitive processes such as numerical and linguistic reasoning.',
+                research: ['Computational modeling', 'Probabilistic graphical models', 'Neural networks', 'Statistical learning'],
+                email: 'ivilin.stoianov@gmail.com',
+                phone: '+39 049 827 6642',
+                office: 'Psico2, Room P12, Ground Floor',
+                links: [
+                    { label: 'Personal Website', url: 'http://www.stoianov.it' },
+                ]
+            },
+            'maria-grazia-di-bono': {
+                name: 'Maria Grazia Di Bono',
+                initials: 'MD',
+                role: 'Post-Doctoral Researcher',
+                title: 'Post-Doc',
+                image: 'Assets/People/mariagrazia-dibono.jpeg',
+                bio: 'Ph.D. in Psychology and Cognitive Science (University of Padova) and M.Sc. in Computer Science (University of Pisa). Her research lies at the intersection of cognitive neuroscience and machine learning, with a focus on numerical and mathematical cognition.',
+                research: ['Numerical cognition', 'Cognitive neuroscience', 'Machine learning', 'Mathematical cognition'],
+                email: '',
+                phone: '+39 049 827 6528',
+                office: 'Psico1, via Venezia 8',
+                links: []
+            },
+            'gisella-decarli': {
+                name: 'Gisella Decarli',
+                initials: 'GD',
+                role: 'Post-Doctoral Researcher',
+                title: 'Post-Doc',
+                image: 'Assets/People/gisella-decarli.png',
+                bio: 'Investigates mathematical cognition in typical and atypical development, with a particular focus on developmental dyscalculia. Uses behavioral and neuroimaging methods to understand how numerical and mathematical abilities emerge and differ across individuals.',
+                research: ['Mathematical cognition', 'Developmental dyscalculia', 'Typical development', 'Neuroimaging'],
+                email: 'gisella.decarli@unipd.it',
+                phone: '+39 049 827 6149',
+                office: 'Psico2, Room 038, Ground Floor',
+                links: []
+            },
+            'francesco-sella': {
+                name: 'Francesco Sella',
+                initials: 'FS',
+                role: 'Affiliate Researcher',
+                title: 'Affiliate Researcher',
+                image: 'Assets/People/francesco-sella.jpg',
+                bio: 'Numerical cognition researcher spanning developmental and experimental approaches. His work examines how children and adults learn about numbers, the role of approximate number sense, and interventions for mathematical difficulties.',
+                research: ['Numerical cognition', 'Developmental psychology', 'Approximate number sense', 'Mathematical interventions'],
+                email: 'sella.francesco@gmail.com',
+                phone: '+39 049 827 6941',
+                office: 'Psico2, Room 008, Ground Floor',
+                links: []
+            },
+            'serena-dolfi': {
+                name: 'Serena Dolfi',
+                initials: 'SD',
+                role: 'Post-Doctoral Researcher',
+                title: 'Post-Doc',
+                image: 'Assets/People/serena-dolfi.png',
+                bio: 'Research in cognitive neuroscience and computational approaches to cognition. Interested in understanding the neural and computational mechanisms that underlie learning and cognitive flexibility.',
+                research: ['Cognitive neuroscience', 'Computational approaches', 'Learning', 'Cognitive flexibility'],
+                email: '',
+                phone: '+39 049 827 6528',
+                office: 'Dept. of General Psychology, via Venezia 8',
+                links: []
+            },
+            'wanlu-fu': {
+                name: 'Wanlu Fu',
+                initials: 'WF',
+                role: 'PhD Student',
+                title: 'PhD Student',
+                image: 'Assets/People/wanlu-fu.png',
+                bio: 'Investigating visual attentional deficits in developmental dyslexia at both behavioral and neural levels. Her research uses eye-tracking, EEG, and computational modeling to understand how atypical visual attention contributes to reading difficulties.',
+                research: ['Developmental dyslexia', 'Visual attention', 'Eye-tracking', 'EEG', 'Computational modeling'],
+                email: 'wanlu.fu@unipd.it',
+                phone: '+39 049 827 6941',
+                office: 'Psico2, Room P13, Ground Floor',
+                links: []
+            },
+            'kuinan-hou': {
+                name: 'Kuinan Hou',
+                initials: 'KH',
+                role: 'PhD Student',
+                title: 'PhD Student',
+                image: 'Assets/People/kuinan-hou.png',
+                bio: 'Research at the intersection of computational modeling, generative AI, and cognitive neuroscience. Explores how large generative models can illuminate theories of human cognition and vice versa.',
+                research: ['Computational modeling', 'Generative AI', 'Cognitive neuroscience', 'Large language models'],
+                email: '',
+                phone: '+39 049 827 6528',
+                office: 'Dept. of General Psychology, via Venezia 8',
+                links: []
+            }
+        };
+
+        // ── Render profile ───────────────────────────────────────────────
+        function renderProfile() {
+            const params = new URLSearchParams(window.location.search);
+            const id = params.get('id');
+            const data = profiles[id];
+
+            if (!data) {
+                document.getElementById('profile-hero').classList.add('hidden');
+                document.querySelector('.grid.lg\\:grid-cols-3').classList.add('hidden');
+                document.getElementById('profile-contact').classList.add('hidden');
+                document.getElementById('profile-not-found').classList.remove('hidden');
+                document.title = 'Profile Not Found | CCNLab';
+                return;
+            }
+
+            document.title = data.name + ' | CCNLab';
+
+            // Avatar
+            const photo = document.getElementById('profile-photo');
+            const initials = document.getElementById('profile-initials');
+            initials.textContent = data.initials;
+            photo.onload = () => {
+                photo.classList.remove('hidden');
+                initials.classList.add('hidden');
+            };
+            photo.onerror = () => { photo.classList.add('hidden'); initials.classList.remove('hidden'); };
+            photo.alt = data.name;
+            photo.src = data.image;
+
+            // Identity
+            document.getElementById('profile-role').textContent = data.role;
+            document.getElementById('profile-name').textContent = data.name;
+            document.getElementById('profile-title').textContent = data.title;
+
+            // Hero external links (verified URLs only)
+            const linksEl = document.getElementById('profile-links');
+            data.links.forEach(link => {
+                const a = document.createElement('a');
+                a.href = link.url;
+                a.target = '_blank';
+                a.rel = 'noopener noreferrer';
+                a.className = 'inline-flex items-center gap-1.5 text-sm text-accent-gold border border-accent-gold/30 hover:border-accent-gold px-4 py-1.5 rounded-full transition-colors';
+                a.textContent = link.label + ' →';
+                linksEl.appendChild(a);
+            });
+
+            // Bio
+            document.getElementById('profile-bio').textContent = data.bio;
+
+            // Research areas
+            const researchEl = document.getElementById('profile-research');
+            data.research.forEach(area => {
+                const li = document.createElement('li');
+                li.className = 'flex items-center gap-3 text-neutral-gray text-sm';
+                li.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-accent-gold flex-shrink-0"></span>' + area;
+                researchEl.appendChild(li);
+            });
+
+            // Contact: email
+            if (data.email) {
+                const emailLink = document.getElementById('profile-email');
+                emailLink.href = 'mailto:' + data.email;
+                emailLink.textContent = data.email;
+                document.getElementById('profile-email-item').classList.remove('hidden');
+            }
+
+            // Contact: phone
+            if (data.phone) {
+                const phoneLink = document.getElementById('profile-phone');
+                phoneLink.href = 'tel:' + data.phone.replace(/\s/g, '');
+                phoneLink.textContent = data.phone;
+                document.getElementById('profile-phone-item').classList.remove('hidden');
+            }
+
+            // Contact: office
+            if (data.office) {
+                document.getElementById('profile-office').textContent = data.office;
+                document.getElementById('profile-office-item').classList.remove('hidden');
+            }
+
+            // Contact: online profiles (verified links only, no duplicates with hero)
+            const contactLinksEl = document.getElementById('profile-contact-links');
+            if (data.links.length > 0) {
+                data.links.forEach(link => {
+                    const li = document.createElement('li');
+                    const a = document.createElement('a');
+                    a.href = link.url;
+                    a.target = '_blank';
+                    a.rel = 'noopener noreferrer';
+                    a.className = 'inline-flex items-center gap-2 text-sm text-accent-gold border border-accent-gold/30 hover:border-accent-gold px-3 py-1.5 rounded-full transition-colors';
+                    a.textContent = link.label + ' →';
+                    li.appendChild(a);
+                    contactLinksEl.appendChild(li);
+                });
+            } else {
+                document.getElementById('profile-contact-links-wrap').classList.add('hidden');
+            }
+        }
+
+        renderProfile();
+
+        // ── Mobile menu ──────────────────────────────────────────────────
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // ── Header scroll effect ─────────────────────────────────────────
+        const header = document.getElementById('header');
+        const navInner = document.getElementById('nav-inner');
+        const headerLogo = document.getElementById('header-logo');
+        const originalLogo = "Assets/Logo_and_text.png";
+        const scrolledLogo = "Assets/Logo.png";
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('shadow-md');
+                navInner.classList.remove('h-16', 'lg:h-20');
+                navInner.classList.add('h-12', 'lg:h-14');
+                headerLogo.src = scrolledLogo;
+                headerLogo.classList.remove('h-10', 'lg:h-12');
+                headerLogo.classList.add('h-8', 'lg:h-10');
+            } else {
+                header.classList.remove('shadow-md');
+                navInner.classList.add('h-16', 'lg:h-20');
+                navInner.classList.remove('h-12', 'lg:h-14');
+                headerLogo.src = originalLogo;
+                headerLogo.classList.add('h-10', 'lg:h-12');
+                headerLogo.classList.remove('h-8', 'lg:h-10');
+            }
+        });
+    </script>
+</body>
+
+</html>

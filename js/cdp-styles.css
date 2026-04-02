@@ -1,0 +1,353 @@
+/* ===== CDP Reading Model - Styles v3 (Padova Red Editorial) ===== */
+
+.cdp-demo {
+    position: relative;
+    width: 100%;
+    background: #1a1a1a;
+    border-radius: 0;
+    overflow: hidden;
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    color: #fff;
+}
+
+.cdp-container {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+/* ── Input Area ─────────────────────────────────────────────────────────── */
+.cdp-input-area {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.cdp-word-input {
+    flex: 1;
+    min-width: 180px;
+    padding: 12px 16px;
+    border-radius: 0;
+    border: 1px solid rgba(255,255,255,0.15);
+    background: rgba(0,0,0,0.4);
+    color: #fff;
+    font-size: 1.1rem;
+    font-weight: 600;
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    outline: none;
+    transition: border-color 0.3s;
+}
+.cdp-word-input:focus { border-color: #b20839; }
+.cdp-word-input::placeholder {
+    color: rgba(255,255,255,0.2);
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: normal;
+    text-transform: none;
+    font-weight: 400;
+    font-size: 0.85rem;
+}
+
+.cdp-btn {
+    padding: 12px 24px;
+    border-radius: 0;
+    border: none;
+    background: #b20839;
+    color: #fff;
+    font-size: 0.8rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: 'JetBrains Mono', monospace;
+    white-space: nowrap;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+.cdp-btn:hover { background: #8a0022; }
+.cdp-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+/* ── Quick Buttons ──────────────────────────────────────────────────────── */
+.cdp-quick-words {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: center;
+}
+
+.cdp-quick-label {
+    font-size: 0.6rem;
+    font-weight: 600;
+    color: rgba(255,255,255,0.3);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.cdp-quick-btn {
+    padding: 4px 11px;
+    border-radius: 0;
+    border: 1px solid rgba(255,255,255,0.1);
+    background: transparent;
+    color: rgba(255,255,255,0.55);
+    font-size: 0.68rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+/* Semantic route colors — muted variants */
+.cdp-quick-btn.regular   { border-color: rgba(255,255,255,0.15); color: rgba(255,255,255,0.55); }
+.cdp-quick-btn.regular:hover   { border-color: #b20839; color: #b20839; background: rgba(178,8,57,0.08); }
+.cdp-quick-btn.irregular { border-color: rgba(255,255,255,0.15); color: rgba(255,255,255,0.55); }
+.cdp-quick-btn.irregular:hover { border-color: #b20839; color: #b20839; background: rgba(178,8,57,0.08); }
+.cdp-quick-btn.nonword  { border-color: rgba(255,255,255,0.15); color: rgba(255,255,255,0.55); }
+.cdp-quick-btn.nonword:hover  { border-color: rgba(255,255,255,0.35); color: rgba(255,255,255,0.8); background: rgba(255,255,255,0.05); }
+
+/* ── Architecture Canvas ────────────────────────────────────────────────── */
+.cdp-arch-canvas {
+    width: 100%;
+    aspect-ratio: 700 / 380;   /* preserves proportions on narrow screens */
+    border-radius: 0;
+    background: rgba(0,0,0,0.3);
+    display: block;
+}
+
+/* ── Route Cards ────────────────────────────────────────────────────────── */
+.cdp-routes {
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.cdp-route-card {
+    flex: 1;
+    min-width: 180px;
+    max-width: 300px;
+    border-radius: 0;
+    padding: 13px 14px;
+    border: 1px solid rgba(255,255,255,0.07);
+    background: rgba(255,255,255,0.02);
+    transition: all 0.5s;
+}
+.cdp-route-card.active-lexical    { border-color: rgba(178,8,57,0.45); border-left: 3px solid #b20839; background: rgba(178,8,57,0.06); }
+.cdp-route-card.active-sublexical { border-color: rgba(255,255,255,0.25); border-left: 3px solid rgba(255,255,255,0.5); background: rgba(255,255,255,0.04); }
+
+.cdp-route-title {
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 5px;
+}
+.cdp-route-title.lexical    { color: #b20839; }
+.cdp-route-title.sublexical { color: rgba(255,255,255,0.7); }
+
+.cdp-route-desc {
+    font-size: 0.68rem;
+    color: rgba(255,255,255,0.4);
+    line-height: 1.5;
+}
+
+.cdp-route-activity {
+    margin-top: 8px;
+    height: 3px;
+    border-radius: 0;
+    background: rgba(255,255,255,0.06);
+    overflow: hidden;
+}
+.cdp-route-activity-fill {
+    height: 100%;
+    border-radius: 0;
+    width: 0%;
+    transition: width 0.8s ease-out;
+}
+.cdp-route-activity-fill.lexical    { background: #b20839; }
+.cdp-route-activity-fill.sublexical { background: rgba(255,255,255,0.5); }
+
+/* ── Metrics Row ─────────────────────────────────────────────────────────── */
+.cdp-metrics-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
+.cdp-metric-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 0;
+    padding: 12px 14px;
+    text-align: center;
+}
+
+.cdp-metric-label {
+    font-size: 0.58rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(255,255,255,0.35);
+    margin-bottom: 4px;
+}
+
+.cdp-metric-value {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: #b20839;
+    transition: color 0.4s;
+}
+
+.cdp-metric-sub {
+    font-size: 0.6rem;
+    color: rgba(255,255,255,0.3);
+    margin-top: 3px;
+}
+
+/* ── GPC Decomposition ──────────────────────────────────────────────────── */
+.cdp-gpc-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    background: rgba(255,255,255,0.025);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-left: 3px solid #b20839;
+    border-radius: 0;
+    padding: 10px 14px;
+}
+
+.cdp-gpc-label {
+    font-size: 0.6rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(255,255,255,0.35);
+    flex-shrink: 0;
+}
+
+.cdp-gpc-cells {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.cdp-gpc-cell {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+}
+
+.cdp-gpc-g {
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #b20839;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.cdp-gpc-arrow {
+    font-size: 0.6rem;
+    color: rgba(255,255,255,0.25);
+}
+
+.cdp-gpc-p {
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: rgba(255,255,255,0.7);
+}
+
+.cdp-gpc-cell.silent .cdp-gpc-p { color: rgba(255,255,255,0.25); font-style: italic; }
+.cdp-gpc-cell.unknown .cdp-gpc-p { color: rgba(178,8,57,0.7); }
+
+/* ── Output Area ─────────────────────────────────────────────────────────── */
+.cdp-output {
+    text-align: center;
+    padding: 16px;
+    background: rgba(178,8,57,0.04);
+    border: 1px solid rgba(178,8,57,0.15);
+    border-radius: 0;
+    min-height: 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+
+.cdp-output-label {
+    font-size: 0.6rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: rgba(178,8,57,0.6);
+}
+
+.cdp-output-phoneme {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: #b20839;
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    letter-spacing: 0.2em;
+    min-height: 2rem;
+}
+
+.cdp-output-ipa {
+    font-size: 1rem;
+    color: rgba(255,255,255,0.45);
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+}
+
+.cdp-output-meta { display: flex; gap: 10px; justify-content: center; margin-top: 4px; flex-wrap: wrap; }
+
+.cdp-output-tag {
+    font-size: 0.65rem;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 0;
+    border: 1px solid;
+}
+.cdp-output-tag.regular         { background: transparent; border-color: rgba(255,255,255,0.2); color: rgba(255,255,255,0.6); }
+.cdp-output-tag.irregular       { background: rgba(178,8,57,0.08); border-color: rgba(178,8,57,0.3); color: #b20839; }
+.cdp-output-tag.nonword         { background: transparent; border-color: rgba(255,255,255,0.15); color: rgba(255,255,255,0.45); }
+.cdp-output-tag.word            { background: transparent; border-color: rgba(255,255,255,0.2); color: rgba(255,255,255,0.6); }
+.cdp-output-tag.freq-high       { color: rgba(255,255,255,0.6); border-color: rgba(255,255,255,0.2); background: transparent; }
+.cdp-output-tag.freq-medium     { color: rgba(255,255,255,0.5); border-color: rgba(255,255,255,0.15); background: transparent; }
+.cdp-output-tag.freq-low        { color: #b20839; border-color: rgba(178,8,57,0.3); background: rgba(178,8,57,0.06); }
+
+/* ── Explanation ────────────────────────────────────────────────────────── */
+.cdp-explanation {
+    background: rgba(178,8,57,0.04);
+    border: 1px solid rgba(178,8,57,0.12);
+    border-left: 3px solid #b20839;
+    border-radius: 0;
+    padding: 14px 16px;
+    font-size: 0.75rem;
+    line-height: 1.65;
+    color: rgba(255,255,255,0.6);
+}
+.cdp-explanation strong { color: #b20839; }
+.cdp-explanation em     { color: rgba(255,255,255,0.85); font-style: normal; font-weight: 600; }
+
+/* ── Responsive ─────────────────────────────────────────────────────────── */
+@media (max-width: 700px) {
+    .cdp-container      { padding: 14px; gap: 14px; }
+    .cdp-word-input     { font-size: 0.95rem; padding: 10px 14px; }
+    .cdp-output-phoneme { font-size: 1.2rem; }
+    .cdp-route-card     { min-width: 140px; }
+    .cdp-routes         { gap: 10px; }
+    .cdp-metrics-row    { grid-template-columns: repeat(2, 1fr); }
+    .cdp-gpc-cells      { gap: 6px; }
+    /* Larger tap targets for buttons */
+    .cdp-btn            { padding: 12px 20px; min-height: 44px; }
+    .cdp-quick-btn      { padding: 8px 14px; min-height: 36px; font-size: 0.75rem; }
+}
+
+@media (max-width: 480px) {
+    .cdp-metrics-row { grid-template-columns: 1fr 1fr; }
+}

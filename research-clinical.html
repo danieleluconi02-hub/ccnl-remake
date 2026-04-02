@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clinical Studies | CCNLab</title>
+    <link rel="icon" type="image/png" href="Assets/Logo.png">
+    <meta name="description"
+        content="Clinical research at CCNL — brain-behavior mapping in stroke patients, advanced neuroimaging, and rehabilitation of cognitive disorders.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-dark':     '#1a1a1a',
+                        'primary-light':    '#FFFFFF',
+                        'accent-red':       '#b20839',
+                        'accent-red-hover': '#8a0022',
+                        'accent-gold':      '#b20839',
+                        'accent-gold-hover':'#8a0022',
+                        'neutral-gray':     '#6B7280',
+                        'light-gray':       '#F3F4F6',
+                        'surface':          '#f8f7f4',
+                        'surface-alt':      '#eeedea',
+                        'surface-border':   '#e2dfda',
+                    },
+                    fontFamily: {
+                        'manrope':   ['Manrope', 'sans-serif'],
+                        'display':   ['"Playfair Display"', 'Georgia', 'serif'],
+                        'mono-tech': ['"JetBrains Mono"', '"Courier New"', 'monospace'],
+                    },
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="font-manrope bg-surface text-primary-dark antialiased">
+
+    <!-- Header / Navigation -->
+    <header id="header" class="fixed top-0 left-0 right-0 z-50 bg-white border-b border-surface-border shadow-sm transition-all duration-300">
+        <div class="inst-hierarchy-bar">
+            <div class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16 flex justify-between items-center">
+                <span>University of Padova &nbsp;·&nbsp; Department of General Psychology &nbsp;·&nbsp; CCN Lab</span>
+                <a href="https://www.unipd.it" target="_blank" rel="noopener noreferrer" class="hover:text-accent-red transition-colors hidden sm:block">unipd.it ↗</a>
+            </div>
+        </div>
+        <nav class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16">
+            <div class="flex items-center justify-between h-16 lg:h-20 transition-all duration-300" id="nav-inner">
+                <a href="index.html" class="flex items-center gap-4 group">
+                    <img src="Assets/Logo_and_text.png" alt="CCN Lab Logo" id="header-logo"
+                        class="h-10 lg:h-12 object-contain -ml-2 transition-all duration-300 logo-on-light">
+                </a>
+                <div class="hidden md:flex items-center gap-4 lg:gap-8">
+                    <a href="index.html#about" class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-base font-medium">About</a>
+                    <div class="dropdown-container">
+                        <a href="research.html" class="nav-link text-accent-gold transition-colors duration-200 text-base font-medium">Research</a>
+                        <div class="dropdown-menu">
+                            <a href="research.html#research" class="dropdown-item">Research areas</a>
+                            <a href="research.html#facilities" class="dropdown-item">Lab facilities</a>
+                            <a href="research.html#publications" class="dropdown-item">Publications</a>
+                            <a href="software.html" class="dropdown-item">Software &amp; Downloads</a>
+                        </div>
+                    </div>
+                    <a href="people.html" class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-base font-medium">People</a>
+                    <a href="playground.html" class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-base font-medium">Playground</a>
+                    <a href="news.html" class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-base font-medium">News</a>
+                    <a href="join-us.html" class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-base font-medium">Join us</a>
+                    <a href="index.html#contact" class="btn-primary px-5 py-2.5 bg-accent-gold text-white font-semibold rounded-none hover:bg-accent-red-hover transition-all duration-200 hover:shadow-lg hover:shadow-accent-gold/20 text-base">Contact us</a>
+                </div>
+                <button id="mobile-menu-btn" class="md:hidden p-2 text-neutral-gray hover:text-accent-red transition-colors" aria-label="Open menu">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+                </button>
+            </div>
+        </nav>
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-surface-border">
+            <div class="px-6 py-4 space-y-4">
+                <a href="index.html#about" class="block text-neutral-gray hover:text-accent-red transition-colors py-2">About</a>
+                <a href="research.html" class="block text-accent-gold font-semibold transition-colors py-2">Research</a>
+                <a href="people.html" class="block text-neutral-gray hover:text-accent-red transition-colors py-2">People</a>
+                <a href="playground.html" class="block text-neutral-gray hover:text-accent-red transition-colors py-2">Playground</a>
+                <a href="news.html" class="block text-neutral-gray hover:text-accent-red transition-colors py-2">News</a>
+                <a href="join-us.html" class="block text-neutral-gray hover:text-accent-red transition-colors py-2">Join us</a>
+                <a href="software.html" class="block text-neutral-gray hover:text-accent-red transition-colors py-2">Software</a>
+                <a href="index.html#contact" class="block w-fit mx-auto text-center px-5 py-2 bg-accent-red text-white font-semibold rounded-none hover:bg-accent-red-hover transition-colors">Contact us</a>
+            </div>
+        </div>
+        <div class="h-px bg-accent-red"></div>
+    </header>
+
+    <!-- Hero -->
+    <section class="pt-20 pb-10 md:pt-32 md:pb-16 bg-surface border-b border-surface-border">
+        <div class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16">
+            <nav class="flex items-center gap-2 text-sm text-neutral-gray mb-10">
+                <a href="research.html" class="hover:text-accent-red transition-colors">Research</a>
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                <span class="text-accent-red font-medium">Clinical Studies</span>
+            </nav>
+            <div class="max-w-4xl">
+                <div class="flex flex-wrap items-center gap-3 mb-6">
+                    <span class="px-3 py-1 text-xs font-semibold bg-red-500/15 text-red-400 border border-red-500/30 rounded-full uppercase tracking-wider">Stroke Neuroimaging</span>
+                    <span class="font-mono-tech text-xs text-neutral-gray uppercase tracking-widest border border-surface-border px-2 py-0.5">Rehabilitation</span>
+                    <span class="font-mono-tech text-xs text-accent-red uppercase tracking-widest border border-accent-red/30 px-2 py-0.5">fMRI · EEG · TMS · fNIRS</span>
+                </div>
+                <h1 class="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 text-primary-dark">
+                    Clinical<br>
+                    <span class="text-accent-gold">Studies</span>
+                </h1>
+                <p class="text-xl text-neutral-gray font-light leading-relaxed max-w-3xl">
+                    Brain-behavior mapping in neurological patients, advanced stroke neuroimaging,
+                    and evidence-based rehabilitation of cognitive disorders — bridging computational
+                    models with clinical neuroscience.
+                </p>
+            </div>
+            <div class="flex flex-wrap gap-4 mt-10">
+                <a href="people.html" class="inline-flex items-center gap-2 px-6 py-3 bg-accent-red text-white font-semibold rounded-none hover:bg-accent-red-hover transition-all duration-200 hover:shadow-lg hover:shadow-accent-gold/20">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                    Meet the Team
+                </a>
+                <a href="research.html#facilities" class="inline-flex items-center gap-2 px-6 py-3 border border-neutral-gray/30 text-primary-dark font-medium rounded-none border border-neutral-gray/20 hover:border-accent-gold/50 transition-all duration-200">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l.707.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.989-2.386l-.548-.547z"/></svg>
+                    Lab Facilities
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Overview -->
+    <section class="py-12 md:py-20 bg-white border-t border-surface">
+        <div class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-8 md:gap-16 items-start">
+                <div>
+                    <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-6 md:mb-8">Overview</h2>
+                    <div class="space-y-5 text-neutral-gray text-lg font-light leading-relaxed">
+                        <p>
+                            Clinical neuroscience at the CCNL bridges fundamental research with direct
+                            applications to human health. The lab studies neurological patients —
+                            primarily stroke survivors — to understand how brain damage disrupts
+                            cognition and how recovery can be supported through targeted rehabilitation.
+                        </p>
+                        <p>
+                            A major focus is <span class="text-accent-red font-medium">lesion-deficit mapping</span>:
+                            identifying the neural substrates of specific cognitive functions by comparing
+                            patterns of impairment across patients with varying lesion profiles.
+                            This approach complements computational modeling by providing ground-truth
+                            data on the neural implementation of cognitive processes.
+                        </p>
+                        <p>
+                            The lab's partnership with the <span class="text-accent-red font-medium">IRCCS San Camillo
+                            Hospital</span> in Venice provides privileged access to large patient cohorts
+                            and state-of-the-art clinical neuroimaging, enabling longitudinal studies of
+                            post-stroke recovery and rehabilitation efficacy.
+                        </p>
+                    </div>
+                </div>
+                <div class="space-y-4">
+                    <div class="bg-white border border-surface-border p-6 rounded-none border-l-2 border-accent-gold">
+                        <h3 class="font-semibold text-lg mb-2">Brain-Behavior Mapping</h3>
+                        <p class="text-neutral-gray text-sm leading-relaxed">
+                            Systematic voxel-based lesion-symptom mapping (VLSM) and multivariate lesion
+                            analysis in stroke patients, identifying key cortical and white-matter
+                            structures whose damage predicts specific cognitive deficits.
+                        </p>
+                    </div>
+                    <div class="bg-white border border-surface-border p-6 rounded-none border-l-2 border-accent-gold">
+                        <h3 class="font-semibold text-lg mb-2">Stroke Neuroimaging</h3>
+                        <p class="text-neutral-gray text-sm leading-relaxed">
+                            Advanced structural and functional MRI protocols for characterizing post-stroke
+                            structural reorganization, diaschisis effects, and neural correlates of
+                            spontaneous recovery and intervention-driven plasticity.
+                        </p>
+                    </div>
+                    <div class="bg-white border border-surface-border p-6 rounded-none border-l-2 border-accent-gold">
+                        <h3 class="font-semibold text-lg mb-2">Rehabilitation Methods</h3>
+                        <p class="text-neutral-gray text-sm leading-relaxed">
+                            Development and assessment of advanced rehabilitation approaches for
+                            hemispatial neglect, including prism adaptation, non-invasive brain
+                            stimulation, and technology-assisted training with eye-tracking-based
+                            feedback systems.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Research Areas -->
+    <section class="py-12 md:py-20 bg-white border-t border-surface">
+        <div class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16">
+            <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-8 md:mb-12">Research Highlights</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                <div class="group bg-white border border-surface-border p-8 rounded-none hover:shadow-2xl hover:border-accent-red transition-all duration-300 hover:-translate-y-1">
+                    <div class="w-12 h-12 bg-accent-gold/10 rounded-none flex items-center justify-center mb-5 group-hover:bg-accent-gold/20 transition-colors">
+                        <svg class="w-6 h-6 text-accent-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/></svg>
+                    </div>
+                    <h3 class="font-semibold text-lg mb-3">VLSM in Hemispatial Neglect</h3>
+                    <p class="text-neutral-gray text-sm leading-relaxed">
+                        Large-scale voxel-based lesion-symptom mapping studies in stroke patients identifying
+                        the parietal-frontal network — particularly the right inferior frontal gyrus and superior
+                        longitudinal fasciculus — as critical for spatial attention. These findings inform
+                        targeted rehabilitation strategies for neglect.
+                    </p>
+                </div>
+
+                <div class="group bg-white border border-surface-border p-8 rounded-none hover:shadow-2xl hover:border-accent-red transition-all duration-300 hover:-translate-y-1">
+                    <div class="w-12 h-12 bg-accent-gold/10 rounded-none flex items-center justify-center mb-5 group-hover:bg-accent-gold/20 transition-colors">
+                        <svg class="w-6 h-6 text-accent-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+                    </div>
+                    <h3 class="font-semibold text-lg mb-3">Eye-tracking-based Rehabilitation</h3>
+                    <p class="text-neutral-gray text-sm leading-relaxed">
+                        Novel computer-based rehabilitation tools using eye-tracking to deliver
+                        adaptive, real-time feedback to neglect patients. Machine learning classifiers
+                        distinguish neglect-related oculomotor patterns, enabling objective outcome
+                        monitoring across rehabilitation sessions.
+                    </p>
+                </div>
+
+                <div class="group bg-white border border-surface-border p-8 rounded-none hover:shadow-2xl hover:border-accent-red transition-all duration-300 hover:-translate-y-1">
+                    <div class="w-12 h-12 bg-accent-gold/10 rounded-none flex items-center justify-center mb-5 group-hover:bg-accent-gold/20 transition-colors">
+                        <svg class="w-6 h-6 text-accent-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                    </div>
+                    <h3 class="font-semibold text-lg mb-3">Brain-Computer Interfaces</h3>
+                    <p class="text-neutral-gray text-sm leading-relaxed">
+                        Collaborative work with Konstantinos Priftis on brain-computer interfaces
+                        guided by electrophysiological signals (EEG), with applications to
+                        motor rehabilitation and augmentative communication in neurological patients.
+                    </p>
+                </div>
+
+                <div class="group bg-white border border-surface-border p-8 rounded-none hover:shadow-2xl hover:border-accent-red transition-all duration-300 hover:-translate-y-1">
+                    <div class="w-12 h-12 bg-accent-gold/10 rounded-none flex items-center justify-center mb-5 group-hover:bg-accent-gold/20 transition-colors">
+                        <svg class="w-6 h-6 text-accent-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l.707.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.989-2.386l-.548-.547z"/></svg>
+                    </div>
+                    <h3 class="font-semibold text-lg mb-3">fNIRS &amp; Cognitive Monitoring</h3>
+                    <p class="text-neutral-gray text-sm leading-relaxed">
+                        Simone Cutini's fNIRS research providing portable, high-temporal-resolution
+                        monitoring of prefrontal and parietal activity during cognitive tasks —
+                        suitable for bedside assessment in clinical populations and ecological
+                        settings outside the scanner.
+                    </p>
+                </div>
+
+                <div class="group bg-white border border-surface-border p-8 rounded-none hover:shadow-2xl hover:border-accent-red transition-all duration-300 hover:-translate-y-1">
+                    <div class="w-12 h-12 bg-accent-gold/10 rounded-none flex items-center justify-center mb-5 group-hover:bg-accent-gold/20 transition-colors">
+                        <svg class="w-6 h-6 text-accent-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                    </div>
+                    <h3 class="font-semibold text-lg mb-3">Dyscalculia Intervention</h3>
+                    <p class="text-neutral-gray text-sm leading-relaxed">
+                        From basic research on developmental dyscalculia to clinical intervention:
+                        cognitive training programs and the <em>La Gara dei Numeri</em> game used in
+                        school and clinic settings, with controlled trials evaluating efficacy in
+                        children with diagnosed learning disabilities.
+                    </p>
+                </div>
+
+                <div class="group bg-white border border-surface-border p-8 rounded-none hover:shadow-2xl hover:border-accent-red transition-all duration-300 hover:-translate-y-1">
+                    <div class="w-12 h-12 bg-accent-gold/10 rounded-none flex items-center justify-center mb-5 group-hover:bg-accent-gold/20 transition-colors">
+                        <svg class="w-6 h-6 text-accent-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+                    </div>
+                    <h3 class="font-semibold text-lg mb-3">San Camillo Computational Neuroimaging</h3>
+                    <p class="text-neutral-gray text-sm leading-relaxed">
+                        The Computational Neuroimaging Laboratory at IRCCS San Camillo Hospital
+                        provides the infrastructure for advanced fMRI analysis, diffusion tractography,
+                        and longitudinal rehabilitation studies in neurological patient populations,
+                        in direct collaboration with the CCNL.
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Key People -->
+    <section class="py-12 md:py-20 bg-white border-t border-surface">
+        <div class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16">
+            <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-8 md:mb-12">Key Researchers</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+                <div class="bg-white border border-surface-border p-6 rounded-none">
+                    <p class="font-semibold mb-1">Mario Bonato</p>
+                    <p class="text-accent-gold text-sm mb-2">Associate Professor</p>
+                    <p class="text-neutral-gray text-sm">Neglect, rehabilitation, clinical neuropsychology, ecological approach to cognitive disorders.</p>
+                </div>
+                <div class="bg-white border border-surface-border p-6 rounded-none">
+                    <p class="font-semibold mb-1">Sebastiano Cinetto</p>
+                    <p class="text-accent-gold text-sm mb-2">Post-doc</p>
+                    <p class="text-neutral-gray text-sm">Eye-tracking, stroke rehabilitation, brain network analysis, machine learning for clinical applications.</p>
+                </div>
+                <div class="bg-white border border-surface-border p-6 rounded-none">
+                    <p class="font-semibold mb-1">Konstantinos Priftis</p>
+                    <p class="text-accent-gold text-sm mb-2">Full Professor (Collaborator)</p>
+                    <p class="text-neutral-gray text-sm">Clinical neuropsychology, spatial disorders, brain-computer interfaces, mathematical cognition disorders.</p>
+                </div>
+                <div class="bg-white border border-surface-border p-6 rounded-none">
+                    <p class="font-semibold mb-1">Simone Cutini</p>
+                    <p class="text-accent-gold text-sm mb-2">Associate Professor (Collaborator)</p>
+                    <p class="text-neutral-gray text-sm">Neuroimaging, fNIRS, cognitive control, executive functions, numerical cognition.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Facilities -->
+    <section class="py-12 md:py-20 bg-white border-t border-surface">
+        <div class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16">
+            <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-6 md:mb-10">Clinical Infrastructure</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="bg-white border border-surface-border p-6 rounded-none">
+                    <p class="text-accent-gold font-semibold mb-2 text-sm uppercase tracking-wider">MRI</p>
+                    <p class="text-primary-dark font-semibold mb-1">3 Tesla fMRI</p>
+                    <p class="text-neutral-gray text-sm">Philips Ingenia at PNC for structural, functional, and diffusion imaging in patient and control populations.</p>
+                </div>
+                <div class="bg-white border border-surface-border p-6 rounded-none">
+                    <p class="text-accent-gold font-semibold mb-2 text-sm uppercase tracking-wider">EEG</p>
+                    <p class="text-primary-dark font-semibold mb-1">High-density EEG</p>
+                    <p class="text-neutral-gray text-sm">256-channel and BrainAmp 32/64-channel systems for millisecond-resolution electrophysiology in patients and healthy participants.</p>
+                </div>
+                <div class="bg-white border border-surface-border p-6 rounded-none">
+                    <p class="text-accent-gold font-semibold mb-2 text-sm uppercase tracking-wider">Stimulation</p>
+                    <p class="text-primary-dark font-semibold mb-1">TMS &amp; TES</p>
+                    <p class="text-neutral-gray text-sm">Transcranial magnetic and electrical stimulation for causal testing and therapeutic neuromodulation in neurological patients.</p>
+                </div>
+                <div class="bg-white border border-surface-border p-6 rounded-none">
+                    <p class="text-accent-gold font-semibold mb-2 text-sm uppercase tracking-wider">Optical Imaging</p>
+                    <p class="text-primary-dark font-semibold mb-1">fNIRS</p>
+                    <p class="text-neutral-gray text-sm">Portable functional near-infrared spectroscopy for bedside cognitive monitoring in stroke and neurorehabilitation settings.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-surface-alt py-12 border-t border-surface-border">
+        <div class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16">
+            <div class="grid md:grid-cols-4 gap-8 md:gap-12 mb-8 md:mb-12">
+                <div class="md:col-span-2">
+                    <img src="Assets/Logo_and_text.png" alt="CCN Lab" class="h-14 mb-4 logo-on-light">
+                    <p class="text-neutral-gray text-sm leading-relaxed max-w-md">
+                        The Computational Cognitive Neuroscience Lab at the University of Padova, exploring the
+                        computational mechanisms underlying human cognition since 2000.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4 text-primary-dark">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="index.html#about" class="text-neutral-gray hover:text-accent-red transition-colors text-sm">About</a></li>
+                        <li><a href="research.html" class="text-neutral-gray hover:text-accent-red transition-colors text-sm">Research</a></li>
+                        <li><a href="people.html" class="text-neutral-gray hover:text-accent-red transition-colors text-sm">People</a></li>
+                        <li><a href="news.html" class="text-neutral-gray hover:text-accent-red transition-colors text-sm">News</a></li>
+                        <li><a href="software.html" class="text-neutral-gray hover:text-accent-red transition-colors text-sm">Software</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4 text-primary-dark">Affiliations</h4>
+                    <ul class="space-y-2 text-sm text-neutral-gray">
+                        <li><a href="http://www.unipd.it" class="hover:text-accent-red transition-colors">University of Padova</a></li>
+                        <li><a href="http://dpg.psy.unipd.it" class="hover:text-accent-red transition-colors">Dept. of General Psychology</a></li>
+                        <li><a href="http://pnc.unipd.it/" class="hover:text-accent-red transition-colors">Padova Neuroscience Center</a></li>
+                        <li><a href="https://hsancamillo.it" class="hover:text-accent-red transition-colors">San Camillo Research Hospital</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="pt-8 border-t border-neutral-gray/20">
+                <p class="text-neutral-gray text-xs">© 2000–2026 Computational Cognitive Neuroscience Lab. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+        mobileMenu.querySelectorAll('a').forEach(link => link.addEventListener('click', () => mobileMenu.classList.add('hidden')));
+
+        const header = document.getElementById('header');
+        const navInner = document.getElementById('nav-inner');
+        const headerLogo = document.getElementById('header-logo');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('shadow-md');
+                navInner.classList.replace('h-16', 'h-12');
+                navInner.classList.replace('lg:h-20', 'lg:h-16');
+                headerLogo.src = 'Assets/Logo.png';
+                headerLogo.classList.replace('h-10', 'h-8');
+                headerLogo.classList.replace('lg:h-12', 'lg:h-10');
+            } else {
+                header.classList.remove('shadow-md');
+                navInner.classList.replace('h-12', 'h-16');
+                navInner.classList.replace('lg:h-16', 'lg:h-20');
+                headerLogo.src = 'Assets/Logo_and_text.png';
+                headerLogo.classList.replace('h-8', 'h-10');
+                headerLogo.classList.replace('lg:h-10', 'lg:h-12');
+            }
+        });
+    </script>
+</body>
+</html>

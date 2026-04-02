@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CCNLab | Computational Cognitive Neuroscience Lab · University of Padova</title>
+    <link rel="icon" type="image/png" href="Assets/Logo.png">
+    <meta name="description"
+        content="The Computational Cognitive Neuroscience Lab (CCNL) is a multidisciplinary research group at the University of Padova, exploring the computational mechanisms underlying human cognition.">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-dark':    '#1a1a1a',
+                        'primary-light':   '#FFFFFF',
+                        'accent-red':      '#b20839',
+                        'accent-red-hover':'#8a0022',
+                        'accent-gold':     '#b20839',
+                        'accent-gold-hover':'#8a0022',
+                        'neutral-gray':    '#6B7280',
+                        'light-gray':      '#F3F4F6',
+                        'surface':         '#f8f7f4',
+                        'surface-alt':     '#eeedea',
+                        'surface-border':  '#e2dfda',
+                        'surface':         '#f8f7f4',
+                    },
+                    fontFamily: {
+                        'manrope':    ['Manrope', 'sans-serif'],
+                        'display':    ['"Playfair Display"', 'Georgia', 'serif'],
+                        'mono-tech':  ['"JetBrains Mono"', '"Courier New"', 'monospace'],
+                    },
+                }
+            }
+        }
+    </script>
+
+    <link rel="stylesheet" href="styles.css">
+    <!-- Three.js for neural network visualization -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+
+<body class="font-manrope bg-surface text-primary-dark antialiased">
+
+    <!-- ===================== HEADER ===================== -->
+    <header id="header" class="fixed top-0 left-0 right-0 z-50 bg-white border-b border-surface-border transition-all duration-300">
+
+        <!-- Institutional Hierarchy Bar -->
+        <div class="inst-hierarchy-bar">
+            <div class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16 flex justify-between items-center">
+                <span>University of Padova &nbsp;·&nbsp; Department of General Psychology &nbsp;·&nbsp; Computational Cognitive Neuroscience Lab</span>
+                <a href="https://www.unipd.it" target="_blank" rel="noopener noreferrer" class="hover:text-accent-red transition-colors hidden sm:block">unipd.it ↗</a>
+            </div>
+        </div>
+
+        <!-- Main Navigation -->
+        <nav class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16">
+            <div class="flex items-center justify-between h-14 lg:h-16 transition-all duration-300" id="nav-inner">
+
+                <!-- Logo -->
+                <a href="#" class="flex items-center gap-3 group">
+                    <img src="Assets/Logo_and_text.png" alt="CCN Lab Logo" id="header-logo"
+                        class="h-10 lg:h-12 object-contain -ml-2 transition-all duration-300 logo-on-light">
+                </a>
+
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex items-center gap-4 lg:gap-7">
+                    <a href="#about" class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-sm font-medium tracking-wide">About</a>
+                    <div class="dropdown-container">
+                        <a href="research.html" class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-sm font-medium tracking-wide">Research</a>
+                        <div class="dropdown-menu">
+                            <a href="research.html#research"     class="dropdown-item">Research areas</a>
+                            <a href="research.html#facilities"   class="dropdown-item">Lab facilities</a>
+                            <a href="research.html#publications" class="dropdown-item">Publications</a>
+                            <a href="software.html"              class="dropdown-item">Software &amp; Downloads</a>
+                        </div>
+                    </div>
+                    <a href="people.html"     class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-sm font-medium tracking-wide">People</a>
+                    <a href="playground.html" class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-sm font-medium tracking-wide">Playground</a>
+                    <a href="news.html"       class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-sm font-medium tracking-wide">News</a>
+                    <a href="join-us.html"    class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-sm font-medium tracking-wide">Join us</a>
+
+                    <a href="#contact"
+                        class="btn-primary px-5 py-2 bg-accent-red text-white text-sm font-semibold hover:bg-accent-red-hover transition-all duration-200">
+                        Contact
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn" class="md:hidden p-2 text-neutral-gray hover:text-accent-red transition-colors" aria-label="Open menu">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-surface-border">
+            <div class="px-6 py-4 space-y-1">
+                <a href="#about"          class="block text-neutral-gray hover:text-accent-red transition-colors py-2.5 text-sm border-b border-surface-border">About</a>
+                <a href="research.html"   class="block text-neutral-gray hover:text-accent-red transition-colors py-2.5 text-sm border-b border-surface-border">Research</a>
+                <a href="people.html"     class="block text-neutral-gray hover:text-accent-red transition-colors py-2.5 text-sm border-b border-surface-border">People</a>
+                <a href="playground.html" class="block text-neutral-gray hover:text-accent-red transition-colors py-2.5 text-sm border-b border-surface-border">Playground</a>
+                <a href="news.html"       class="block text-neutral-gray hover:text-accent-red transition-colors py-2.5 text-sm border-b border-surface-border">News</a>
+                <a href="join-us.html"    class="block text-neutral-gray hover:text-accent-red transition-colors py-2.5 text-sm border-b border-surface-border">Join us</a>
+                <a href="#contact"        class="block w-fit mt-3 px-5 py-2 bg-accent-red text-white text-sm font-semibold hover:bg-accent-red-hover transition-colors">Contact</a>
+            </div>
+        </div>
+
+        <!-- Padova Red accent line -->
+        <div class="h-px bg-accent-red"></div>
+    </header>
+
+    <!-- ===================== HERO ===================== -->
+    <section id="hero" class="pt-[88px] min-h-screen flex items-center relative overflow-hidden bg-surface hero-pattern">
+
+        <div class="relative z-10 max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16 w-full">
+            <div class="grid grid-cols-1 lg:grid-cols-[1fr_58%] gap-8 lg:gap-0 items-center min-h-[calc(100vh-88px)] py-12 lg:py-0">
+
+                <!-- Left: Headline text -->
+                <div class="hero-text-col animate-fade-in-up">
+
+                    <!-- Lab identifier (monospace) -->
+                    <p class="font-mono-tech text-xs text-accent-red uppercase tracking-widest mb-8 flex items-center gap-2">
+                        <span class="inline-block w-8 h-px bg-accent-red"></span>
+                        Est. 2000 · Padova, Italy
+                    </p>
+
+                    <!-- Main headline in Playfair Display -->
+                    <div class="flex items-stretch gap-4 mb-8">
+                        <div class="headline-rule self-stretch" style="min-height: 3rem;"></div>
+                        <h1 class="font-display text-4xl sm:text-5xl md:text-6xl lg:text-5xl xl:text-6xl font-bold leading-tight text-primary-dark">
+                            Mapping the<br>
+                            Frontiers of<br>
+                            <span class="italic text-accent-red">Computational</span><br>
+                            Cognitive<br>
+                            Neuroscience
+                        </h1>
+                    </div>
+
+                    <!-- Subtitle -->
+                    <p class="text-base md:text-lg text-neutral-gray leading-relaxed mb-12 max-w-md font-light">
+                        A multidisciplinary research group at the University of Padova studying the (neuro)computational mechanisms underlying human cognition — from development to clinical breakdown.
+                    </p>
+
+                    <!-- Text-link CTAs -->
+                    <div class="flex flex-col sm:flex-row gap-5">
+                        <a href="research.html" class="cta-link cta-link-red text-sm font-semibold tracking-wide uppercase">
+                            Explore Research
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                            </svg>
+                        </a>
+                        <a href="#about" class="cta-link text-sm font-semibold tracking-wide uppercase text-neutral-gray border-neutral-gray/40 hover:text-accent-red hover:border-accent-red">
+                            About the Lab
+                        </a>
+                    </div>
+
+                    <!-- Metrics row -->
+                    <div class="flex gap-10 mt-14 pt-8 border-t border-surface-border">
+                        <div>
+                            <p class="metric-number text-3xl font-display font-bold">
+                                <span class="metric-value" data-target="300">0</span><span class="text-lg">+</span>
+                            </p>
+                            <p class="metric-label mt-1">Publications</p>
+                        </div>
+                        <div class="w-px bg-surface-border self-stretch"></div>
+                        <div>
+                            <p class="metric-number text-3xl font-display font-bold">
+                                <span class="metric-value" data-target="25">0</span><span class="text-lg">+</span>
+                            </p>
+                            <p class="metric-label mt-1">Years Active</p>
+                        </div>
+                        <div class="w-px bg-surface-border self-stretch"></div>
+                        <div>
+                            <p class="metric-number text-3xl font-display font-bold">7</p>
+                            <p class="metric-label mt-1">Research Areas</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: Neural visualization (large, bleeds visually) -->
+                <div class="neural-right-col hero-canvas-col flex flex-col items-end relative animate-fade-in">
+                    <!-- University branding — desktop only -->
+                    <a href="https://www.dpg.unipd.it/" target="_blank" rel="noopener noreferrer"
+                        class="hidden lg:flex flex-row-reverse items-center gap-4 absolute top-0 right-0 z-10 transition-opacity hover:opacity-70">
+                        <img src="Assets/Logo_UniPadova.png" alt="University of Padova"
+                            class="h-14 w-auto object-contain logo-on-light">
+                        <div class="flex flex-col items-end">
+                            <span class="text-base font-medium text-primary-dark tracking-tight">University of Padova</span>
+                            <span class="text-xs text-neutral-gray font-mono-tech tracking-wide">Dept. General Psychology</span>
+                        </div>
+                    </a>
+
+                    <!-- Neural canvas — the "Perceptron Star" -->
+                    <div id="neural-network-bg" class="w-full lg:w-[820px] h-[420px] lg:h-[600px] relative mt-8 lg:mt-28"></div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Subtle red grain texture overlay -->
+        <div class="absolute inset-0 pointer-events-none" style="background-image: radial-gradient(circle at 70% 50%, rgba(178,8,57,0.04) 0%, transparent 60%)"></div>
+    </section>
+
+    <!-- ===================== ABOUT ===================== -->
+    <section id="about" class="py-16 md:py-24 bg-white border-t border-surface-border section-container">
+        <div class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16">
+
+            <!-- Section label -->
+            <p class="font-mono-tech text-xs text-accent-red uppercase tracking-widest mb-6 flex items-center gap-2">
+                <span class="w-6 h-px bg-accent-red"></span>
+                About the Laboratory
+            </p>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
+                <!-- Left: Text -->
+                <div>
+                    <h2 class="font-display text-3xl md:text-4xl lg:text-5xl font-bold mb-8 leading-snug">
+                        Computational models of<br>
+                        <span class="italic text-accent-red">human cognition</span>
+                    </h2>
+
+                    <p class="text-base md:text-lg text-neutral-gray leading-relaxed mb-6">
+                        The Computational Cognitive Neuroscience Lab (CCNL) is a multidisciplinary research group
+                        <strong class="text-primary-dark font-medium">established in October 2000</strong> at the University of Padova. Based within the Department of General Psychology, the lab is a central hub for research linked to the Padova Neuroscience Center and is twinned with the Computational Neuroimaging Lab at the San Camillo Research Hospital in Venice-Lido.
+                    </p>
+
+                    <p class="text-base md:text-lg text-neutral-gray leading-relaxed mb-10">
+                        The lab is involved in multidisciplinary research at the frontiers between cognitive science, neuroscience and computer science. The focus is on the (neuro)computational mechanisms underlying human cognition, from development to skilled performance and breakdowns of processing in neurological or neurodevelopmental disorders.
+                    </p>
+
+                    <a href="research.html" class="cta-link cta-link-red text-sm font-semibold tracking-wide uppercase">
+                        Research overview
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                        </svg>
+                    </a>
+                </div>
+
+                <!-- Right: Images + institutional affiliations -->
+                <div class="space-y-6">
+                    <!-- Photos -->
+                    <div class="grid grid-cols-2 gap-3">
+                        <div class="relative group overflow-hidden">
+                            <img src="Assets/CCNL_team.jpg" alt="CCNL Team"
+                                class="h-48 lg:h-56 w-full border border-surface-border object-cover transition-transform duration-500 group-hover:scale-103 people-photo brightness-105">
+                        </div>
+                        <div class="relative group overflow-hidden">
+                            <img src="Assets/Lab_Psico2.jpg" alt="Lab Space"
+                                class="h-48 lg:h-56 w-full border border-surface-border object-cover transition-transform duration-500 group-hover:scale-103 people-photo">
+                        </div>
+                    </div>
+
+                    <!-- Affiliation cards -->
+                    <div class="grid grid-cols-2 gap-3">
+                        <div class="card-hard p-4">
+                            <p class="font-mono-tech text-xs text-accent-red uppercase tracking-wider mb-1">Primary Affiliation</p>
+                            <p class="text-sm font-medium text-primary-dark">University of Padova</p>
+                            <p class="text-xs text-neutral-gray">Dept. of General Psychology</p>
+                        </div>
+                        <div class="card-hard p-4">
+                            <p class="font-mono-tech text-xs text-accent-red uppercase tracking-wider mb-1">Clinical Partner</p>
+                            <p class="text-sm font-medium text-primary-dark">San Camillo Hospital</p>
+                            <p class="text-xs text-neutral-gray">Computational Neuroimaging Lab</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== FUNDING / PARTNERS ===================== -->
+    <section class="py-10 bg-surface border-y border-surface-border overflow-hidden">
+        <div class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16">
+            <p class="font-mono-tech text-xs text-neutral-gray uppercase tracking-widest mb-8">
+                Funding &amp; Partners
+            </p>
+
+            <!-- Carousel -->
+            <div id="partners-carousel" class="partners-carousel-container relative">
+                <button class="carousel-nav-btn prev" aria-label="Previous" id="partners-prev">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                    </svg>
+                </button>
+                <button class="carousel-nav-btn next" aria-label="Next" id="partners-next">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                    </svg>
+                </button>
+
+                <!-- Fade edges -->
+                <div class="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-surface to-transparent z-10 pointer-events-none"></div>
+                <div class="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-surface to-transparent z-10 pointer-events-none"></div>
+
+                <div class="partners-carousel-track flex items-center gap-12">
+                    <!-- Set 1 -->
+                    <a href="https://erc.europa.eu/" target="_blank" rel="noopener noreferrer" class="partner-logo-wrapper flex-shrink-0">
+                        <img src="Assets/Funding_and_Partners/European_Research_Council_logo.svg.png" alt="European Research Council" class="partner-logo" title="European Research Council">
+                    </a>
+                    <a href="https://ec.europa.eu/" target="_blank" rel="noopener noreferrer" class="partner-logo-wrapper flex-shrink-0">
+                        <img src="Assets/Funding_and_Partners/European_Commission_logo.png" alt="European Commission" class="partner-logo" title="European Commission">
+                    </a>
+                    <a href="https://fondazionecariparo.it/" target="_blank" rel="noopener noreferrer" class="partner-logo-wrapper flex-shrink-0">
+                        <img src="Assets/Funding_and_Partners/Cariparo_Fundation.png" alt="Cariparo Foundation" class="partner-logo" title="Cariparo Foundation">
+                    </a>
+                    <a href="https://www.compagniadisanpaolo.it/" target="_blank" rel="noopener noreferrer" class="partner-logo-wrapper flex-shrink-0">
+                        <img src="Assets/Funding_and_Partners/Compagnia_di_San_Paolo.png" alt="Compagnia di San Paolo" class="partner-logo" title="Compagnia di San Paolo">
+                    </a>
+                    <a href="https://www.salute.gov.it/" target="_blank" rel="noopener noreferrer" class="partner-logo-wrapper flex-shrink-0">
+                        <img src="Assets/Funding_and_Partners/Ministry_Health_Italy.png" alt="Italian Ministry of Health" class="partner-logo" title="Italian Ministry of Health">
+                    </a>
+                    <a href="https://www.mur.gov.it/" target="_blank" rel="noopener noreferrer" class="partner-logo-wrapper flex-shrink-0">
+                        <img src="Assets/Funding_and_Partners/Italy_Ministery_Research_Education.png" alt="Italian Ministry of Education" class="partner-logo" title="Italian Ministry of Education">
+                    </a>
+                    <a href="https://pnc.unipd.it/" target="_blank" rel="noopener noreferrer" class="partner-logo-wrapper flex-shrink-0">
+                        <img src="Assets/Funding_and_Partners/Padova_Neuroscience_Center.png" alt="Padova Neuroscience Center" class="partner-logo" title="Padova Neuroscience Center">
+                    </a>
+                    <a href="https://www.hsancamillo.it/" target="_blank" rel="noopener noreferrer" class="partner-logo-wrapper flex-shrink-0">
+                        <img src="Assets/Funding_and_Partners/San_Camillo_Hospital.png" alt="San Camillo Research Hospital" class="partner-logo" title="San Camillo Research Hospital">
+                    </a>
+                    <a href="https://www.fondationlejeune.org/" target="_blank" rel="noopener noreferrer" class="partner-logo-wrapper flex-shrink-0">
+                        <img src="Assets/Funding_and_Partners/jerome lejeun.png" alt="Fondation Jérôme Lejeune" class="partner-logo" style="mix-blend-mode: multiply;" title="Fondation Jérôme Lejeune">
+                    </a>
+                    <!-- Set 2 (duplicate for loop) -->
+                    <a href="https://erc.europa.eu/" target="_blank" rel="noopener noreferrer" class="partner-logo-wrapper flex-shrink-0">
+                        <img src="Assets/Funding_and_Partners/European_Research_Council_logo.svg.png" alt="European Research Council" class="partner-logo">
+                    </a>
+                    <a href="https://ec.europa.eu/" target="_blank" rel="noopener noreferrer" class="partner-logo-wrapper flex-shrink-0">
+                        <img src="Assets/Funding_and_Partners/European_Commission_logo.png" alt="European Commission" class="partner-logo">
+                    </a>
+                    <a href="https://fondazionecariparo.it/" target="_blank" rel="noopener noreferrer" class="partner-logo-wrapper flex-shrink-0">
+                        <img src="Assets/Funding_and_Partners/Cariparo_Fundation.png" alt="Cariparo Foundation" class="partner-logo">
+                    </a>
+                    <a href="https://www.compagniadisanpaolo.it/" target="_blank" rel="noopener noreferrer" class="partner-logo-wrapper flex-shrink-0">
+                        <img src="Assets/Funding_and_Partners/Compagnia_di_San_Paolo.png" alt="Compagnia di San Paolo" class="partner-logo">
+                    </a>
+                    <a href="https://www.salute.gov.it/" target="_blank" rel="noopener noreferrer" class="partner-logo-wrapper flex-shrink-0">
+                        <img src="Assets/Funding_and_Partners/Ministry_Health_Italy.png" alt="Italian Ministry of Health" class="partner-logo">
+                    </a>
+                    <a href="https://www.mur.gov.it/" target="_blank" rel="noopener noreferrer" class="partner-logo-wrapper flex-shrink-0">
+                        <img src="Assets/Funding_and_Partners/Italy_Ministery_Research_Education.png" alt="Italian Ministry of Education" class="partner-logo">
+                    </a>
+                    <a href="https://pnc.unipd.it/" target="_blank" rel="noopener noreferrer" class="partner-logo-wrapper flex-shrink-0">
+                        <img src="Assets/Funding_and_Partners/Padova_Neuroscience_Center.png" alt="Padova Neuroscience Center" class="partner-logo">
+                    </a>
+                    <a href="https://www.hsancamillo.it/" target="_blank" rel="noopener noreferrer" class="partner-logo-wrapper flex-shrink-0">
+                        <img src="Assets/Funding_and_Partners/San_Camillo_Hospital.png" alt="San Camillo Research Hospital" class="partner-logo">
+                    </a>
+                    <a href="https://www.fondationlejeune.org/" target="_blank" rel="noopener noreferrer" class="partner-logo-wrapper flex-shrink-0">
+                        <img src="Assets/Funding_and_Partners/jerome lejeun.png" alt="Fondation Jérôme Lejeune" class="partner-logo" style="mix-blend-mode: multiply;">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== CONTACT ===================== -->
+    <section id="contact" class="py-16 md:py-24 bg-white section-container border-t border-surface-border">
+        <div class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16">
+
+            <p class="font-mono-tech text-xs text-accent-red uppercase tracking-widest mb-6 flex items-center gap-2">
+                <span class="w-6 h-px bg-accent-red"></span>
+                Get in Touch
+            </p>
+
+            <h2 class="font-display text-3xl md:text-4xl lg:text-5xl font-bold mb-12 leading-snug">Contact the Lab</h2>
+
+            <div class="grid lg:grid-cols-2 gap-12 lg:gap-20">
+                <!-- Contact Form -->
+                <div class="card-editorial p-8 md:p-10">
+                    <form class="space-y-5">
+                        <div>
+                            <label for="name" class="block text-xs font-mono-tech uppercase tracking-widest text-neutral-gray mb-2">Name</label>
+                            <input type="text" id="name"
+                                class="w-full bg-surface border border-surface-border px-4 py-3 text-sm text-primary-dark placeholder-neutral-gray/50 focus:outline-none focus:border-accent-red transition-colors"
+                                placeholder="Your full name">
+                        </div>
+                        <div>
+                            <label for="email" class="block text-xs font-mono-tech uppercase tracking-widest text-neutral-gray mb-2">Email</label>
+                            <input type="email" id="email"
+                                class="w-full bg-surface border border-surface-border px-4 py-3 text-sm text-primary-dark placeholder-neutral-gray/50 focus:outline-none focus:border-accent-red transition-colors"
+                                placeholder="your@email.com">
+                        </div>
+                        <div>
+                            <label for="message" class="block text-xs font-mono-tech uppercase tracking-widest text-neutral-gray mb-2">Message</label>
+                            <textarea id="message" rows="5"
+                                class="w-full bg-surface border border-surface-border px-4 py-3 text-sm text-primary-dark placeholder-neutral-gray/50 focus:outline-none focus:border-accent-red transition-colors resize-none"
+                                placeholder="How can we help?"></textarea>
+                        </div>
+                        <button type="button"
+                            class="btn-primary w-full px-8 py-3.5 bg-accent-red text-white text-sm font-semibold tracking-wide uppercase hover:bg-accent-red-hover transition-all duration-200">
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Contact Info -->
+                <div class="space-y-8">
+                    <!-- Address -->
+                    <div class="card-editorial p-6">
+                        <p class="font-mono-tech text-xs text-accent-red uppercase tracking-widest mb-3">Location</p>
+                        <div class="flex flex-col md:flex-row gap-5">
+                            <div class="w-full md:w-44 h-36 overflow-hidden border border-surface-border flex-shrink-0">
+                                <iframe
+                                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2801.3031238938165!2d11.885065376822285!3d45.41113573745672!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x477eda59ba33917d%3A0x9560f64e6f4a864d!2sVia%20Venezia%2C%208%2C%2035131%20Padova%20PD!5e0!3m2!1sen!2sit!4v1707346580000!5m2!1sen!2sit"
+                                    width="100%" height="150%" style="border:0; margin-top:-40px;"
+                                    allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+                                </iframe>
+                            </div>
+                            <div>
+                                <strong class="text-sm font-semibold text-primary-dark block mb-1">CCN Lab</strong>
+                                <p class="text-sm text-neutral-gray leading-relaxed">
+                                    Department of General Psychology<br>
+                                    University of Padova<br>
+                                    Via Venezia 8<br>
+                                    35131 Padova, Italy
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Connect -->
+                    <div class="card-editorial p-6">
+                        <p class="font-mono-tech text-xs text-accent-red uppercase tracking-widest mb-4">Connect</p>
+                        <div class="flex items-center gap-6">
+                            <a href="https://www.linkedin.com/company/ccnl-unipd" target="_blank" title="LinkedIn"
+                                class="text-neutral-gray hover:text-accent-red transition-colors duration-200">
+                                <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.761 0 5-2.239 5-5v-14c0-2.761-2.239-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                                </svg>
+                            </a>
+                            <a href="https://github.com/CCNL-UniPD" target="_blank" title="GitHub"
+                                class="text-neutral-gray hover:text-accent-red transition-colors duration-200">
+                                <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== FOOTER ===================== -->
+    <footer id="footer" class="bg-surface-alt py-12 border-t border-surface-border">
+        <div class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16">
+            <div class="grid md:grid-cols-4 gap-8 md:gap-12 mb-8">
+
+                <!-- Logo & Description -->
+                <div class="md:col-span-2">
+                    <img src="Assets/Logo_and_text.png" alt="CCN Lab" class="h-10 mb-4 logo-on-light opacity-70">
+                    <p class="text-neutral-gray text-sm leading-relaxed max-w-sm">
+                        The Computational Cognitive Neuroscience Lab at the University of Padova, exploring the computational mechanisms underlying human cognition since 2000.
+                    </p>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h4 class="font-mono-tech text-xs text-primary-dark uppercase tracking-widest mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#about"        class="text-neutral-gray hover:text-accent-red transition-colors text-sm">About</a></li>
+                        <li><a href="research.html" class="text-neutral-gray hover:text-accent-red transition-colors text-sm">Research</a></li>
+                        <li><a href="people.html"   class="text-neutral-gray hover:text-accent-red transition-colors text-sm">People</a></li>
+                        <li><a href="playground.html" class="text-neutral-gray hover:text-accent-red transition-colors text-sm">Playground</a></li>
+                        <li><a href="news.html"     class="text-neutral-gray hover:text-accent-red transition-colors text-sm">News</a></li>
+                        <li><a href="join-us.html"  class="text-neutral-gray hover:text-accent-red transition-colors text-sm">Join Us</a></li>
+                    </ul>
+                </div>
+
+                <!-- Affiliations -->
+                <div>
+                    <h4 class="font-mono-tech text-xs text-primary-dark uppercase tracking-widest mb-4">Affiliations</h4>
+                    <ul class="space-y-2 text-sm text-neutral-gray">
+                        <li><a href="http://www.unipd.it"      class="hover:text-accent-red transition-colors">University of Padova</a></li>
+                        <li><a href="http://dpg.psy.unipd.it"  class="hover:text-accent-red transition-colors">Dept. of General Psychology</a></li>
+                        <li><a href="http://pnc.unipd.it/"     class="hover:text-accent-red transition-colors">Padova Neuroscience Center</a></li>
+                        <li><a href="https://hsancamillo.it"   class="hover:text-accent-red transition-colors">San Camillo Research Hospital</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <hr class="section-rule mb-6">
+
+            <div class="flex flex-col md:flex-row justify-between items-center gap-3">
+                <p class="font-mono-tech text-xs text-neutral-gray">
+                    © 2000–2026 Computational Cognitive Neuroscience Lab · University of Padova
+                </p>
+                <p class="font-mono-tech text-xs text-neutral-gray/50">
+                    Dept. General Psychology · Via Venezia 8 · 35131 Padova, IT
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ===================== SCRIPTS ===================== -->
+    <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu    = document.getElementById('mobile-menu');
+        mobileMenuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+        mobileMenu.querySelectorAll('a').forEach(l => l.addEventListener('click', () => mobileMenu.classList.add('hidden')));
+
+        // Header scroll shrink
+        const header     = document.getElementById('header');
+        const navInner   = document.getElementById('nav-inner');
+        const headerLogo = document.getElementById('header-logo');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('shadow-md');
+                navInner.classList.replace('h-14', 'h-12');
+                navInner.classList.replace('lg:h-16', 'lg:h-14');
+                headerLogo.src = 'Assets/Logo.png';
+                headerLogo.classList.replace('h-10', 'h-8');
+                headerLogo.classList.replace('lg:h-12', 'lg:h-10');
+            } else {
+                header.classList.remove('shadow-md');
+                navInner.classList.replace('h-12', 'h-14');
+                navInner.classList.replace('lg:h-14', 'lg:h-16');
+                headerLogo.src = 'Assets/Logo_and_text.png';
+                headerLogo.classList.replace('h-8', 'h-10');
+                headerLogo.classList.replace('lg:h-10', 'lg:h-12');
+            }
+        });
+
+        // Scroll to top on refresh
+        if (history.scrollRestoration) history.scrollRestoration = 'manual';
+        window.scrollTo(0, 0);
+    </script>
+
+    <!-- Neural Network Visualization -->
+    <script src="js/brain-visualization.js?v=2026.1"></script>
+
+    <!-- Partners carousel -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const track   = document.querySelector('.partners-carousel-track');
+            const container = document.getElementById('partners-carousel');
+            const btnPrev = document.getElementById('partners-prev');
+            const btnNext = document.getElementById('partners-next');
+
+            let currentX = 0, isPaused = false, isManualMoving = false, isDragging = false;
+            let startX, scrollStartX;
+            const speed = 1.4;
+
+            function animate() {
+                if (!isPaused && !isManualMoving && !isDragging) {
+                    currentX -= speed;
+                    const halfWidth = track.offsetWidth / 2;
+                    if (Math.abs(currentX) >= halfWidth) currentX = 0;
+                    track.style.transform = `translateX(${currentX}px)`;
+                }
+                requestAnimationFrame(animate);
+            }
+            animate();
+
+            container.addEventListener('mouseenter', () => { if (!isDragging) isPaused = true; });
+            container.addEventListener('mouseleave', () => { if (!isManualMoving && !isDragging) isPaused = false; });
+
+            const shiftAmount = (200 + 48) * 2; // item width + gap
+
+            function handleNav(dir) {
+                if (isManualMoving || isDragging) return;
+                isManualMoving = true; isPaused = true;
+                let targetX = dir === 'next' ? currentX - shiftAmount : currentX + shiftAmount;
+                track.style.transition = 'transform 0.55s cubic-bezier(0.25,1,0.5,1)';
+                currentX = targetX;
+                track.style.transform = `translateX(${currentX}px)`;
+                const onEnd = () => {
+                    track.style.transition = 'none';
+                    const h = track.offsetWidth / 2;
+                    while (currentX <= -h) currentX += h;
+                    while (currentX > 0)  currentX -= h;
+                    track.style.transform = `translateX(${currentX}px)`;
+                    void track.offsetWidth;
+                    isManualMoving = false;
+                    if (!container.matches(':hover')) isPaused = false;
+                    track.removeEventListener('transitionend', onEnd);
+                };
+                track.addEventListener('transitionend', onEnd);
+            }
+
+            btnNext.addEventListener('click', e => { e.preventDefault(); handleNav('next'); });
+            btnPrev.addEventListener('click', e => { e.preventDefault(); handleNav('prev'); });
+
+            // Drag
+            const startDrag = e => {
+                if (isManualMoving) return;
+                isDragging = true; isPaused = true;
+                container.style.cursor = 'grabbing';
+                startX = e.pageX || e.touches[0].pageX;
+                scrollStartX = currentX;
+                track.style.transition = 'none';
+            };
+            const moveDrag = e => {
+                if (!isDragging) return;
+                const x = e.pageX || e.touches[0].pageX;
+                let newX = scrollStartX + (x - startX) * 1.4;
+                const h = track.offsetWidth / 2;
+                while (newX <= -h) newX += h;
+                while (newX > 0)  newX -= h;
+                currentX = newX;
+                track.style.transform = `translateX(${currentX}px)`;
+            };
+            const stopDrag = () => {
+                if (!isDragging) return;
+                isDragging = false;
+                container.style.cursor = 'grab';
+                if (!container.matches(':hover')) isPaused = false;
+            };
+            container.addEventListener('mousedown', startDrag);
+            window.addEventListener('mousemove', moveDrag);
+            window.addEventListener('mouseup', stopDrag);
+            container.addEventListener('touchstart', startDrag, { passive: true });
+            window.addEventListener('touchmove', moveDrag, { passive: true });
+            window.addEventListener('touchend', stopDrag);
+        });
+    </script>
+
+    <!-- Metric counter -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const metricEls = document.querySelectorAll('.metric-value');
+            const animateVal = (el, start, end, dur) => {
+                let ts = null;
+                const step = t => {
+                    if (!ts) ts = t;
+                    const p = Math.min((t - ts) / dur, 1);
+                    el.textContent = Math.floor(p * (end - start) + start);
+                    if (p < 1) requestAnimationFrame(step);
+                };
+                requestAnimationFrame(step);
+            };
+            const obs = new IntersectionObserver(entries => {
+                entries.forEach(e => {
+                    if (e.isIntersecting) {
+                        animateVal(e.target, 0, parseInt(e.target.dataset.target), 2000);
+                        obs.unobserve(e.target);
+                    }
+                });
+            }, { threshold: 0.5 });
+            metricEls.forEach(el => obs.observe(el));
+        });
+    </script>
+
+</body>
+</html>

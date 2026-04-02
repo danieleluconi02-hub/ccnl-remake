@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deep Unsupervised Learning | CCNLab</title>
+    <link rel="icon" type="image/png" href="Assets/Logo.png">
+    <meta name="description"
+        content="Deep Belief Networks for cognitive modeling — GPU implementations, datasets, and source code from the Computational Cognitive Neuroscience Lab.">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-dark':     '#1a1a1a',
+                        'primary-light':    '#FFFFFF',
+                        'accent-red':       '#b20839',
+                        'accent-red-hover': '#8a0022',
+                        'accent-gold':      '#b20839',
+                        'accent-gold-hover':'#8a0022',
+                        'neutral-gray':     '#6B7280',
+                        'light-gray':       '#F3F4F6',
+                        'surface':          '#f8f7f4',
+                        'surface-alt':      '#eeedea',
+                        'surface-border':   '#e2dfda',
+                    },
+                    fontFamily: {
+                        'manrope':   ['Manrope', 'sans-serif'],
+                        'display':   ['"Playfair Display"', 'Georgia', 'serif'],
+                        'mono-tech': ['"JetBrains Mono"', '"Courier New"', 'monospace'],
+                    },
+                }
+            }
+        }
+    </script>
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="font-manrope bg-surface text-primary-dark antialiased">
+
+    <!-- Header / Navigation -->
+    <header id="header" class="fixed top-0 left-0 right-0 z-50 bg-white border-b border-surface-border shadow-sm transition-all duration-300">
+        <div class="inst-hierarchy-bar">
+            <div class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16 flex justify-between items-center">
+                <span>University of Padova &nbsp;·&nbsp; Department of General Psychology &nbsp;·&nbsp; CCN Lab</span>
+                <a href="https://www.unipd.it" target="_blank" rel="noopener noreferrer" class="hover:text-accent-red transition-colors hidden sm:block">unipd.it ↗</a>
+            </div>
+        </div>
+        <nav class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16">
+            <div class="flex items-center justify-between h-16 lg:h-20 transition-all duration-300" id="nav-inner">
+
+                <!-- Logo -->
+                <a href="index.html" class="flex items-center gap-4 group">
+                    <img src="Assets/Logo_and_text.png" alt="CCN Lab Logo" id="header-logo"
+                        class="h-10 lg:h-12 object-contain -ml-2 transition-all duration-300 logo-on-light">
+                </a>
+
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex items-center gap-4 lg:gap-8">
+                    <a href="index.html#about"
+                        class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-base font-medium">About</a>
+                    <div class="dropdown-container">
+                        <a href="research.html"
+                            class="nav-link text-accent-gold hover:text-primary-dark transition-colors duration-200 text-base font-medium">Research</a>
+                        <div class="dropdown-menu">
+                            <a href="research.html#research" class="dropdown-item">Research areas</a>
+                            <a href="research.html#facilities" class="dropdown-item">Lab facilities</a>
+                            <a href="research.html#publications" class="dropdown-item">Publications</a>
+                            <a href="software.html" class="dropdown-item">Software &amp; Downloads</a>
+                        </div>
+                    </div>
+                    <a href="people.html"
+                        class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-base font-medium">People</a>
+                    <a href="playground.html"
+                        class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-base font-medium">Playground</a>
+                    <a href="news.html"
+                        class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-base font-medium">News</a>
+                    <a href="join-us.html"
+                        class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-base font-medium">Join us</a>
+                    <a href="index.html#contact"
+                        class="btn-primary px-5 py-2.5 bg-accent-gold text-white font-semibold rounded-none hover:bg-accent-red-hover transition-all duration-200 hover:shadow-lg hover:shadow-accent-gold/20 text-base">
+                        Contact us
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn"
+                    class="md:hidden p-2 text-neutral-gray hover:text-accent-red transition-colors"
+                    aria-label="Open menu">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-surface-border">
+            <div class="px-6 py-4 space-y-4">
+                <a href="index.html#about"
+                    class="block text-neutral-gray hover:text-accent-red transition-colors py-2">About</a>
+                <a href="research.html"
+                    class="block text-neutral-gray hover:text-accent-red transition-colors py-2">Research</a>
+                <a href="people.html"
+                    class="block text-neutral-gray hover:text-accent-red transition-colors py-2">People</a>
+                <a href="playground.html"
+                    class="block text-neutral-gray hover:text-accent-red transition-colors py-2">Playground</a>
+                <a href="news.html"
+                    class="block text-neutral-gray hover:text-accent-red transition-colors py-2">News</a>
+                <a href="join-us.html"
+                    class="block text-neutral-gray hover:text-accent-red transition-colors py-2">Join us</a>
+                <a href="index.html#contact"
+                    class="block w-fit mx-auto text-center px-5 py-2 bg-accent-red text-white font-semibold rounded-none hover:bg-accent-red-hover transition-colors">
+                    Contact us
+                </a>
+            </div>
+        </div>
+
+        <!-- Gold accent line -->
+        <div class="h-px bg-accent-red"></div>
+    </header>
+
+    <!-- Hero -->
+    <section class="pt-20 pb-10 md:pt-32 md:pb-16 bg-surface border-b border-surface-border">
+        <div class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16">
+
+            <!-- Breadcrumb -->
+            <nav class="flex items-center gap-2 text-sm text-neutral-gray mb-10">
+                <a href="research.html" class="hover:text-accent-red transition-colors">Research</a>
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
+                <span class="text-accent-red font-medium">Deep Unsupervised Learning</span>
+            </nav>
+
+            <!-- Title block -->
+            <div class="max-w-4xl">
+                <div class="flex items-center gap-3 mb-6">
+                    <span class="font-mono-tech text-xs text-neutral-gray uppercase tracking-widest border border-surface-border px-2 py-0.5">Generative Model</span>
+                    <span class="font-mono-tech text-xs text-accent-red uppercase tracking-widest border border-accent-red/30 px-2 py-0.5">Nature Neuroscience 2012</span>
+                </div>
+                <h1 class="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 text-primary-dark">
+                    Deep Unsupervised Learning<br>
+                    <span class="text-accent-gold">on Graphic Processors</span>
+                </h1>
+                <p class="text-xl text-neutral-gray font-light leading-relaxed max-w-3xl">
+                    Building hierarchies of progressively complex distributed representations of sensory data through
+                    probabilistic generative models — and discovering that numerosity emerges without supervision.
+                </p>
+            </div>
+
+            <!-- Quick action buttons -->
+            <div class="flex flex-wrap gap-4 mt-10">
+                <a href="playground.html#dbn-explorer"
+                    class="inline-flex items-center gap-2 px-6 py-3 bg-accent-red text-white font-semibold rounded-none hover:bg-accent-red-hover transition-all duration-200 hover:shadow-lg hover:shadow-accent-gold/20">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    Try Interactive Demo
+                </a>
+                <a href="https://github.com/CCNL-UniPD/iDBN" target="_blank" rel="noopener"
+                    class="inline-flex items-center gap-2 px-6 py-3 border border-neutral-gray/30 text-primary-dark rounded-none hover:border-accent-red hover:text-accent-red transition-all duration-200">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/>
+                    </svg>
+                    iDBN on GitHub
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gold divider -->
+    <div class="h-px bg-surface-border"></div>
+
+    <!-- Main Content -->
+    <main class="py-12 md:py-20 bg-white border-t border-surface-border">
+        <div class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16">
+            <div class="grid lg:grid-cols-3 gap-16">
+
+                <!-- Left column: main article -->
+                <article class="lg:col-span-2 prose-reading">
+
+                    <!-- Overview -->
+                    <section class="mb-16">
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="w-1 h-8 bg-accent-red"></div>
+                            <h2 class="text-2xl font-bold">Overview</h2>
+                        </div>
+                        <div class="space-y-5 text-neutral-gray leading-relaxed">
+                            <p>
+                                Deep Belief Networks (DBNs) are hierarchical generative models that learn progressively complex
+                                distributed representations of sensory data through multiple stacked Restricted Boltzmann Machines (RBMs).
+                                Each RBM learns a compressed, higher-level encoding of the layer below, giving the model the capacity
+                                to capture structure at multiple scales of abstraction.
+                            </p>
+                            <p>
+                                At the CCNL, we use DBNs as <strong class="text-accent-red font-medium">computational cognitive models</strong> — not
+                                merely engineering tools. By training DBNs on visual stimuli analogous to those encountered in human
+                                perception, we investigate whether cognitive capacities such as numerosity perception, letter recognition,
+                                and word-form processing emerge spontaneously from unsupervised statistical learning, without explicit
+                                symbolic programming.
+                            </p>
+                            <p>
+                                This research sits at the intersection of machine learning and cognitive neuroscience, testing
+                                the hypothesis that the brain's representational hierarchy arises from the same unsupervised
+                                learning pressures that drive deep generative models.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- DBN Architecture figure (SVG schematic) -->
+                    <figure class="mb-16">
+                        <div class="border border-surface-border bg-primary-dark p-6 overflow-x-auto">
+                            <svg viewBox="0 0 680 260" width="100%" style="max-width:680px;display:block;margin:0 auto;font-family:Manrope,sans-serif">
+                                <!-- Layer labels -->
+                                <text x="60"  y="20" fill="rgba(255,255,255,0.4)" font-size="10" font-weight="600" text-anchor="middle" letter-spacing="1">INPUT (v)</text>
+                                <text x="240" y="20" fill="rgba(255,255,255,0.4)" font-size="10" font-weight="600" text-anchor="middle" letter-spacing="1">HIDDEN 1 (h¹)</text>
+                                <text x="430" y="20" fill="rgba(255,255,255,0.4)" font-size="10" font-weight="600" text-anchor="middle" letter-spacing="1">HIDDEN 2 (h²)</text>
+                                <text x="600" y="20" fill="rgba(255,255,255,0.4)" font-size="10" font-weight="600" text-anchor="middle" letter-spacing="1">OUTPUT</text>
+
+                                <!-- RBM1 bracket -->
+                                <rect x="20" y="30" width="355" height="200" rx="10" fill="none" stroke="rgba(52,152,219,0.2)" stroke-width="1.5" stroke-dasharray="5,4"/>
+                                <text x="197" y="245" fill="rgba(52,152,219,0.5)" font-size="9" text-anchor="middle">RBM₁  ·  CD-k</text>
+
+                                <!-- RBM2 bracket -->
+                                <rect x="205" y="30" width="355" height="200" rx="10" fill="none" stroke="rgba(46,204,113,0.2)" stroke-width="1.5" stroke-dasharray="5,4"/>
+                                <text x="382" y="256" fill="rgba(46,204,113,0.5)" font-size="9" text-anchor="middle">RBM₂  ·  CD-k</text>
+
+                                <!-- Visible layer: 10 neurons -->
+                                <g id="vis">
+                                    <circle cx="60" cy="50"  r="7" fill="#1a2a40" stroke="rgba(52,152,219,0.6)" stroke-width="1.5"/>
+                                    <circle cx="60" cy="74"  r="7" fill="#1d3a50" stroke="rgba(52,152,219,0.8)" stroke-width="1.5"/>
+                                    <circle cx="60" cy="98"  r="7" fill="#142030" stroke="rgba(52,152,219,0.4)" stroke-width="1.5"/>
+                                    <circle cx="60" cy="122" r="7" fill="#0d1a28" stroke="rgba(52,152,219,0.3)" stroke-width="1.5"/>
+                                    <circle cx="60" cy="146" r="7" fill="#1a3048" stroke="rgba(52,152,219,0.7)" stroke-width="1.5"/>
+                                    <circle cx="60" cy="170" r="7" fill="#0a1520" stroke="rgba(52,152,219,0.2)" stroke-width="1.5"/>
+                                    <circle cx="60" cy="194" r="7" fill="#1d3050" stroke="rgba(52,152,219,0.9)" stroke-width="1.5"/>
+                                    <text x="60" y="218" fill="rgba(255,255,255,0.3)" font-size="8" text-anchor="middle">…100 units</text>
+                                </g>
+
+                                <!-- Connections v→h1 (sample) -->
+                                <g stroke="rgba(52,152,219,0.12)" stroke-width="0.8">
+                                    <line x1="67" y1="50"  x2="225" y2="65"/>
+                                    <line x1="67" y1="50"  x2="225" y2="105"/>
+                                    <line x1="67" y1="74"  x2="225" y2="85"/>
+                                    <line x1="67" y1="74"  x2="225" y2="125"/>
+                                    <line x1="67" y1="98"  x2="225" y2="65"/>
+                                    <line x1="67" y1="98"  x2="225" y2="145"/>
+                                    <line x1="67" y1="122" x2="225" y2="85"/>
+                                    <line x1="67" y1="146" x2="225" y2="105"/>
+                                    <line x1="67" y1="170" x2="225" y2="125"/>
+                                    <line x1="67" y1="194" x2="225" y2="145"/>
+                                    <line x1="67" y1="194" x2="225" y2="165"/>
+                                </g>
+                                <!-- W label -->
+                                <text x="145" y="95" fill="rgba(52,152,219,0.55)" font-size="11" font-weight="700" font-style="italic">W₁</text>
+
+                                <!-- Hidden 1: 7 neurons -->
+                                <g id="h1">
+                                    <circle cx="240" cy="65"  r="8" fill="#1d3050" stroke="#3498db" stroke-width="1.5"/>
+                                    <circle cx="240" cy="90"  r="8" fill="#2a4060" stroke="#3498db" stroke-width="1.8"/>
+                                    <circle cx="240" cy="115" r="8" fill="#0d1a28" stroke="rgba(52,152,219,0.4)" stroke-width="1.2"/>
+                                    <circle cx="240" cy="140" r="8" fill="#1a3048" stroke="#3498db" stroke-width="1.5"/>
+                                    <circle cx="240" cy="165" r="8" fill="#243858" stroke="#3498db" stroke-width="1.7"/>
+                                    <circle cx="240" cy="190" r="8" fill="#0a1520" stroke="rgba(52,152,219,0.3)" stroke-width="1"/>
+                                    <text x="240" y="214" fill="rgba(255,255,255,0.3)" font-size="8" text-anchor="middle">…50 units</text>
+                                </g>
+
+                                <!-- Connections h1→h2 (sample) -->
+                                <g stroke="rgba(46,204,113,0.12)" stroke-width="0.8">
+                                    <line x1="248" y1="65"  x2="415" y2="75"/>
+                                    <line x1="248" y1="65"  x2="415" y2="115"/>
+                                    <line x1="248" y1="90"  x2="415" y2="95"/>
+                                    <line x1="248" y1="90"  x2="415" y2="135"/>
+                                    <line x1="248" y1="115" x2="415" y2="75"/>
+                                    <line x1="248" y1="140" x2="415" y2="95"/>
+                                    <line x1="248" y1="165" x2="415" y2="135"/>
+                                    <line x1="248" y1="190" x2="415" y2="155"/>
+                                </g>
+                                <text x="330" y="95" fill="rgba(46,204,113,0.55)" font-size="11" font-weight="700" font-style="italic">W₂</text>
+
+                                <!-- Hidden 2: 5 neurons -->
+                                <g id="h2">
+                                    <circle cx="430" cy="75"  r="9" fill="#1a3d25" stroke="#2ecc71" stroke-width="1.8"/>
+                                    <circle cx="430" cy="100" r="9" fill="#2a5035" stroke="#2ecc71" stroke-width="2"/>
+                                    <circle cx="430" cy="125" r="9" fill="#142d1c" stroke="rgba(46,204,113,0.5)" stroke-width="1.2"/>
+                                    <circle cx="430" cy="150" r="9" fill="#1a3d25" stroke="#2ecc71" stroke-width="1.6"/>
+                                    <circle cx="430" cy="175" r="9" fill="#0d2018" stroke="rgba(46,204,113,0.3)" stroke-width="1"/>
+                                    <text x="430" y="200" fill="rgba(255,255,255,0.3)" font-size="8" text-anchor="middle">…20 units</text>
+                                </g>
+
+                                <!-- Output arrow -->
+                                <line x1="440" y1="125" x2="560" y2="125" stroke="rgba(178,8,57,0.6)" stroke-width="1.5" marker-end="url(#arr)"/>
+                                <defs>
+                                    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                                        <path d="M0,0 L0,6 L8,3 z" fill="rgba(178,8,57,0.9)"/>
+                                    </marker>
+                                </defs>
+
+                                <!-- Output box -->
+                                <rect x="560" y="108" width="95" height="34" rx="7" fill="rgba(178,8,57,0.08)" stroke="rgba(178,8,57,0.4)" stroke-width="1.5"/>
+                                <text x="607" y="130" fill="#b20839" font-size="10" font-weight="700" text-anchor="middle">Numerosity</text>
+                            </svg>
+                        </div>
+                        <figcaption class="mt-3 text-xs text-neutral-gray/60 italic">
+                            DBN architecture: a hierarchy of Restricted Boltzmann Machines (100 → 50 → 20 units),
+                            trained layer-wise with Contrastive Divergence. After pre-training, numerosity-selective
+                            units emerge in the hidden layers without any labelled supervision.
+                            Based on Stoianov &amp; Zorzi (2012), <em>Nature Neuroscience</em>.
+                        </figcaption>
+                    </figure>
+
+                    <!-- Key Findings -->
+                    <section class="mb-16">
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="w-1 h-8 bg-accent-red"></div>
+                            <h2 class="text-2xl font-bold">Key Findings</h2>
+                        </div>
+
+                        <!-- Finding card 1 -->
+                        <div class="mb-8 p-6 rounded-none border border-surface-border bg-surface">
+                            <div class="flex items-start gap-4">
+                                <div class="flex-shrink-0 w-10 h-10 rounded-none bg-blue-500/15 flex items-center justify-center">
+                                    <svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14"/></svg>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold text-primary-dark mb-2">Emergent Numerosity Perception</h3>
+                                    <p class="text-neutral-gray text-sm leading-relaxed">
+                                        A DBN trained on images of dot patterns with varying numbers of elements spontaneously develops
+                                        internal representations that are selective for numerosity — mirroring the numerical tuning
+                                        curves found in parietal and prefrontal neurons. Crucially, this emerges without any
+                                        supervision or explicit number information in the training signal.
+                                    </p>
+                                    <p class="text-xs text-neutral-gray/60 mt-3 italic">
+                                        Stoianov &amp; Zorzi (2012). <em>Nature Neuroscience, 15</em>, 194–196.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Finding card 2 -->
+                        <div class="mb-8 p-6 rounded-none border border-surface-border bg-surface">
+                            <div class="flex items-start gap-4">
+                                <div class="flex-shrink-0 w-10 h-10 rounded-none bg-purple-500/15 flex items-center justify-center">
+                                    <svg class="w-5 h-5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"/></svg>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold text-primary-dark mb-2">Visual Word-Form Representations</h3>
+                                    <p class="text-neutral-gray text-sm leading-relaxed">
+                                        DBNs trained on printed letters and words develop features analogous to those found in the
+                                        Visual Word Form Area of the human brain — from oriented edge detectors in lower layers to
+                                        whole-word and letter-cluster detectors in higher layers. The representational geometry
+                                        reflects orthographic similarity between words.
+                                    </p>
+                                    <p class="text-xs text-neutral-gray/60 mt-3 italic">
+                                        Testolin et al. (2013). <em>Frontiers in Psychology, 4</em>, 566.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Finding card 3 -->
+                        <div class="mb-8 p-6 rounded-none border border-surface-border bg-surface">
+                            <div class="flex items-start gap-4">
+                                <div class="flex-shrink-0 w-10 h-10 rounded-none bg-green-500/15 flex items-center justify-center">
+                                    <span class="text-green-400 text-lg">⚡</span>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold text-primary-dark mb-2">The iDBN Algorithm</h3>
+                                    <p class="text-neutral-gray text-sm leading-relaxed">
+                                        Standard layer-wise DBN pre-training freezes lower layers before training higher ones.
+                                        The iterative DBN (iDBN) instead performs joint updates across all layers simultaneously,
+                                        yielding richer features and faster convergence. GPU implementations allow training on
+                                        biologically realistic image datasets at scales previously requiring cluster computing.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Architecture -->
+                    <section class="mb-16">
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="w-1 h-8 bg-accent-red"></div>
+                            <h2 class="text-2xl font-bold">Architecture & Training</h2>
+                        </div>
+                        <div class="space-y-5 text-neutral-gray leading-relaxed">
+                            <p>
+                                Each layer of a DBN is a <strong class="text-accent-red font-medium">Restricted Boltzmann Machine</strong> — a
+                                bipartite undirected graphical model with a visible layer <em>v</em> and a hidden layer <em>h</em>,
+                                connected by a weight matrix <em>W</em>. The joint energy is:
+                            </p>
+                            <div class="my-6 p-5 rounded-none bg-surface-alt border border-surface-border font-mono text-sm text-primary-dark/90 overflow-x-auto">
+                                E(v, h) = −&Sigma;<sub>i</sub> a<sub>i</sub>v<sub>i</sub> − &Sigma;<sub>j</sub> b<sub>j</sub>h<sub>j</sub> − &Sigma;<sub>ij</sub> v<sub>i</sub>W<sub>ij</sub>h<sub>j</sub>
+                            </div>
+                            <p>
+                                Training uses <strong class="text-accent-red font-medium">Contrastive Divergence (CD-k)</strong>, which approximates
+                                the log-likelihood gradient with <em>k</em> steps of Gibbs sampling. A positive phase collects
+                                co-activation statistics from the data; a negative phase collects them from the model's fantasy
+                                particles. Weight updates follow:
+                            </p>
+                            <div class="my-6 p-5 rounded-none bg-surface-alt border border-surface-border font-mono text-sm text-primary-dark/90 overflow-x-auto">
+                                &Delta;W = &mu;&Delta;W<sub>prev</sub> + &eta;(&langle;vh&rangle;<sub>data</sub> − &langle;vh&rangle;<sub>model</sub> − &lambda;W)
+                            </div>
+                            <p>
+                                After layer-wise pre-training, the full DBN is optionally fine-tuned by backpropagation using the
+                                pre-trained weights as a warm start — a procedure shown by Hinton et al. (2006) to reliably escape
+                                the poor local minima that trap randomly initialized deep networks.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- GENMOD project -->
+                    <section class="mb-16">
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="w-1 h-8 bg-accent-red"></div>
+                            <h2 class="text-2xl font-bold">GENMOD — ERC-Funded Project</h2>
+                        </div>
+                        <div class="p-6 rounded-none border-l-2 border-accent-red bg-surface mb-6">
+                            <p class="text-neutral-gray text-sm leading-relaxed">
+                                The GENMOD project (European Research Council Advanced Grant, PI: Marco Zorzi) developed large-scale
+                                DBN implementations running on clusters of GPUs. The project specifically targeted cognitive
+                                phenomena where representational structure may emerge from unsupervised exposure to naturalistic stimuli —
+                                bypassing the need for labelled datasets or hand-crafted feature engineering.
+                            </p>
+                        </div>
+                        <div class="space-y-4 text-neutral-gray leading-relaxed">
+                            <p>
+                                A desktop-PC-friendly version of the framework was documented in Testolin et al. (2013) in
+                                <em>Frontiers in Psychology</em>, making these tools accessible to cognitive scientists without
+                                dedicated HPC infrastructure.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- Key Citations -->
+                    <section class="mb-16">
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="w-1 h-8 bg-accent-red"></div>
+                            <h2 class="text-2xl font-bold">Key References</h2>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="p-5 rounded-none border border-surface-border bg-surface">
+                                <p class="font-mono-tech text-xs text-accent-red uppercase tracking-wider mb-2">Primary Research</p>
+                                <p class="text-neutral-gray text-sm leading-relaxed">
+                                    Stoianov, I., &amp; Zorzi, M. (2012). Emergence of a 'visual number sense' in hierarchical
+                                    generative models. <em>Nature Neuroscience, 15</em>, 194–196.
+                                    <a href="https://doi.org/10.1038/nn.2996" target="_blank" rel="noopener"
+                                        class="text-accent-red hover:underline ml-1">doi:10.1038/nn.2996</a>
+                                </p>
+                            </div>
+                            <div class="p-5 rounded-none border border-surface-border bg-surface">
+                                <p class="font-mono-tech text-xs text-accent-red uppercase tracking-wider mb-2">Accessible Implementation</p>
+                                <p class="text-neutral-gray text-sm leading-relaxed">
+                                    Testolin, A., Stoianov, I., De Filippo De Grazia, M., &amp; Zorzi, M. (2013).
+                                    Deep unsupervised learning on a desktop PC: A primer for cognitive scientists.
+                                    <em>Frontiers in Psychology, 4</em>, 566.
+                                    <a href="https://doi.org/10.3389/fpsyg.2013.00566" target="_blank" rel="noopener"
+                                        class="text-accent-red hover:underline ml-1">doi:10.3389/fpsyg.2013.00566</a>
+                                </p>
+                            </div>
+                            <div class="p-5 rounded-none border border-surface-border bg-surface">
+                                <p class="font-mono-tech text-xs text-accent-red uppercase tracking-wider mb-2">Training Algorithm</p>
+                                <p class="text-neutral-gray text-sm leading-relaxed">
+                                    Hinton, G.E., Osindero, S., &amp; Teh, Y.W. (2006). A fast learning algorithm for
+                                    deep belief nets. <em>Neural Computation, 18</em>, 1527–1554.
+                                </p>
+                            </div>
+                        </div>
+                    </section>
+
+                </article>
+
+                <!-- Right sidebar -->
+                <aside class="lg:col-span-1 space-y-8">
+
+                    <!-- Try the Demo -->
+                    <div class="sticky top-28">
+                        <div class="p-6 rounded-none border border-surface-border bg-surface mb-6">
+                            <h3 class="font-semibold text-primary-dark mb-3 flex items-center gap-2">
+                                <svg class="w-5 h-5 text-accent-red" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                                Interactive Demo
+                            </h3>
+                            <p class="text-neutral-gray text-sm mb-4 leading-relaxed">
+                                Train a DBN in your browser. Draw dot patterns, adjust CD-k steps and learning rate,
+                                and watch features emerge in the receptive fields.
+                            </p>
+                            <a href="playground.html#dbn-explorer"
+                                class="block w-full text-center px-4 py-2.5 bg-accent-red text-white font-semibold rounded-none hover:bg-accent-red-hover transition-all duration-200 text-sm">
+                                Open DBN Explorer →
+                            </a>
+                        </div>
+
+                        <!-- Downloads -->
+                        <div class="p-6 rounded-none border border-surface-border bg-surface mb-6">
+                            <h3 class="font-semibold text-primary-dark mb-4">Source Code & Datasets</h3>
+                            <ul class="space-y-3">
+                                <li>
+                                    <a href="https://github.com/CCNL-UniPD/iDBN" target="_blank" rel="noopener"
+                                        class="flex items-center gap-3 p-3 rounded-none border border-surface-border hover:border-accent-red transition-colors group">
+                                        <svg class="w-5 h-5 text-neutral-gray group-hover:text-accent-red transition-colors flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/>
+                                        </svg>
+                                        <div>
+                                            <p class="text-sm text-primary-dark font-medium group-hover:text-accent-red transition-colors">iDBN — GitHub</p>
+                                            <p class="text-xs text-neutral-gray">Iterative DBN (Python/MATLAB/GPU)</p>
+                                        </div>
+                                    </a>
+                                </li>
+                            </ul>
+                            <div class="mt-5 pt-5 border-t border-surface-border">
+                                <p class="text-xs text-neutral-gray font-semibold uppercase tracking-wider mb-3">Implementation Variants</p>
+                                <div class="grid grid-cols-2 gap-2">
+                                    <span class="px-3 py-1.5 text-xs text-center border border-surface-border text-neutral-gray">Octave [CPU]</span>
+                                    <span class="px-3 py-1.5 text-xs text-center border border-surface-border text-neutral-gray">Octave [Cluster]</span>
+                                    <span class="px-3 py-1.5 text-xs text-center border border-surface-border text-neutral-gray">MATLAB [GPU]</span>
+                                    <span class="px-3 py-1.5 text-xs text-center border border-surface-border text-neutral-gray">Python [GPU]</span>
+                                </div>
+                                <p class="text-xs text-neutral-gray/60 mt-3">All available via the GitHub repository above.</p>
+                            </div>
+                        </div>
+
+                        <!-- Available datasets -->
+                        <div class="p-6 rounded-none border border-surface-border bg-surface">
+                            <h3 class="font-semibold text-primary-dark mb-4">Datasets & Tools</h3>
+                            <ul class="space-y-2 text-sm text-neutral-gray">
+                                <li class="flex items-start gap-2">
+                                    <span class="text-accent-red mt-1">›</span>
+                                    Visual numerosity perception dataset
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <span class="text-accent-red mt-1">›</span>
+                                    Word recognition deep learning models
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <span class="text-accent-red mt-1">›</span>
+                                    Printed letter confusion/similarity matrices
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <span class="text-accent-red mt-1">›</span>
+                                    Natural image-trained network weights
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <span class="text-accent-red mt-1">›</span>
+                                    Latin letter dataset (uppercase, whitened, multi-font)
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <span class="text-accent-red mt-1">›</span>
+                                    MATLAB receptive-field visualization routines
+                                </li>
+                            </ul>
+                            <p class="text-xs text-neutral-gray/60 mt-4">Datasets available via the GitHub repository and Open Science Framework.</p>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </main>
+
+    <!-- Related / Next Research -->
+    <section class="py-16 border-t border-surface-border">
+        <div class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16">
+            <h2 class="text-xl font-bold mb-8 text-neutral-gray">Related Research</h2>
+            <div class="grid md:grid-cols-2 gap-6 max-w-3xl">
+                <a href="research-cdp.html"
+                    class="flex items-start gap-4 p-5 rounded-none border border-surface-border hover:border-accent-red transition-all duration-200 group">
+                    <svg class="w-6 h-6 mt-1 flex-shrink-0 text-neutral-gray/60 group-hover:text-accent-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+                    <div>
+                        <p class="font-semibold text-primary-dark group-hover:text-accent-red transition-colors mb-1">CDP Reading Model</p>
+                        <p class="text-sm text-neutral-gray">Connectionist dual-route simulation of reading aloud across four languages.</p>
+                    </div>
+                </a>
+                <a href="playground.html#dbn-explorer"
+                    class="flex items-start gap-4 p-5 rounded-none border border-neutral-gray/15 hover:border-blue-400/40 transition-all duration-200 group">
+                    <svg class="w-6 h-6 mt-1 flex-shrink-0 text-blue-400/60 group-hover:text-blue-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"/></svg>
+                    <div>
+                        <p class="font-semibold text-primary-dark group-hover:text-blue-400 transition-colors mb-1">DBN Explorer</p>
+                        <p class="text-sm text-neutral-gray">Train and visualize a Deep Belief Network interactively in the browser.</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="footer" class="bg-surface-alt py-12 border-t border-surface-border">
+        <div class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16">
+            <div class="grid md:grid-cols-4 gap-8 md:gap-12 mb-8 md:mb-12">
+                <div class="md:col-span-2">
+                    <img src="Assets/Logo_and_text.png" alt="CCN Lab" class="h-14 mb-4 logo-on-light">
+                    <p class="text-neutral-gray text-sm leading-relaxed max-w-md">
+                        The Computational Cognitive Neuroscience Lab at the University of Padova, exploring the
+                        computational mechanisms underlying human cognition since 2000.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4 text-primary-dark">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="index.html#about" class="text-neutral-gray hover:text-accent-red transition-colors text-sm">About</a></li>
+                        <li><a href="research.html" class="text-neutral-gray hover:text-accent-red transition-colors text-sm">Research</a></li>
+                        <li><a href="people.html" class="text-neutral-gray hover:text-accent-red transition-colors text-sm">People</a></li>
+                        <li><a href="playground.html" class="text-neutral-gray hover:text-accent-red transition-colors text-sm">Playground</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4 text-primary-dark">Affiliations</h4>
+                    <ul class="space-y-2 text-sm text-neutral-gray">
+                        <li><a href="http://www.unipd.it" class="hover:text-accent-red transition-colors">University of Padova</a></li>
+                        <li><a href="http://dpg.psy.unipd.it" class="hover:text-accent-red transition-colors">Dept. of General Psychology</a></li>
+                        <li><a href="http://pnc.unipd.it/" class="hover:text-accent-red transition-colors">Padova Neuroscience Center</a></li>
+                        <li><a href="https://hsancamillo.it" class="hover:text-accent-red transition-colors">San Camillo Research Hospital</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="pt-8 border-t border-neutral-gray/20 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-neutral-gray text-xs">
+                    © 2000–2026 Computational Cognitive Neuroscience Lab. All rights reserved.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Mobile Menu Script -->
+    <script>
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        if (mobileMenuBtn && mobileMenu) {
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+        }
+
+        const header    = document.getElementById('header');
+        const navInner  = document.getElementById('nav-inner');
+        const headerLogo = document.getElementById('header-logo');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('shadow-md');
+                navInner.classList.remove('h-16', 'lg:h-20');
+                navInner.classList.add('h-12', 'lg:h-14');
+                headerLogo.src = 'Assets/Logo.png';
+                headerLogo.classList.remove('h-10', 'lg:h-12');
+                headerLogo.classList.add('h-8', 'lg:h-10');
+            } else {
+                header.classList.remove('shadow-md');
+                navInner.classList.add('h-16', 'lg:h-20');
+                navInner.classList.remove('h-12', 'lg:h-14');
+                headerLogo.src = 'Assets/Logo_and_text.png';
+                headerLogo.classList.add('h-10', 'lg:h-12');
+                headerLogo.classList.remove('h-8', 'lg:h-10');
+            }
+        });
+    </script>
+
+</body>
+</html>

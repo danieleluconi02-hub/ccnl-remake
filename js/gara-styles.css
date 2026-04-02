@@ -1,0 +1,381 @@
+/* ===== La Gara dei Numeri - Game Styles (Padova Red Editorial) ===== */
+
+/* Base Container */
+.gara-game {
+    position: relative;
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    border-radius: 0;
+    overflow: hidden;
+    box-shadow: 0 0 60px rgba(178,8,57,0.1), 0 20px 60px rgba(0,0,0,0.5);
+    background: #1a1a1a;
+    aspect-ratio: 4/3;
+}
+.gara-game:fullscreen, .gara-game:-webkit-full-screen {
+    max-width: 100vw; border-radius: 0; aspect-ratio: auto;
+}
+.gara-screen { position: relative; width: 100%; height: 100%; }
+#gara-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: none; }
+.gara-overlay {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Manrope', 'Inter', sans-serif; color: #fff; overflow: hidden;
+}
+.gara-controls {
+    position: absolute; top: 12px; right: 12px; z-index: 20;
+    display: flex; gap: 6px;
+}
+.gara-btn-ctrl {
+    width: 36px; height: 36px; border-radius: 0;
+    background: rgba(0,0,0,0.6); backdrop-filter: blur(8px);
+    border: 1px solid rgba(255,255,255,0.15); color: #fff;
+    font-size: 16px; cursor: pointer; transition: all 0.2s;
+    display: flex; align-items: center; justify-content: center;
+}
+.gara-btn-ctrl:hover { background: rgba(178,8,57,0.2); border-color: #b20839; transform: scale(1.1); }
+
+/* Buttons */
+.gara-btn-primary {
+    padding: 14px 36px; font-size: 1.1rem; font-weight: 700;
+    background: #b20839; color: #fff;
+    border: none; border-radius: 0; cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 3px 3px 0 #8a0022;
+    font-family: inherit; letter-spacing: 0.5px;
+}
+.gara-btn-primary:hover { background: #8a0022; transform: translate(1px,1px); box-shadow: 2px 2px 0 #5a0017; }
+.gara-btn-secondary {
+    padding: 12px 28px; font-size: 1rem; font-weight: 600;
+    background: rgba(255,255,255,0.08); color: #fff;
+    border: 1px solid rgba(255,255,255,0.2); border-radius: 0;
+    cursor: pointer; transition: all 0.2s; font-family: inherit;
+    backdrop-filter: blur(8px);
+}
+.gara-btn-secondary:hover { background: rgba(255,255,255,0.15); border-color: rgba(178,8,57,0.5); }
+.gara-btn-small {
+    padding: 8px 18px; font-size: 0.85rem; font-weight: 600;
+    background: rgba(255,255,255,0.1); color: #fff;
+    border: 1px solid rgba(255,255,255,0.2); border-radius: 0;
+    cursor: pointer; transition: all 0.2s; font-family: inherit;
+}
+.gara-btn-small:hover { background: rgba(178,8,57,0.15); border-color: rgba(178,8,57,0.4); }
+.gara-btn-small:disabled { opacity: 0.4; cursor: default; }
+
+/* Pulse animation */
+@keyframes garaPulse { 0%,100% { box-shadow: 3px 3px 0 #8a0022; } 50% { box-shadow: 3px 3px 0 rgba(178,8,57,0.2), 0 0 20px rgba(178,8,57,0.3); } }
+.gara-pulse { animation: garaPulse 2s ease-in-out infinite; }
+
+/* ===== TITLE SCREEN ===== */
+.gara-title-screen { width:100%; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; position:relative; padding:30px; text-align:center; }
+.gara-title-bg { position:absolute; inset:0; }
+.gara-title-bg img { width:100%; height:100%; object-fit:cover; opacity:0.5; }
+.gara-title-content { position:relative; z-index:2; }
+.gara-title-text { font-size:2.8rem; font-weight:800; margin:0; color: #fff; line-height:1.1; text-shadow: 0 2px 12px rgba(0,0,0,0.5); }
+.gara-title-sub { font-size:1.3rem; color:rgba(255,255,255,0.7); margin:6px 0 12px; font-weight:300; font-style:italic; }
+.gara-title-desc { font-size:0.9rem; color:rgba(255,255,255,0.5); max-width:400px; margin:0 auto 24px; line-height:1.5; }
+.gara-title-actions { display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-bottom:20px; }
+.gara-level-select { display:flex; align-items:center; gap:10px; flex-wrap:wrap; justify-content:center; }
+.gara-level-select label { color:rgba(255,255,255,0.6); font-size:0.9rem; }
+.gara-lvl-btn { padding:8px 16px; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.2); border-radius:0; color:#fff; cursor:pointer; font-family:inherit; font-size:0.85rem; transition:all 0.2s; }
+.gara-lvl-btn.active { background:rgba(178,8,57,0.2); border-color:#b20839; color:#b20839; }
+
+/* ===== THEME CHOICE ===== */
+.gara-theme-choice, .gara-char-choice { width:100%; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:30px; background-size:cover; background-position:center; }
+.gara-screen-title { font-size:2rem; font-weight:700; margin:0 0 6px; color:#fff; text-shadow:0 2px 12px rgba(0,0,0,0.5); }
+.gara-screen-sub { font-size:1rem; color:rgba(255,255,255,0.7); margin:0 0 24px; }
+.gara-theme-cards { display:flex; gap:24px; flex-wrap:wrap; justify-content:center; }
+.gara-theme-card {
+    width:260px; border-radius:0; overflow:hidden; cursor:pointer;
+    background:rgba(0,0,0,0.4); backdrop-filter:blur(8px);
+    border:1px solid rgba(255,255,255,0.15); transition:all 0.3s;
+}
+.gara-theme-card:hover { transform:translateY(-4px); border-color:rgba(178,8,57,0.5); box-shadow:0 8px 30px rgba(0,0,0,0.4); }
+.gara-theme-card.selected { border-color:#b20839; box-shadow:0 0 24px rgba(178,8,57,0.25); }
+.gara-theme-card img { width:100%; height:160px; object-fit:cover; }
+.gara-theme-label { padding:16px; text-align:center; }
+.gara-theme-icon { font-size:2rem; }
+.gara-theme-label h3 { margin:6px 0 2px; font-size:1.2rem; }
+.gara-theme-label p { color:rgba(255,255,255,0.6); font-size:0.85rem; margin:0; }
+
+/* ===== CHARACTER CHOICE ===== */
+.gara-char-choice { background-size:cover; }
+.gara-char-grid { display:flex; gap:16px; flex-wrap:wrap; justify-content:center; }
+.gara-char-card {
+    width:100px; text-align:center; padding:12px; border-radius:0; cursor:pointer;
+    background:rgba(0,0,0,0.4); backdrop-filter:blur(6px);
+    border:1px solid rgba(255,255,255,0.15); transition:all 0.3s;
+    touch-action:manipulation; -webkit-tap-highlight-color:transparent;
+}
+.gara-char-card:hover:not(.gara-char-locked) { transform:translateY(-4px); border-color:rgba(178,8,57,0.4); }
+.gara-char-card.selected { border-color:#b20839; background:rgba(178,8,57,0.1); transform:scale(1.1); }
+.gara-char-card.dimmed { opacity:0.3; pointer-events:none; }
+.gara-char-card.gara-char-locked { cursor:not-allowed; opacity:0.55; border-color:rgba(255,255,255,0.08); filter:grayscale(0.6); }
+.gara-char-card.gara-char-locked:hover { transform:none; border-color:rgba(255,255,255,0.08); }
+@keyframes garaCharShake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-6px)} 75%{transform:translateX(6px)} }
+.gara-char-shake { animation:garaCharShake 0.35s ease-in-out; }
+.gara-char-img-wrap { position:relative; display:inline-block; }
+.gara-char-img { width:60px; height:60px; object-fit:contain; image-rendering:pixelated; display:block; }
+.gara-lock-badge {
+    position:absolute; inset:0; display:flex; flex-direction:column;
+    align-items:center; justify-content:center; background:rgba(0,0,0,0.5);
+    border-radius:0; font-size:1.3rem; gap:2px;
+}
+.gara-lock-cost { font-size:0.65rem; color:#b20839; font-weight:700; line-height:1; }
+.gara-char-name { font-size:0.75rem; margin:6px 0 0; color:rgba(255,255,255,0.8); }
+/* Token counter */
+.gara-token-bar {
+    display:flex; align-items:center; gap:6px; background:rgba(0,0,0,0.4);
+    backdrop-filter:blur(6px); border:1px solid rgba(178,8,57,0.25);
+    border-radius:0; padding:6px 14px; font-size:0.85rem; color:#b20839;
+    font-weight:700; margin-bottom:12px;
+}
+.gara-token-icon { font-size:1.1rem; }
+/* Token earned popup on game over */
+.gara-tokens-earned {
+    display:inline-flex; align-items:center; gap:6px; background:rgba(178,8,57,0.1);
+    border:1px solid rgba(178,8,57,0.35); border-radius:0;
+    padding:8px 16px; font-size:1rem; font-weight:700; color:#b20839; margin-top:12px;
+}
+
+/* ===== CHOICE/GAME SCREEN ===== */
+.gara-choice-screen {
+    width:100%; height:100%; display:flex; flex-direction:column;
+    background-size:cover; background-position:center; position:relative; padding:12px;
+}
+.gara-hud {
+    display:flex; justify-content:space-between; align-items:center;
+    /* padding-right clears the 5 control buttons (5×36px + 4×6px gap + 12px margin = 228px) */
+    padding:8px 228px 8px 16px;
+    background:rgba(0,0,0,0.5); backdrop-filter:blur(6px);
+    border-radius:0; margin-bottom:8px; font-size:0.8rem;
+}
+.gara-hud-player, .gara-hud-enemy { display:flex; align-items:center; gap:6px; }
+.gara-hud-sprite { width:32px; height:32px; object-fit:contain; image-rendering:pixelated; }
+.gara-hud-turn { font-weight:700; color:#ffffff; font-size:0.9rem; }
+.gara-prompt {
+    text-align:center; padding:8px; font-size:1rem;
+    background:rgba(0,0,0,0.4); border-radius:0; margin-bottom:8px;
+}
+.gara-prompt strong { color:#ffffff; }
+.gara-choices {
+    flex:1; display:flex; align-items:center; justify-content:center; gap:16px;
+}
+
+/* ─── Choice boxes: light background isolates black dots from busy game art ── */
+.gara-choice-side {
+    flex: 1;
+    max-width: 340px;
+    min-height: 270px;
+    border-radius: 0;                            /* sharp editorial corners */
+    background: rgba(248,247,244,0.92);          /* #f8f7f4 @ 0.92 — isolates dots */
+    border: 1px solid #e2dfda;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;                               /* ≥2rem → dots ≥10px from wall */
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    overflow: visible;
+    box-shadow: 2px 2px 0 rgba(226,223,218,0.6);
+}
+.gara-choice-side:hover {
+    border-color: #b20839;
+    transform: scale(1.02);
+    background: rgba(255,255,255,0.95);
+    box-shadow: 3px 3px 0 rgba(178,8,57,0.2);
+}
+/* Feedback: tinted backgrounds still legible on light surface */
+.gara-choice-side.gara-correct { border-color:#2ecc71!important; background:rgba(46,204,113,0.18)!important; animation:garaFlash 0.5s; }
+.gara-choice-side.gara-wrong   { border-color:#e74c3c!important; background:rgba(231,76,60,0.18)!important; animation:garaShake 0.5s; }
+@keyframes garaFlash { 0%,100% { box-shadow:none; } 50% { box-shadow:0 0 40px rgba(46,204,113,0.5); } }
+@keyframes garaShake { 0%,100% { transform:translateX(0); } 25% { transform:translateX(-8px); } 75% { transform:translateX(8px); } }
+.gara-vs { font-size:1.5rem; font-weight:800; color:rgba(255,255,255,0.55); flex-shrink:0; }
+
+/* ─── Dot containers ─────────────────────────────────────────── */
+.gara-chest-wrapper { text-align:center; position:relative; }
+.gara-chest-img { width:120px; height:auto; image-rendering:pixelated; margin-bottom:8px; }
+
+/* Main dot area — sized to match algorithm constants (mainW=220, mainH=185) */
+.gara-dots-area {
+    position: relative;
+    width:  220px;
+    height: 185px;
+    margin: 0 auto;
+    overflow: visible;  /* never clip dots — clipping destroys the numerosity signal */
+}
+
+/* Mini dot area (digits notation) — sized to match (miniW=148, miniH=118) */
+.gara-dots-mini {
+    position: relative;
+    width:  148px;
+    height: 118px;
+    margin: 4px auto 0;
+    overflow: visible;
+}
+
+.gara-dot {
+    position: absolute;
+    border-radius: 50%;
+    transition: all 0.3s;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+}
+.gara-num-display, .gara-sum-display {
+    font-size:2.5rem; font-weight:800; color:#1a1a1a; text-shadow:none;
+    margin-top:4px;
+}
+
+/* Timer */
+.gara-timer-bar {
+    height:4px; background:rgba(255,255,255,0.1); border-radius:0;
+    margin-top:8px; overflow:hidden;
+}
+.gara-timer-fill { height:100%; width:0; border-radius:0; transition:width 0.05s linear, background 0.3s; }
+
+/* Board peek */
+.gara-board-peek { text-align:center; margin-top:6px; }
+
+/* Feedback */
+.gara-feedback {
+    position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+    padding:16px 32px; border-radius:0; font-size:1.5rem; font-weight:800;
+    z-index:10; animation:garaFadeUp 1.1s ease-out forwards; pointer-events:none;
+}
+.gara-fb-correct { background:rgba(46,204,113,0.9); color:#fff; }
+.gara-fb-wrong   { background:rgba(231,76,60,0.9);  color:#fff; }
+@keyframes garaFadeUp { 0% { opacity:1; transform:translate(-50%,-50%); } 100% { opacity:0; transform:translate(-50%,-80%); } }
+
+/* ===== BOARD SCREEN ===== */
+.gara-board-screen {
+    width:100%; height:100%; display:flex; flex-direction:column;
+    align-items:center; justify-content:center; padding:20px; gap:12px;
+}
+.gara-board-grid { display:flex; flex-direction:column; gap:3px; }
+.gara-board-row  { display:flex; gap:3px; }
+.gara-sq {
+    width:44px; height:40px; border-radius:0; display:flex;
+    align-items:center; justify-content:center; font-size:0.65rem;
+    background:rgba(255,255,255,0.15); color:rgba(255,255,255,0.6);
+    position:relative; font-weight:500;
+}
+.gara-sq-start  { background:rgba(46,204,113,0.4); border:1px solid #2ecc71; }
+.gara-sq-finish { background:rgba(178,8,57,0.35);  border:1px solid #b20839; }
+.gara-sq-hazard { background:rgba(231,76,60,0.3);  border:1px solid rgba(231,76,60,0.5); }
+.gara-sq-player, .gara-sq-enemy { position:absolute; font-size:0.9rem; top:-2px; }
+.gara-sq-enemy { right:0; }
+.gara-board-legend { display:flex; gap:16px; font-size:0.85rem; color:rgba(255,255,255,0.8); }
+.gara-legend-hazard { color:#e74c3c; }
+
+/* ===== REWARD SCREEN ===== */
+.gara-reward-screen {
+    width:100%; height:100%; display:flex; flex-direction:column;
+    align-items:center; justify-content:center; padding:30px; text-align:center;
+    background-size:cover; background-position:center;
+}
+.gara-reward-title  { color:#b20839!important; font-size:2rem; }
+.gara-reward-animal { margin:16px 0; }
+.gara-reward-img    { width:120px; height:auto; image-rendering:pixelated; }
+@keyframes garaBounce { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-12px); } }
+.gara-bounce { animation:garaBounce 0.8s ease-in-out 3; }
+.gara-reward-count  { font-size:1.1rem; color:rgba(255,255,255,0.8); margin:8px 0; }
+.gara-reward-collection { display:flex; gap:8px; justify-content:center; flex-wrap:wrap; margin:12px 0; }
+.gara-reward-mini { width:48px; height:48px; object-fit:contain; image-rendering:pixelated; border-radius:0; background:rgba(0,0,0,0.3); padding:4px; }
+
+/* ===== GAME OVER ===== */
+.gara-gameover {
+    width:100%; height:100%; display:flex; align-items:center; justify-content:center;
+    background-size:cover; background-position:center;
+}
+.gara-gameover-content {
+    background:rgba(0,0,0,0.75); backdrop-filter:blur(12px);
+    padding:36px; border-radius:0; text-align:center;
+    border:1px solid rgba(255,255,255,0.1); max-width:500px;
+}
+.gara-gameover-title { font-size:2.2rem; margin:0 0 20px; }
+.gara-gameover-stats { display:flex; gap:16px; justify-content:center; flex-wrap:wrap; margin-bottom:16px; }
+.gara-stat {
+    background:rgba(255,255,255,0.05); padding:12px 16px; border-radius:0;
+    border:1px solid rgba(255,255,255,0.1); min-width:80px;
+}
+.gara-stat-val { display:block; font-size:1.8rem; font-weight:800; color:#b20839; }
+.gara-stat-lbl { display:block; font-size:0.7rem; color:rgba(255,255,255,0.5); margin-top:2px; }
+.gara-gameover-actions { display:flex; gap:12px; justify-content:center; margin-top:16px; }
+
+/* ===== INSTRUCTIONS ===== */
+.gara-instructions {
+    width:100%; height:100%; display:flex; align-items:center; justify-content:center;
+    background:rgba(0,0,0,0.8); backdrop-filter:blur(8px);
+}
+.gara-instr-modal {
+    background: #1a1a1a; border-radius:0;
+    padding:32px; max-width:480px; width:90%; position:relative;
+    border:1px solid rgba(178,8,57,0.25); box-shadow:0 20px 60px rgba(0,0,0,0.5);
+}
+.gara-instr-close {
+    position:absolute; top:12px; right:16px; background:none; border:none;
+    color:rgba(255,255,255,0.5); font-size:1.4rem; cursor:pointer; transition:color 0.2s;
+}
+.gara-instr-close:hover { color:#fff; }
+.gara-instr-step { display:none; text-align:center; padding:16px 0; min-height:180px; }
+.gara-instr-step.active { display:block; animation:garaSlideIn 0.4s ease-out; }
+@keyframes garaSlideIn { from { opacity:0; transform:translateX(20px); } to { opacity:1; transform:translateX(0); } }
+.gara-instr-icon { font-size:3rem; margin-bottom:12px; }
+.gara-instr-step h3 { font-size:1.4rem; margin:0 0 10px; color:#b20839; }
+.gara-instr-step p  { font-size:0.95rem; line-height:1.6; color:rgba(255,255,255,0.8); margin:0; }
+.gara-instr-step strong { color:#b20839; }
+.gara-instr-step em { color:rgba(255,255,255,0.9); font-style:normal; font-weight:600; }
+.gara-instr-nav { display:flex; align-items:center; justify-content:space-between; margin-top:16px; }
+.gara-instr-dots { display:flex; gap:6px; }
+.gara-dot-nav { width:8px; height:8px; border-radius:0; background:rgba(255,255,255,0.2); transition:all 0.3s; }
+.gara-dot-nav.active { background:#b20839; transform:scale(1.3); }
+
+/* ===== CREDITS ===== */
+.gara-credits-line {
+    margin-top:16px; padding-top:12px; border-top:1px solid rgba(255,255,255,0.08);
+}
+.gara-credits-line p { font-size:0.7rem; color:rgba(255,255,255,0.35); line-height:1.5; margin:0; }
+.gara-credits-footer {
+    margin-top:16px; padding-top:12px; border-top:1px solid rgba(255,255,255,0.1);
+}
+.gara-credits-footer p { font-size:0.7rem; color:rgba(255,255,255,0.4); line-height:1.5; margin:0; }
+
+/* ===== Responsive ===== */
+@media (max-width: 640px) {
+    .gara-game          { aspect-ratio: auto; min-height: 520px; }
+    .gara-title-text    { font-size:1.8rem; }
+    .gara-title-sub     { font-size:1rem; }
+    .gara-btn-primary   { padding:10px 24px; font-size:0.95rem; }
+    .gara-chest-img     { width:80px; }
+    .gara-num-display, .gara-sum-display { font-size:1.8rem; }
+    .gara-hud           { font-size:0.7rem; padding:6px 190px 6px 10px; }
+    .gara-btn-ctrl      { width:28px; height:28px; font-size:13px; }
+    .gara-controls      { gap:4px; }
+    .gara-sq            { width:30px; height:28px; font-size:0.5rem; }
+    .gara-theme-card    { width:200px; }
+    .gara-theme-card img{ height:120px; }
+    .gara-char-card     { width:70px; padding:8px; }
+    .gara-char-img      { width:40px; height:40px; }
+    .gara-choice-side   { min-height:240px; padding:1.25rem; overflow:visible; }
+    .gara-dots-area     { width:170px; height:145px; }
+    .gara-dots-mini     { width:116px; height: 92px; }
+    .gara-instr-modal   { padding:20px; }
+}
+
+/* Very small phones — stack choices vertically to prevent dot overflow */
+@media (max-width: 480px) {
+    .gara-choices       { flex-direction: column; align-items: center; gap: 8px; }
+    .gara-choice-side   { max-width: 90%; min-height: 180px; padding: 1rem; }
+    .gara-vs            { writing-mode: horizontal-tb; font-size: 1rem; padding: 4px 0; }
+    .gara-dots-area     { width: 148px; height: 125px; }
+    .gara-dots-mini     { width: 100px; height:  80px; }
+    /* Touch-friendly active states (substitute for hover) */
+    .gara-choice-side:active {
+        border-color: #b20839; background: rgba(255,255,255,0.95);
+        box-shadow: 3px 3px 0 rgba(178,8,57,0.2);
+    }
+    .gara-btn-ctrl      { width: 32px; height: 32px; font-size: 15px; }
+    .gara-btn-primary   { padding: 12px 20px; font-size: 0.9rem; }
+}

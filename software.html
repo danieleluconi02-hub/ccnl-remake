@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Software &amp; Downloads | CCNLab</title>
+    <link rel="icon" type="image/png" href="Assets/Logo.png">
+    <meta name="description"
+        content="Open-source software, datasets, and research code from the CCNL — DBN code, CDP reading models, La Gara dei Numeri, and published datasets.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-dark':     '#1a1a1a',
+                        'primary-light':    '#FFFFFF',
+                        'accent-red':       '#b20839',
+                        'accent-red-hover': '#8a0022',
+                        'accent-gold':      '#b20839',
+                        'accent-gold-hover':'#8a0022',
+                        'neutral-gray':     '#6B7280',
+                        'light-gray':       '#F3F4F6',
+                        'surface':          '#f8f7f4',
+                        'surface-alt':      '#eeedea',
+                        'surface-border':   '#e2dfda',
+                    },
+                    fontFamily: {
+                        'manrope':   ['Manrope', 'sans-serif'],
+                        'display':   ['"Playfair Display"', 'Georgia', 'serif'],
+                        'mono-tech': ['"JetBrains Mono"', '"Courier New"', 'monospace'],
+                    },
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="font-manrope bg-surface text-primary-dark antialiased">
+
+    <!-- Header / Navigation -->
+    <header id="header" class="fixed top-0 left-0 right-0 z-50 bg-white border-b border-surface-border shadow-sm transition-all duration-300">
+        <div class="inst-hierarchy-bar">
+            <div class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16 flex justify-between items-center">
+                <span>University of Padova &nbsp;·&nbsp; Department of General Psychology &nbsp;·&nbsp; CCN Lab</span>
+                <a href="https://www.unipd.it" target="_blank" rel="noopener noreferrer" class="hover:text-accent-red transition-colors hidden sm:block">unipd.it ↗</a>
+            </div>
+        </div>
+        <nav class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16">
+            <div class="flex items-center justify-between h-16 lg:h-20 transition-all duration-300" id="nav-inner">
+                <a href="index.html" class="flex items-center gap-4 group">
+                    <img src="Assets/Logo_and_text.png" alt="CCN Lab Logo" id="header-logo"
+                        class="h-10 lg:h-12 object-contain -ml-2 transition-all duration-300 logo-on-light">
+                </a>
+                <div class="hidden md:flex items-center gap-4 lg:gap-8">
+                    <a href="index.html#about" class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-base font-medium">About</a>
+                    <div class="dropdown-container">
+                        <a href="research.html" class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-base font-medium">Research</a>
+                        <div class="dropdown-menu">
+                            <a href="research.html#research" class="dropdown-item">Research areas</a>
+                            <a href="research.html#facilities" class="dropdown-item">Lab facilities</a>
+                            <a href="research.html#publications" class="dropdown-item">Publications</a>
+                            <a href="software.html" class="dropdown-item font-semibold text-accent-gold">Software &amp; Downloads</a>
+                        </div>
+                    </div>
+                    <a href="people.html" class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-base font-medium">People</a>
+                    <a href="playground.html" class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-base font-medium">Playground</a>
+                    <a href="news.html" class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-base font-medium">News</a>
+                    <a href="join-us.html" class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-base font-medium">Join us</a>
+                    <a href="index.html#contact" class="btn-primary px-5 py-2.5 bg-accent-gold text-white font-semibold rounded-none hover:bg-accent-red-hover transition-all duration-200 hover:shadow-lg hover:shadow-accent-gold/20 text-base">Contact us</a>
+                </div>
+                <button id="mobile-menu-btn" class="md:hidden p-2 text-neutral-gray hover:text-accent-red transition-colors" aria-label="Open menu">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+                </button>
+            </div>
+        </nav>
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-surface-border">
+            <div class="px-6 py-4 space-y-4">
+                <a href="index.html#about" class="block text-neutral-gray hover:text-accent-red transition-colors py-2">About</a>
+                <a href="research.html" class="block text-neutral-gray hover:text-accent-red transition-colors py-2">Research</a>
+                <a href="people.html" class="block text-neutral-gray hover:text-accent-red transition-colors py-2">People</a>
+                <a href="playground.html" class="block text-neutral-gray hover:text-accent-red transition-colors py-2">Playground</a>
+                <a href="news.html" class="block text-neutral-gray hover:text-accent-red transition-colors py-2">News</a>
+                <a href="join-us.html" class="block text-neutral-gray hover:text-accent-red transition-colors py-2">Join us</a>
+                <a href="software.html" class="block text-accent-gold font-semibold transition-colors py-2">Software</a>
+                <a href="index.html#contact" class="block w-fit mx-auto text-center px-5 py-2 bg-accent-red text-white font-semibold rounded-none hover:bg-accent-red-hover transition-colors">Contact us</a>
+            </div>
+        </div>
+        <div class="h-px bg-accent-red"></div>
+    </header>
+
+    <!-- Hero -->
+    <section class="pt-20 pb-10 md:pt-32 md:pb-16 bg-surface border-b border-surface-border">
+        <div class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16">
+            <div class="max-w-3xl">
+                <p class="text-accent-gold text-sm font-semibold uppercase tracking-wider mb-4">Open Science</p>
+                <h1 class="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 text-primary-dark">
+                    Software &amp;<br>
+                    <span class="text-accent-red">Downloads</span>
+                </h1>
+                <p class="text-xl text-neutral-gray font-light leading-relaxed">
+                    All CCNL software, datasets, and code is freely available for academic use.
+                    We are committed to open science and reproducible research.
+                </p>
+            </div>
+            <div class="flex flex-wrap gap-4 mt-10">
+                <a href="https://github.com/CCNL-UniPD" target="_blank" rel="noopener noreferrer"
+                    class="inline-flex items-center gap-2 px-6 py-3 bg-accent-red text-white font-semibold rounded-none hover:bg-accent-red-hover transition-all duration-200 hover:shadow-lg hover:shadow-accent-gold/20">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                    CCNL GitHub
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Deep Learning Code -->
+    <section id="dbn" class="py-12 md:py-20 bg-white border-t border-surface">
+        <div class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16">
+            <div class="flex items-center gap-4 mb-10">
+                <div class="w-12 h-12 bg-accent-gold/10 rounded-none flex items-center justify-center">
+                    <svg class="w-6 h-6 text-accent-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+                </div>
+                <div>
+                    <h2 class="text-2xl md:text-3xl font-bold">Deep Belief Network Code</h2>
+                    <p class="text-neutral-gray text-sm">Unsupervised deep learning for cognitive modeling</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 mb-10">
+                <div>
+                    <p class="text-neutral-gray leading-relaxed mb-6">
+                        Code for training Deep Belief Networks (DBNs) on cognitive modeling tasks.
+                        Developed as part of the ERC GENMOD project, these implementations enable
+                        large-scale simulations on GPUs and clusters. Includes the novel iterative
+                        DBN (iDBN) algorithm for joint-layer learning.
+                    </p>
+                    <p class="text-neutral-gray leading-relaxed">
+                        All implementations are available on the lab's GitHub alongside MATLAB routines
+                        for analyzing trained networks (receptive field visualization, weight distributions,
+                        reconstruction quality).
+                    </p>
+                </div>
+                <div class="space-y-3">
+                    <h3 class="font-semibold text-sm uppercase tracking-wider text-neutral-gray mb-4">Key References</h3>
+                    <div class="bg-white border border-surface-border p-4 rounded-none text-sm">
+                        <p class="text-primary-dark font-medium mb-1">Deep unsupervised learning — Primer</p>
+                        <p class="text-neutral-gray text-xs">Testolin, Stoianov, De Filippo De Grazia &amp; Zorzi (2013) · Frontiers in Psychology, 4(251)</p>
+                    </div>
+                    <div class="bg-white border border-surface-border p-4 rounded-none text-sm">
+                        <p class="text-primary-dark font-medium mb-1">Tutorial overview — Language &amp; Cognition</p>
+                        <p class="text-neutral-gray text-xs">Zorzi, Testolin &amp; Stoianov (2013) · Frontiers in Psychology, 4(515)</p>
+                    </div>
+                    <div class="bg-white border border-surface-border p-4 rounded-none text-sm">
+                        <p class="text-primary-dark font-medium mb-1">iDBN — Developmental Approach</p>
+                        <p class="text-neutral-gray text-xs">Zambra, Testolin &amp; Zorzi (2023) · Cognitive Computation, 15, 103–120</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+                <div class="bg-white border border-surface-border p-4 rounded-none text-center hover:border hover:border-accent-gold/30 transition-all group cursor-pointer">
+                    <div class="w-8 h-8 bg-accent-gold/10 rounded mx-auto mb-3 flex items-center justify-center">
+                        <svg class="w-4 h-4 text-accent-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                    </div>
+                    <p class="text-sm font-medium group-hover:text-accent-red transition-colors">Octave</p>
+                    <p class="text-xs text-neutral-gray mt-1">CPU</p>
+                </div>
+                <div class="bg-white border border-surface-border p-4 rounded-none text-center hover:border hover:border-accent-gold/30 transition-all group cursor-pointer">
+                    <div class="w-8 h-8 bg-accent-gold/10 rounded mx-auto mb-3 flex items-center justify-center">
+                        <svg class="w-4 h-4 text-accent-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                    </div>
+                    <p class="text-sm font-medium group-hover:text-accent-red transition-colors">Octave</p>
+                    <p class="text-xs text-neutral-gray mt-1">Cluster</p>
+                </div>
+                <div class="bg-white border border-surface-border p-4 rounded-none text-center hover:border hover:border-accent-gold/30 transition-all group cursor-pointer">
+                    <div class="w-8 h-8 bg-accent-gold/10 rounded mx-auto mb-3 flex items-center justify-center">
+                        <svg class="w-4 h-4 text-accent-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                    </div>
+                    <p class="text-sm font-medium group-hover:text-accent-red transition-colors">MATLAB</p>
+                    <p class="text-xs text-neutral-gray mt-1">GPU</p>
+                </div>
+                <div class="bg-white border border-surface-border p-4 rounded-none text-center hover:border hover:border-accent-gold/30 transition-all group cursor-pointer">
+                    <div class="w-8 h-8 bg-accent-gold/10 rounded mx-auto mb-3 flex items-center justify-center">
+                        <svg class="w-4 h-4 text-accent-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                    </div>
+                    <p class="text-sm font-medium group-hover:text-accent-red transition-colors">Python</p>
+                    <p class="text-xs text-neutral-gray mt-1">GPU</p>
+                </div>
+                <div class="bg-white border border-surface-border p-4 rounded-none text-center hover:border hover:border-accent-gold/30 transition-all group cursor-pointer">
+                    <div class="w-8 h-8 bg-accent-gold/10 rounded mx-auto mb-3 flex items-center justify-center">
+                        <svg class="w-4 h-4 text-accent-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+                    </div>
+                    <p class="text-sm font-medium group-hover:text-accent-red transition-colors">Analysis</p>
+                    <p class="text-xs text-neutral-gray mt-1">MATLAB routines</p>
+                </div>
+                <div class="bg-white border border-surface-border p-4 rounded-none text-center hover:border hover:border-accent-gold/30 transition-all group cursor-pointer">
+                    <div class="w-8 h-8 bg-accent-gold/10 rounded mx-auto mb-3 flex items-center justify-center">
+                        <svg class="w-4 h-4 text-accent-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg>
+                    </div>
+                    <p class="text-sm font-medium group-hover:text-accent-red transition-colors">iDBN</p>
+                    <p class="text-xs text-neutral-gray mt-1">GitHub</p>
+                </div>
+            </div>
+
+            <div class="mt-6">
+                <a href="https://github.com/CCNL-UniPD" target="_blank" rel="noopener noreferrer"
+                    class="inline-flex items-center gap-2 text-accent-gold hover:underline text-sm font-medium">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                    View all DBN code on GitHub →
+                </a>
+            </div>
+
+            <div class="mt-4">
+                <a href="research-deeplearning.html"
+                    class="inline-flex items-center gap-2 text-neutral-gray hover:text-accent-red transition-colors text-sm font-medium">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+                    Full DBN research page →
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- CDP Model -->
+    <section id="cdp" class="py-12 md:py-20 bg-white border-t border-surface">
+        <div class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16">
+            <div class="flex items-center gap-4 mb-10">
+                <div class="w-12 h-12 bg-accent-gold/10 rounded-none flex items-center justify-center">
+                    <svg class="w-6 h-6 text-accent-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+                </div>
+                <div>
+                    <h2 class="text-2xl md:text-3xl font-bold">CDP Reading Model</h2>
+                    <p class="text-neutral-gray text-sm">Connectionist Dual Process model of reading aloud</p>
+                </div>
+            </div>
+
+            <p class="text-neutral-gray leading-relaxed mb-10 max-w-3xl">
+                Standalone Windows programs implementing the CDP model family for simulating human reading
+                aloud. All versions come with user manuals and require no installation. Contact
+                <a href="mailto:marco.zorzi@unipd.it" class="text-accent-gold hover:underline">marco.zorzi@unipd.it</a>
+                or Conrad Perry (<a href="mailto:conradperry@gmail.com" class="text-accent-gold hover:underline">conradperry@gmail.com</a>)
+                for access.
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+                <div class="bg-white border border-surface-border p-6 rounded-none hover:shadow-xl hover:border-accent-red transition-all duration-300 group">
+                    <div class="flex items-center gap-3 mb-4">
+                        <span class="px-2.5 py-1 text-xs font-bold bg-accent-gold/15 text-accent-gold rounded">CDP+</span>
+                        <span class="px-2.5 py-1 text-xs font-medium bg-blue-500/10 text-blue-400 rounded">English</span>
+                    </div>
+                    <h3 class="font-semibold mb-2">CDP+ (English)</h3>
+                    <p class="text-neutral-gray text-sm leading-relaxed mb-4">Monosyllabic English word reading. Standalone Windows program with user manual.</p>
+                    <p class="text-xs text-neutral-gray/70">Perry, Ziegler &amp; Zorzi (2006) · Psychological Review</p>
+                </div>
+
+                <div class="bg-white border border-surface-border p-6 rounded-none hover:shadow-xl hover:border-accent-red transition-all duration-300 group">
+                    <div class="flex items-center gap-3 mb-4">
+                        <span class="px-2.5 py-1 text-xs font-bold bg-purple-500/15 text-purple-400 rounded">CDP++</span>
+                        <span class="px-2.5 py-1 text-xs font-medium bg-blue-500/10 text-blue-400 rounded">English</span>
+                    </div>
+                    <h3 class="font-semibold mb-2">CDP++ (English)</h3>
+                    <p class="text-neutral-gray text-sm leading-relaxed mb-4">Bisyllabic English words (32,000+) with stress assignment. Explains 49% of item RT variance.</p>
+                    <p class="text-xs text-neutral-gray/70">Perry, Ziegler &amp; Zorzi (2010) · Psychological Review</p>
+                </div>
+
+                <div class="bg-white border border-surface-border p-6 rounded-none hover:shadow-xl hover:border-accent-red transition-all duration-300 group">
+                    <div class="flex items-center gap-3 mb-4">
+                        <span class="px-2.5 py-1 text-xs font-bold bg-green-500/15 text-green-400 rounded">CDP++.parser</span>
+                        <span class="px-2.5 py-1 text-xs font-medium bg-blue-500/10 text-blue-400 rounded">English</span>
+                    </div>
+                    <h3 class="font-semibold mb-2">CDP++.parser (English)</h3>
+                    <p class="text-neutral-gray text-sm leading-relaxed mb-4">Adds learned graphemic parsing mechanisms for resolving letter-cluster ambiguity.</p>
+                    <p class="text-xs text-neutral-gray/70">Perry, Ziegler &amp; Zorzi (2013) · Cognition</p>
+                </div>
+
+                <div class="bg-white border border-surface-border p-6 rounded-none hover:shadow-xl hover:border-accent-red transition-all duration-300 group">
+                    <div class="flex items-center gap-3 mb-4">
+                        <span class="px-2.5 py-1 text-xs font-bold bg-accent-gold/15 text-accent-gold rounded">CDP+</span>
+                        <span class="px-2.5 py-1 text-xs font-medium bg-gray-500/10 text-gray-300 rounded">German</span>
+                    </div>
+                    <h3 class="font-semibold mb-2">CDP+ (German)</h3>
+                    <p class="text-neutral-gray text-sm leading-relaxed mb-4">Cross-linguistic extension to German orthography. Standalone Windows program.</p>
+                    <p class="text-xs text-neutral-gray/70">Perry, Ziegler, Braun &amp; Zorzi (2010)</p>
+                </div>
+
+                <div class="bg-white border border-surface-border p-6 rounded-none hover:shadow-xl hover:border-accent-red transition-all duration-300 group">
+                    <div class="flex items-center gap-3 mb-4">
+                        <span class="px-2.5 py-1 text-xs font-bold bg-purple-500/15 text-purple-400 rounded">CDP++</span>
+                        <span class="px-2.5 py-1 text-xs font-medium bg-red-500/10 text-red-400 rounded">French</span>
+                    </div>
+                    <h3 class="font-semibold mb-2">CDP++ (French)</h3>
+                    <p class="text-neutral-gray text-sm leading-relaxed mb-4">100,000+ word French lexicon with full stress assignment for bisyllabic words.</p>
+                    <p class="text-xs text-neutral-gray/70">Perry, Ziegler &amp; Zorzi (2014)</p>
+                </div>
+
+                <div class="bg-white border border-surface-border p-6 rounded-none hover:shadow-xl hover:border-accent-red transition-all duration-300 group">
+                    <div class="flex items-center gap-3 mb-4">
+                        <span class="px-2.5 py-1 text-xs font-bold bg-purple-500/15 text-purple-400 rounded">CDP++</span>
+                        <span class="px-2.5 py-1 text-xs font-medium bg-green-500/10 text-green-400 rounded">Italian</span>
+                    </div>
+                    <h3 class="font-semibold mb-2">CDP++ (Italian)</h3>
+                    <p class="text-neutral-gray text-sm leading-relaxed mb-4">60,000+ word Italian lexicon with lexical stress modeling for bisyllabic words.</p>
+                    <p class="text-xs text-neutral-gray/70">Perry, Ziegler &amp; Zorzi (2014)</p>
+                </div>
+
+            </div>
+
+            <div class="mt-8 flex flex-wrap gap-4">
+                <a href="research-cdp.html" class="inline-flex items-center gap-2 text-accent-gold hover:underline text-sm font-medium">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+                    Full CDP research page →
+                </a>
+                <a href="playground.html" class="inline-flex items-center gap-2 text-neutral-gray hover:text-accent-red transition-colors text-sm font-medium">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    Try interactive CDP demo →
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- La Gara dei Numeri -->
+    <section id="gara" class="py-12 md:py-20 bg-white border-t border-surface">
+        <div class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16">
+            <div class="flex items-center gap-4 mb-10">
+                <div class="w-12 h-12 bg-accent-gold/10 rounded-none flex items-center justify-center">
+                    <svg class="w-6 h-6 text-accent-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                </div>
+                <div>
+                    <h2 class="text-2xl md:text-3xl font-bold">La Gara dei Numeri</h2>
+                    <p class="text-neutral-gray text-sm">Italian Number Race — dyscalculia intervention game</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+                <div>
+                    <p class="text-neutral-gray leading-relaxed mb-5">
+                        An Italian adaptation of "The Number Race" (Wilson, Dehaene, Pinel, Revkin, Cohen &amp; Cohen,
+                        2006). A free educational video game designed to strengthen numerical abilities and treat
+                        developmental dyscalculia in children aged 4–8.
+                    </p>
+                    <p class="text-neutral-gray leading-relaxed mb-5">
+                        The game uses an adaptive difficulty algorithm that monitors the child's performance
+                        and adjusts task difficulty in real time — reducing response time, switching to symbolic
+                        quantities, and introducing arithmetic operations at advanced levels.
+                    </p>
+                    <p class="text-neutral-gray leading-relaxed mb-6">
+                        Released under the <span class="text-accent-red font-medium">GNU General Public Licence</span>
+                        (prohibiting commercial sale). Includes an Italian user manual. Can also be used for
+                        children without specific learning disorders.
+                    </p>
+                    <div class="flex flex-wrap gap-3">
+                        <a href="playground.html"
+                            class="inline-flex items-center gap-2 px-5 py-2.5 bg-accent-red text-white font-semibold rounded-none hover:bg-accent-red-hover transition-all duration-200 text-sm">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                            Play in Playground
+                        </a>
+                    </div>
+                </div>
+                <div class="space-y-4">
+                    <div class="bg-white border border-surface-border p-5 rounded-none">
+                        <p class="font-semibold text-sm mb-2">Target audience</p>
+                        <p class="text-neutral-gray text-sm">Children ages 4–8. Suitable for dyscalculia intervention or number sense strengthening in typical development.</p>
+                    </div>
+                    <div class="bg-white border border-surface-border p-5 rounded-none">
+                        <p class="font-semibold text-sm mb-2">Environments</p>
+                        <p class="text-neutral-gray text-sm">Jungle or ocean environments. Adaptive difficulty based on child performance history.</p>
+                    </div>
+                    <div class="bg-white border border-surface-border p-5 rounded-none">
+                        <p class="font-semibold text-sm mb-2">Evidence base</p>
+                        <p class="text-neutral-gray text-sm">Based on Wilson et al. (2006). Game structure grounded in current neuroscience of numerical cognition.</p>
+                    </div>
+                    <div class="bg-white border border-surface-border p-5 rounded-none">
+                        <p class="font-semibold text-sm mb-2">Languages</p>
+                        <p class="text-neutral-gray text-sm">Italian (this version). English version ("The Number Race") available from original authors.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Datasets -->
+    <section id="datasets" class="py-12 md:py-20 bg-white border-t border-surface">
+        <div class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16">
+            <div class="flex items-center gap-4 mb-10">
+                <div class="w-12 h-12 bg-accent-gold/10 rounded-none flex items-center justify-center">
+                    <svg class="w-6 h-6 text-accent-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"/></svg>
+                </div>
+                <div>
+                    <h2 class="text-2xl md:text-3xl font-bold">Published Datasets</h2>
+                    <p class="text-neutral-gray text-sm">Open datasets released alongside publications</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                <div class="bg-white border border-surface-border p-6 rounded-none">
+                    <div class="flex items-start gap-4">
+                        <div class="w-10 h-10 bg-accent-gold/10 rounded-none flex items-center justify-center flex-shrink-0">
+                            <svg class="w-5 h-5 text-accent-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold mb-2">Visual Numerosity Perception</h3>
+                            <p class="text-neutral-gray text-sm leading-relaxed mb-3">
+                                Complete dataset of visual scenes with objects used to train DBNs for
+                                numerosity perception. Includes instructions for replication.
+                            </p>
+                            <p class="text-xs text-accent-gold/80 font-medium">Stoianov &amp; Zorzi (2012) · Nature Neuroscience</p>
+                            <p class="text-xs text-neutral-gray mt-2">Follow-up code: Testolin, Dolfi, Rochus &amp; Zorzi (2020) — Open Science Framework</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white border border-surface-border p-6 rounded-none">
+                    <div class="flex items-start gap-4">
+                        <div class="w-10 h-10 bg-accent-gold/10 rounded-none flex items-center justify-center flex-shrink-0">
+                            <svg class="w-5 h-5 text-accent-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"/></svg>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold mb-2">Word Recognition Dataset</h3>
+                            <p class="text-neutral-gray text-sm leading-relaxed mb-3">
+                                Dataset and adapted source code for word recognition modeling.
+                                Available from the authors on request.
+                            </p>
+                            <p class="text-xs text-accent-gold/80 font-medium">Di Bono &amp; Zorzi (2013)</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white border border-surface-border p-6 rounded-none">
+                    <div class="flex items-start gap-4">
+                        <div class="w-10 h-10 bg-accent-gold/10 rounded-none flex items-center justify-center flex-shrink-0">
+                            <svg class="w-5 h-5 text-accent-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"/></svg>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold mb-2">Letter Recognition Matrices</h3>
+                            <p class="text-neutral-gray text-sm leading-relaxed mb-3">
+                                Confusion and similarity matrices for Latin uppercase letters from deep
+                                network models. Includes single-layer network weights trained on natural images
+                                and the full letter dataset. Available via Open Science Framework.
+                            </p>
+                            <p class="text-xs text-accent-gold/80 font-medium">Testolin, Stoianov &amp; Zorzi (2017)</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white border border-surface-border p-6 rounded-none">
+                    <div class="flex items-start gap-4">
+                        <div class="w-10 h-10 bg-accent-gold/10 rounded-none flex items-center justify-center flex-shrink-0">
+                            <svg class="w-5 h-5 text-accent-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"/></svg>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold mb-2">MNIST Pre-trained DBN Weights</h3>
+                            <p class="text-neutral-gray text-sm leading-relaxed mb-3">
+                                Trained DBN model weights on the MNIST handwritten digit dataset,
+                                ready for use in downstream experiments or as baselines for new models.
+                            </p>
+                            <p class="text-xs text-accent-gold/80 font-medium">CCNL · Available on request / GitHub</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-surface-alt py-12 border-t border-surface-border">
+        <div class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16">
+            <div class="grid md:grid-cols-4 gap-8 md:gap-12 mb-8 md:mb-12">
+                <div class="md:col-span-2">
+                    <img src="Assets/Logo_and_text.png" alt="CCN Lab" class="h-14 mb-4 logo-on-light">
+                    <p class="text-neutral-gray text-sm leading-relaxed max-w-md">
+                        The Computational Cognitive Neuroscience Lab at the University of Padova, exploring the
+                        computational mechanisms underlying human cognition since 2000.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4 text-primary-dark">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="index.html#about" class="text-neutral-gray hover:text-accent-red transition-colors text-sm">About</a></li>
+                        <li><a href="research.html" class="text-neutral-gray hover:text-accent-red transition-colors text-sm">Research</a></li>
+                        <li><a href="people.html" class="text-neutral-gray hover:text-accent-red transition-colors text-sm">People</a></li>
+                        <li><a href="news.html" class="text-neutral-gray hover:text-accent-red transition-colors text-sm">News</a></li>
+                        <li><a href="software.html" class="text-neutral-gray hover:text-accent-red transition-colors text-sm">Software</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4 text-primary-dark">Affiliations</h4>
+                    <ul class="space-y-2 text-sm text-neutral-gray">
+                        <li><a href="http://www.unipd.it" class="hover:text-accent-red transition-colors">University of Padova</a></li>
+                        <li><a href="http://dpg.psy.unipd.it" class="hover:text-accent-red transition-colors">Dept. of General Psychology</a></li>
+                        <li><a href="http://pnc.unipd.it/" class="hover:text-accent-red transition-colors">Padova Neuroscience Center</a></li>
+                        <li><a href="https://hsancamillo.it" class="hover:text-accent-red transition-colors">San Camillo Research Hospital</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="pt-8 border-t border-neutral-gray/20">
+                <p class="text-neutral-gray text-xs">© 2000–2026 Computational Cognitive Neuroscience Lab. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+        mobileMenu.querySelectorAll('a').forEach(link => link.addEventListener('click', () => mobileMenu.classList.add('hidden')));
+
+        const header = document.getElementById('header');
+        const navInner = document.getElementById('nav-inner');
+        const headerLogo = document.getElementById('header-logo');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('shadow-md');
+                navInner.classList.replace('h-16', 'h-12');
+                navInner.classList.replace('lg:h-20', 'lg:h-16');
+                headerLogo.src = 'Assets/Logo.png';
+                headerLogo.classList.replace('h-10', 'h-8');
+                headerLogo.classList.replace('lg:h-12', 'lg:h-10');
+            } else {
+                header.classList.remove('shadow-md');
+                navInner.classList.replace('h-12', 'h-16');
+                navInner.classList.replace('lg:h-16', 'lg:h-20');
+                headerLogo.src = 'Assets/Logo_and_text.png';
+                headerLogo.classList.replace('h-8', 'h-10');
+                headerLogo.classList.replace('lg:h-10', 'lg:h-12');
+            }
+        });
+    </script>
+</body>
+</html>
