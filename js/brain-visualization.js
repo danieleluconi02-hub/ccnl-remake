@@ -184,24 +184,41 @@ class NeuralArchitectureVis {
     // ─── Label ──────────────────────────────────────────────────────
     _makeLabel() {
         this.label = document.createElement('div');
-        Object.assign(this.label.style, {
-            position: 'absolute',
-            bottom: '20px',
-            left: '50%',
-            transform: 'translateX(-50%)',
-            fontFamily: '"Playfair Display", Georgia, serif',
-            fontSize: '13px', lineHeight: '1.5',
-            textAlign: 'center', pointerEvents: 'none',
-            userSelect: 'none', maxWidth: '340px', zIndex: '10',
-            opacity: '0',
-            transition: 'opacity 0.35s ease',
-            whiteSpace: 'nowrap',
-        });
 
-        // Append to parent to escape the radial-gradient mask on this.container
-        const parent = this.container.parentElement || this.container;
-        parent.style.position = 'relative';
-        parent.appendChild(this.label);
+        if (this.isMobile) {
+            // On mobile: in-flow block below the canvas, centered, no overlap
+            Object.assign(this.label.style, {
+                position: 'relative',
+                marginTop: '1.5rem',
+                fontFamily: '"Playfair Display", Georgia, serif',
+                fontSize: '13px', lineHeight: '1.5',
+                textAlign: 'center', pointerEvents: 'none',
+                userSelect: 'none', width: '100%', zIndex: '10',
+                opacity: '0',
+                transition: 'opacity 0.35s ease',
+            });
+            // Append inside the flex column so it flows below #neural-network-bg
+            const parent = this.container.parentElement || this.container;
+            parent.appendChild(this.label);
+        } else {
+            // Desktop: absolute overlay at the bottom of the parent
+            Object.assign(this.label.style, {
+                position: 'absolute',
+                bottom: '20px',
+                left: '50%',
+                transform: 'translateX(-50%)',
+                fontFamily: '"Playfair Display", Georgia, serif',
+                fontSize: '13px', lineHeight: '1.5',
+                textAlign: 'center', pointerEvents: 'none',
+                userSelect: 'none', maxWidth: '340px', zIndex: '10',
+                opacity: '0',
+                transition: 'opacity 0.35s ease',
+                whiteSpace: 'nowrap',
+            });
+            const parent = this.container.parentElement || this.container;
+            parent.style.position = 'relative';
+            parent.appendChild(this.label);
+        }
     }
 
     _setLabel() {
@@ -215,6 +232,8 @@ class NeuralArchitectureVis {
 
     // Position label centred on the actual network centre within the parent element
     _positionLabel() {
+        // On mobile the label is in-flow (position: relative) — no JS positioning needed
+        if (this.isMobile) return;
         const parent = this.container.parentElement;
         if (!parent) return;
         const containerRect = this.container.getBoundingClientRect();
@@ -509,17 +528,14 @@ class NeuralArchitectureVis {
     }
 
     _startMobileCycle() {
+        // Show label — auto-cycle disabled on mobile: architecture
+        // is fixed at load time and only refreshes on full page reload.
         this.label.style.opacity = '1';
         this.label.style.pointerEvents = 'none';
-        if (this._mobileCycleTimer) return;
-        this._mobileCycleTimer = setInterval(() => this._cycleArch(), 4000);
     }
 
     _stopMobileCycle() {
-        if (this._mobileCycleTimer) {
-            clearInterval(this._mobileCycleTimer);
-            this._mobileCycleTimer = null;
-        }
+        // No-op: interval was removed; kept for API compatibility.
     }
 
     _cycleArch() {
