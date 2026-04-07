@@ -80,18 +80,6 @@ body {
     letter-spacing: 0.03em;
 }
 
-/* ===== Institutional Hierarchy Bar ===== */
-.inst-hierarchy-bar {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.625rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: #9CA3AF;
-    background-color: #f0efeb;
-    border-bottom: 1px solid #e2dfda;
-    padding: 0.35rem 0;
-}
-
 /* ===== Logo: dark version for light header ===== */
 .logo-on-light {
     filter: brightness(0) saturate(100%);
