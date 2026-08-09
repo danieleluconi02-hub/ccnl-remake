@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Numerical Cognition | CCNLab</title>
+    <title>Numerical Cognition | CCNLab · University of Padova</title>
     <link rel="icon" type="image/png" href="Assets/Logo.png">
     <meta name="description"
         content="Research on numerical cognition at CCNL — numerosity perception, mathematical development, and developmental dyscalculia.">
@@ -23,8 +23,6 @@
                         'primary-light':    '#FFFFFF',
                         'accent-red':       '#b20839',
                         'accent-red-hover': '#8a0022',
-                        'accent-gold':      '#b20839',
-                        'accent-gold-hover':'#8a0022',
                         'neutral-gray':     '#6B7280',
                         'light-gray':       '#F3F4F6',
                         'surface':          '#f8f7f4',
@@ -45,53 +43,70 @@
 
 <body class="font-manrope bg-surface text-primary-dark antialiased">
 
+    <a href="#main" class="skip-link">Skip to content</a>
+
     <!-- Header / Navigation -->
-    <header id="header" class="fixed top-0 left-0 right-0 z-50 bg-white border-b border-surface-border shadow-sm transition-all duration-300">
+    <header id="header" class="fixed top-0 left-0 right-0 z-50 bg-white border-b border-surface-border">
         <nav class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16">
-            <div class="flex items-center justify-between h-16 lg:h-20 transition-all duration-300" id="nav-inner">
-                <a href="index.html" class="flex items-center gap-4 group">
-                    <img src="Assets/Logo_and_text.png" alt="CCN Lab Logo" id="header-logo"
-                        class="h-10 lg:h-12 object-contain -ml-2 transition-all duration-300 logo-on-light">
+            <div class="flex items-center justify-between" id="nav-inner">
+                <a href="index.html" class="flex items-center gap-3 group">
+                    <span class="header-logo" id="header-logo">
+                        <img loading="eager" decoding="async" width="1408" height="792"
+                            src="Assets/Logo_and_text.png" alt="CCN Lab"
+                            class="header-logo-full logo-on-light">
+                        <span class="header-logo-lab" aria-hidden="true"></span>
+                        <img loading="eager" decoding="async" width="1394" height="1394"
+                            src="Assets/Logo.png" alt="" aria-hidden="true"
+                            class="header-logo-mark logo-on-light">
+                    </span>
                 </a>
-                <div class="hidden md:flex items-center gap-4 lg:gap-8">
-                    <a href="index.html#about" class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-base font-medium">About</a>
+                <div class="hidden md:flex items-center gap-4 lg:gap-7">
+                    <a href="index.html#about" class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-sm font-medium">About</a>
                     <div class="dropdown-container">
-                        <a href="research.html" class="nav-link text-accent-gold transition-colors duration-200 text-base font-medium">Research</a>
-                        <div class="dropdown-menu">
-                            <a href="research.html#research" class="dropdown-item">Research areas</a>
-                            <a href="research.html#facilities" class="dropdown-item">Lab facilities</a>
+                        <a href="research.html" class="nav-link text-primary-dark font-semibold transition-colors duration-200 text-sm active-page" aria-haspopup="true" aria-expanded="false" aria-controls="research-menu">Research</a>
+                        <div class="dropdown-menu" id="research-menu">
+                            <a href="research.html#research"     class="dropdown-item">Research areas</a>
+                            <a href="research.html#facilities"   class="dropdown-item">Lab facilities</a>
                             <a href="research.html#publications" class="dropdown-item">Publications</a>
-                            <a href="software.html" class="dropdown-item">Software &amp; Downloads</a>
+                            <a href="software.html"               class="dropdown-item">Software &amp; Downloads</a>
                         </div>
                     </div>
-                    <a href="people.html" class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-base font-medium">People</a>
-                    <a href="playground.html" class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-base font-medium">Playground</a>
-                    <a href="news.html" class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-base font-medium">News</a>
-                    <a href="join-us.html" class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-base font-medium">Join us</a>
-                    <a href="index.html#contact" class="btn-primary px-5 py-2.5 bg-accent-gold text-white font-semibold rounded-none hover:bg-accent-red-hover transition-all duration-200 hover:shadow-lg hover:shadow-accent-gold/20 text-base">Contact us</a>
+                    <a href="people.html"     class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-sm font-medium">People</a>
+                    <a href="playground.html" class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-sm font-medium">Playground</a>
+                    <a href="news.html"       class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-sm font-medium">News</a>
+                    <a href="join-us.html"    class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-sm font-medium">Join us</a>
+                    <a href="index.html#contact" class="btn-primary px-5 py-2 bg-accent-red text-white text-sm font-semibold hover:bg-accent-red-hover transition-all duration-200">Contact</a>
                 </div>
-                <button id="mobile-menu-btn" class="md:hidden p-2 text-neutral-gray hover:text-accent-red transition-colors" aria-label="Open menu">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+                <button id="mobile-menu-btn" type="button" class="md:hidden inline-flex items-center justify-center w-11 h-11 -mr-2 text-neutral-gray hover:text-accent-red transition-colors" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
                 </button>
             </div>
         </nav>
         <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-surface-border">
-            <div class="px-6 py-4 space-y-4">
-                <a href="index.html#about" class="block text-neutral-gray hover:text-accent-red transition-colors py-2">About</a>
-                <a href="research.html" class="block text-accent-gold font-semibold transition-colors py-2">Research</a>
-                <a href="people.html" class="block text-neutral-gray hover:text-accent-red transition-colors py-2">People</a>
-                <a href="playground.html" class="block text-neutral-gray hover:text-accent-red transition-colors py-2">Playground</a>
-                <a href="news.html" class="block text-neutral-gray hover:text-accent-red transition-colors py-2">News</a>
-                <a href="join-us.html" class="block text-neutral-gray hover:text-accent-red transition-colors py-2">Join us</a>
-                <a href="software.html" class="block text-neutral-gray hover:text-accent-red transition-colors py-2">Software</a>
-                <a href="index.html#contact" class="block w-fit mx-auto text-center px-5 py-2 bg-accent-red text-white font-semibold rounded-none hover:bg-accent-red-hover transition-colors">Contact us</a>
+            <div class="px-6 py-4 space-y-1">
+                <a href="index.html" class="block text-neutral-gray hover:text-accent-red py-2.5 text-sm border-b border-surface-border">Home</a>
+                <a href="index.html#about" class="block text-neutral-gray hover:text-accent-red py-2.5 text-sm border-b border-surface-border">About</a>
+                <a href="research.html" class="block text-accent-red font-semibold py-2.5 text-sm border-b border-surface-border" aria-current="page">Research</a>
+                <a href="research.html#research" class="block text-neutral-gray hover:text-accent-red py-2.5 pl-4 text-sm border-b border-surface-border">Research areas</a>
+                <a href="research.html#facilities" class="block text-neutral-gray hover:text-accent-red py-2.5 pl-4 text-sm border-b border-surface-border">Lab facilities</a>
+                <a href="research.html#publications" class="block text-neutral-gray hover:text-accent-red py-2.5 pl-4 text-sm border-b border-surface-border">Publications</a>
+                <a href="software.html" class="block text-neutral-gray hover:text-accent-red py-2.5 pl-4 text-sm border-b border-surface-border">Software &amp; Downloads</a>
+                <a href="people.html" class="block text-neutral-gray hover:text-accent-red py-2.5 text-sm border-b border-surface-border">People</a>
+                <a href="playground.html" class="block text-neutral-gray hover:text-accent-red py-2.5 text-sm border-b border-surface-border">Playground</a>
+                <a href="news.html" class="block text-neutral-gray hover:text-accent-red py-2.5 text-sm border-b border-surface-border">News</a>
+                <a href="join-us.html" class="block text-neutral-gray hover:text-accent-red py-2.5 text-sm border-b border-surface-border">Join us</a>
+                <a href="index.html#contact" class="block w-fit mt-3 px-5 py-2 bg-accent-red text-white text-sm font-semibold">Contact</a>
             </div>
         </div>
         <div class="h-px bg-accent-red"></div>
     </header>
 
+    <main id="main">
+
     <!-- Hero -->
-    <section class="pt-20 pb-10 md:pt-32 md:pb-16 bg-surface border-b border-surface-border">
+    <section class="page-hero bg-surface border-b border-surface-border">
         <div class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16">
             <nav class="flex items-center gap-2 text-sm text-neutral-gray mb-10">
                 <a href="research.html" class="hover:text-accent-red transition-colors">Research</a>
@@ -100,13 +115,13 @@
             </nav>
             <div class="max-w-4xl">
                 <div class="flex flex-wrap items-center gap-3 mb-6">
-                    <span class="font-mono-tech text-xs text-neutral-gray uppercase tracking-widest border border-surface-border px-2 py-0.5">Experimental &amp; Computational</span>
-                    <span class="px-3 py-1 text-xs font-semibold bg-green-500/15 text-green-400 border border-green-500/30 rounded-full uppercase tracking-wider">Developmental</span>
-                    <span class="font-mono-tech text-xs text-accent-red uppercase tracking-widest border border-accent-red/30 px-2 py-0.5">Nature Neuroscience 2012</span>
+                    <span class="chip chip-label">Experimental &amp; Computational</span>
+                    <span class="chip chip-label">Developmental</span>
+                    <span class="chip chip-accent chip-label">Nature Neuroscience 2012</span>
                 </div>
-                <h1 class="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 text-primary-dark">
+                <h1 class="t-h1 font-display font-bold leading-tight mb-6 text-primary-dark">
                     Numerical<br>
-                    <span class="text-accent-gold">Cognition</span>
+                    <span class="italic text-accent-red">Cognition</span>
                 </h1>
                 <p class="text-xl text-neutral-gray font-light leading-relaxed max-w-3xl">
                     How the brain perceives, represents, and manipulates numbers — from innate number sense to
@@ -116,11 +131,11 @@
 
             <!-- Quick Actions -->
             <div class="flex flex-wrap gap-4 mt-10">
-                <a href="playground.html" class="inline-flex items-center gap-2 px-6 py-3 bg-accent-red text-white font-semibold rounded-none hover:bg-accent-red-hover transition-all duration-200 hover:shadow-lg hover:shadow-accent-gold/20">
+                <a href="playground.html" class="inline-flex items-center gap-2 px-6 py-3 bg-accent-red text-white font-semibold rounded-none hover:bg-accent-red-hover transition-all duration-200 hover:shadow-lg hover:shadow-accent-red/20">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                     Try Number Race Demo
                 </a>
-                <a href="software.html" class="inline-flex items-center gap-2 px-6 py-3 border border-neutral-gray/30 text-primary-dark font-medium rounded-none border border-neutral-gray/20 hover:border-accent-gold/50 transition-all duration-200">
+                <a href="software.html" class="inline-flex items-center gap-2 px-6 py-3 border border-neutral-gray/30 text-primary-dark font-medium rounded-none border border-neutral-gray/20 hover:border-accent-red/50 transition-all duration-200">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
                     Download Datasets &amp; Code
                 </a>
@@ -129,11 +144,11 @@
     </section>
 
     <!-- Overview -->
-    <section class="py-12 md:py-20 bg-white border-t border-surface">
+    <section class="section-y bg-white border-t border-surface">
         <div class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-8 md:gap-16 items-start">
                 <div>
-                    <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-6 md:mb-8">Overview</h2>
+                    <h2 class="t-h2 font-display font-bold text-primary-dark mb-6 md:mb-8">Overview</h2>
                     <div class="space-y-5 text-neutral-gray text-lg font-light leading-relaxed">
                         <p>
                             The CCNL has a long-standing interest in understanding the (neuro)computational mechanisms
@@ -158,8 +173,8 @@
                 </div>
                 <!-- Three sub-topics -->
                 <div class="space-y-4">
-                    <div class="bg-white border border-surface-border p-6 rounded-none border-l-2 border-accent-gold">
-                        <h3 class="font-semibold text-lg mb-2">Numerosity Perception</h3>
+                    <div class="bg-white border border-surface-border p-6 rounded-none border-l-2 border-accent-red">
+                        <h3 class="t-h3 font-semibold mb-2">Numerosity Perception</h3>
                         <p class="text-neutral-gray text-sm leading-relaxed">
                             Psychophysical studies and computational models of the Approximate Number System (ANS) —
                             the core system for representing magnitudes in an analogue, noisy format.
@@ -167,8 +182,8 @@
                             correlates of magnitude representation in parietal cortex.
                         </p>
                     </div>
-                    <div class="bg-white border border-surface-border p-6 rounded-none border-l-2 border-accent-gold">
-                        <h3 class="font-semibold text-lg mb-2">Numerical Development</h3>
+                    <div class="bg-white border border-surface-border p-6 rounded-none border-l-2 border-accent-red">
+                        <h3 class="t-h3 font-semibold mb-2">Numerical Development</h3>
                         <p class="text-neutral-gray text-sm leading-relaxed">
                             How children acquire symbolic number knowledge and arithmetic skills, including
                             the role of the ANS in formal mathematics learning. Longitudinal and cross-sectional
@@ -176,8 +191,8 @@
                             predicts later mathematical achievement.
                         </p>
                     </div>
-                    <div class="bg-white border border-surface-border p-6 rounded-none border-l-2 border-accent-gold">
-                        <h3 class="font-semibold text-lg mb-2">Developmental Dyscalculia</h3>
+                    <div class="bg-white border border-surface-border p-6 rounded-none border-l-2 border-accent-red">
+                        <h3 class="t-h3 font-semibold mb-2">Developmental Dyscalculia</h3>
                         <p class="text-neutral-gray text-sm leading-relaxed">
                             Characterizing the cognitive profile of dyscalculia and developing computational
                             training tools. The <em>La Gara dei Numeri</em> (Italian Number Race) is a
@@ -191,87 +206,87 @@
     </section>
 
     <!-- Key Research Highlights -->
-    <section class="py-12 md:py-20 bg-white border-t border-surface">
+    <section class="section-y bg-white border-t border-surface">
         <div class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16">
-            <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-8 md:mb-12">Key Research Highlights</h2>
+            <h2 class="t-h2 font-display font-bold text-primary-dark mb-8 md:mb-12">Key Research Highlights</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
                 <div class="group bg-white border border-surface-border p-8 rounded-none hover:shadow-2xl hover:border-accent-red transition-all duration-300 hover:-translate-y-1">
-                    <div class="w-12 h-12 bg-accent-gold/10 rounded-none flex items-center justify-center mb-5 group-hover:bg-accent-gold/20 transition-colors">
-                        <svg class="w-6 h-6 text-accent-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"/></svg>
+                    <div class="w-12 h-12 bg-accent-red/10 rounded-none flex items-center justify-center mb-5 group-hover:bg-accent-red/20 transition-colors">
+                        <svg class="w-6 h-6 text-accent-red" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"/></svg>
                     </div>
-                    <h3 class="font-semibold text-lg mb-3">Emergent Number Sense in Deep Networks</h3>
+                    <h3 class="t-h3 font-semibold mb-3">Emergent Number Sense in Deep Networks</h3>
                     <p class="text-neutral-gray text-sm leading-relaxed mb-4">
                         Using Deep Belief Networks trained on visual scenes with objects, we demonstrated
                         that numerosity perception — a hallmark of the Approximate Number System — emerges
                         spontaneously from unsupervised learning, without any explicit number supervision.
                     </p>
-                    <p class="text-xs text-accent-gold/80 font-medium">Stoianov &amp; Zorzi (2012) · Nature Neuroscience</p>
+                    <p class="text-xs text-accent-red/80 font-medium">Stoianov &amp; Zorzi (2012) · Nature Neuroscience</p>
                 </div>
 
                 <div class="group bg-white border border-surface-border p-8 rounded-none hover:shadow-2xl hover:border-accent-red transition-all duration-300 hover:-translate-y-1">
-                    <div class="w-12 h-12 bg-accent-gold/10 rounded-none flex items-center justify-center mb-5 group-hover:bg-accent-gold/20 transition-colors">
-                        <svg class="w-6 h-6 text-accent-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+                    <div class="w-12 h-12 bg-accent-red/10 rounded-none flex items-center justify-center mb-5 group-hover:bg-accent-red/20 transition-colors">
+                        <svg class="w-6 h-6 text-accent-red" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
                     </div>
-                    <h3 class="font-semibold text-lg mb-3">Number Sense &amp; Dyscalculia</h3>
+                    <h3 class="t-h3 font-semibold mb-3">Number Sense &amp; Dyscalculia</h3>
                     <p class="text-neutral-gray text-sm leading-relaxed mb-4">
                         Empirical and computational work identifying deficits in the approximate number system
                         as a core marker of developmental dyscalculia, with implications for diagnosis and
                         targeted intervention design in school-age children.
                     </p>
-                    <p class="text-xs text-accent-gold/80 font-medium">Sella, Zorzi &amp; colleagues · Multiple venues</p>
+                    <p class="text-xs text-accent-red/80 font-medium">Sella, Zorzi &amp; colleagues · Multiple venues</p>
                 </div>
 
                 <div class="group bg-white border border-surface-border p-8 rounded-none hover:shadow-2xl hover:border-accent-red transition-all duration-300 hover:-translate-y-1">
-                    <div class="w-12 h-12 bg-accent-gold/10 rounded-none flex items-center justify-center mb-5 group-hover:bg-accent-gold/20 transition-colors">
-                        <svg class="w-6 h-6 text-accent-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    <div class="w-12 h-12 bg-accent-red/10 rounded-none flex items-center justify-center mb-5 group-hover:bg-accent-red/20 transition-colors">
+                        <svg class="w-6 h-6 text-accent-red" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                     </div>
-                    <h3 class="font-semibold text-lg mb-3">La Gara dei Numeri</h3>
+                    <h3 class="t-h3 font-semibold mb-3">La Gara dei Numeri</h3>
                     <p class="text-neutral-gray text-sm leading-relaxed mb-4">
                         An Italian adaptation of "The Number Race" (Wilson et al., 2006) — a free, adaptive
                         video game for children aged 4–8 that strengthens number sense through engaging gameplay
                         and evidence-based number comparison tasks, usable as a dyscalculia intervention.
                     </p>
-                    <p class="text-xs text-accent-gold/80 font-medium">Based on Wilson et al. (2006) · Adapted by CCNL</p>
+                    <p class="text-xs text-accent-red/80 font-medium">Based on Wilson et al. (2006) · Adapted by CCNL</p>
                 </div>
 
                 <div class="group bg-white border border-surface-border p-8 rounded-none hover:shadow-2xl hover:border-accent-red transition-all duration-300 hover:-translate-y-1">
-                    <div class="w-12 h-12 bg-accent-gold/10 rounded-none flex items-center justify-center mb-5 group-hover:bg-accent-gold/20 transition-colors">
-                        <svg class="w-6 h-6 text-accent-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2"/></svg>
+                    <div class="w-12 h-12 bg-accent-red/10 rounded-none flex items-center justify-center mb-5 group-hover:bg-accent-red/20 transition-colors">
+                        <svg class="w-6 h-6 text-accent-red" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2"/></svg>
                     </div>
-                    <h3 class="font-semibold text-lg mb-3">Numerosity Follow-up Studies</h3>
+                    <h3 class="t-h3 font-semibold mb-3">Numerosity Follow-up Studies</h3>
                     <p class="text-neutral-gray text-sm leading-relaxed mb-4">
                         Follow-up computational work extending the numerosity emergence results, released
                         via Open Science Framework with datasets and code to allow full reproduction and
                         extension by the scientific community.
                     </p>
-                    <p class="text-xs text-accent-gold/80 font-medium">Testolin, Dolfi, Rochus &amp; Zorzi (2020)</p>
+                    <p class="text-xs text-accent-red/80 font-medium">Testolin, Dolfi, Rochus &amp; Zorzi (2020)</p>
                 </div>
 
                 <div class="group bg-white border border-surface-border p-8 rounded-none hover:shadow-2xl hover:border-accent-red transition-all duration-300 hover:-translate-y-1">
-                    <div class="w-12 h-12 bg-accent-gold/10 rounded-none flex items-center justify-center mb-5 group-hover:bg-accent-gold/20 transition-colors">
-                        <svg class="w-6 h-6 text-accent-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"/></svg>
+                    <div class="w-12 h-12 bg-accent-red/10 rounded-none flex items-center justify-center mb-5 group-hover:bg-accent-red/20 transition-colors">
+                        <svg class="w-6 h-6 text-accent-red" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"/></svg>
                     </div>
-                    <h3 class="font-semibold text-lg mb-3">Embodied Numerical Cognition</h3>
+                    <h3 class="t-h3 font-semibold mb-3">Embodied Numerical Cognition</h3>
                     <p class="text-neutral-gray text-sm leading-relaxed mb-4">
                         Research by Mariagrazia Ranzini on embodied cognition and how sensorimotor experience
                         shapes numerical representations, including finger counting, gesture, and the spatial
                         layout of the mental number line.
                     </p>
-                    <p class="text-xs text-accent-gold/80 font-medium">Ranzini &amp; collaborators</p>
+                    <p class="text-xs text-accent-red/80 font-medium">Ranzini &amp; collaborators</p>
                 </div>
 
                 <div class="group bg-white border border-surface-border p-8 rounded-none hover:shadow-2xl hover:border-accent-red transition-all duration-300 hover:-translate-y-1">
-                    <div class="w-12 h-12 bg-accent-gold/10 rounded-none flex items-center justify-center mb-5 group-hover:bg-accent-gold/20 transition-colors">
-                        <svg class="w-6 h-6 text-accent-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+                    <div class="w-12 h-12 bg-accent-red/10 rounded-none flex items-center justify-center mb-5 group-hover:bg-accent-red/20 transition-colors">
+                        <svg class="w-6 h-6 text-accent-red" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
                     </div>
-                    <h3 class="font-semibold text-lg mb-3">Number Sense in AI Models</h3>
+                    <h3 class="t-h3 font-semibold mb-3">Number Sense in AI Models</h3>
                     <p class="text-neutral-gray text-sm leading-relaxed mb-4">
                         Current PhD work by Kuinan Hou examining how number sense develops in artificial
                         neural networks and large language models, bridging computational neuroscience
                         and modern AI research on numerical understanding.
                     </p>
-                    <p class="text-xs text-accent-gold/80 font-medium">Hou &amp; Zorzi · Ongoing</p>
+                    <p class="text-xs text-accent-red/80 font-medium">Hou &amp; Zorzi · Ongoing</p>
                 </div>
 
             </div>
@@ -279,28 +294,28 @@
     </section>
 
     <!-- Key People -->
-    <section class="py-12 md:py-20 bg-white border-t border-surface">
+    <section class="section-y bg-white border-t border-surface">
         <div class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16">
-            <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-8 md:mb-12">Key Researchers</h2>
+            <h2 class="t-h2 font-display font-bold text-primary-dark mb-8 md:mb-12">Key Researchers</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
                 <div class="bg-white border border-surface-border p-6 rounded-none">
                     <p class="font-semibold mb-1">Marco Zorzi</p>
-                    <p class="text-accent-gold text-sm mb-2">Lab Director · Full Professor</p>
+                    <p class="text-accent-red text-sm mb-2">Full Professor · Principal Investigator</p>
                     <p class="text-neutral-gray text-sm">Computational modeling of numerical cognition; ERC GENMOD PI.</p>
                 </div>
                 <div class="bg-white border border-surface-border p-6 rounded-none">
                     <p class="font-semibold mb-1">Mariagrazia Ranzini</p>
-                    <p class="text-accent-gold text-sm mb-2">Associate Professor</p>
+                    <p class="text-accent-red text-sm mb-2">Associate Professor</p>
                     <p class="text-neutral-gray text-sm">Numerical cognition, embodied cognition, cognitive neurosciences.</p>
                 </div>
                 <div class="bg-white border border-surface-border p-6 rounded-none">
                     <p class="font-semibold mb-1">Francesco Sella</p>
-                    <p class="text-accent-gold text-sm mb-2">Senior Lecturer</p>
+                    <p class="text-accent-red text-sm mb-2">Senior Lecturer</p>
                     <p class="text-neutral-gray text-sm">Numerical cognition in typical and atypical development; dyscalculia.</p>
                 </div>
                 <div class="bg-white border border-surface-border p-6 rounded-none">
                     <p class="font-semibold mb-1">Kuinan Hou</p>
-                    <p class="text-accent-gold text-sm mb-2">PhD Student</p>
+                    <p class="text-accent-red text-sm mb-2">PhD Student</p>
                     <p class="text-neutral-gray text-sm">Number sense in generative AI and large language models.</p>
                 </div>
             </div>
@@ -308,23 +323,23 @@
     </section>
 
     <!-- Related Resources -->
-    <section class="py-12 md:py-20 bg-white border-t border-surface">
+    <section class="section-y bg-white border-t border-surface">
         <div class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16">
-            <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-6 md:mb-10">Related Resources</h2>
+            <h2 class="t-h2 font-display font-bold text-primary-dark mb-6 md:mb-10">Related Resources</h2>
             <div class="flex flex-wrap gap-4">
-                <a href="playground.html" class="inline-flex items-center gap-2 px-6 py-3 bg-accent-red text-white font-semibold rounded-none hover:bg-accent-red-hover transition-all duration-200 hover:shadow-lg hover:shadow-accent-gold/20">
+                <a href="playground.html" class="inline-flex items-center gap-2 px-6 py-3 bg-accent-red text-white font-semibold rounded-none hover:bg-accent-red-hover transition-all duration-200 hover:shadow-lg hover:shadow-accent-red/20">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                     Interactive Playground
                 </a>
-                <a href="software.html" class="inline-flex items-center gap-2 px-6 py-3 border border-neutral-gray/30 text-primary-dark font-medium rounded-none border border-neutral-gray/20 hover:border-accent-gold/50 transition-all duration-200">
+                <a href="software.html" class="inline-flex items-center gap-2 px-6 py-3 border border-neutral-gray/30 text-primary-dark font-medium rounded-none border border-neutral-gray/20 hover:border-accent-red/50 transition-all duration-200">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
                     Numerosity Datasets
                 </a>
-                <a href="https://github.com/CCNL-UniPD" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-6 py-3 border border-neutral-gray/30 text-primary-dark font-medium rounded-none border border-neutral-gray/20 hover:border-accent-gold/50 transition-all duration-200">
+                <a href="https://github.com/CCNL-UniPD" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-6 py-3 border border-neutral-gray/30 text-primary-dark font-medium rounded-none border border-neutral-gray/20 hover:border-accent-red/50 transition-all duration-200">
                     <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
                     GitHub Repository
                 </a>
-                <a href="research.html" class="inline-flex items-center gap-2 px-6 py-3 border border-neutral-gray/30 text-primary-dark font-medium rounded-none border border-neutral-gray/20 hover:border-accent-gold/50 transition-all duration-200">
+                <a href="research.html" class="inline-flex items-center gap-2 px-6 py-3 border border-neutral-gray/30 text-primary-dark font-medium rounded-none border border-neutral-gray/20 hover:border-accent-red/50 transition-all duration-200">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
                     All Research Areas
                 </a>
@@ -332,39 +347,44 @@
         </div>
     </section>
 
+    </main>
+
     <!-- Footer -->
-    <footer class="bg-surface-alt py-12 border-t border-surface-border">
+    <footer class="site-footer bg-surface-alt py-12 border-t border-surface-border">
         <div class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16">
-            <div class="grid md:grid-cols-4 gap-8 md:gap-12 mb-8 md:mb-12">
-                <div class="md:col-span-2">
-                    <img src="Assets/Logo_and_text.png" alt="CCN Lab" class="h-14 mb-4 logo-on-light">
-                    <p class="text-neutral-gray text-sm leading-relaxed max-w-md">
-                        The Computational Cognitive Neuroscience Lab at the University of Padova, exploring the
-                        computational mechanisms underlying human cognition since 2000.
+            <div class="grid md:grid-cols-3 gap-8 md:gap-12 mb-8">
+                <div>
+                    <img loading="lazy" decoding="async" width="1408" height="792" src="Assets/Logo_and_text.png" alt="CCN Lab" class="h-10 mb-4 logo-on-light opacity-70 w-auto">
+                    <p class="text-neutral-gray text-sm leading-relaxed max-w-sm">
+                        The Computational Cognitive Neuroscience Lab at the University of Padova, exploring the computational mechanisms underlying human cognition since 2000.
                     </p>
                 </div>
                 <div>
-                    <h4 class="font-semibold mb-4 text-primary-dark">Quick Links</h4>
+                    <h4 class="t-eyebrow font-mono-tech text-primary-dark uppercase tracking-widest mb-4">Quick Links</h4>
                     <ul class="space-y-2">
                         <li><a href="index.html#about" class="text-neutral-gray hover:text-accent-red transition-colors text-sm">About</a></li>
                         <li><a href="research.html" class="text-neutral-gray hover:text-accent-red transition-colors text-sm">Research</a></li>
                         <li><a href="people.html" class="text-neutral-gray hover:text-accent-red transition-colors text-sm">People</a></li>
+                        <li><a href="playground.html" class="text-neutral-gray hover:text-accent-red transition-colors text-sm">Playground</a></li>
                         <li><a href="news.html" class="text-neutral-gray hover:text-accent-red transition-colors text-sm">News</a></li>
                         <li><a href="software.html" class="text-neutral-gray hover:text-accent-red transition-colors text-sm">Software</a></li>
+                        <li><a href="join-us.html" class="text-neutral-gray hover:text-accent-red transition-colors text-sm">Join us</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h4 class="font-semibold mb-4 text-primary-dark">Affiliations</h4>
+                    <h4 class="t-eyebrow font-mono-tech text-primary-dark uppercase tracking-widest mb-4">Affiliations</h4>
                     <ul class="space-y-2 text-sm text-neutral-gray">
-                        <li><a href="http://www.unipd.it" class="hover:text-accent-red transition-colors">University of Padova</a></li>
+                        <li><a href="http://www.unipd.it"     class="hover:text-accent-red transition-colors">University of Padova</a></li>
                         <li><a href="http://dpg.psy.unipd.it" class="hover:text-accent-red transition-colors">Dept. of General Psychology</a></li>
-                        <li><a href="http://pnc.unipd.it/" class="hover:text-accent-red transition-colors">Padova Neuroscience Center</a></li>
-                        <li><a href="https://hsancamillo.it" class="hover:text-accent-red transition-colors">San Camillo Research Hospital</a></li>
+                        <li><a href="http://pnc.unipd.it/"    class="hover:text-accent-red transition-colors">Padova Neuroscience Center</a></li>
+                        <li><a href="https://hsancamillo.it"  class="hover:text-accent-red transition-colors">San Camillo Research Hospital</a></li>
                     </ul>
                 </div>
             </div>
-            <div class="pt-8 border-t border-neutral-gray/20 flex flex-col md:flex-row justify-between items-center gap-4">
-                <p class="text-neutral-gray text-xs">© 2000–2026 Computational Cognitive Neuroscience Lab. All rights reserved.</p>
+            <hr class="section-rule mb-6">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-3">
+                <p class="font-mono-tech text-xs text-neutral-gray">© 2000–2026 Computational Cognitive Neuroscience Lab · University of Padova</p>
+                <p class="font-mono-tech text-xs text-neutral-gray">Dept. General Psychology · Via Venezia 8 · 35131 Padova, IT</p>
             </div>
         </div>
     </footer>
@@ -375,26 +395,9 @@
         mobileMenuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
         mobileMenu.querySelectorAll('a').forEach(link => link.addEventListener('click', () => mobileMenu.classList.add('hidden')));
 
-        const header = document.getElementById('header');
-        const navInner = document.getElementById('nav-inner');
-        const headerLogo = document.getElementById('header-logo');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                header.classList.add('shadow-md');
-                navInner.classList.replace('h-16', 'h-12');
-                navInner.classList.replace('lg:h-20', 'lg:h-16');
-                headerLogo.src = 'Assets/Logo.png';
-                headerLogo.classList.replace('h-10', 'h-8');
-                headerLogo.classList.replace('lg:h-12', 'lg:h-10');
-            } else {
-                header.classList.remove('shadow-md');
-                navInner.classList.replace('h-12', 'h-16');
-                navInner.classList.replace('lg:h-16', 'lg:h-20');
-                headerLogo.src = 'Assets/Logo_and_text.png';
-                headerLogo.classList.replace('h-8', 'h-10');
-                headerLogo.classList.replace('lg:h-10', 'lg:h-12');
-            }
-        });
+// Header expand/compact + logo lockup swap: see js/site-nav.js
+
     </script>
+    <script src="js/site-nav.js"></script>
 </body>
 </html>

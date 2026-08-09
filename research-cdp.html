@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CDP Reading Model | CCNLab</title>
+    <title>CDP Reading Model | CCNLab · University of Padova</title>
     <link rel="icon" type="image/png" href="Assets/Logo.png">
     <meta name="description"
         content="The Connectionist Dual Process model of reading aloud — architecture, multilingual versions, downloads, and scientific background.">
@@ -25,8 +25,6 @@
                         'primary-light':    '#FFFFFF',
                         'accent-red':       '#b20839',
                         'accent-red-hover': '#8a0022',
-                        'accent-gold':      '#b20839',
-                        'accent-gold-hover':'#8a0022',
                         'neutral-gray':     '#6B7280',
                         'light-gray':       '#F3F4F6',
                         'surface':          '#f8f7f4',
@@ -49,85 +47,70 @@
 
 <body class="font-manrope bg-surface text-primary-dark antialiased">
 
+    <a href="#main" class="skip-link">Skip to content</a>
+
     <!-- Header / Navigation -->
-    <header id="header" class="fixed top-0 left-0 right-0 z-50 bg-white border-b border-surface-border shadow-sm transition-all duration-300">
+    <header id="header" class="fixed top-0 left-0 right-0 z-50 bg-white border-b border-surface-border">
         <nav class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16">
-            <div class="flex items-center justify-between h-16 lg:h-20 transition-all duration-300" id="nav-inner">
-
-                <!-- Logo -->
-                <a href="index.html" class="flex items-center gap-4 group">
-                    <img src="Assets/Logo_and_text.png" alt="CCN Lab Logo" id="header-logo"
-                        class="h-10 lg:h-12 object-contain -ml-2 transition-all duration-300 logo-on-light">
+            <div class="flex items-center justify-between" id="nav-inner">
+                <a href="index.html" class="flex items-center gap-3 group">
+                    <span class="header-logo" id="header-logo">
+                        <img loading="eager" decoding="async" width="1408" height="792"
+                            src="Assets/Logo_and_text.png" alt="CCN Lab"
+                            class="header-logo-full logo-on-light">
+                        <span class="header-logo-lab" aria-hidden="true"></span>
+                        <img loading="eager" decoding="async" width="1394" height="1394"
+                            src="Assets/Logo.png" alt="" aria-hidden="true"
+                            class="header-logo-mark logo-on-light">
+                    </span>
                 </a>
-
-                <!-- Desktop Navigation -->
-                <div class="hidden md:flex items-center gap-4 lg:gap-8">
-                    <a href="index.html#about"
-                        class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-base font-medium">About</a>
+                <div class="hidden md:flex items-center gap-4 lg:gap-7">
+                    <a href="index.html#about" class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-sm font-medium">About</a>
                     <div class="dropdown-container">
-                        <a href="research.html"
-                            class="nav-link text-accent-gold hover:text-primary-dark transition-colors duration-200 text-base font-medium">Research</a>
-                        <div class="dropdown-menu">
-                            <a href="research.html#research" class="dropdown-item">Research areas</a>
-                            <a href="research.html#facilities" class="dropdown-item">Lab facilities</a>
+                        <a href="research.html" class="nav-link text-primary-dark font-semibold transition-colors duration-200 text-sm active-page" aria-haspopup="true" aria-expanded="false" aria-controls="research-menu">Research</a>
+                        <div class="dropdown-menu" id="research-menu">
+                            <a href="research.html#research"     class="dropdown-item">Research areas</a>
+                            <a href="research.html#facilities"   class="dropdown-item">Lab facilities</a>
                             <a href="research.html#publications" class="dropdown-item">Publications</a>
-                            <a href="software.html" class="dropdown-item">Software &amp; Downloads</a>
+                            <a href="software.html"               class="dropdown-item">Software &amp; Downloads</a>
                         </div>
                     </div>
-                    <a href="people.html"
-                        class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-base font-medium">People</a>
-                    <a href="playground.html"
-                        class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-base font-medium">Playground</a>
-                    <a href="news.html"
-                        class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-base font-medium">News</a>
-                    <a href="join-us.html"
-                        class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-base font-medium">Join us</a>
-                    <a href="index.html#contact"
-                        class="btn-primary px-5 py-2.5 bg-accent-gold text-white font-semibold rounded-none hover:bg-accent-red-hover transition-all duration-200 hover:shadow-lg hover:shadow-accent-gold/20 text-base">
-                        Contact us
-                    </a>
+                    <a href="people.html"     class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-sm font-medium">People</a>
+                    <a href="playground.html" class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-sm font-medium">Playground</a>
+                    <a href="news.html"       class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-sm font-medium">News</a>
+                    <a href="join-us.html"    class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-sm font-medium">Join us</a>
+                    <a href="index.html#contact" class="btn-primary px-5 py-2 bg-accent-red text-white text-sm font-semibold hover:bg-accent-red-hover transition-all duration-200">Contact</a>
                 </div>
-
-                <!-- Mobile Menu Button -->
-                <button id="mobile-menu-btn"
-                    class="md:hidden p-2 text-neutral-gray hover:text-accent-red transition-colors"
-                    aria-label="Open menu">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M4 6h16M4 12h16M4 18h16" />
+                <button id="mobile-menu-btn" type="button" class="md:hidden inline-flex items-center justify-center w-11 h-11 -mr-2 text-neutral-gray hover:text-accent-red transition-colors" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
                     </svg>
                 </button>
             </div>
         </nav>
-
-        <!-- Mobile Menu -->
         <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-surface-border">
-            <div class="px-6 py-4 space-y-4">
-                <a href="index.html#about"
-                    class="block text-neutral-gray hover:text-accent-red transition-colors py-2">About</a>
-                <a href="research.html"
-                    class="block text-neutral-gray hover:text-accent-red transition-colors py-2">Research</a>
-                <a href="people.html"
-                    class="block text-neutral-gray hover:text-accent-red transition-colors py-2">People</a>
-                <a href="playground.html"
-                    class="block text-neutral-gray hover:text-accent-red transition-colors py-2">Playground</a>
-                <a href="news.html"
-                    class="block text-neutral-gray hover:text-accent-red transition-colors py-2">News</a>
-                <a href="join-us.html"
-                    class="block text-neutral-gray hover:text-accent-red transition-colors py-2">Join us</a>
-                <a href="index.html#contact"
-                    class="block w-fit mx-auto text-center px-5 py-2 bg-accent-red text-white font-semibold rounded-none hover:bg-accent-red-hover transition-colors">
-                    Contact us
-                </a>
+            <div class="px-6 py-4 space-y-1">
+                <a href="index.html" class="block text-neutral-gray hover:text-accent-red py-2.5 text-sm border-b border-surface-border">Home</a>
+                <a href="index.html#about" class="block text-neutral-gray hover:text-accent-red py-2.5 text-sm border-b border-surface-border">About</a>
+                <a href="research.html" class="block text-accent-red font-semibold py-2.5 text-sm border-b border-surface-border" aria-current="page">Research</a>
+                <a href="research.html#research" class="block text-neutral-gray hover:text-accent-red py-2.5 pl-4 text-sm border-b border-surface-border">Research areas</a>
+                <a href="research.html#facilities" class="block text-neutral-gray hover:text-accent-red py-2.5 pl-4 text-sm border-b border-surface-border">Lab facilities</a>
+                <a href="research.html#publications" class="block text-neutral-gray hover:text-accent-red py-2.5 pl-4 text-sm border-b border-surface-border">Publications</a>
+                <a href="software.html" class="block text-neutral-gray hover:text-accent-red py-2.5 pl-4 text-sm border-b border-surface-border">Software &amp; Downloads</a>
+                <a href="people.html" class="block text-neutral-gray hover:text-accent-red py-2.5 text-sm border-b border-surface-border">People</a>
+                <a href="playground.html" class="block text-neutral-gray hover:text-accent-red py-2.5 text-sm border-b border-surface-border">Playground</a>
+                <a href="news.html" class="block text-neutral-gray hover:text-accent-red py-2.5 text-sm border-b border-surface-border">News</a>
+                <a href="join-us.html" class="block text-neutral-gray hover:text-accent-red py-2.5 text-sm border-b border-surface-border">Join us</a>
+                <a href="index.html#contact" class="block w-fit mt-3 px-5 py-2 bg-accent-red text-white text-sm font-semibold">Contact</a>
             </div>
         </div>
-
-        <!-- Gold accent line -->
         <div class="h-px bg-accent-red"></div>
     </header>
 
+    <main id="main">
+
     <!-- Hero -->
-    <section class="pt-20 pb-10 md:pt-32 md:pb-16 bg-surface border-b border-surface-border">
+    <section class="page-hero bg-surface border-b border-surface-border">
         <div class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16">
 
             <!-- Breadcrumb -->
@@ -142,13 +125,13 @@
             <!-- Title block -->
             <div class="max-w-4xl">
                 <div class="flex flex-wrap items-center gap-3 mb-6">
-                    <span class="font-mono-tech text-xs text-neutral-gray uppercase tracking-widest border border-surface-border px-2 py-0.5">Dual-Route Architecture</span>
-                    <span class="px-3 py-1 text-xs font-semibold bg-green-500/15 text-green-400 border border-green-500/30 rounded-full uppercase tracking-wider">EN · IT · FR · DE</span>
-                    <span class="px-3 py-1 text-xs font-semibold bg-accent-gold/10 text-accent-gold border border-surface-border rounded-full uppercase tracking-wider">Psychological Review 2007</span>
+                    <span class="chip chip-label">Dual-Route Architecture</span>
+                    <span class="chip chip-label">EN · IT · FR · DE</span>
+                    <span class="chip chip-accent chip-label">Psychological Review 2007</span>
                 </div>
-                <h1 class="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6" text-primary-dark">
+                <h1 class="t-h1 font-display font-bold leading-tight mb-6" text-primary-dark">
                     CDP: The Connectionist<br>
-                    <span class="text-accent-gold">Dual Process Model</span>
+                    <span class="italic text-accent-red">Dual Process Model</span>
                 </h1>
                 <p class="text-xl text-neutral-gray font-light leading-relaxed max-w-3xl">
                     The leading computational framework for simulating human reading aloud —
@@ -160,7 +143,7 @@
             <!-- Quick action buttons -->
             <div class="flex flex-wrap gap-4 mt-10">
                 <a href="playground.html#cdp-model"
-                    class="inline-flex items-center gap-2 px-6 py-3 bg-accent-red text-white font-semibold rounded-none hover:bg-accent-red-hover transition-all duration-200 hover:shadow-lg hover:shadow-accent-gold/20">
+                    class="inline-flex items-center gap-2 px-6 py-3 bg-accent-red text-white font-semibold rounded-none hover:bg-accent-red-hover transition-all duration-200 hover:shadow-lg hover:shadow-accent-red/20">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
                     </svg>
@@ -181,16 +164,16 @@
     <div class="h-px bg-surface-border"></div>
 
     <!-- Main Content -->
-    <main class="py-12 md:py-20 bg-white border-t border-surface-border">
+    <section class="section-y bg-white border-t border-surface-border">
         <div class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16">
-            <div class="grid lg:grid-cols-3 gap-16">
+            <div class="grid lg:grid-cols-3 gap-16 max-w-[1400px]">
 
                 <!-- Left column: main article -->
                 <article class="lg:col-span-2 prose-reading">
 
                     <!-- Model diagram (original image from CCNL site) -->
                     <figure class="mb-16">
-                        <img src="Assets/cdp-model-diagram.jpg"
+                        <img loading="lazy" decoding="async" width="623" height="438" src="Assets/cdp-model-diagram.jpg"
                              alt="CDP model architecture diagram — lexical and sublexical routes converging on phonological output"
                              class="w-full rounded-none border border-surface-border"
                              style="max-width:623px; height:auto;">
@@ -205,7 +188,7 @@
                     <section class="mb-16">
                         <div class="flex items-center gap-3 mb-6">
                             <div class="w-1 h-8 bg-accent-red"></div>
-                            <h2 class="text-2xl font-bold">Overview</h2>
+                            <h2 class="t-h2 font-display font-bold text-primary-dark">Overview</h2>
                         </div>
                         <div class="space-y-5 text-neutral-gray leading-relaxed">
                             <p>
@@ -234,7 +217,7 @@
                     <section class="mb-16">
                         <div class="flex items-center gap-3 mb-6">
                             <div class="w-1 h-8 bg-accent-red"></div>
-                            <h2 class="text-2xl font-bold">Dual-Route Architecture</h2>
+                            <h2 class="t-h2 font-display font-bold text-primary-dark">Dual-Route Architecture</h2>
                         </div>
 
                         <!-- Route diagram (text-based) -->
@@ -244,35 +227,35 @@
                                 <div class="text-neutral-gray/50">↓</div>
                                 <div class="text-primary-dark">ORTHOGRAPHIC ANALYSIS</div>
                                 <div class="flex justify-center gap-6 md:gap-20 mt-2">
-                                    <div class="text-blue-400">↙</div>
-                                    <div class="text-green-400">↘</div>
+                                    <div class="route-lex">↙</div>
+                                    <div class="route-sub">↘</div>
                                 </div>
                                 <div class="flex justify-center gap-8">
-                                    <div class="text-blue-400 text-center">
+                                    <div class="route-lex text-center">
                                         <div class="font-semibold">LEXICAL ROUTE</div>
-                                        <div class="text-xs text-blue-400/70 mt-1">Orthographic Lexicon<br>→ Phonological Lexicon</div>
+                                        <div class="route-lex-sub text-xs mt-1">Orthographic Lexicon<br>→ Phonological Lexicon</div>
                                     </div>
-                                    <div class="text-green-400 text-center">
+                                    <div class="route-sub text-center">
                                         <div class="font-semibold">SUBLEXICAL ROUTE</div>
-                                        <div class="text-xs text-green-400/70 mt-1">TLA Network<br>(Grapheme-Phoneme Rules)</div>
+                                        <div class="route-sub-sub text-xs mt-1">TLA Network<br>(Grapheme-Phoneme Rules)</div>
                                     </div>
                                 </div>
                                 <div class="flex justify-center gap-6 md:gap-20 mt-2">
-                                    <div class="text-purple-400">↘</div>
-                                    <div class="text-purple-400">↙</div>
+                                    <div class="route-out">↘</div>
+                                    <div class="route-out">↙</div>
                                 </div>
-                                <div class="text-purple-400 font-semibold">PHONOLOGICAL OUTPUT BUFFER</div>
+                                <div class="route-out">PHONOLOGICAL OUTPUT BUFFER</div>
                                 <div class="text-neutral-gray/50">↓</div>
-                                <div class="text-accent-gold font-bold">SPEECH OUTPUT</div>
+                                <div class="text-accent-red font-bold">SPEECH OUTPUT</div>
                             </div>
                         </div>
 
                         <div class="space-y-6">
                             <!-- Lexical route -->
-                            <div class="p-6 rounded-none border border-blue-500/20 bg-blue-500/[0.03]">
+                            <div class="route-card route-card--lexical p-6">
                                 <div class="flex items-center gap-3 mb-3">
-                                    <div class="w-2 h-2 rounded-full bg-blue-400"></div>
-                                    <h3 class="font-semibold text-blue-400">Lexical Route</h3>
+                                    <div class="route-dot"></div>
+                                    <h3 class="t-h4 font-bold text-accent-red">Lexical Route</h3>
                                 </div>
                                 <p class="text-neutral-gray text-sm leading-relaxed">
                                     Maps orthographic input directly onto stored whole-word phonological representations
@@ -284,10 +267,10 @@
                                 </p>
                             </div>
                             <!-- Sublexical route -->
-                            <div class="p-6 rounded-none border border-green-500/20 bg-green-500/[0.03]">
+                            <div class="route-card route-card--sublexical p-6">
                                 <div class="flex items-center gap-3 mb-3">
-                                    <div class="w-2 h-2 rounded-full bg-green-400"></div>
-                                    <h3 class="font-semibold text-green-400">Sublexical Route (TLA Network)</h3>
+                                    <div class="route-dot"></div>
+                                    <h3 class="t-h4 font-medium text-primary-dark">Sublexical Route (TLA Network)</h3>
                                 </div>
                                 <p class="text-neutral-gray text-sm leading-relaxed">
                                     The Temporal Letter Assembly (TLA) network applies learned grapheme-to-phoneme
@@ -299,10 +282,10 @@
                                 </p>
                             </div>
                             <!-- Competition -->
-                            <div class="p-6 rounded-none border border-purple-500/20 bg-purple-500/[0.03]">
+                            <div class="route-card route-card--competition p-6">
                                 <div class="flex items-center gap-3 mb-3">
-                                    <div class="w-2 h-2 rounded-full bg-purple-400"></div>
-                                    <h3 class="font-semibold text-purple-400">Frequency-Weighted Pathway Competition</h3>
+                                    <div class="route-dot"></div>
+                                    <h3 class="t-h4 font-semibold text-neutral-gray">Frequency-Weighted Pathway Competition</h3>
                                 </div>
                                 <p class="text-neutral-gray text-sm leading-relaxed">
                                     The model implements <strong class="text-accent-red font-medium">pathway competition</strong>:
@@ -320,17 +303,17 @@
                     <section class="mb-16" id="versions">
                         <div class="flex items-center gap-3 mb-6">
                             <div class="w-1 h-8 bg-accent-red"></div>
-                            <h2 class="text-2xl font-bold">Model Versions</h2>
+                            <h2 class="t-h2 font-display font-bold text-primary-dark">Model Versions</h2>
                         </div>
                         <div class="space-y-6">
 
                             <div class="p-6 rounded-none border border-surface-border bg-surface">
                                 <div class="flex items-start justify-between gap-4 mb-3">
                                     <div>
-                                        <h3 class="font-bold text-primary-dark text-lg">CDP+</h3>
+                                        <h3 class="t-h3 font-bold text-primary-dark">CDP+</h3>
                                         <p class="text-neutral-gray text-sm">Perry, Ziegler, &amp; Zorzi (2007)</p>
                                     </div>
-                                    <span class="px-2 py-1 text-xs bg-blue-500/15 text-blue-400 border border-blue-500/25 rounded-full whitespace-nowrap">English</span>
+                                    <span class="chip">English</span>
                                 </div>
                                 <p class="text-neutral-gray text-sm leading-relaxed mb-3">
                                     The foundational version. Includes a complete lexical pathway with a
@@ -348,10 +331,10 @@
                             <div class="p-6 rounded-none border border-surface-border bg-surface">
                                 <div class="flex items-start justify-between gap-4 mb-3">
                                     <div>
-                                        <h3 class="font-bold text-primary-dark text-lg">CDP++</h3>
+                                        <h3 class="t-h3 font-bold text-primary-dark">CDP++</h3>
                                         <p class="text-neutral-gray text-sm">Perry, Ziegler, &amp; Zorzi (2010)</p>
                                     </div>
-                                    <span class="px-2 py-1 text-xs bg-blue-500/15 text-blue-400 border border-blue-500/25 rounded-full whitespace-nowrap">English</span>
+                                    <span class="chip">English</span>
                                 </div>
                                 <p class="text-neutral-gray text-sm leading-relaxed mb-3">
                                     Extends CDP+ to multisyllabic words and nonwords, adds a stress assignment mechanism,
@@ -369,10 +352,10 @@
                             <div class="p-6 rounded-none border border-surface-border bg-surface">
                                 <div class="flex items-start justify-between gap-4 mb-3">
                                     <div>
-                                        <h3 class="font-bold text-primary-dark text-lg">CDP++.parser</h3>
+                                        <h3 class="t-h3 font-bold text-primary-dark">CDP++.parser</h3>
                                         <p class="text-neutral-gray text-sm">Perry, Ziegler, &amp; Zorzi (2013)</p>
                                     </div>
-                                    <span class="px-2 py-1 text-xs bg-blue-500/15 text-blue-400 border border-blue-500/25 rounded-full whitespace-nowrap">English</span>
+                                    <span class="chip">English</span>
                                 </div>
                                 <p class="text-neutral-gray text-sm leading-relaxed mb-3">
                                     Adds a learned graphemic parsing mechanism that categorizes letter-string positions
@@ -387,7 +370,7 @@
                     <section class="mb-16" id="multilingual">
                         <div class="flex items-center gap-3 mb-6">
                             <div class="w-1 h-8 bg-accent-red"></div>
-                            <h2 class="text-2xl font-bold">Multilingual Implementations</h2>
+                            <h2 class="t-h2 font-display font-bold text-primary-dark">Multilingual Implementations</h2>
                         </div>
                         <p class="text-neutral-gray mb-6 leading-relaxed">
                             The CDP architecture has been adapted for three additional languages, each requiring its own
@@ -397,7 +380,7 @@
                         <div class="grid md:grid-cols-3 gap-4">
                             <div class="p-5 rounded-none border border-surface-border bg-surface text-center">
                                 <div class="text-2xl mb-3">🇩🇪</div>
-                                <h3 class="font-semibold text-primary-dark mb-2">German CDP+</h3>
+                                <h3 class="t-h4 font-semibold text-primary-dark mb-2">German CDP+</h3>
                                 <p class="text-neutral-gray text-xs leading-relaxed">
                                     Transparent orthography; regularity effects are attenuated relative to English.
                                     Perry et al. (2010).
@@ -405,7 +388,7 @@
                             </div>
                             <div class="p-5 rounded-none border border-surface-border bg-surface text-center">
                                 <div class="text-2xl mb-3">🇫🇷</div>
-                                <h3 class="font-semibold text-primary-dark mb-2">French CDP++</h3>
+                                <h3 class="t-h4 font-semibold text-primary-dark mb-2">French CDP++</h3>
                                 <p class="text-neutral-gray text-xs leading-relaxed">
                                     Lexicon of 100,000+ words. Semi-transparent orthography with large asymmetry
                                     between reading and spelling. Perry et al. (2014).
@@ -413,7 +396,7 @@
                             </div>
                             <div class="p-5 rounded-none border border-surface-border bg-surface text-center">
                                 <div class="text-2xl mb-3">🇮🇹</div>
-                                <h3 class="font-semibold text-primary-dark mb-2">Italian CDP++</h3>
+                                <h3 class="t-h4 font-semibold text-primary-dark mb-2">Italian CDP++</h3>
                                 <p class="text-neutral-gray text-xs leading-relaxed">
                                     Lexicon of 60,000+ words. Highly transparent orthography; sublexical route
                                     is dominant for most words. Perry et al. (2014).
@@ -426,7 +409,7 @@
                     <section class="mb-16">
                         <div class="flex items-center gap-3 mb-6">
                             <div class="w-1 h-8 bg-accent-red"></div>
-                            <h2 class="text-2xl font-bold">Developmental &amp; Clinical Applications</h2>
+                            <h2 class="t-h2 font-display font-bold text-primary-dark">Developmental &amp; Clinical Applications</h2>
                         </div>
                         <div class="space-y-5 text-neutral-gray leading-relaxed">
                             <p>
@@ -450,7 +433,7 @@
                     <section class="mb-16">
                         <div class="flex items-center gap-3 mb-6">
                             <div class="w-1 h-8 bg-accent-red"></div>
-                            <h2 class="text-2xl font-bold">Key References</h2>
+                            <h2 class="t-h2 font-display font-bold text-primary-dark">Key References</h2>
                         </div>
                         <div class="space-y-4">
                             <div class="p-5 rounded-none border border-surface-border bg-surface">
@@ -495,8 +478,8 @@
 
                         <!-- Interactive Demo -->
                         <div class="p-6 rounded-none border border-surface-border bg-surface">
-                            <h3 class="font-semibold text-primary-dark mb-3 flex items-center gap-2">
-                                <svg class="w-5 h-5 text-accent-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <h3 class="t-h4 font-semibold text-primary-dark mb-3 flex items-center gap-2">
+                                <svg class="w-5 h-5 text-accent-red" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                 </svg>
                                 Interactive Demo
@@ -513,7 +496,7 @@
 
                         <!-- Downloads -->
                         <div class="p-6 rounded-none border border-surface-border bg-surface" id="downloads">
-                            <h3 class="font-semibold text-primary-dark mb-4 flex items-center gap-2">
+                            <h3 class="t-h4 font-semibold text-primary-dark mb-4 flex items-center gap-2">
                                 <svg class="w-5 h-5 text-neutral-gray" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
                                 </svg>
@@ -525,35 +508,35 @@
                             </p>
                             <div class="space-y-2">
                                 <div class="flex items-center gap-3 p-3 rounded-none border border-surface-border bg-surface">
-                                    <span class="text-blue-400 font-bold text-sm w-16 flex-shrink-0">CDP+</span>
+                                    <span class="text-accent-red font-bold text-sm w-16 flex-shrink-0">CDP+</span>
                                     <div class="flex-1">
                                         <p class="text-xs text-neutral-gray">English monosyllables · v1.0</p>
                                     </div>
                                     <span class="text-xs text-neutral-gray/50">Windows</span>
                                 </div>
                                 <div class="flex items-center gap-3 p-3 rounded-none border border-surface-border bg-surface">
-                                    <span class="text-blue-400 font-bold text-sm w-16 flex-shrink-0">CDP++</span>
+                                    <span class="text-accent-red font-bold text-sm w-16 flex-shrink-0">CDP++</span>
                                     <div class="flex-1">
                                         <p class="text-xs text-neutral-gray">English multisyllabic · 32k words</p>
                                     </div>
                                     <span class="text-xs text-neutral-gray/50">Windows</span>
                                 </div>
                                 <div class="flex items-center gap-3 p-3 rounded-none border border-surface-border bg-surface">
-                                    <span class="text-green-400 font-bold text-sm w-16 flex-shrink-0">IT</span>
+                                    <span class="text-neutral-gray font-bold text-sm w-16 flex-shrink-0">IT</span>
                                     <div class="flex-1">
                                         <p class="text-xs text-neutral-gray">Italian CDP++ · 60k words</p>
                                     </div>
                                     <span class="text-xs text-neutral-gray/50">Windows</span>
                                 </div>
                                 <div class="flex items-center gap-3 p-3 rounded-none border border-surface-border bg-surface">
-                                    <span class="text-green-400 font-bold text-sm w-16 flex-shrink-0">FR</span>
+                                    <span class="text-neutral-gray font-bold text-sm w-16 flex-shrink-0">FR</span>
                                     <div class="flex-1">
                                         <p class="text-xs text-neutral-gray">French CDP++ · 100k words</p>
                                     </div>
                                     <span class="text-xs text-neutral-gray/50">Windows</span>
                                 </div>
                                 <div class="flex items-center gap-3 p-3 rounded-none border border-surface-border bg-surface">
-                                    <span class="text-green-400 font-bold text-sm w-16 flex-shrink-0">DE</span>
+                                    <span class="text-neutral-gray font-bold text-sm w-16 flex-shrink-0">DE</span>
                                     <div class="flex-1">
                                         <p class="text-xs text-neutral-gray">German CDP+</p>
                                     </div>
@@ -573,30 +556,30 @@
 
                         <!-- Phenomena explained -->
                         <div class="p-6 rounded-none border border-surface-border bg-surface">
-                            <h3 class="font-semibold text-primary-dark mb-4">Phenomena Captured</h3>
+                            <h3 class="t-h4 font-semibold text-primary-dark mb-4">Phenomena Captured</h3>
                             <ul class="space-y-3 text-sm text-neutral-gray">
                                 <li class="flex items-start gap-2">
-                                    <span class="text-accent-gold mt-0.5 flex-shrink-0">✓</span>
+                                    <span class="text-accent-red mt-0.5 flex-shrink-0">✓</span>
                                     <span><strong class="text-accent-red font-medium">Frequency effect</strong> — high-freq words named faster</span>
                                 </li>
                                 <li class="flex items-start gap-2">
-                                    <span class="text-accent-gold mt-0.5 flex-shrink-0">✓</span>
+                                    <span class="text-accent-red mt-0.5 flex-shrink-0">✓</span>
                                     <span><strong class="text-accent-red font-medium">Regularity effect</strong> — irregular words slower/more errors</span>
                                 </li>
                                 <li class="flex items-start gap-2">
-                                    <span class="text-accent-gold mt-0.5 flex-shrink-0">✓</span>
+                                    <span class="text-accent-red mt-0.5 flex-shrink-0">✓</span>
                                     <span><strong class="text-accent-red font-medium">Frequency × Regularity</strong> — interaction only at low freq</span>
                                 </li>
                                 <li class="flex items-start gap-2">
-                                    <span class="text-accent-gold mt-0.5 flex-shrink-0">✓</span>
+                                    <span class="text-accent-red mt-0.5 flex-shrink-0">✓</span>
                                     <span><strong class="text-accent-red font-medium">Consistency effect</strong> — body-neighbour inconsistency costs</span>
                                 </li>
                                 <li class="flex items-start gap-2">
-                                    <span class="text-accent-gold mt-0.5 flex-shrink-0">✓</span>
+                                    <span class="text-accent-red mt-0.5 flex-shrink-0">✓</span>
                                     <span><strong class="text-accent-red font-medium">Length effect</strong> — sublexical serial assembly cost</span>
                                 </li>
                                 <li class="flex items-start gap-2">
-                                    <span class="text-accent-gold mt-0.5 flex-shrink-0">✓</span>
+                                    <span class="text-accent-red mt-0.5 flex-shrink-0">✓</span>
                                     <span><strong class="text-accent-red font-medium">Nonword reading</strong> — sublexical route only</span>
                                 </li>
                             </ul>
@@ -605,15 +588,15 @@
                 </aside>
             </div>
         </div>
-    </main>
+    </section>
 
     <!-- Related -->
-    <section class="py-16 border-t border-surface-border bg-surface">
+    <section class="section-y border-t border-surface-border bg-surface">
         <div class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16">
-            <h2 class="text-xl font-bold mb-8 text-neutral-gray">Related Research</h2>
+            <h2 class="t-h2 font-display font-bold text-primary-dark mb-8">Related Research</h2>
             <div class="grid md:grid-cols-2 gap-6 max-w-3xl">
                 <a href="research-deeplearning.html"
-                    class="flex items-start gap-4 p-5 rounded-none border border-surface-border hover:border-accent-gold/40 transition-all duration-200 group">
+                    class="flex items-start gap-4 p-5 rounded-none border border-surface-border hover:border-accent-red/40 transition-all duration-200 group">
                     <svg class="w-6 h-6 mt-1 flex-shrink-0 text-neutral-gray/60 group-hover:text-accent-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"/></svg>
                     <div>
                         <p class="font-semibold text-primary-dark group-hover:text-accent-red transition-colors mb-1">Deep Unsupervised Learning</p>
@@ -621,10 +604,10 @@
                     </div>
                 </a>
                 <a href="playground.html#cdp-model"
-                    class="flex items-start gap-4 p-5 rounded-none border border-surface-border hover:border-purple-400/40 transition-all duration-200 group">
-                    <svg class="w-6 h-6 mt-1 flex-shrink-0 text-purple-400/60 group-hover:text-purple-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+                    class="flex items-start gap-4 p-5 rounded-none border border-surface-border hover:border-accent-red/40 transition-all duration-200 group">
+                    <svg class="w-6 h-6 mt-1 flex-shrink-0 text-neutral-gray/60 group-hover:text-accent-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
                     <div>
-                        <p class="font-semibold text-primary-dark group-hover:text-purple-400 transition-colors mb-1">CDP Explorer</p>
+                        <p class="font-semibold text-primary-dark group-hover:text-accent-red transition-colors mb-1">CDP Explorer</p>
                         <p class="text-sm text-neutral-gray">Try the dual-route model interactively with any English word or nonword.</p>
                     </div>
                 </a>
@@ -632,40 +615,44 @@
         </div>
     </section>
 
+    </main>
+
     <!-- Footer -->
-    <footer id="footer" class="bg-surface-alt py-12 border-t border-surface-border">
+    <footer class="site-footer bg-surface-alt py-12 border-t border-surface-border">
         <div class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16">
-            <div class="grid md:grid-cols-4 gap-8 md:gap-12 mb-8 md:mb-12">
-                <div class="md:col-span-2">
-                    <img src="Assets/Logo_and_text.png" alt="CCN Lab" class="h-14 mb-4 logo-on-light">
-                    <p class="text-neutral-gray text-sm leading-relaxed max-w-md">
-                        The Computational Cognitive Neuroscience Lab at the University of Padova, exploring the
-                        computational mechanisms underlying human cognition since 2000.
+            <div class="grid md:grid-cols-3 gap-8 md:gap-12 mb-8">
+                <div>
+                    <img loading="lazy" decoding="async" width="1408" height="792" src="Assets/Logo_and_text.png" alt="CCN Lab" class="h-10 mb-4 logo-on-light opacity-70 w-auto">
+                    <p class="text-neutral-gray text-sm leading-relaxed max-w-sm">
+                        The Computational Cognitive Neuroscience Lab at the University of Padova, exploring the computational mechanisms underlying human cognition since 2000.
                     </p>
                 </div>
                 <div>
-                    <h4 class="font-semibold mb-4 text-primary-dark">Quick Links</h4>
+                    <h4 class="t-eyebrow font-mono-tech text-primary-dark uppercase tracking-widest mb-4">Quick Links</h4>
                     <ul class="space-y-2">
                         <li><a href="index.html#about" class="text-neutral-gray hover:text-accent-red transition-colors text-sm">About</a></li>
                         <li><a href="research.html" class="text-neutral-gray hover:text-accent-red transition-colors text-sm">Research</a></li>
                         <li><a href="people.html" class="text-neutral-gray hover:text-accent-red transition-colors text-sm">People</a></li>
                         <li><a href="playground.html" class="text-neutral-gray hover:text-accent-red transition-colors text-sm">Playground</a></li>
+                        <li><a href="news.html" class="text-neutral-gray hover:text-accent-red transition-colors text-sm">News</a></li>
+                        <li><a href="software.html" class="text-neutral-gray hover:text-accent-red transition-colors text-sm">Software</a></li>
+                        <li><a href="join-us.html" class="text-neutral-gray hover:text-accent-red transition-colors text-sm">Join us</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h4 class="font-semibold mb-4 text-primary-dark">Affiliations</h4>
+                    <h4 class="t-eyebrow font-mono-tech text-primary-dark uppercase tracking-widest mb-4">Affiliations</h4>
                     <ul class="space-y-2 text-sm text-neutral-gray">
-                        <li><a href="http://www.unipd.it" class="hover:text-accent-red transition-colors">University of Padova</a></li>
+                        <li><a href="http://www.unipd.it"     class="hover:text-accent-red transition-colors">University of Padova</a></li>
                         <li><a href="http://dpg.psy.unipd.it" class="hover:text-accent-red transition-colors">Dept. of General Psychology</a></li>
-                        <li><a href="http://pnc.unipd.it/" class="hover:text-accent-red transition-colors">Padova Neuroscience Center</a></li>
-                        <li><a href="https://hsancamillo.it" class="hover:text-accent-red transition-colors">San Camillo Research Hospital</a></li>
+                        <li><a href="http://pnc.unipd.it/"    class="hover:text-accent-red transition-colors">Padova Neuroscience Center</a></li>
+                        <li><a href="https://hsancamillo.it"  class="hover:text-accent-red transition-colors">San Camillo Research Hospital</a></li>
                     </ul>
                 </div>
             </div>
-            <div class="pt-8 border-t border-surface-border flex flex-col md:flex-row justify-between items-center gap-4">
-                <p class="text-neutral-gray text-xs">
-                    © 2000–2026 Computational Cognitive Neuroscience Lab. All rights reserved.
-                </p>
+            <hr class="section-rule mb-6">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-3">
+                <p class="font-mono-tech text-xs text-neutral-gray">© 2000–2026 Computational Cognitive Neuroscience Lab · University of Padova</p>
+                <p class="font-mono-tech text-xs text-neutral-gray">Dept. General Psychology · Via Venezia 8 · 35131 Padova, IT</p>
             </div>
         </div>
     </footer>
@@ -680,27 +667,10 @@
             });
         }
 
-        const header    = document.getElementById('header');
-        const navInner  = document.getElementById('nav-inner');
-        const headerLogo = document.getElementById('header-logo');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                header.classList.add('shadow-md');
-                navInner.classList.remove('h-16', 'lg:h-20');
-                navInner.classList.add('h-12', 'lg:h-14');
-                headerLogo.src = 'Assets/Logo.png';
-                headerLogo.classList.remove('h-10', 'lg:h-12');
-                headerLogo.classList.add('h-8', 'lg:h-10');
-            } else {
-                header.classList.remove('shadow-md');
-                navInner.classList.add('h-16', 'lg:h-20');
-                navInner.classList.remove('h-12', 'lg:h-14');
-                headerLogo.src = 'Assets/Logo_and_text.png';
-                headerLogo.classList.add('h-10', 'lg:h-12');
-                headerLogo.classList.remove('h-8', 'lg:h-10');
-            }
-        });
+// Header expand/compact + logo lockup swap: see js/site-nav.js
+
     </script>
 
+    <script src="js/site-nav.js"></script>
 </body>
 </html>

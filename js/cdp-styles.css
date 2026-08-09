@@ -41,7 +41,7 @@
     outline: none;
     transition: border-color 0.3s;
 }
-.cdp-word-input:focus { border-color: #b20839; }
+.cdp-word-input:focus { border-color: var(--accent-on-dark); }
 .cdp-word-input::placeholder {
     color: rgba(255,255,255,0.2);
     font-family: 'JetBrains Mono', monospace;
@@ -77,6 +77,15 @@
     align-items: center;
 }
 
+/* Keep each label glued to its own words when the row wraps. */
+.cdp-quick-group {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    /* `nowrap` pushed the last quick-word button past the viewport at 390px,
+       where `overflow-x: clip` on html cuts it off with nothing to scroll. */
+    flex-wrap: wrap;
+}
 .cdp-quick-label {
     font-size: 0.6rem;
     font-weight: 600;
@@ -101,9 +110,9 @@
 }
 /* Semantic route colors — muted variants */
 .cdp-quick-btn.regular   { border-color: rgba(255,255,255,0.15); color: rgba(255,255,255,0.55); }
-.cdp-quick-btn.regular:hover   { border-color: #b20839; color: #b20839; background: rgba(178,8,57,0.08); }
+.cdp-quick-btn.regular:hover   { border-color: var(--accent-on-dark); color: var(--accent-on-dark); background: rgba(178,8,57,0.08); }
 .cdp-quick-btn.irregular { border-color: rgba(255,255,255,0.15); color: rgba(255,255,255,0.55); }
-.cdp-quick-btn.irregular:hover { border-color: #b20839; color: #b20839; background: rgba(178,8,57,0.08); }
+.cdp-quick-btn.irregular:hover { border-color: var(--accent-on-dark); color: var(--accent-on-dark); background: rgba(178,8,57,0.08); }
 .cdp-quick-btn.nonword  { border-color: rgba(255,255,255,0.15); color: rgba(255,255,255,0.55); }
 .cdp-quick-btn.nonword:hover  { border-color: rgba(255,255,255,0.35); color: rgba(255,255,255,0.8); background: rgba(255,255,255,0.05); }
 
@@ -134,7 +143,7 @@
     background: rgba(255,255,255,0.02);
     transition: all 0.5s;
 }
-.cdp-route-card.active-lexical    { border-color: rgba(178,8,57,0.45); border-left: 3px solid #b20839; background: rgba(178,8,57,0.06); }
+.cdp-route-card.active-lexical    { border-color: rgba(178,8,57,0.45); border-left: 3px solid var(--accent-on-dark); background: rgba(178,8,57,0.06); }
 .cdp-route-card.active-sublexical { border-color: rgba(255,255,255,0.25); border-left: 3px solid rgba(255,255,255,0.5); background: rgba(255,255,255,0.04); }
 
 .cdp-route-title {
@@ -144,7 +153,7 @@
     letter-spacing: 0.08em;
     margin-bottom: 5px;
 }
-.cdp-route-title.lexical    { color: #b20839; }
+.cdp-route-title.lexical    { color: var(--accent-on-dark); }
 .cdp-route-title.sublexical { color: rgba(255,255,255,0.7); }
 
 .cdp-route-desc {
@@ -196,7 +205,7 @@
 .cdp-metric-value {
     font-size: 1.15rem;
     font-weight: 800;
-    color: #b20839;
+    color: var(--accent-on-dark);
     transition: color 0.4s;
 }
 
@@ -214,7 +223,7 @@
     flex-wrap: wrap;
     background: rgba(255,255,255,0.025);
     border: 1px solid rgba(255,255,255,0.07);
-    border-left: 3px solid #b20839;
+    border-left: 3px solid var(--accent-on-dark);
     border-radius: 0;
     padding: 10px 14px;
 }
@@ -245,7 +254,7 @@
     font-family: 'JetBrains Mono', 'Courier New', monospace;
     font-size: 0.85rem;
     font-weight: 700;
-    color: #b20839;
+    color: var(--accent-on-dark);
     text-transform: uppercase;
     letter-spacing: 0.05em;
 }
@@ -263,7 +272,7 @@
 }
 
 .cdp-gpc-cell.silent .cdp-gpc-p { color: rgba(255,255,255,0.25); font-style: italic; }
-.cdp-gpc-cell.unknown .cdp-gpc-p { color: rgba(178,8,57,0.7); }
+.cdp-gpc-cell.unknown .cdp-gpc-p { color: var(--accent-on-dark); }
 
 /* ── Output Area ─────────────────────────────────────────────────────────── */
 .cdp-output {
@@ -285,13 +294,13 @@
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.12em;
-    color: rgba(178,8,57,0.6);
+    color: var(--accent-on-dark);
 }
 
 .cdp-output-phoneme {
     font-size: 1.6rem;
     font-weight: 800;
-    color: #b20839;
+    color: var(--accent-on-dark);
     font-family: 'JetBrains Mono', 'Courier New', monospace;
     letter-spacing: 0.2em;
     min-height: 2rem;
@@ -313,25 +322,25 @@
     border: 1px solid;
 }
 .cdp-output-tag.regular         { background: transparent; border-color: rgba(255,255,255,0.2); color: rgba(255,255,255,0.6); }
-.cdp-output-tag.irregular       { background: rgba(178,8,57,0.08); border-color: rgba(178,8,57,0.3); color: #b20839; }
+.cdp-output-tag.irregular       { background: rgba(178,8,57,0.08); border-color: rgba(178,8,57,0.3); color: var(--accent-on-dark); }
 .cdp-output-tag.nonword         { background: transparent; border-color: rgba(255,255,255,0.15); color: rgba(255,255,255,0.45); }
 .cdp-output-tag.word            { background: transparent; border-color: rgba(255,255,255,0.2); color: rgba(255,255,255,0.6); }
 .cdp-output-tag.freq-high       { color: rgba(255,255,255,0.6); border-color: rgba(255,255,255,0.2); background: transparent; }
 .cdp-output-tag.freq-medium     { color: rgba(255,255,255,0.5); border-color: rgba(255,255,255,0.15); background: transparent; }
-.cdp-output-tag.freq-low        { color: #b20839; border-color: rgba(178,8,57,0.3); background: rgba(178,8,57,0.06); }
+.cdp-output-tag.freq-low        { color: var(--accent-on-dark); border-color: rgba(178,8,57,0.3); background: rgba(178,8,57,0.06); }
 
 /* ── Explanation ────────────────────────────────────────────────────────── */
 .cdp-explanation {
     background: rgba(178,8,57,0.04);
     border: 1px solid rgba(178,8,57,0.12);
-    border-left: 3px solid #b20839;
+    border-left: 3px solid var(--accent-on-dark);
     border-radius: 0;
     padding: 14px 16px;
     font-size: 0.75rem;
     line-height: 1.65;
     color: rgba(255,255,255,0.6);
 }
-.cdp-explanation strong { color: #b20839; }
+.cdp-explanation strong { color: var(--accent-on-dark); }
 .cdp-explanation em     { color: rgba(255,255,255,0.85); font-style: normal; font-weight: 600; }
 
 /* ── Responsive ─────────────────────────────────────────────────────────── */

@@ -407,19 +407,25 @@ class CDPDemo {
                 </div>
 
                 <div class="cdp-quick-words">
-                    <span class="cdp-quick-label">Regular:</span>
-                    <button class="cdp-quick-btn regular" data-word="cat">cat</button>
-                    <button class="cdp-quick-btn regular" data-word="hand">hand</button>
-                    <button class="cdp-quick-btn regular" data-word="flat">flat</button>
-                    <span class="cdp-quick-label" style="margin-left:6px">Irregular:</span>
-                    <button class="cdp-quick-btn irregular" data-word="have">have</button>
-                    <button class="cdp-quick-btn irregular" data-word="blood">blood</button>
-                    <button class="cdp-quick-btn irregular" data-word="pint">pint</button>
-                    <button class="cdp-quick-btn irregular" data-word="yacht">yacht</button>
-                    <span class="cdp-quick-label" style="margin-left:6px">Nonword:</span>
-                    <button class="cdp-quick-btn nonword" data-word="bink">bink</button>
-                    <button class="cdp-quick-btn nonword" data-word="grof">grof</button>
-                    <button class="cdp-quick-btn nonword" data-word="flurb">flurb</button>
+                    <div class="cdp-quick-group">
+                        <span class="cdp-quick-label">Regular:</span>
+                        <button class="cdp-quick-btn regular" data-word="cat">cat</button>
+                        <button class="cdp-quick-btn regular" data-word="hand">hand</button>
+                        <button class="cdp-quick-btn regular" data-word="flat">flat</button>
+                    </div>
+                    <div class="cdp-quick-group">
+                        <span class="cdp-quick-label">Irregular:</span>
+                        <button class="cdp-quick-btn irregular" data-word="have">have</button>
+                        <button class="cdp-quick-btn irregular" data-word="blood">blood</button>
+                        <button class="cdp-quick-btn irregular" data-word="pint">pint</button>
+                        <button class="cdp-quick-btn irregular" data-word="yacht">yacht</button>
+                    </div>
+                    <div class="cdp-quick-group">
+                        <span class="cdp-quick-label">Nonword:</span>
+                        <button class="cdp-quick-btn nonword" data-word="bink">bink</button>
+                        <button class="cdp-quick-btn nonword" data-word="grof">grof</button>
+                        <button class="cdp-quick-btn nonword" data-word="flurb">flurb</button>
+                    </div>
                 </div>
 
                 <canvas class="cdp-arch-canvas" id="cdp-canvas" width="700" height="380"></canvas>
@@ -553,6 +559,18 @@ class CDPDemo {
         if (this._rafId) cancelAnimationFrame(this._rafId);
         const startTime  = performance.now();
         const duration   = 1800;
+        /* Reduced motion: show the finished state rather than stepping through
+           the five phases. The information is identical; only the motion goes. */
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            this._drawStep(result, 'output');
+            if (result.lexicalStrength > 0) {
+                this.container.querySelector('#cdp-lexical-card').className = 'cdp-route-card active-lexical';
+                this.container.querySelector('#cdp-lex-bar').style.width = `${result.lexicalStrength * 100}%`;
+            }
+            this.container.querySelector('#cdp-sublexical-card').className = 'cdp-route-card active-sublexical';
+            this.container.querySelector('#cdp-sub-bar').style.width = `${result.sublexicalStrength * 100}%`;
+            return;
+        }
         // Phase timeline (fraction of total duration)
         const phaseTimes = [
             { t: 0.00, phase: 'input' },
@@ -592,26 +610,59 @@ class CDPDemo {
 
     // ─── Canvas Drawing ─────────────────────────────────────────────────────
 
+    /* The backing store used to be a flat 700x380 shown in a 754x410 box, so
+       the whole diagram was resampled and soft on any display. Size it to
+       devicePixelRatio and keep drawing in the 700x380 design space. */
+    _fitCanvas(canvas, designW, designH) {
+        const dpr  = Math.min(window.devicePixelRatio || 1, 2);
+        const cssW = canvas.clientWidth  || designW;
+        const cssH = canvas.clientHeight || designH;
+        const bw = Math.round(cssW * dpr), bh = Math.round(cssH * dpr);
+        if (canvas.width !== bw || canvas.height !== bh) { canvas.width = bw; canvas.height = bh; }
+        const s = Math.min(cssW / designW, cssH / designH);
+        canvas.getContext('2d').setTransform(dpr * s, 0, 0, dpr * s,
+            dpr * (cssW - designW * s) / 2, dpr * (cssH - designH * s) / 2);
+        return s;
+    }
+
     _drawStep(result, phase) {
         const canvas = this.container.querySelector('#cdp-canvas');
+        const W = 700, H = 380;                       // design box
+        this._fitCanvas(canvas, W, H);
         const ctx = canvas.getContext('2d');
-        const W = canvas.width, H = canvas.height;
         const centerX = W / 2;
         const lexX    = centerX - 140;
         const subX    = centerX + 140;
         const inputY  = 35, orthY = 100, lexY = 195, subY = 195, phonY = 295, outY = 358;
 
         ctx.clearRect(0, 0, W, H);
-        this._drawArchitecture(ctx, W, H, phase, result);
+        /* Nodes that are about to be overdrawn with live content: the static
+           label is suppressed there and redrawn by _drawActiveBox on its own
+           line, otherwise the two share a baseline and interleave
+           ("VISUAL INPUT" + "HAVE" rendered as "VI HAVE UT"). */
+        const live = new Set();
+        if (['input','orthographic','routes','processing','output'].includes(phase))
+            live.add(centerX + ':' + inputY);
+        if (['orthographic','routes','processing','output'].includes(phase))
+            live.add(centerX + ':' + orthY);
+        if (['processing','output'].includes(phase)) {
+            if (result.lexicalStrength > 0) live.add(lexX + ':' + lexY);
+            live.add(subX + ':' + subY);
+        }
+        if (phase === 'output') {
+            live.add(centerX + ':' + phonY);
+            live.add(centerX + ':' + outY);
+        }
+        this._drawArchitecture(ctx, W, H, phase, result, live);
 
         if (phase === 'input') {
-            this._drawActiveBox(ctx, centerX, inputY, result.word.toUpperCase(), '#b20839', 1);
+            this._drawActiveBox(ctx, centerX, inputY, result.word.toUpperCase(), '#b20839', 1, 'VISUAL INPUT');
         }
         if (['orthographic','routes','processing','output'].includes(phase)) {
-            this._drawActiveBox(ctx, centerX, inputY, result.word.toUpperCase(), '#b20839', 1);
+            this._drawActiveBox(ctx, centerX, inputY, result.word.toUpperCase(), '#b20839', 1, 'VISUAL INPUT');
             const gStr = result.graphemes.join(' · ');
             const fade = phase === 'orthographic' ? 1 : 0.65;
-            this._drawActiveBox(ctx, centerX, orthY, gStr, '#b20839', fade);
+            this._drawActiveBox(ctx, centerX, orthY, gStr, '#b20839', fade, 'ORTHOGRAPHIC ANALYSIS');
             this._drawFlowArrow(ctx, centerX, inputY + 22, centerX, orthY - 18, '#b20839', 0.65);
         }
         if (['routes','processing','output'].includes(phase)) {
@@ -623,23 +674,23 @@ class CDPDemo {
             if (result.lexicalStrength > 0) {
                 this.container.querySelector('#cdp-lexical-card').className = 'cdp-route-card active-lexical';
                 this.container.querySelector('#cdp-lex-bar').style.width = `${result.lexicalStrength * 100}%`;
-                this._drawActiveBox(ctx, lexX, lexY, result.phoneme, '#b20839', result.lexicalStrength);
+                this._drawActiveBox(ctx, lexX, lexY, result.phoneme, '#b20839', result.lexicalStrength, 'LEXICAL ROUTE');
             }
             this.container.querySelector('#cdp-sublexical-card').className = 'cdp-route-card active-sublexical';
             this.container.querySelector('#cdp-sub-bar').style.width = `${result.sublexicalStrength * 100}%`;
-            this._drawActiveBox(ctx, subX, subY, result.gpcOutput || '?', '#888888', result.sublexicalStrength);
+            this._drawActiveBox(ctx, subX, subY, result.gpcOutput || '?', '#888888', result.sublexicalStrength, 'SUBLEXICAL ROUTE');
         }
         if (phase === 'output') {
             if (result.lexicalStrength > 0)
                 this._drawFlowArrow(ctx, lexX, lexY + 22, centerX, phonY - 18, '#b20839', 0.6);
             this._drawFlowArrow(ctx, subX, subY + 22, centerX, phonY - 18, '#888888', 0.6);
-            this._drawActiveBox(ctx, centerX, phonY, result.phoneme, '#b20839', 1);
+            this._drawActiveBox(ctx, centerX, phonY, result.phoneme, '#b20839', 1, 'PHONOLOGICAL OUTPUT');
             this._drawFlowArrow(ctx, centerX, phonY + 22, centerX, outY - 12, '#b20839', 0.8);
-            this._drawActiveBox(ctx, centerX, outY, '🔊 ' + (result.ipa || '/' + result.phoneme + '/'), '#b20839', 1);
+            this._drawActiveBox(ctx, centerX, outY, '🔊 ' + (result.ipa || '/' + result.phoneme + '/'), '#b20839', 1, 'SPEECH OUTPUT');
         }
     }
 
-    _drawArchitecture(ctx, W, H, phase, result) {
+    _drawArchitecture(ctx, W, H, phase, result, live) {
         const cx  = W / 2;
         const lx  = cx - 140;
         const sx  = cx + 140;
@@ -662,6 +713,7 @@ class CDPDemo {
             ctx.beginPath();
             this._roundRect(ctx, box.x - bw / 2, box.y - bh / 2, bw, bh, 7);
             ctx.fill();
+            if (live && live.has(box.x + ':' + box.y)) return;   // label redrawn live
             ctx.fillStyle = 'rgba(255,255,255,0.18)';
             ctx.font = '600 8px Manrope, sans-serif';
             ctx.textAlign = 'center';
@@ -698,7 +750,7 @@ class CDPDemo {
         }
     }
 
-    _drawActiveBox(ctx, x, y, text, color, alpha) {
+    _drawActiveBox(ctx, x, y, text, color, alpha, label) {
         const bw = 190, bh = 32;
         ctx.globalAlpha = alpha * 0.18;
         ctx.fillStyle = color;
@@ -712,12 +764,22 @@ class CDPDemo {
         this._roundRect(ctx, x - bw / 2, y - bh / 2, bw, bh, 7);
         ctx.stroke();
         ctx.globalAlpha = alpha;
-        ctx.fillStyle = '#fff';
-        ctx.font = '700 11px "Courier New", monospace';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
         const display = text.length > 24 ? text.substring(0, 24) + '…' : text;
-        ctx.fillText(display, x, y);
+        if (label) {
+            // Two lines inside the 32px box: node name above, live content below.
+            ctx.fillStyle = 'rgba(255,255,255,0.45)';
+            ctx.font = '600 7px Manrope, sans-serif';
+            ctx.fillText(label, x, y - 8);
+            ctx.fillStyle = '#fff';
+            ctx.font = '700 11px "Courier New", monospace';
+            ctx.fillText(display, x, y + 6);
+        } else {
+            ctx.fillStyle = '#fff';
+            ctx.font = '700 11px "Courier New", monospace';
+            ctx.fillText(display, x, y);
+        }
         ctx.globalAlpha = 1;
     }
 

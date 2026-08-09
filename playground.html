@@ -25,8 +25,6 @@
                         'primary-light':    '#FFFFFF',
                         'accent-red':       '#b20839',
                         'accent-red-hover': '#8a0022',
-                        'accent-gold':      '#b20839',
-                        'accent-gold-hover':'#8a0022',
                         'neutral-gray':     '#6B7280',
                         'light-gray':       '#F3F4F6',
                         'surface':          '#f8f7f4',
@@ -66,6 +64,9 @@
         }
 
         /* Inspector panel — ASCII-frame */
+        /* The frame used to be hand-padded box-drawing characters, so every
+           live value of a different length pushed the right-hand rule to a
+           different x. The box is CSS now; the rows align by construction. */
         .inspector-panel {
             font-family: 'JetBrains Mono', 'Courier New', monospace;
             font-size: 0.7rem;
@@ -76,9 +77,24 @@
             border-left: 3px solid #b20839;
             padding: 0.75rem 1rem;
             box-shadow: 3px 3px 0 #e2dfda;
-            white-space: pre;
-            overflow-x: auto;
+            max-width: 26rem;
         }
+        .inspector-title {
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: #b20839;
+            border-bottom: 1px solid #e2dfda;
+            padding-bottom: 0.3rem;
+            margin-bottom: 0.35rem;
+        }
+        .inspector-rows { list-style: none; margin: 0; padding: 0; }
+        .inspector-rows li {
+            display: flex;
+            justify-content: space-between;
+            gap: 1.5rem;
+        }
+        .inspector-key { color: #6B7280; }
+        .inspector-val { color: #1a1a1a; text-align: right; }
 
         /* Theory/formula box */
         .formula-box {
@@ -87,7 +103,7 @@
             background: #1a1a1a;
             color: #f8f7f4;
             padding: 1rem 1.25rem;
-            border-left: 3px solid #b20839;
+            border-left: 3px solid var(--accent-on-dark);
             box-shadow: 3px 3px 0 #b20839;
             overflow-x: auto;
             white-space: pre-wrap;
@@ -324,32 +340,41 @@
 
 <body class="font-manrope bg-surface text-primary-dark antialiased">
 
+    <a href="#main" class="skip-link">Skip to content</a>
+
     <!-- ===== HEADER ===== -->
-    <header id="header" class="fixed top-0 left-0 right-0 z-50 bg-white border-b border-surface-border transition-all duration-300">
+    <header id="header" class="fixed top-0 left-0 right-0 z-50 bg-white border-b border-surface-border">
         <nav class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16">
-            <div class="flex items-center justify-between h-14 lg:h-16 transition-all duration-300" id="nav-inner">
+            <div class="flex items-center justify-between" id="nav-inner">
                 <a href="index.html" class="flex items-center gap-3 group">
-                    <img src="Assets/Logo_and_text.png" alt="CCN Lab Logo" id="header-logo"
-                        class="h-10 lg:h-12 object-contain -ml-2 transition-all duration-300 logo-on-light">
+                    <span class="header-logo" id="header-logo">
+                        <img loading="eager" decoding="async" width="1408" height="792"
+                            src="Assets/Logo_and_text.png" alt="CCN Lab"
+                            class="header-logo-full logo-on-light">
+                        <span class="header-logo-lab" aria-hidden="true"></span>
+                        <img loading="eager" decoding="async" width="1394" height="1394"
+                            src="Assets/Logo.png" alt="" aria-hidden="true"
+                            class="header-logo-mark logo-on-light">
+                    </span>
                 </a>
                 <div class="hidden md:flex items-center gap-4 lg:gap-7">
-                    <a href="index.html#about" class="nav-link text-neutral-gray hover:text-primary-dark text-sm font-medium">About</a>
+                    <a href="index.html#about" class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-sm font-medium">About</a>
                     <div class="dropdown-container">
-                        <a href="research.html" class="nav-link text-neutral-gray hover:text-primary-dark text-sm font-medium">Research</a>
-                        <div class="dropdown-menu">
+                        <a href="research.html" class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-sm font-medium" aria-haspopup="true" aria-expanded="false" aria-controls="research-menu">Research</a>
+                        <div class="dropdown-menu" id="research-menu">
                             <a href="research.html#research"     class="dropdown-item">Research areas</a>
                             <a href="research.html#facilities"   class="dropdown-item">Lab facilities</a>
                             <a href="research.html#publications" class="dropdown-item">Publications</a>
-                            <a href="software.html"              class="dropdown-item">Software &amp; Downloads</a>
+                            <a href="software.html"               class="dropdown-item">Software &amp; Downloads</a>
                         </div>
                     </div>
-                    <a href="people.html"     class="nav-link text-neutral-gray hover:text-primary-dark text-sm font-medium">People</a>
-                    <a href="playground.html" class="nav-link text-primary-dark font-semibold text-sm active-page">Playground</a>
-                    <a href="news.html"       class="nav-link text-neutral-gray hover:text-primary-dark text-sm font-medium">News</a>
-                    <a href="join-us.html"    class="nav-link text-neutral-gray hover:text-primary-dark text-sm font-medium">Join us</a>
-                    <a href="index.html#contact" class="btn-primary px-5 py-2 bg-accent-red text-white text-sm font-semibold hover:bg-accent-red-hover rounded-none">Contact</a>
+                    <a href="people.html"     class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-sm font-medium">People</a>
+                    <a href="playground.html" class="nav-link text-primary-dark font-semibold transition-colors duration-200 text-sm active-page">Playground</a>
+                    <a href="news.html"       class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-sm font-medium">News</a>
+                    <a href="join-us.html"    class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-sm font-medium">Join us</a>
+                    <a href="index.html#contact" class="btn-primary px-5 py-2 bg-accent-red text-white text-sm font-semibold hover:bg-accent-red-hover transition-all duration-200">Contact</a>
                 </div>
-                <button id="mobile-menu-btn" class="md:hidden p-2 text-neutral-gray hover:text-accent-red transition-colors" aria-label="Open menu">
+                <button id="mobile-menu-btn" type="button" class="md:hidden inline-flex items-center justify-center w-11 h-11 -mr-2 text-neutral-gray hover:text-accent-red transition-colors" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
                     </svg>
@@ -358,27 +383,34 @@
         </nav>
         <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-surface-border">
             <div class="px-6 py-4 space-y-1">
+                <a href="index.html" class="block text-neutral-gray hover:text-accent-red py-2.5 text-sm border-b border-surface-border">Home</a>
                 <a href="index.html#about" class="block text-neutral-gray hover:text-accent-red py-2.5 text-sm border-b border-surface-border">About</a>
-                <a href="research.html"    class="block text-neutral-gray hover:text-accent-red py-2.5 text-sm border-b border-surface-border">Research</a>
-                <a href="people.html"      class="block text-neutral-gray hover:text-accent-red py-2.5 text-sm border-b border-surface-border">People</a>
-                <a href="playground.html"  class="block text-accent-red font-semibold py-2.5 text-sm border-b border-surface-border">Playground</a>
-                <a href="news.html"        class="block text-neutral-gray hover:text-accent-red py-2.5 text-sm border-b border-surface-border">News</a>
-                <a href="join-us.html"     class="block text-neutral-gray hover:text-accent-red py-2.5 text-sm border-b border-surface-border">Join us</a>
-                <a href="index.html#contact" class="block w-fit mt-3 px-5 py-2 bg-accent-red text-white text-sm font-semibold rounded-none">Contact</a>
+                <a href="research.html" class="block text-neutral-gray hover:text-accent-red py-2.5 text-sm border-b border-surface-border">Research</a>
+                <a href="research.html#research" class="block text-neutral-gray hover:text-accent-red py-2.5 pl-4 text-sm border-b border-surface-border">Research areas</a>
+                <a href="research.html#facilities" class="block text-neutral-gray hover:text-accent-red py-2.5 pl-4 text-sm border-b border-surface-border">Lab facilities</a>
+                <a href="research.html#publications" class="block text-neutral-gray hover:text-accent-red py-2.5 pl-4 text-sm border-b border-surface-border">Publications</a>
+                <a href="software.html" class="block text-neutral-gray hover:text-accent-red py-2.5 pl-4 text-sm border-b border-surface-border">Software &amp; Downloads</a>
+                <a href="people.html" class="block text-neutral-gray hover:text-accent-red py-2.5 text-sm border-b border-surface-border">People</a>
+                <a href="playground.html" class="block text-accent-red font-semibold py-2.5 text-sm border-b border-surface-border" aria-current="page">Playground</a>
+                <a href="news.html" class="block text-neutral-gray hover:text-accent-red py-2.5 text-sm border-b border-surface-border">News</a>
+                <a href="join-us.html" class="block text-neutral-gray hover:text-accent-red py-2.5 text-sm border-b border-surface-border">Join us</a>
+                <a href="index.html#contact" class="block w-fit mt-3 px-5 py-2 bg-accent-red text-white text-sm font-semibold">Contact</a>
             </div>
         </div>
         <div class="h-px bg-accent-red"></div>
     </header>
 
+    <main id="main">
+
     <!-- ===== HERO ===== -->
-    <section class="pt-[88px] pb-12 bg-surface border-b border-surface-border">
-        <div class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16 pt-10">
+    <section class="page-hero bg-surface border-b border-surface-border">
+        <div class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16">
             <p class="font-mono-tech text-xs text-accent-red uppercase tracking-widest mb-5 flex items-center gap-2">
                 <span class="w-6 h-px bg-accent-red"></span>
                 Technical Laboratory Workbench
             </p>
             <div class="max-w-3xl">
-                <h1 class="font-display text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-5 text-primary-dark">
+                <h1 class="t-h1 font-display font-bold leading-tight mb-5 text-primary-dark">
                     Research <em class="text-accent-red">Playground</em>
                 </h1>
                 <p class="text-base text-neutral-gray font-light leading-relaxed max-w-2xl mb-6">
@@ -424,7 +456,7 @@
                                 <span class="status-dot"></span>System: Idle
                             </span>
                         </div>
-                        <h2 class="font-display text-3xl font-bold text-primary-dark leading-tight mb-2">
+                        <h2 class="t-h2 font-display font-bold text-primary-dark leading-tight mb-2">
                             La Gara dei Numeri
                         </h2>
                         <p class="font-mono-tech text-xs text-neutral-gray italic mb-4">The Number Race</p>
@@ -491,16 +523,19 @@ Adaptive staircase:
                     <!-- Inspector -->
                     <details class="inspector">
                         <summary>Inspector — Session State</summary>
-                        <div class="inspector-panel">┌─ INSPECTOR ───────────────────────────┐
-│ task     = ANS number comparison      │
-│ mode     = adaptive                   │
-│ RT_last  = <span id="insp-gara-rt">—</span> ms                    │
-│ accuracy = <span id="insp-gara-acc">—</span> %                     │
-│ level    = <span id="insp-gara-lvl">—</span>                        │
-│ w (Weber)= <span id="insp-gara-weber">—</span>                     │
-│ jnd      = <span id="insp-gara-jnd">—</span>                        │
-│ user     = <span id="insp-gara-user">guest</span>                 │
-└───────────────────────────────────────┘</div>
+                        <div class="inspector-panel">
+                        <p class="inspector-title">Inspector</p>
+                        <ul class="inspector-rows">
+                            <li><span class="inspector-key">task</span><span class="inspector-val">ANS number comparison</span></li>
+                            <li><span class="inspector-key">mode</span><span class="inspector-val">adaptive</span></li>
+                            <li><span class="inspector-key">RT_last</span><span class="inspector-val"><span id="insp-gara-rt">—</span> ms</span></li>
+                            <li><span class="inspector-key">accuracy</span><span class="inspector-val"><span id="insp-gara-acc">—</span> %</span></li>
+                            <li><span class="inspector-key">level</span><span class="inspector-val"><span id="insp-gara-lvl">—</span></span></li>
+                            <li><span class="inspector-key">w (Weber)</span><span class="inspector-val"><span id="insp-gara-weber">—</span></span></li>
+                            <li><span class="inspector-key">jnd</span><span class="inspector-val"><span id="insp-gara-jnd">—</span></span></li>
+                            <li><span class="inspector-key">user</span><span class="inspector-val"><span id="insp-gara-user">guest</span></span></li>
+                        </ul>
+                    </div>
                         <div class="debug-log" id="dbg-gara"></div>
                     </details>
 
@@ -522,15 +557,15 @@ Adaptive staircase:
                         <!-- Step 1: Language selector -->
                         <div id="step-lang" class="border border-surface-border p-8 bg-white" style="box-shadow:3px 3px 0 #e2dfda;">
                             <p class="font-mono-tech text-xs text-accent-red uppercase tracking-widest mb-6">Step 1 of 2 — Choose Language</p>
-                            <h3 class="font-display text-2xl font-bold text-primary-dark mb-2">Scegli la lingua</h3>
-                            <p class="text-neutral-gray text-sm mb-8">Select your preferred language to continue</p>
+                            <h3 class="t-h3 font-display font-bold text-primary-dark mb-2">Choose a language</h3>
+                            <p class="text-neutral-gray text-sm mb-8">The game is available in Italian and English. <span lang="it" class="italic">Scegli la lingua per continuare.</span></p>
                             <div class="flex gap-4">
                                 <button data-lang="it" class="lang-btn flex flex-col items-center gap-2 px-8 py-5 border border-surface-border hover:border-accent-red transition-all duration-200 group bg-surface hover:bg-white" style="box-shadow:2px 2px 0 #e2dfda;">
-                                    <span class="text-3xl">🇮🇹</span>
+                                    <span class="font-mono-tech text-2xl font-medium tracking-widest text-accent-red">IT</span>
                                     <span class="font-mono-tech text-xs text-neutral-gray group-hover:text-accent-red transition-colors uppercase tracking-widest">Italiano</span>
                                 </button>
                                 <button data-lang="en" class="lang-btn flex flex-col items-center gap-2 px-8 py-5 border border-surface-border hover:border-accent-red transition-all duration-200 group bg-surface hover:bg-white" style="box-shadow:2px 2px 0 #e2dfda;">
-                                    <span class="text-3xl">🇬🇧</span>
+                                    <span class="font-mono-tech text-2xl font-medium tracking-widest text-accent-red">EN</span>
                                     <span class="font-mono-tech text-xs text-neutral-gray group-hover:text-accent-red transition-colors uppercase tracking-widest">English</span>
                                 </button>
                             </div>
@@ -538,7 +573,7 @@ Adaptive staircase:
 
                         <!-- Step 2: Auth (hidden initially) -->
                         <div id="step-auth" class="hidden border border-surface-border p-8 bg-white" style="box-shadow:3px 3px 0 #e2dfda;">
-                            <p class="font-mono-tech text-xs text-accent-red uppercase tracking-widest mb-6">Step 2 of 2 — Authentication</p>
+                            <p class="font-mono-tech text-xs text-accent-red uppercase tracking-widest mb-6">Step 2 of 2 — Start Playing</p>
 
                             <!-- Logged-in state -->
                             <div id="auth-loggedin" class="hidden text-center">
@@ -561,36 +596,34 @@ Adaptive staircase:
                                 </div>
                             </div>
 
-                            <!-- Login / Register form -->
+                            <!-- Play gate — the primary action for the stated
+                                 audience is playing, not signing in. -->
                             <div id="auth-form-section">
-                                <h3 class="font-display text-xl font-bold text-primary-dark text-center mb-1" id="auth-title">Sign in</h3>
-                                <p class="text-neutral-gray text-sm text-center mb-6" id="auth-subtitle">Sign in to save your scores</p>
-                                <div class="max-w-sm mx-auto space-y-4">
-                                    <div>
-                                        <label class="block font-mono-tech text-xs text-neutral-gray uppercase tracking-widest mb-1.5" id="lbl-username">Username</label>
-                                        <input id="auth-username" type="text" autocomplete="username"
-                                            class="auth-input-light"
-                                            placeholder="username">
-                                    </div>
-                                    <div>
-                                        <label class="block font-mono-tech text-xs text-neutral-gray uppercase tracking-widest mb-1.5" id="lbl-password">Password</label>
-                                        <input id="auth-password" type="password" autocomplete="current-password"
-                                            class="auth-input-light"
-                                            placeholder="••••••••">
-                                    </div>
-                                    <p id="auth-error" class="text-accent-red text-xs hidden font-mono-tech"></p>
-                                    <button id="auth-submit"
-                                        class="w-full py-3 bg-accent-red text-white font-semibold hover:bg-accent-red-hover transition-all duration-200 text-sm rounded-none font-mono-tech uppercase tracking-widest">
-                                        Sign In
+                                <div class="max-w-sm mx-auto">
+                                    <button id="auth-guest"
+                                        class="btn-primary w-full py-3.5 bg-accent-red text-white font-semibold hover:bg-accent-red-hover transition-all duration-200 text-sm rounded-none font-mono-tech uppercase tracking-widest">
+                                        ▶ Play now
                                     </button>
-                                    <div class="flex gap-3">
-                                        <button id="auth-toggle-mode"
-                                            class="flex-1 py-2.5 border border-surface-border text-neutral-gray hover:border-accent-red hover:text-accent-red transition-all duration-200 rounded-none font-mono-tech text-xs uppercase tracking-widest">
-                                            Register instead
-                                        </button>
-                                        <button id="auth-guest"
-                                            class="flex-1 py-2.5 border border-surface-border text-neutral-gray hover:border-neutral-gray/60 transition-all duration-200 rounded-none font-mono-tech text-xs uppercase tracking-widest">
-                                            Play as Guest
+
+                                    <div class="flex items-center gap-3 my-6">
+                                        <div class="flex-1 h-px bg-surface-border"></div>
+                                        <span class="font-mono-tech text-xs text-neutral-gray uppercase tracking-widest">Optional</span>
+                                        <div class="flex-1 h-px bg-surface-border"></div>
+                                    </div>
+
+                                    <h3 class="t-h4 font-semibold text-primary-dark mb-1" id="auth-title">Keep your scores</h3>
+                                    <p class="text-neutral-gray text-sm mb-4" id="auth-subtitle">Pick a name and this browser will remember your results. Nothing is sent anywhere and there is no account.</p>
+                                    <div class="space-y-3">
+                                        <div>
+                                            <label for="auth-username" class="block font-mono-tech text-xs text-neutral-gray uppercase tracking-widest mb-1.5" id="lbl-username">Player name</label>
+                                            <input id="auth-username" type="text" name="player" autocomplete="nickname"
+                                                class="auth-input-light"
+                                                placeholder="e.g. Ada">
+                                        </div>
+                                        <p id="auth-error" class="text-accent-red text-xs hidden font-mono-tech"></p>
+                                        <button id="auth-submit"
+                                            class="w-full py-2.5 border border-surface-border text-neutral-gray hover:border-accent-red hover:text-accent-red transition-all duration-200 rounded-none font-mono-tech text-xs uppercase tracking-widest">
+                                            Save scores under this name
                                         </button>
                                     </div>
                                 </div>
@@ -633,7 +666,7 @@ Adaptive staircase:
             <!-- EN credits -->
             <div id="credits-en">
                 <p class="font-mono-tech text-xs text-accent-red uppercase tracking-widest mb-2">Credits &amp; Acknowledgments</p>
-                <h2 class="font-display text-2xl font-bold text-primary-dark mb-6">About The Number Race</h2>
+                <h2 class="t-h2 font-display font-bold text-primary-dark mb-6">About The Number Race</h2>
                 <div class="space-y-5 text-sm text-neutral-gray leading-relaxed">
                     <div>
                         <p class="font-semibold text-primary-dark mb-1">Original Game</p>
@@ -661,7 +694,7 @@ Adaptive staircase:
             <!-- IT credits -->
             <div id="credits-it" class="hidden">
                 <p class="font-mono-tech text-xs text-accent-red uppercase tracking-widest mb-2">Crediti &amp; Ringraziamenti</p>
-                <h2 class="font-display text-2xl font-bold text-primary-dark mb-6">Informazioni su La Gara dei Numeri</h2>
+                <h2 class="t-h2 font-display font-bold text-primary-dark mb-6">Informazioni su La Gara dei Numeri</h2>
                 <div class="space-y-5 text-sm text-neutral-gray leading-relaxed">
                     <div>
                         <p class="font-semibold text-primary-dark mb-1">Gioco Originale</p>
@@ -720,7 +753,7 @@ Adaptive staircase:
                                 <span class="status-dot"></span>System: Running
                             </span>
                         </div>
-                        <h2 class="font-display text-3xl font-bold text-primary-dark leading-tight mb-2">
+                        <h2 class="t-h2 font-display font-bold text-primary-dark leading-tight mb-2">
                             DBN Explorer
                         </h2>
                         <p class="font-mono-tech text-xs text-neutral-gray italic mb-4">Deep Belief Networks</p>
@@ -770,20 +803,20 @@ where:
                         <div class="space-y-4">
                             <div>
                                 <div class="flex justify-between items-center mb-1">
-                                    <label class="font-mono-tech text-xs text-neutral-gray uppercase tracking-widest" title="Learning rate η: how large each weight update step is. Too high → unstable; too low → slow convergence.">η — Learning Rate</label>
-                                    <span class="font-mono-tech text-xs text-accent-red" id="dbn-lr-val">0.010</span>
+                                    <label class="font-mono-tech text-xs text-neutral-gray uppercase tracking-widest" for="dbn-lr-ctrl" title="Learning rate η: how large each weight update step is. Too high → unstable; too low → slow convergence.">η — Learning Rate</label>
+                                    <span class="font-mono-tech text-xs text-accent-red" id="dbn-lr-ctrl-val">0.010</span>
                                 </div>
-                                <input type="range" id="dbn-lr-ctrl" class="param-slider" min="1" max="100" value="10" step="1" title="Controls step size of weight updates. High η learns fast but may overshoot.">
+                                <input type="range" id="dbn-lr-ctrl" class="param-slider" aria-describedby="dbn-lr-ctrl-val" min="1" max="100" value="10" step="1" title="Controls step size of weight updates. High η learns fast but may overshoot.">
                                 <div class="flex justify-between font-mono-tech text-xs text-neutral-gray mt-0.5">
                                     <span>0.001</span><span>0.100</span>
                                 </div>
                             </div>
                             <div>
                                 <div class="flex justify-between items-center mb-1">
-                                    <label class="font-mono-tech text-xs text-neutral-gray uppercase tracking-widest" title="CD steps k: number of Gibbs sampling iterations for the negative phase. Higher k = more accurate gradient, but slower.">k — CD Steps</label>
+                                    <label class="font-mono-tech text-xs text-neutral-gray uppercase tracking-widest" for="dbn-cd-ctrl" title="CD steps k: number of Gibbs sampling iterations for the negative phase. Higher k = more accurate gradient, but slower.">k — CD Steps</label>
                                     <span class="font-mono-tech text-xs text-accent-red" id="dbn-cd-val">1</span>
                                 </div>
-                                <input type="range" id="dbn-cd-ctrl" class="param-slider" min="1" max="10" value="1" step="1" title="Gibbs chain length for the negative phase. CD-1 is standard; CD-10 gives a better gradient estimate.">
+                                <input type="range" id="dbn-cd-ctrl" class="param-slider" aria-describedby="dbn-cd-val" min="1" max="10" value="1" step="1" title="Gibbs chain length for the negative phase. CD-1 is standard; CD-10 gives a better gradient estimate.">
                                 <div class="flex justify-between font-mono-tech text-xs text-neutral-gray mt-0.5">
                                     <span>1</span><span>10</span>
                                 </div>
@@ -794,14 +827,17 @@ where:
                     <!-- Inspector -->
                     <details class="inspector">
                         <summary>Inspector — Network State</summary>
-                        <div class="inspector-panel">┌─ INSPECTOR ───────────────────────────┐
-│ η  = <span id="insp-dbn-lr">0.010</span>                        │
-│ k  = <span id="insp-dbn-cd">1</span>                           │
-│ h  = <span id="insp-dbn-h">50 units</span>                  │
-│ ε  = <span id="insp-dbn-err">—</span> (reconstruction err) │
-│ F  = <span id="insp-dbn-fe">—</span> (free energy)         │
-│ ep = <span id="insp-dbn-ep">0</span> (epoch)                │
-└───────────────────────────────────────┘</div>
+                        <div class="inspector-panel">
+                        <p class="inspector-title">Inspector</p>
+                        <ul class="inspector-rows">
+                            <li><span class="inspector-key">η</span><span class="inspector-val"><span id="insp-dbn-lr">0.010</span></span></li>
+                            <li><span class="inspector-key">k</span><span class="inspector-val"><span id="insp-dbn-cd">1</span></span></li>
+                            <li><span class="inspector-key">h</span><span class="inspector-val"><span id="insp-dbn-h">50 units</span></span></li>
+                            <li><span class="inspector-key">ε (reconstruction err)</span><span class="inspector-val"><span id="insp-dbn-err">—</span></span></li>
+                            <li><span class="inspector-key">F (free energy)</span><span class="inspector-val"><span id="insp-dbn-fe">—</span></span></li>
+                            <li><span class="inspector-key">ep (epoch)</span><span class="inspector-val"><span id="insp-dbn-ep">0</span></span></li>
+                        </ul>
+                    </div>
                         <div class="debug-log" id="dbg-dbn"></div>
                     </details>
 
@@ -859,14 +895,14 @@ where:
                                 <span class="status-dot"></span>System: Idle
                             </span>
                         </div>
-                        <h2 class="font-display text-3xl font-bold text-primary-dark leading-tight mb-2">
+                        <h2 class="t-h2 font-display font-bold text-primary-dark leading-tight mb-2">
                             CDP Reading Model
                         </h2>
                         <p class="font-mono-tech text-xs text-neutral-gray italic mb-4">Connectionist Dual Process</p>
 
                         <!-- Layer 1: The Hook -->
                         <p class="text-sm text-primary-dark font-medium leading-relaxed mb-3">
-                            Reading a word activates two competing brain pathways at once — one recognises the whole word, the other sounds it out letter by letter.
+                            Reading a word activates two competing brain pathways at once — one recognizes the whole word, the other sounds it out letter by letter.
                         </p>
 
                         <!-- Layer 2: The Mechanism -->
@@ -913,20 +949,20 @@ RT model (Perry et al. 2007, Table 2):
                         <div class="space-y-4">
                             <div>
                                 <div class="flex justify-between items-center mb-1">
-                                    <label class="font-mono-tech text-xs text-neutral-gray uppercase tracking-widest" title="λ: the balance between whole-word lookup (lexical) and letter-by-letter assembly (sub-lexical). Slide right to simulate deep-dyslexia (pure lexical); left for surface-dyslexia (pure sub-lexical).">λ — Lexical Bias</label>
+                                    <label class="font-mono-tech text-xs text-neutral-gray uppercase tracking-widest" title="λ: the balance between whole-word lookup (lexical) and letter-by-letter assembly (sub-lexical). Slide right to simulate deep-dyslexia (pure lexical); left for surface-dyslexia (pure sub-lexical)." for="cdp-lambda-ctrl">λ — Lexical Bias</label>
                                     <span class="font-mono-tech text-xs text-accent-red" id="cdp-lambda-val">0.50</span>
                                 </div>
-                                <input type="range" id="cdp-lambda-ctrl" class="param-slider" min="0" max="100" value="50" step="1" title="Shifts route dominance. Full left = sub-lexical only (nonword reading). Full right = lexical only (irregular word reading).">
+                                <input type="range" id="cdp-lambda-ctrl" class="param-slider" aria-describedby="cdp-lambda-val" min="0" max="100" value="50" step="1" title="Shifts route dominance. Full left = sub-lexical only (nonword reading). Full right = lexical only (irregular word reading).">
                                 <div class="flex justify-between font-mono-tech text-xs text-neutral-gray mt-0.5">
                                     <span>Sub-lexical</span><span>Lexical</span>
                                 </div>
                             </div>
                             <div>
                                 <div class="flex justify-between items-center mb-1">
-                                    <label class="font-mono-tech text-xs text-neutral-gray uppercase tracking-widest" title="Frequency threshold θ (Zipf scale): the word frequency at which the lexical route starts dominating. Low-frequency words fall below this threshold and rely more on sub-lexical processing.">Freq Threshold θ (Zipf)</label>
+                                    <label class="font-mono-tech text-xs text-neutral-gray uppercase tracking-widest" title="Frequency threshold θ (Zipf scale): the word frequency at which the lexical route starts dominating. Low-frequency words fall below this threshold and rely more on sub-lexical processing." for="cdp-freq-thresh-ctrl">Freq Threshold θ (Zipf)</label>
                                     <span class="font-mono-tech text-xs text-accent-red" id="cdp-freq-thresh-val">3.5</span>
                                 </div>
-                                <input type="range" id="cdp-freq-thresh-ctrl" class="param-slider" min="20" max="60" value="35" step="1" title="Zipf frequency threshold. Words above this frequency lean lexical; words below lean sub-lexical.">
+                                <input type="range" id="cdp-freq-thresh-ctrl" class="param-slider" aria-describedby="cdp-freq-thresh-val" min="20" max="60" value="35" step="1" title="Zipf frequency threshold. Words above this frequency lean lexical; words below lean sub-lexical.">
                                 <div class="flex justify-between font-mono-tech text-xs text-neutral-gray mt-0.5">
                                     <span>2.0</span><span>6.0</span>
                                 </div>
@@ -937,14 +973,17 @@ RT model (Perry et al. 2007, Table 2):
                     <!-- Phoneme activation inspector -->
                     <details class="inspector" id="cdp-inspector-details">
                         <summary>Inspector — Phoneme Activations</summary>
-                        <div class="inspector-panel">┌─ INSPECTOR ───────────────────────────┐
-│ word     = <span id="insp-cdp-word">—</span>                    │
-│ phonemes = <span id="insp-cdp-ph">—</span>              │
-│ λ_lex    = <span id="insp-cdp-lex">—</span>                    │
-│ λ_phon   = <span id="insp-cdp-phon">—</span>                    │
-│ route    = <span id="insp-cdp-route">—</span>               │
-│ RT_pred  = <span id="insp-cdp-rt">—</span> ms                  │
-└───────────────────────────────────────┘</div>
+                        <div class="inspector-panel">
+                        <p class="inspector-title">Inspector</p>
+                        <ul class="inspector-rows">
+                            <li><span class="inspector-key">word</span><span class="inspector-val"><span id="insp-cdp-word">—</span></span></li>
+                            <li><span class="inspector-key">phonemes</span><span class="inspector-val"><span id="insp-cdp-ph">—</span></span></li>
+                            <li><span class="inspector-key">λ_lex</span><span class="inspector-val"><span id="insp-cdp-lex">—</span></span></li>
+                            <li><span class="inspector-key">λ_phon</span><span class="inspector-val"><span id="insp-cdp-phon">—</span></span></li>
+                            <li><span class="inspector-key">route</span><span class="inspector-val"><span id="insp-cdp-route">—</span></span></li>
+                            <li><span class="inspector-key">RT_pred</span><span class="inspector-val"><span id="insp-cdp-rt">—</span> ms</span></li>
+                        </ul>
+                    </div>
                         <div class="debug-log" id="dbg-cdp"></div>
                     </details>
 
@@ -978,54 +1017,44 @@ RT model (Perry et al. 2007, Table 2):
     </section>
 
 
-    <!-- ===== FOOTER ===== -->
-    <footer id="footer" class="bg-surface-alt py-12 border-t border-surface-border">
-        <div class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16">
-            <div class="grid md:grid-cols-4 gap-8 md:gap-12 mb-8">
+    </main>
 
-                <!-- Column 1: Logo & Description -->
-                <div class="md:col-span-2">
-                    <img src="Assets/Logo_and_text.png" alt="CCN Lab" class="h-10 mb-4 logo-on-light opacity-70">
+    <!-- ===== FOOTER ===== -->
+    <footer class="site-footer bg-surface-alt py-12 border-t border-surface-border">
+        <div class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16">
+            <div class="grid md:grid-cols-3 gap-8 md:gap-12 mb-8">
+                <div>
+                    <img loading="lazy" decoding="async" width="1408" height="792" src="Assets/Logo_and_text.png" alt="CCN Lab" class="h-10 mb-4 logo-on-light opacity-70 w-auto">
                     <p class="text-neutral-gray text-sm leading-relaxed max-w-sm">
-                        The Computational Cognitive Neuroscience Lab at the University of Padova, exploring the
-                        computational mechanisms underlying human cognition since 2000.
+                        The Computational Cognitive Neuroscience Lab at the University of Padova, exploring the computational mechanisms underlying human cognition since 2000.
                     </p>
                 </div>
-
-                <!-- Column 2: Quick Links -->
                 <div>
-                    <h4 class="font-mono-tech text-xs text-primary-dark uppercase tracking-widest mb-4">Quick Links</h4>
+                    <h4 class="t-eyebrow font-mono-tech text-primary-dark uppercase tracking-widest mb-4">Quick Links</h4>
                     <ul class="space-y-2">
-                        <li><a href="index.html#about"  class="text-neutral-gray hover:text-accent-red transition-colors text-sm">About</a></li>
-                        <li><a href="research.html"     class="text-neutral-gray hover:text-accent-red transition-colors text-sm">Research</a></li>
-                        <li><a href="people.html"       class="text-neutral-gray hover:text-accent-red transition-colors text-sm">People</a></li>
-                        <li><a href="playground.html"   class="text-accent-red text-sm">Playground</a></li>
-                        <li><a href="news.html"         class="text-neutral-gray hover:text-accent-red transition-colors text-sm">News</a></li>
-                        <li><a href="join-us.html"      class="text-neutral-gray hover:text-accent-red transition-colors text-sm">Join Us</a></li>
+                        <li><a href="index.html#about" class="text-neutral-gray hover:text-accent-red transition-colors text-sm">About</a></li>
+                        <li><a href="research.html" class="text-neutral-gray hover:text-accent-red transition-colors text-sm">Research</a></li>
+                        <li><a href="people.html" class="text-neutral-gray hover:text-accent-red transition-colors text-sm">People</a></li>
+                        <li><a href="playground.html" class="text-neutral-gray hover:text-accent-red transition-colors text-sm">Playground</a></li>
+                        <li><a href="news.html" class="text-neutral-gray hover:text-accent-red transition-colors text-sm">News</a></li>
+                        <li><a href="software.html" class="text-neutral-gray hover:text-accent-red transition-colors text-sm">Software</a></li>
+                        <li><a href="join-us.html" class="text-neutral-gray hover:text-accent-red transition-colors text-sm">Join us</a></li>
                     </ul>
                 </div>
-
-                <!-- Column 3: Affiliations -->
                 <div>
-                    <h4 class="font-mono-tech text-xs text-primary-dark uppercase tracking-widest mb-4">Affiliations</h4>
+                    <h4 class="t-eyebrow font-mono-tech text-primary-dark uppercase tracking-widest mb-4">Affiliations</h4>
                     <ul class="space-y-2 text-sm text-neutral-gray">
-                        <li><a href="http://www.unipd.it"      class="hover:text-accent-red transition-colors">University of Padova</a></li>
-                        <li><a href="http://dpg.psy.unipd.it"  class="hover:text-accent-red transition-colors">Dept. of General Psychology</a></li>
-                        <li><a href="http://pnc.unipd.it/"     class="hover:text-accent-red transition-colors">Padova Neuroscience Center</a></li>
-                        <li><a href="https://hsancamillo.it"   class="hover:text-accent-red transition-colors">San Camillo Research Hospital</a></li>
+                        <li><a href="http://www.unipd.it"     class="hover:text-accent-red transition-colors">University of Padova</a></li>
+                        <li><a href="http://dpg.psy.unipd.it" class="hover:text-accent-red transition-colors">Dept. of General Psychology</a></li>
+                        <li><a href="http://pnc.unipd.it/"    class="hover:text-accent-red transition-colors">Padova Neuroscience Center</a></li>
+                        <li><a href="https://hsancamillo.it"  class="hover:text-accent-red transition-colors">San Camillo Research Hospital</a></li>
                     </ul>
                 </div>
             </div>
-
             <hr class="section-rule mb-6">
-
             <div class="flex flex-col md:flex-row justify-between items-center gap-3">
-                <p class="font-mono-tech text-xs text-neutral-gray">
-                    © 2000–2026 Computational Cognitive Neuroscience Lab · University of Padova
-                </p>
-                <p class="font-mono-tech text-xs text-neutral-gray/50">
-                    Dept. General Psychology · Via Venezia 8 · 35131 Padova, IT
-                </p>
+                <p class="font-mono-tech text-xs text-neutral-gray">© 2000–2026 Computational Cognitive Neuroscience Lab · University of Padova</p>
+                <p class="font-mono-tech text-xs text-neutral-gray">Dept. General Psychology · Via Venezia 8 · 35131 Padova, IT</p>
             </div>
         </div>
     </footer>
@@ -1047,26 +1076,8 @@ RT model (Perry et al. 2007, Table 2):
             link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
         });
 
-        // Header scroll — keep white (light) background, just compact height
-        const header    = document.getElementById('header');
-        const navInner  = document.getElementById('nav-inner');
-        const headerLogo = document.getElementById('header-logo');
+// Header expand/compact + logo lockup swap: see js/site-nav.js
 
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                header.classList.add('shadow-md');
-                navInner.classList.remove('h-14', 'lg:h-16');
-                navInner.classList.add('h-12', 'lg:h-14');
-                headerLogo.classList.remove('h-10', 'lg:h-12');
-                headerLogo.classList.add('h-8', 'lg:h-10');
-            } else {
-                header.classList.remove('shadow-md');
-                navInner.classList.add('h-14', 'lg:h-16');
-                navInner.classList.remove('h-12', 'lg:h-14');
-                headerLogo.classList.add('h-10', 'lg:h-12');
-                headerLogo.classList.remove('h-8', 'lg:h-10');
-            }
-        });
     </script>
 
     <!-- Deep Belief Networks Demo -->
@@ -1106,11 +1117,10 @@ RT model (Perry et al. 2007, Table 2):
         GARA_I18N.setLang(lang);
         const t  = (k) => GARA_I18N.t(k);
         const el = (id) => document.getElementById(id);
-        if (el('auth-title'))    el('auth-title').textContent    = t('loginTitle');
-        if (el('auth-subtitle')) el('auth-subtitle').textContent = t('loginSub');
+        if (el('auth-title'))    el('auth-title').textContent    = t('profileTitle');
+        if (el('auth-subtitle')) el('auth-subtitle').textContent = t('profileSub');
         if (el('lbl-username'))  el('lbl-username').textContent  = t('usernameLabel');
-        if (el('lbl-password'))  el('lbl-password').textContent  = t('passwordLabel');
-        if (el('auth-submit'))   el('auth-submit').textContent   = t('loginBtn');
+        if (el('auth-submit'))   el('auth-submit').textContent   = t('saveScoresBtn');
         if (el('auth-guest'))    el('auth-guest').textContent    = t('guestBtn');
         if (el('auth-score-label')) el('auth-score-label').textContent = t('scoreHistory');
         if (el('lbl-back-playground')) el('lbl-back-playground').textContent =
@@ -1120,18 +1130,8 @@ RT model (Perry et al. 2007, Table 2):
         const session = getSession();
         if (session && el('auth-welcome-msg'))
             el('auth-welcome-msg').textContent = t('welcomeBack');
-        updateToggleModeLabel();
     }
 
-    let authMode = 'login';
-    function updateToggleModeLabel() {
-        const btn  = document.getElementById('auth-toggle-mode');
-        if (!btn) return;
-        const lang = GARA_I18N.currentLang;
-        btn.textContent = authMode === 'login'
-            ? (lang === 'it' ? 'Registrati' : 'Register instead')
-            : (lang === 'it' ? 'Accedi'     : 'Sign in instead');
-    }
 
     // ── DBN parameter bridge ──────────────────────────────────────────
     // The sliders in the left column mirror values into the DBN demo internals.
@@ -1161,7 +1161,7 @@ RT model (Perry et al. 2007, Table 2):
         window._ccnl_dbn_params.cd = cd;
 
         // Update display labels
-        document.getElementById('dbn-lr-val').textContent  = lr;
+        document.getElementById('dbn-lr-ctrl-val').textContent  = lr;
         document.getElementById('dbn-cd-val').textContent  = cd;
         document.getElementById('insp-dbn-lr').textContent = lr;
         document.getElementById('insp-dbn-cd').textContent = cd;
@@ -1327,52 +1327,22 @@ RT model (Perry et al. 2007, Table 2):
             }).join('');
         }
 
-        // Auth form toggle (login ↔ register)
-        document.getElementById('auth-toggle-mode').addEventListener('click', () => {
-            authMode = authMode === 'login' ? 'register' : 'login';
-            const isReg = authMode === 'register';
-            const lang  = GARA_I18N.currentLang;
-            document.getElementById('auth-title').textContent    = isReg
-                ? (lang === 'it' ? 'Crea Account' : 'Create Account')
-                : GARA_I18N.t('loginTitle');
-            document.getElementById('auth-subtitle').textContent = isReg
-                ? (lang === 'it' ? 'Crea un account per salvare i punteggi' : 'Create an account to save your scores')
-                : GARA_I18N.t('loginSub');
-            document.getElementById('auth-submit').textContent   = isReg
-                ? GARA_I18N.t('registerBtn')
-                : GARA_I18N.t('loginBtn');
-            document.getElementById('auth-error').classList.add('hidden');
-            updateToggleModeLabel();
-        });
-
-        // Auth submit
+        // Local profile — no password, because there is no server to
+        // authenticate against and a password in localStorage is theatre.
         document.getElementById('auth-submit').addEventListener('click', () => {
             const username = document.getElementById('auth-username').value.trim();
-            const password = document.getElementById('auth-password').value;
             const errorEl  = document.getElementById('auth-error');
             const lang     = GARA_I18N.currentLang;
 
-            if (!username || !password) {
-                errorEl.textContent = lang === 'it' ? 'Compila tutti i campi.' : 'Please fill in all fields.';
+            if (!username) {
+                errorEl.textContent = lang === 'it' ? 'Inserisci un nome.' : 'Enter a name first.';
                 errorEl.classList.remove('hidden');
                 return;
             }
+            errorEl.classList.add('hidden');
             const users = getUsers();
-            if (authMode === 'register') {
-                if (users[username]) {
-                    errorEl.textContent = lang === 'it' ? 'Nome utente già in uso.' : 'Username already taken.';
-                    errorEl.classList.remove('hidden');
-                    return;
-                }
-                users[username] = { password, scores: [] };
-                saveUsers(users);
-            } else {
-                if (!users[username] || users[username].password !== password) {
-                    errorEl.textContent = lang === 'it' ? 'Credenziali non valide.' : 'Invalid username or password.';
-                    errorEl.classList.remove('hidden');
-                    return;
-                }
-            }
+            if (!users[username]) users[username] = { scores: [] };
+            saveUsers(users);
             const session = { username };
             setSession(session);
             showLoggedIn(session);
@@ -1487,5 +1457,6 @@ RT model (Perry et al. 2007, Table 2):
     });
     </script>
 
+    <script src="js/site-nav.js"></script>
 </body>
 </html>

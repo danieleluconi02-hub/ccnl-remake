@@ -22,8 +22,6 @@
                         'primary-light':    '#FFFFFF',
                         'accent-red':       '#b20839',
                         'accent-red-hover': '#8a0022',
-                        'accent-gold':      '#b20839',
-                        'accent-gold-hover':'#8a0022',
                         'neutral-gray':     '#6B7280',
                         'light-gray':       '#F3F4F6',
                         'surface':          '#f8f7f4',
@@ -44,32 +42,41 @@
 
 <body class="font-manrope bg-surface text-primary-dark antialiased">
 
+    <a href="#main" class="skip-link">Skip to content</a>
+
     <!-- ===== HEADER ===== -->
-    <header id="header" class="fixed top-0 left-0 right-0 z-50 bg-white border-b border-surface-border transition-all duration-300">
+    <header id="header" class="fixed top-0 left-0 right-0 z-50 bg-white border-b border-surface-border">
         <nav class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16">
-            <div class="flex items-center justify-between h-14 lg:h-16 transition-all duration-300" id="nav-inner">
+            <div class="flex items-center justify-between" id="nav-inner">
                 <a href="index.html" class="flex items-center gap-3 group">
-                    <img src="Assets/Logo_and_text.png" alt="CCN Lab Logo" id="header-logo"
-                        class="h-10 lg:h-12 object-contain -ml-2 transition-all duration-300 logo-on-light">
+                    <span class="header-logo" id="header-logo">
+                        <img loading="eager" decoding="async" width="1408" height="792"
+                            src="Assets/Logo_and_text.png" alt="CCN Lab"
+                            class="header-logo-full logo-on-light">
+                        <span class="header-logo-lab" aria-hidden="true"></span>
+                        <img loading="eager" decoding="async" width="1394" height="1394"
+                            src="Assets/Logo.png" alt="" aria-hidden="true"
+                            class="header-logo-mark logo-on-light">
+                    </span>
                 </a>
                 <div class="hidden md:flex items-center gap-4 lg:gap-7">
-                    <a href="index.html#about" class="nav-link text-neutral-gray hover:text-primary-dark text-sm font-medium">About</a>
+                    <a href="index.html#about" class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-sm font-medium">About</a>
                     <div class="dropdown-container">
-                        <a href="research.html" class="nav-link text-neutral-gray hover:text-primary-dark text-sm font-medium">Research</a>
-                        <div class="dropdown-menu">
+                        <a href="research.html" class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-sm font-medium" aria-haspopup="true" aria-expanded="false" aria-controls="research-menu">Research</a>
+                        <div class="dropdown-menu" id="research-menu">
                             <a href="research.html#research"     class="dropdown-item">Research areas</a>
                             <a href="research.html#facilities"   class="dropdown-item">Lab facilities</a>
                             <a href="research.html#publications" class="dropdown-item">Publications</a>
-                            <a href="software.html"              class="dropdown-item">Software &amp; Downloads</a>
+                            <a href="software.html"               class="dropdown-item">Software &amp; Downloads</a>
                         </div>
                     </div>
-                    <a href="people.html"     class="nav-link text-neutral-gray hover:text-primary-dark text-sm font-medium">People</a>
-                    <a href="playground.html" class="nav-link text-neutral-gray hover:text-primary-dark text-sm font-medium">Playground</a>
-                    <a href="news.html"       class="nav-link text-primary-dark font-semibold text-sm active-page">News</a>
-                    <a href="join-us.html"    class="nav-link text-neutral-gray hover:text-primary-dark text-sm font-medium">Join us</a>
-                    <a href="index.html#contact" class="btn-primary px-5 py-2 bg-accent-red text-white text-sm font-semibold hover:bg-accent-red-hover">Contact</a>
+                    <a href="people.html"     class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-sm font-medium">People</a>
+                    <a href="playground.html" class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-sm font-medium">Playground</a>
+                    <a href="news.html"       class="nav-link text-primary-dark font-semibold transition-colors duration-200 text-sm active-page">News</a>
+                    <a href="join-us.html"    class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-sm font-medium">Join us</a>
+                    <a href="index.html#contact" class="btn-primary px-5 py-2 bg-accent-red text-white text-sm font-semibold hover:bg-accent-red-hover transition-all duration-200">Contact</a>
                 </div>
-                <button id="mobile-menu-btn" class="md:hidden p-2 text-neutral-gray hover:text-accent-red transition-colors" aria-label="Open menu">
+                <button id="mobile-menu-btn" type="button" class="md:hidden inline-flex items-center justify-center w-11 h-11 -mr-2 text-neutral-gray hover:text-accent-red transition-colors" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
                     </svg>
@@ -78,27 +85,34 @@
         </nav>
         <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-surface-border">
             <div class="px-6 py-4 space-y-1">
+                <a href="index.html" class="block text-neutral-gray hover:text-accent-red py-2.5 text-sm border-b border-surface-border">Home</a>
                 <a href="index.html#about" class="block text-neutral-gray hover:text-accent-red py-2.5 text-sm border-b border-surface-border">About</a>
-                <a href="research.html"    class="block text-neutral-gray hover:text-accent-red py-2.5 text-sm border-b border-surface-border">Research</a>
-                <a href="people.html"      class="block text-neutral-gray hover:text-accent-red py-2.5 text-sm border-b border-surface-border">People</a>
-                <a href="playground.html"  class="block text-neutral-gray hover:text-accent-red py-2.5 text-sm border-b border-surface-border">Playground</a>
-                <a href="news.html"        class="block text-accent-red font-semibold py-2.5 text-sm border-b border-surface-border">News</a>
-                <a href="join-us.html"     class="block text-neutral-gray hover:text-accent-red py-2.5 text-sm border-b border-surface-border">Join us</a>
+                <a href="research.html" class="block text-neutral-gray hover:text-accent-red py-2.5 text-sm border-b border-surface-border">Research</a>
+                <a href="research.html#research" class="block text-neutral-gray hover:text-accent-red py-2.5 pl-4 text-sm border-b border-surface-border">Research areas</a>
+                <a href="research.html#facilities" class="block text-neutral-gray hover:text-accent-red py-2.5 pl-4 text-sm border-b border-surface-border">Lab facilities</a>
+                <a href="research.html#publications" class="block text-neutral-gray hover:text-accent-red py-2.5 pl-4 text-sm border-b border-surface-border">Publications</a>
+                <a href="software.html" class="block text-neutral-gray hover:text-accent-red py-2.5 pl-4 text-sm border-b border-surface-border">Software &amp; Downloads</a>
+                <a href="people.html" class="block text-neutral-gray hover:text-accent-red py-2.5 text-sm border-b border-surface-border">People</a>
+                <a href="playground.html" class="block text-neutral-gray hover:text-accent-red py-2.5 text-sm border-b border-surface-border">Playground</a>
+                <a href="news.html" class="block text-accent-red font-semibold py-2.5 text-sm border-b border-surface-border" aria-current="page">News</a>
+                <a href="join-us.html" class="block text-neutral-gray hover:text-accent-red py-2.5 text-sm border-b border-surface-border">Join us</a>
                 <a href="index.html#contact" class="block w-fit mt-3 px-5 py-2 bg-accent-red text-white text-sm font-semibold">Contact</a>
             </div>
         </div>
         <div class="h-px bg-accent-red"></div>
     </header>
 
+    <main id="main">
+
     <!-- ===== PAGE HERO ===== -->
-    <section class="pt-[88px] pb-10 bg-white border-b border-surface-border">
-        <div class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16 pt-10">
+    <section class="page-hero bg-white border-b border-surface-border">
+        <div class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16">
             <p class="font-mono-tech text-xs text-accent-red uppercase tracking-widest mb-5 flex items-center gap-2">
                 <span class="w-6 h-px bg-accent-red"></span>
                 Press &amp; Public Science
             </p>
             <div class="max-w-2xl">
-                <h1 class="font-display text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-5">
+                <h1 class="t-h1 font-display font-bold leading-tight mb-5">
                     News &amp;<br>
                     <span class="italic text-accent-red">Media Coverage</span>
                 </h1>
@@ -110,237 +124,259 @@
     </section>
 
     <!-- ===== NEWS LIST ===== -->
-    <section class="py-12 md:py-16 bg-white">
+    <section class="section-y bg-white">
         <div class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16">
 
             <!-- 2025 -->
             <div class="mb-12">
                 <div class="flex items-center gap-4 mb-2">
-                    <h2 class="font-display text-2xl font-bold text-primary-dark">2025</h2>
+                    <h2 class="t-h2 font-display font-bold text-primary-dark">2025</h2>
                     <div class="flex-1 h-px bg-surface-border"></div>
                 </div>
 
-                <a href="https://english.elpais.com/technology/2025-07-10/ai-cannot-feel-emotions-but-it-is-able-to-recognize-them-in-an-image.html"
-                    target="_blank" rel="noopener noreferrer" class="news-entry group">
-                    <div class="news-date-label">
-                        July 10, 2025<br>
-                        <span class="news-source-tag">International Press</span>
-                    </div>
-                    <div>
-                        <h3 class="text-base font-semibold text-primary-dark group-hover:text-accent-red transition-colors leading-snug mb-1">
-                            AI cannot feel emotions, but it can recognize them in an image
-                        </h3>
-                        <p class="text-sm text-neutral-gray">El País</p>
-                    </div>
-                    <svg class="w-4 h-4 text-neutral-gray/25 group-hover:text-accent-red transition-colors flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
-                    </svg>
-                </a>
+                
+                <div class="news-list">
+    <a href="https://english.elpais.com/technology/2025-07-10/ai-cannot-feel-emotions-but-it-is-able-to-recognize-them-in-an-image.html"
+                        target="_blank" rel="noopener noreferrer" class="news-entry group">
+                        <div class="news-date-label">
+                            Jul 10, 2025<br>
+                            <span class="news-source-tag">International Press</span> <span class="news-lang-tag">EN</span>
+                        </div>
+                        <div>
+                            <h3 class="t-h4 font-semibold text-primary-dark group-hover:text-accent-red transition-colors leading-snug mb-1">
+                                AI cannot feel emotions, but it can recognize them in an image
+                            </h3>
+                            <p class="text-sm text-neutral-gray">El País</p>
+                        </div>
+                        <svg class="w-4 h-4 text-neutral-gray/25 group-hover:text-accent-red transition-colors flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                        </svg>
+                    </a>
+                </div>
             </div>
 
             <!-- 2024 -->
             <div class="mb-12">
                 <div class="flex items-center gap-4 mb-2">
-                    <h2 class="font-display text-2xl font-bold text-primary-dark">2024</h2>
+                    <h2 class="t-h2 font-display font-bold text-primary-dark">2024</h2>
                     <div class="flex-1 h-px bg-surface-border"></div>
                 </div>
 
-                <a href="https://ilbolive.unipd.it/it/news/scienza-ricerca/possiamo-imparare-qualcosa-sul-cervello-grazie"
-                    target="_blank" rel="noopener noreferrer" class="news-entry group">
-                    <div class="news-date-label">
-                        Nov 27, 2024<br>
-                        <span class="news-source-tag">Il Bo Live</span>
-                    </div>
-                    <div>
-                        <h3 class="text-base font-semibold text-primary-dark group-hover:text-accent-red transition-colors leading-snug mb-1">
-                            Possiamo imparare qualcosa sul cervello grazie alle reti neurali?
-                        </h3>
-                        <p class="text-sm text-neutral-gray">Il Bo Live · University of Padova</p>
-                    </div>
-                    <svg class="w-4 h-4 text-neutral-gray/25 group-hover:text-accent-red transition-colors flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
-                    </svg>
-                </a>
+                
+                <div class="news-list">
+    <a href="https://ilbolive.unipd.it/it/news/scienza-ricerca/possiamo-imparare-qualcosa-sul-cervello-grazie"
+                        target="_blank" rel="noopener noreferrer" class="news-entry group">
+                        <div class="news-date-label">
+                            Nov 27, 2024<br>
+                            <span class="news-source-tag">Il Bo Live</span> <span class="news-lang-tag">IT</span>
+                        </div>
+                        <div>
+                            <h3 class="t-h4 font-semibold text-primary-dark group-hover:text-accent-red transition-colors leading-snug mb-1">
+                                Possiamo imparare qualcosa sul cervello grazie alle reti neurali?
+                            </h3>
+                            <p class="text-sm text-neutral-gray">Il Bo Live · University of Padova</p>
+                        </div>
+                        <svg class="w-4 h-4 text-neutral-gray/25 group-hover:text-accent-red transition-colors flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                        </svg>
+                    </a>
+                </div>
             </div>
 
             <!-- 2023 -->
             <div class="mb-12">
                 <div class="flex items-center gap-4 mb-2">
-                    <h2 class="font-display text-2xl font-bold text-primary-dark">2023</h2>
+                    <h2 class="t-h2 font-display font-bold text-primary-dark">2023</h2>
                     <div class="flex-1 h-px bg-surface-border"></div>
                 </div>
 
-                <div class="news-entry group">
-                    <div class="news-date-label">
-                        May 9, 2023<br>
-                        <span class="news-source-tag">Television</span>
+                
+                <div class="news-list">
+    <div class="news-entry group">
+                        <div class="news-date-label">
+                            May 9, 2023<br>
+                            <span class="news-source-tag">Television</span> <span class="news-lang-tag">IT</span>
+                        </div>
+                        <div>
+                            <h3 class="t-h4 font-semibold text-primary-dark leading-snug mb-1">
+                                Chi ha paura dell'Intelligenza Artificiale?
+                            </h3>
+                            <p class="text-sm text-neutral-gray">Telechiara, special episode</p>
+                        </div>
+                        <div></div>
                     </div>
-                    <div>
-                        <h3 class="text-base font-semibold text-primary-dark leading-snug mb-1">
-                            Chi ha paura dell'Intelligenza Artificiale?
-                        </h3>
-                        <p class="text-sm text-neutral-gray">Telechiara, special episode</p>
-                    </div>
-                    <div></div>
                 </div>
             </div>
 
             <!-- 2021 -->
             <div class="mb-12">
                 <div class="flex items-center gap-4 mb-2">
-                    <h2 class="font-display text-2xl font-bold text-primary-dark">2021</h2>
+                    <h2 class="t-h2 font-display font-bold text-primary-dark">2021</h2>
                     <div class="flex-1 h-px bg-surface-border"></div>
                 </div>
 
-                <a href="https://www.youtube.com/watch?v=dyTf1XeBAns" target="_blank" rel="noopener noreferrer" class="news-entry group">
-                    <div class="news-date-label">
-                        2021<br>
-                        <span class="news-source-tag">Online Talk</span>
-                    </div>
-                    <div>
-                        <h3 class="text-base font-semibold text-primary-dark group-hover:text-accent-red transition-colors leading-snug mb-1">Che cos'è l'IA?</h3>
-                        <p class="text-sm text-neutral-gray">ICTalk divulgativo</p>
-                    </div>
-                    <svg class="w-4 h-4 text-neutral-gray/25 group-hover:text-accent-red transition-colors flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
-                    </svg>
-                </a>
+                
+                <div class="news-list">
+    <a href="https://www.youtube.com/watch?v=dyTf1XeBAns" target="_blank" rel="noopener noreferrer" class="news-entry group">
+                        <div class="news-date-label">
+                            2021<br>
+                            <span class="news-source-tag">Online Talk</span> <span class="news-lang-tag">IT</span>
+                        </div>
+                        <div>
+                            <h3 class="t-h4 font-semibold text-primary-dark group-hover:text-accent-red transition-colors leading-snug mb-1">Che cos'è l'IA?</h3>
+                            <p class="text-sm text-neutral-gray">ICTalk divulgativo</p>
+                        </div>
+                        <svg class="w-4 h-4 text-neutral-gray/25 group-hover:text-accent-red transition-colors flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                        </svg>
+                    </a>
+                </div>
             </div>
 
             <!-- 2020 -->
             <div class="mb-12">
                 <div class="flex items-center gap-4 mb-2">
-                    <h2 class="font-display text-2xl font-bold text-primary-dark">2020</h2>
+                    <h2 class="t-h2 font-display font-bold text-primary-dark">2020</h2>
                     <div class="flex-1 h-px bg-surface-border"></div>
                 </div>
 
-                <div class="news-entry group">
-                    <div class="news-date-label">
-                        May 20, 2020<br>
-                        <span class="news-source-tag">Seminar</span>
+                
+                <div class="news-list">
+    <div class="news-entry group">
+                        <div class="news-date-label">
+                            May 20, 2020<br>
+                            <span class="news-source-tag">Seminar</span> <span class="news-lang-tag">IT</span>
+                        </div>
+                        <div>
+                            <h3 class="t-h4 font-semibold text-primary-dark leading-snug mb-1">Breve storia dell'Intelligenza Artificiale</h3>
+                            <p class="text-sm text-neutral-gray">Psico Zoom seminar series</p>
+                        </div>
+                        <div></div>
                     </div>
-                    <div>
-                        <h3 class="text-base font-semibold text-primary-dark leading-snug mb-1">Breve storia dell'Intelligenza Artificiale</h3>
-                        <p class="text-sm text-neutral-gray">Psico Zoom seminar series</p>
-                    </div>
-                    <div></div>
                 </div>
             </div>
 
             <!-- 2019 -->
             <div class="mb-12">
                 <div class="flex items-center gap-4 mb-2">
-                    <h2 class="font-display text-2xl font-bold text-primary-dark">2019</h2>
+                    <h2 class="t-h2 font-display font-bold text-primary-dark">2019</h2>
                     <div class="flex-1 h-px bg-surface-border"></div>
                 </div>
 
-                <a href="https://live.focus.it/edizione2019/news/lintelligenza-artificiale-ha-cervello-con-marco-zorzi/" target="_blank" rel="noopener noreferrer" class="news-entry group">
-                    <div class="news-date-label">Nov 24, 2019<br><span class="news-source-tag">Conference</span></div>
-                    <div>
-                        <h3 class="text-base font-semibold text-primary-dark group-hover:text-accent-red transition-colors leading-snug mb-1">L'intelligenza artificiale ha cervello?</h3>
-                        <p class="text-sm text-neutral-gray">Focus Live Festival, Milan</p>
-                    </div>
-                    <svg class="w-4 h-4 text-neutral-gray/25 group-hover:text-accent-red transition-colors flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
-                </a>
+                
+                <div class="news-list">
+    <a href="https://live.focus.it/edizione2019/news/lintelligenza-artificiale-ha-cervello-con-marco-zorzi/" target="_blank" rel="noopener noreferrer" class="news-entry group">
+                        <div class="news-date-label">Nov 24, 2019<br><span class="news-source-tag">Conference</span> <span class="news-lang-tag">IT</span></div>
+                        <div>
+                            <h3 class="t-h4 font-semibold text-primary-dark group-hover:text-accent-red transition-colors leading-snug mb-1">L'intelligenza artificiale ha cervello?</h3>
+                            <p class="text-sm text-neutral-gray">Focus Live Festival, Milan</p>
+                        </div>
+                        <svg class="w-4 h-4 text-neutral-gray/25 group-hover:text-accent-red transition-colors flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                    </a>
 
-                <a href="https://www.youtube.com/watch?v=ZjWatb1NHII" target="_blank" rel="noopener noreferrer" class="news-entry group">
-                    <div class="news-date-label">Oct 24, 2019<br><span class="news-source-tag">Conference</span></div>
-                    <div>
-                        <h3 class="text-base font-semibold text-primary-dark group-hover:text-accent-red transition-colors leading-snug mb-1">Dove sta andando l'Intelligenza Artificiale</h3>
-                        <p class="text-sm text-neutral-gray">Affascinati dal cervello, Pordenone</p>
-                    </div>
-                    <svg class="w-4 h-4 text-neutral-gray/25 group-hover:text-accent-red transition-colors flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
-                </a>
+                    <a href="https://www.youtube.com/watch?v=ZjWatb1NHII" target="_blank" rel="noopener noreferrer" class="news-entry group">
+                        <div class="news-date-label">Oct 24, 2019<br><span class="news-source-tag">Conference</span> <span class="news-lang-tag">IT</span></div>
+                        <div>
+                            <h3 class="t-h4 font-semibold text-primary-dark group-hover:text-accent-red transition-colors leading-snug mb-1">Dove sta andando l'Intelligenza Artificiale</h3>
+                            <p class="text-sm text-neutral-gray">Affascinati dal cervello, Pordenone</p>
+                        </div>
+                        <svg class="w-4 h-4 text-neutral-gray/25 group-hover:text-accent-red transition-colors flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                    </a>
 
-                <a href="https://www.youtube.com/watch?v=ZSAUdxUKi-Q" target="_blank" rel="noopener noreferrer" class="news-entry group">
-                    <div class="news-date-label">Apr 5, 2019<br><span class="news-source-tag">Television</span></div>
-                    <div>
-                        <h3 class="text-base font-semibold text-primary-dark group-hover:text-accent-red transition-colors leading-snug mb-1">Cos'è l'intelligenza artificiale? Applicazioni in medicina</h3>
-                        <p class="text-sm text-neutral-gray">PharmaStarTV</p>
-                    </div>
-                    <svg class="w-4 h-4 text-neutral-gray/25 group-hover:text-accent-red transition-colors flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
-                </a>
+                    <a href="https://www.youtube.com/watch?v=ZSAUdxUKi-Q" target="_blank" rel="noopener noreferrer" class="news-entry group">
+                        <div class="news-date-label">Apr 5, 2019<br><span class="news-source-tag">Television</span> <span class="news-lang-tag">IT</span></div>
+                        <div>
+                            <h3 class="t-h4 font-semibold text-primary-dark group-hover:text-accent-red transition-colors leading-snug mb-1">Cos'è l'intelligenza artificiale? Applicazioni in medicina</h3>
+                            <p class="text-sm text-neutral-gray">PharmaStarTV</p>
+                        </div>
+                        <svg class="w-4 h-4 text-neutral-gray/25 group-hover:text-accent-red transition-colors flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                    </a>
 
-                <a href="https://www.vanityfair.it/lifestyle/bambini/2019/04/03/dislessia-un-passo-avanti-per-individuarne-cause-e-trattamento" target="_blank" rel="noopener noreferrer" class="news-entry group">
-                    <div class="news-date-label">Apr 3, 2019<br><span class="news-source-tag">Vanity Fair</span></div>
-                    <div>
-                        <h3 class="text-base font-semibold text-primary-dark group-hover:text-accent-red transition-colors leading-snug mb-1">Dislessia: un passo avanti per individuarne cause e trattamento</h3>
-                        <p class="text-sm text-neutral-gray">Vanity Fair Italia</p>
-                    </div>
-                    <svg class="w-4 h-4 text-neutral-gray/25 group-hover:text-accent-red transition-colors flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
-                </a>
+                    <a href="https://www.vanityfair.it/lifestyle/bambini/2019/04/03/dislessia-un-passo-avanti-per-individuarne-cause-e-trattamento" target="_blank" rel="noopener noreferrer" class="news-entry group">
+                        <div class="news-date-label">Apr 3, 2019<br><span class="news-source-tag">Vanity Fair</span> <span class="news-lang-tag">IT</span></div>
+                        <div>
+                            <h3 class="t-h4 font-semibold text-primary-dark group-hover:text-accent-red transition-colors leading-snug mb-1">Dislessia: un passo avanti per individuarne cause e trattamento</h3>
+                            <p class="text-sm text-neutral-gray">Vanity Fair Italia</p>
+                        </div>
+                        <svg class="w-4 h-4 text-neutral-gray/25 group-hover:text-accent-red transition-colors flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                    </a>
 
-                <a href="https://barbaraganz.blog.ilsole24ore.com/2019/03/30/superprogramma-identificare-le-cause-della-dislessia-fra-gli-autori-un-ricercatore-dellateneo-padova/" target="_blank" rel="noopener noreferrer" class="news-entry group">
-                    <div class="news-date-label">Mar 30, 2019<br><span class="news-source-tag">Newspaper</span></div>
-                    <div>
-                        <h3 class="text-base font-semibold text-primary-dark group-hover:text-accent-red transition-colors leading-snug mb-1">Il superprogramma per identificare le cause della dislessia</h3>
-                        <p class="text-sm text-neutral-gray">Il Sole 24 Ore</p>
-                    </div>
-                    <svg class="w-4 h-4 text-neutral-gray/25 group-hover:text-accent-red transition-colors flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
-                </a>
+                    <a href="https://barbaraganz.blog.ilsole24ore.com/2019/03/30/superprogramma-identificare-le-cause-della-dislessia-fra-gli-autori-un-ricercatore-dellateneo-padova/" target="_blank" rel="noopener noreferrer" class="news-entry group">
+                        <div class="news-date-label">Mar 30, 2019<br><span class="news-source-tag">Newspaper</span> <span class="news-lang-tag">IT</span></div>
+                        <div>
+                            <h3 class="t-h4 font-semibold text-primary-dark group-hover:text-accent-red transition-colors leading-snug mb-1">Il superprogramma per identificare le cause della dislessia</h3>
+                            <p class="text-sm text-neutral-gray">Il Sole 24 Ore</p>
+                        </div>
+                        <svg class="w-4 h-4 text-neutral-gray/25 group-hover:text-accent-red transition-colors flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                    </a>
 
-                <a href="https://www.galileonet.it/rete-neurale-artificiale-dislessia/" target="_blank" rel="noopener noreferrer" class="news-entry group">
-                    <div class="news-date-label">Mar 28, 2019<br><span class="news-source-tag">Science Mag</span></div>
-                    <div>
-                        <h3 class="text-base font-semibold text-primary-dark group-hover:text-accent-red transition-colors leading-snug mb-1">Una rete neurale per capire le cause della dislessia</h3>
-                        <p class="text-sm text-neutral-gray">Galileo</p>
-                    </div>
-                    <svg class="w-4 h-4 text-neutral-gray/25 group-hover:text-accent-red transition-colors flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
-                </a>
+                    <a href="https://www.galileonet.it/rete-neurale-artificiale-dislessia/" target="_blank" rel="noopener noreferrer" class="news-entry group">
+                        <div class="news-date-label">Mar 28, 2019<br><span class="news-source-tag">Science Mag</span> <span class="news-lang-tag">IT</span></div>
+                        <div>
+                            <h3 class="t-h4 font-semibold text-primary-dark group-hover:text-accent-red transition-colors leading-snug mb-1">Una rete neurale per capire le cause della dislessia</h3>
+                            <p class="text-sm text-neutral-gray">Galileo</p>
+                        </div>
+                        <svg class="w-4 h-4 text-neutral-gray/25 group-hover:text-accent-red transition-colors flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                    </a>
 
-                <a href="http://www.lescienze.it/lanci/2019/03/27/news/il_superprogramma_che_aiuta_a_capire_le_cause_della_dislessia-4349101/" target="_blank" rel="noopener noreferrer" class="news-entry group">
-                    <div class="news-date-label">Mar 27, 2019<br><span class="news-source-tag">Science Mag</span></div>
-                    <div>
-                        <h3 class="text-base font-semibold text-primary-dark group-hover:text-accent-red transition-colors leading-snug mb-1">Il superprogramma che aiuta a capire le cause della dislessia</h3>
-                        <p class="text-sm text-neutral-gray">Le Scienze</p>
-                    </div>
-                    <svg class="w-4 h-4 text-neutral-gray/25 group-hover:text-accent-red transition-colors flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
-                </a>
+                    <a href="http://www.lescienze.it/lanci/2019/03/27/news/il_superprogramma_che_aiuta_a_capire_le_cause_della_dislessia-4349101/" target="_blank" rel="noopener noreferrer" class="news-entry group">
+                        <div class="news-date-label">Mar 27, 2019<br><span class="news-source-tag">Science Mag</span> <span class="news-lang-tag">IT</span></div>
+                        <div>
+                            <h3 class="t-h4 font-semibold text-primary-dark group-hover:text-accent-red transition-colors leading-snug mb-1">Il superprogramma che aiuta a capire le cause della dislessia</h3>
+                            <p class="text-sm text-neutral-gray">Le Scienze</p>
+                        </div>
+                        <svg class="w-4 h-4 text-neutral-gray/25 group-hover:text-accent-red transition-colors flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                    </a>
 
-                <div class="news-entry group">
-                    <div class="news-date-label">Mar 27, 2019<br><span class="news-source-tag">Television</span></div>
-                    <div>
-                        <h3 class="text-base font-semibold text-primary-dark leading-snug mb-1">Il lavoro in un chip</h3>
-                        <p class="text-sm text-neutral-gray">TG3 Fuori TG (RAI 3)</p>
+                    <div class="news-entry group">
+                        <div class="news-date-label">Mar 27, 2019<br><span class="news-source-tag">Television</span> <span class="news-lang-tag">IT</span></div>
+                        <div>
+                            <h3 class="t-h4 font-semibold text-primary-dark leading-snug mb-1">Il lavoro in un chip</h3>
+                            <p class="text-sm text-neutral-gray">TG3 Fuori TG (RAI 3)</p>
+                        </div>
+                        <div></div>
                     </div>
-                    <div></div>
+
+                    <a href="https://ilbolive.unipd.it/it/news/-intelligenza-artificiale-settimana-cervello" target="_blank" rel="noopener noreferrer" class="news-entry group">
+                        <div class="news-date-label">Mar 2019<br><span class="news-source-tag">Il Bo Live</span> <span class="news-lang-tag">IT</span></div>
+                        <div>
+                            <h3 class="t-h4 font-semibold text-primary-dark group-hover:text-accent-red transition-colors leading-snug mb-1">L'intelligenza artificiale per la settimana del cervello</h3>
+                            <p class="text-sm text-neutral-gray">Il Bo Live · University of Padova</p>
+                        </div>
+                        <svg class="w-4 h-4 text-neutral-gray/25 group-hover:text-accent-red transition-colors flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                    </a>
                 </div>
-
-                <a href="https://ilbolive.unipd.it/it/news/-intelligenza-artificiale-settimana-cervello" target="_blank" rel="noopener noreferrer" class="news-entry group">
-                    <div class="news-date-label">Mar 2019<br><span class="news-source-tag">Il Bo Live</span></div>
-                    <div>
-                        <h3 class="text-base font-semibold text-primary-dark group-hover:text-accent-red transition-colors leading-snug mb-1">L'intelligenza artificiale per la settimana del cervello</h3>
-                        <p class="text-sm text-neutral-gray">Il Bo Live · University of Padova</p>
-                    </div>
-                    <svg class="w-4 h-4 text-neutral-gray/25 group-hover:text-accent-red transition-colors flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
-                </a>
             </div>
 
         </div>
     </section>
 
+    </main>
+
     <!-- ===== FOOTER ===== -->
-    <footer class="bg-surface-alt py-12 border-t border-surface-border">
+    <footer class="site-footer bg-surface-alt py-12 border-t border-surface-border">
         <div class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16">
-            <div class="grid md:grid-cols-4 gap-8 mb-8">
-                <div class="md:col-span-2">
-                    <img src="Assets/Logo_and_text.png" alt="CCN Lab" class="h-10 mb-4 logo-on-light opacity-70">
+            <div class="grid md:grid-cols-3 gap-8 md:gap-12 mb-8">
+                <div>
+                    <img loading="lazy" decoding="async" width="1408" height="792" src="Assets/Logo_and_text.png" alt="CCN Lab" class="h-10 mb-4 logo-on-light opacity-70 w-auto">
                     <p class="text-neutral-gray text-sm leading-relaxed max-w-sm">
                         The Computational Cognitive Neuroscience Lab at the University of Padova, exploring the computational mechanisms underlying human cognition since 2000.
                     </p>
                 </div>
                 <div>
-                    <h4 class="font-mono-tech text-xs text-primary-dark uppercase tracking-widest mb-4">Quick Links</h4>
+                    <h4 class="t-eyebrow font-mono-tech text-primary-dark uppercase tracking-widest mb-4">Quick Links</h4>
                     <ul class="space-y-2">
                         <li><a href="index.html#about" class="text-neutral-gray hover:text-accent-red transition-colors text-sm">About</a></li>
-                        <li><a href="research.html"    class="text-neutral-gray hover:text-accent-red transition-colors text-sm">Research</a></li>
-                        <li><a href="people.html"      class="text-neutral-gray hover:text-accent-red transition-colors text-sm">People</a></li>
-                        <li><a href="news.html"        class="text-neutral-gray hover:text-accent-red transition-colors text-sm">News</a></li>
-                        <li><a href="software.html"    class="text-neutral-gray hover:text-accent-red transition-colors text-sm">Software</a></li>
+                        <li><a href="research.html" class="text-neutral-gray hover:text-accent-red transition-colors text-sm">Research</a></li>
+                        <li><a href="people.html" class="text-neutral-gray hover:text-accent-red transition-colors text-sm">People</a></li>
+                        <li><a href="playground.html" class="text-neutral-gray hover:text-accent-red transition-colors text-sm">Playground</a></li>
+                        <li><a href="news.html" class="text-neutral-gray hover:text-accent-red transition-colors text-sm">News</a></li>
+                        <li><a href="software.html" class="text-neutral-gray hover:text-accent-red transition-colors text-sm">Software</a></li>
+                        <li><a href="join-us.html" class="text-neutral-gray hover:text-accent-red transition-colors text-sm">Join us</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h4 class="font-mono-tech text-xs text-primary-dark uppercase tracking-widest mb-4">Affiliations</h4>
+                    <h4 class="t-eyebrow font-mono-tech text-primary-dark uppercase tracking-widest mb-4">Affiliations</h4>
                     <ul class="space-y-2 text-sm text-neutral-gray">
                         <li><a href="http://www.unipd.it"     class="hover:text-accent-red transition-colors">University of Padova</a></li>
                         <li><a href="http://dpg.psy.unipd.it" class="hover:text-accent-red transition-colors">Dept. of General Psychology</a></li>
@@ -352,7 +388,7 @@
             <hr class="section-rule mb-6">
             <div class="flex flex-col md:flex-row justify-between items-center gap-3">
                 <p class="font-mono-tech text-xs text-neutral-gray">© 2000–2026 Computational Cognitive Neuroscience Lab · University of Padova</p>
-                <p class="font-mono-tech text-xs text-neutral-gray/50">Dept. General Psychology · Via Venezia 8 · 35131 Padova, IT</p>
+                <p class="font-mono-tech text-xs text-neutral-gray">Dept. General Psychology · Via Venezia 8 · 35131 Padova, IT</p>
             </div>
         </div>
     </footer>
@@ -362,10 +398,9 @@
         const mobileMenu    = document.getElementById('mobile-menu');
         mobileMenuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
         mobileMenu.querySelectorAll('a').forEach(l => l.addEventListener('click', () => mobileMenu.classList.add('hidden')));
-        const header = document.getElementById('header');
-        window.addEventListener('scroll', () => {
-            header.classList.toggle('shadow-md', window.scrollY > 50);
-        });
+// Header expand/compact + logo lockup swap: see js/site-nav.js
+
     </script>
+    <script src="js/site-nav.js"></script>
 </body>
 </html>

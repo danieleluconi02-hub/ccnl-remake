@@ -145,6 +145,17 @@ class NeuralArchitectureVis {
         if (!this.container) return;
         this.container.style.position = 'relative';
 
+        /* The figure is the only explanation of what the graphic is, and it used
+           to appear only on hover with no cursor, role or keyboard path. */
+        this.container.setAttribute('role', 'img');
+        this.container.setAttribute('tabindex', '0');
+        this.container.style.cursor = 'crosshair';
+        this.container.style.outlineOffset = '4px';
+
+        // Decorative idle motion is suppressed for readers who ask for it.
+        this.reducedMotion =
+            window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
         // Detect mobile once, reuse everywhere
         this.isMobile = window.matchMedia('(max-width: 768px)').matches;
 
@@ -178,51 +189,71 @@ class NeuralArchitectureVis {
         this._setLabel();
         this._positionLabel();
         this._bind();
+        this._watchVisibility();
         this._loop();
     }
 
     // ─── Label ──────────────────────────────────────────────────────
     _makeLabel() {
         this.label = document.createElement('div');
+        const parent = this.container.parentElement || this.container;
+        parent.style.position = 'relative';
+        parent.appendChild(this.label);
+        this._applyLabelStyles();
+    }
+
+    /* Layout mode is re-applied whenever the breakpoint changes, so a resize or
+       orientation change can never leave the desktop overlay on a narrow screen. */
+    _applyLabelStyles() {
+        const base = {
+            fontFamily: '"Playfair Display", Georgia, serif',
+            fontSize: '13px', lineHeight: '1.5',
+            textAlign: 'center', pointerEvents: 'none',
+            userSelect: 'none', zIndex: '10',
+            transition: 'opacity 0.35s ease',
+            /* Backing plate: the caption sits over the edge fan, which has enough
+               contrast of its own to make unbacked 10px mono text unreadable. */
+            background: 'rgba(248, 247, 244, 0.94)',
+            border: '1px solid #e2dfda',
+            padding: '8px 14px',
+            borderRadius: '0',
+            opacity: '1',
+        };
 
         if (this.isMobile) {
-            // On mobile: in-flow block below the canvas, centered, no overlap
-            Object.assign(this.label.style, {
+            // In-flow block below the canvas — wraps instead of overflowing.
+            Object.assign(this.label.style, base, {
                 position: 'relative',
                 marginTop: '1.5rem',
-                fontFamily: '"Playfair Display", Georgia, serif',
-                fontSize: '13px', lineHeight: '1.5',
-                textAlign: 'center', pointerEvents: 'none',
-                userSelect: 'none', width: '100%', zIndex: '10',
-                opacity: '0',
-                transition: 'opacity 0.35s ease',
+                bottom: '', left: '', transform: '',
+                width: '100%', maxWidth: '100%',
+                whiteSpace: 'normal',
             });
-            // Append inside the flex column so it flows below #neural-network-bg
-            const parent = this.container.parentElement || this.container;
-            parent.appendChild(this.label);
         } else {
-            // Desktop: absolute overlay at the bottom of the parent
-            Object.assign(this.label.style, {
+            /* Sits *under* the figure, not on it. At `bottom: 16px` the plate
+               landed on the lowest row of nodes — the layout runs them to 90% of
+               the canvas height (S.padY = 0.10), so the last ~37px of a 372px
+               canvas is still graph. The caption is bounded by the figure width
+               so it wraps instead of spilling out on short/narrow viewports. */
+            Object.assign(this.label.style, base, {
                 position: 'absolute',
-                bottom: '20px',
+                top: '100%',
+                bottom: 'auto',
+                marginTop: '14px',
                 left: '50%',
                 transform: 'translateX(-50%)',
-                fontFamily: '"Playfair Display", Georgia, serif',
-                fontSize: '13px', lineHeight: '1.5',
-                textAlign: 'center', pointerEvents: 'none',
-                userSelect: 'none', maxWidth: '340px', zIndex: '10',
-                opacity: '0',
-                transition: 'opacity 0.35s ease',
-                whiteSpace: 'nowrap',
+                width: 'max-content', maxWidth: '100%',
+                whiteSpace: 'normal',
             });
-            const parent = this.container.parentElement || this.container;
-            parent.style.position = 'relative';
-            parent.appendChild(this.label);
         }
+        this._labelMode = this.isMobile ? 'mobile' : 'desktop';
     }
 
     _setLabel() {
         const a = this.arch;
+        this.container.setAttribute(
+            'aria-label',
+            'Animated diagram of a ' + a.name + '. ' + a.desc);
         this.label.innerHTML =
             `<span style="display:block;font-weight:700;font-size:14px;` +
             `color:#b20839;letter-spacing:.01em;margin-bottom:3px">${a.name}</span>` +
@@ -242,10 +273,19 @@ class NeuralArchitectureVis {
         const centreX = (containerRect.left - parentRect.left) + this.W / 2;
         this.label.style.left      = centreX + 'px';
         this.label.style.transform = 'translateX(-50%)';
+        // Bound the caption to the figure itself, not to the (wider) column, so it
+        // wraps rather than sticking out of the graphic on small canvases.
+        this.label.style.maxWidth  = Math.round(this.W) + 'px';
     }
 
     // ─── Canvas Sizing ──────────────────────────────────────────────
     _resize() {
+        // Breakpoint can change under us (resize, orientation change) — the label
+        // layout mode has to follow it, not stay frozen at construction time.
+        this.isMobile = window.matchMedia('(max-width: 768px)').matches;
+        if (this.label && this._labelMode !== (this.isMobile ? 'mobile' : 'desktop')) {
+            this._applyLabelStyles();
+        }
         const r = this.container.getBoundingClientRect();
         this.W = r.width;
         this.H = r.height;
@@ -469,23 +509,12 @@ class NeuralArchitectureVis {
             resizeTimer = setTimeout(() => this._resize(), 100);
         });
 
-        // Hover to reveal label — desktop (≥1024px) on hover; mobile auto-cycles
+        /* The caption is permanent now — it is the only text that says what the
+           figure is, so it cannot depend on a pointer being present. */
         const mq = window.matchMedia('(min-width: 1024px)');
-        const showLabel = () => {
-            if (mq.matches) {
-                this.label.style.opacity = '1';
-                this.label.style.pointerEvents = 'auto';
-            }
-        };
-        const hideLabel = () => {
-            this.label.style.opacity = '0';
-            this.label.style.pointerEvents = 'none';
-        };
-        this.container.addEventListener('mouseenter', showLabel);
-        this.container.addEventListener('mouseleave', hideLabel);
         mq.addEventListener('change', () => {
             if (!mq.matches) this._startMobileCycle();
-            else { this._stopMobileCycle(); hideLabel(); }
+            else this._stopMobileCycle();
         });
 
         // Mobile: show label, auto-cycle every 4 s (tap now triggers pulse, not cycle)
@@ -565,6 +594,7 @@ class NeuralArchitectureVis {
 
     // ─── Signal Pulses ──────────────────────────────────────────────
     _spawnPulse(edge) {
+        if (this.reducedMotion) return;
         // Limit active pulses — tighter cap on mobile for battery/performance
         const maxPulses = this.isMobile ? 30 : 60;
         if (this.pulses.length > maxPulses) return;
@@ -581,14 +611,47 @@ class NeuralArchitectureVis {
     }
 
     // ─── Render Loop ────────────────────────────────────────────────
+    /* The figure used to hold a 60fps loop open for the life of the page, even
+       once it had scrolled away. That competes with the scroll itself and with
+       the header's expand/compact transition. Suspend it while it is off screen
+       and while the tab is in the background. */
+    _watchVisibility() {
+        this._visible = true;
+        const setVisible = (v) => {
+            if (v === this._visible) return;
+            this._visible = v;
+            if (v) {
+                this._t0 = performance.now() - NeuralArchitectureVis.S.drawInDuration;
+                this._loop();
+            } else if (this._raf) {
+                cancelAnimationFrame(this._raf);
+                this._raf = null;
+            }
+        };
+        // Background tabs are already throttled by the browser, so viewport
+        // visibility is the only thing worth tracking here.
+        if ('IntersectionObserver' in window) {
+            new IntersectionObserver(
+                (entries) => setVisible(entries[0].isIntersecting),
+                { rootMargin: '100px' }
+            ).observe(this.container);
+        }
+    }
+
     _loop() {
+        if (this._raf) return;                 // never stack two loops
         const C   = NeuralArchitectureVis.S;
         const ctx = this.ctx;
         const accent = C.accent;
 
         const frame = () => {
-            this._raf = requestAnimationFrame(frame);
-            const now = performance.now();
+            this._raf = null;
+            if (!this.reducedMotion && this._visible !== false) {
+                this._raf = requestAnimationFrame(frame);
+            }
+            const now = this.reducedMotion
+                ? this._t0 + C.drawInDuration
+                : performance.now();
             const drawInProgress = Math.min(1, (now - this._t0) / C.drawInDuration);
             const drawFrac = this._easeOutCubic(drawInProgress);
 
@@ -820,5 +883,6 @@ class NeuralArchitectureVis {
 
 // ─── Mount ──────────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
-    setTimeout(() => new NeuralArchitectureVis('neural-network-bg'), 60);
+    // exposed so the idle/suspended state is inspectable
+    setTimeout(() => { window.__heroVis = new NeuralArchitectureVis('neural-network-bg'); }, 60);
 });

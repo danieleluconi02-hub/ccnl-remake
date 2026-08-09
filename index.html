@@ -25,8 +25,6 @@
                         'primary-light':   '#FFFFFF',
                         'accent-red':      '#b20839',
                         'accent-red-hover':'#8a0022',
-                        'accent-gold':     '#b20839',
-                        'accent-gold-hover':'#8a0022',
                         'neutral-gray':    '#6B7280',
                         'light-gray':      '#F3F4F6',
                         'surface':         '#f8f7f4',
@@ -51,116 +49,123 @@
 
 <body class="font-manrope bg-surface text-primary-dark antialiased">
 
+    <a href="#main" class="skip-link">Skip to content</a>
+
     <!-- ===================== HEADER ===================== -->
-    <header id="header" class="fixed top-0 left-0 right-0 z-50 bg-white border-b border-surface-border transition-all duration-300">
-
-
-        <!-- Main Navigation -->
+    <header id="header" class="fixed top-0 left-0 right-0 z-50 bg-white border-b border-surface-border">
         <nav class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16">
-            <div class="flex items-center justify-between h-14 lg:h-16 transition-all duration-300" id="nav-inner">
-
-                <!-- Logo -->
+            <div class="flex items-center justify-between" id="nav-inner">
                 <a href="#" class="flex items-center gap-3 group">
-                    <img src="Assets/Logo_and_text.png" alt="CCN Lab Logo" id="header-logo"
-                        class="h-10 lg:h-12 object-contain -ml-2 transition-all duration-300 logo-on-light">
+                    <span class="header-logo" id="header-logo">
+                        <img loading="eager" decoding="async" width="1408" height="792"
+                            src="Assets/Logo_and_text.png" alt="CCN Lab"
+                            class="header-logo-full logo-on-light">
+                        <span class="header-logo-lab" aria-hidden="true"></span>
+                        <img loading="eager" decoding="async" width="1394" height="1394"
+                            src="Assets/Logo.png" alt="" aria-hidden="true"
+                            class="header-logo-mark logo-on-light">
+                    </span>
                 </a>
-
-                <!-- Desktop Navigation -->
                 <div class="hidden md:flex items-center gap-4 lg:gap-7">
-                    <a href="#about" class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-sm font-medium tracking-wide">About</a>
+                    <a href="#about" class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-sm font-medium">About</a>
                     <div class="dropdown-container">
-                        <a href="research.html" class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-sm font-medium tracking-wide">Research</a>
-                        <div class="dropdown-menu">
+                        <a href="research.html" class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-sm font-medium" aria-haspopup="true" aria-expanded="false" aria-controls="research-menu">Research</a>
+                        <div class="dropdown-menu" id="research-menu">
                             <a href="research.html#research"     class="dropdown-item">Research areas</a>
                             <a href="research.html#facilities"   class="dropdown-item">Lab facilities</a>
                             <a href="research.html#publications" class="dropdown-item">Publications</a>
-                            <a href="software.html"              class="dropdown-item">Software &amp; Downloads</a>
+                            <a href="software.html"               class="dropdown-item">Software &amp; Downloads</a>
                         </div>
                     </div>
-                    <a href="people.html"     class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-sm font-medium tracking-wide">People</a>
-                    <a href="playground.html" class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-sm font-medium tracking-wide">Playground</a>
-                    <a href="news.html"       class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-sm font-medium tracking-wide">News</a>
-                    <a href="join-us.html"    class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-sm font-medium tracking-wide">Join us</a>
-
-                    <a href="#contact"
-                        class="btn-primary px-5 py-2 bg-accent-red text-white text-sm font-semibold hover:bg-accent-red-hover transition-all duration-200">
-                        Contact
-                    </a>
+                    <a href="people.html"     class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-sm font-medium">People</a>
+                    <a href="playground.html" class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-sm font-medium">Playground</a>
+                    <a href="news.html"       class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-sm font-medium">News</a>
+                    <a href="join-us.html"    class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-sm font-medium">Join us</a>
+                    <a href="#contact" class="btn-primary px-5 py-2 bg-accent-red text-white text-sm font-semibold hover:bg-accent-red-hover transition-all duration-200">Contact</a>
                 </div>
-
-                <!-- Mobile Menu Button -->
-                <button id="mobile-menu-btn" class="md:hidden p-2 text-neutral-gray hover:text-accent-red transition-colors" aria-label="Open menu">
+                <button id="mobile-menu-btn" type="button" class="md:hidden inline-flex items-center justify-center w-11 h-11 -mr-2 text-neutral-gray hover:text-accent-red transition-colors" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
                     </svg>
                 </button>
             </div>
         </nav>
-
-        <!-- Mobile Menu -->
         <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-surface-border">
             <div class="px-6 py-4 space-y-1">
-                <a href="#about"          class="block text-neutral-gray hover:text-accent-red transition-colors py-2.5 text-sm border-b border-surface-border">About</a>
-                <a href="research.html"   class="block text-neutral-gray hover:text-accent-red transition-colors py-2.5 text-sm border-b border-surface-border">Research</a>
-                <a href="people.html"     class="block text-neutral-gray hover:text-accent-red transition-colors py-2.5 text-sm border-b border-surface-border">People</a>
-                <a href="playground.html" class="block text-neutral-gray hover:text-accent-red transition-colors py-2.5 text-sm border-b border-surface-border">Playground</a>
-                <a href="news.html"       class="block text-neutral-gray hover:text-accent-red transition-colors py-2.5 text-sm border-b border-surface-border">News</a>
-                <a href="join-us.html"    class="block text-neutral-gray hover:text-accent-red transition-colors py-2.5 text-sm border-b border-surface-border">Join us</a>
-                <a href="#contact"        class="block w-fit mt-3 px-5 py-2 bg-accent-red text-white text-sm font-semibold hover:bg-accent-red-hover transition-colors">Contact</a>
+                <a href="#" class="block text-accent-red font-semibold py-2.5 text-sm border-b border-surface-border" aria-current="page">Home</a>
+                <a href="#about" class="block text-neutral-gray hover:text-accent-red py-2.5 text-sm border-b border-surface-border">About</a>
+                <a href="research.html" class="block text-neutral-gray hover:text-accent-red py-2.5 text-sm border-b border-surface-border">Research</a>
+                <a href="research.html#research" class="block text-neutral-gray hover:text-accent-red py-2.5 pl-4 text-sm border-b border-surface-border">Research areas</a>
+                <a href="research.html#facilities" class="block text-neutral-gray hover:text-accent-red py-2.5 pl-4 text-sm border-b border-surface-border">Lab facilities</a>
+                <a href="research.html#publications" class="block text-neutral-gray hover:text-accent-red py-2.5 pl-4 text-sm border-b border-surface-border">Publications</a>
+                <a href="software.html" class="block text-neutral-gray hover:text-accent-red py-2.5 pl-4 text-sm border-b border-surface-border">Software &amp; Downloads</a>
+                <a href="people.html" class="block text-neutral-gray hover:text-accent-red py-2.5 text-sm border-b border-surface-border">People</a>
+                <a href="playground.html" class="block text-neutral-gray hover:text-accent-red py-2.5 text-sm border-b border-surface-border">Playground</a>
+                <a href="news.html" class="block text-neutral-gray hover:text-accent-red py-2.5 text-sm border-b border-surface-border">News</a>
+                <a href="join-us.html" class="block text-neutral-gray hover:text-accent-red py-2.5 text-sm border-b border-surface-border">Join us</a>
+                <a href="#contact" class="block w-fit mt-3 px-5 py-2 bg-accent-red text-white text-sm font-semibold">Contact</a>
             </div>
         </div>
-
-        <!-- Padova Red accent line -->
         <div class="h-px bg-accent-red"></div>
     </header>
 
+    <main id="main">
+
     <!-- ===================== HERO ===================== -->
-    <section id="hero" class="pt-[88px] min-h-screen flex items-center relative overflow-hidden bg-surface hero-pattern">
+    <section id="hero" class="pt-16 min-h-screen flex items-center relative overflow-hidden bg-surface hero-pattern">
 
         <div class="relative z-10 max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16 w-full">
-            <div class="grid grid-cols-1 lg:grid-cols-[1fr_58%] gap-8 lg:gap-0 items-center min-h-[calc(100vh-88px)] py-12 lg:py-0">
+
+            <!-- University branding — pinned to the hero masthead, desktop only -->
+            <a href="https://www.dpg.unipd.it/" target="_blank" rel="noopener noreferrer"
+                class="hero-masthead hidden lg:flex flex-row-reverse items-center gap-4 absolute right-6 lg:right-12 xl:right-16 z-20 transition-opacity hover:opacity-70">
+                <img loading="eager" decoding="async" width="940" height="946" src="Assets/Logo_UniPadova.png" alt="University of Padova"
+                    class="h-12 w-auto object-contain logo-on-light">
+                <div class="flex flex-col items-end">
+                    <span class="text-base font-medium text-primary-dark tracking-tight">University of Padova</span>
+                    <span class="text-xs text-neutral-gray font-mono-tech tracking-wide">Dept. General Psychology</span>
+                </div>
+            </a>
+
+            <div class="hero-grid grid grid-cols-1 lg:grid-cols-[1fr_58%] gap-8 lg:gap-0 items-center min-h-[calc(100vh-64px)] py-12 lg:py-16">
 
                 <!-- Left: Headline text -->
                 <div class="hero-text-col animate-fade-in-up">
 
                     <!-- Lab identifier (monospace) -->
-                    <p class="font-mono-tech text-xs text-accent-red uppercase tracking-widest mb-8 flex items-center gap-2">
+                    <p class="hero-eyebrow font-mono-tech text-xs text-accent-red uppercase tracking-widest mb-8 flex items-center gap-2">
                         <span class="inline-block w-8 h-px bg-accent-red"></span>
                         Est. 2000 · Padova, Italy
                     </p>
 
                     <!-- Main headline in Playfair Display -->
-                    <div class="flex items-stretch gap-4 mb-8">
-                        <div class="headline-rule self-stretch" style="min-height: 3rem;"></div>
-                        <h1 class="font-display text-4xl sm:text-5xl md:text-6xl lg:text-5xl xl:text-6xl font-bold leading-tight text-primary-dark">
-                            Mapping the<br>
-                            Frontiers of<br>
-                            <span class="italic text-accent-red">Computational</span><br>
+                    <div class="hero-headline relative mb-8">
+                        <div class="headline-rule hidden lg:block absolute top-2 bottom-2 -left-[35px]"></div>
+                        <h1 class="t-display font-display font-bold leading-tight text-primary-dark">
+                            Computational<br>
                             Cognitive<br>
-                            Neuroscience
+                            Neuroscience<br>
+                            <span class="italic text-accent-red">Lab</span>
                         </h1>
                     </div>
 
                     <!-- Subtitle -->
-                    <p class="text-base md:text-lg text-neutral-gray leading-relaxed mb-12 max-w-md font-light">
+                    <p class="hero-lead text-base md:text-lg text-neutral-gray leading-relaxed mb-12 max-w-md font-light">
                         A multidisciplinary research group at the University of Padova studying the (neuro)computational mechanisms underlying human cognition — from development to clinical breakdown.
                     </p>
 
                     <!-- Text-link CTAs -->
-                    <div class="flex flex-col sm:flex-row gap-5">
+                    <div class="hero-ctas flex flex-col sm:flex-row items-start gap-5">
                         <a href="research.html" class="cta-link cta-link-red text-sm font-semibold tracking-wide uppercase">
                             Explore Research
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
                             </svg>
                         </a>
-                        <a href="#about" class="cta-link text-sm font-semibold tracking-wide uppercase text-neutral-gray border-neutral-gray/40 hover:text-accent-red hover:border-accent-red">
-                            About the Lab
-                        </a>
                     </div>
 
                     <!-- Metrics row -->
-                    <div class="flex gap-10 mt-14 pt-8 border-t border-surface-border">
+                    <div class="hero-metrics flex gap-10 mt-14 pt-8 border-t border-surface-border">
                         <div>
                             <p class="metric-number text-3xl font-display font-bold">
                                 <span class="metric-value" data-target="300">0</span><span class="text-lg">+</span>
@@ -176,7 +181,9 @@
                         </div>
                         <div class="w-px bg-surface-border self-stretch"></div>
                         <div>
-                            <p class="metric-number text-3xl font-display font-bold">7</p>
+                            <p class="metric-number text-3xl font-display font-bold">
+                                <span class="metric-value" data-target="7">0</span>
+                            </p>
                             <p class="metric-label mt-1">Research Areas</p>
                         </div>
                     </div>
@@ -184,19 +191,8 @@
 
                 <!-- Right: Neural visualization (large, bleeds visually) -->
                 <div class="neural-right-col hero-canvas-col flex flex-col items-end relative animate-fade-in">
-                    <!-- University branding — desktop only -->
-                    <a href="https://www.dpg.unipd.it/" target="_blank" rel="noopener noreferrer"
-                        class="hidden lg:flex flex-row-reverse items-center gap-4 absolute top-0 right-0 z-10 transition-opacity hover:opacity-70">
-                        <img src="Assets/Logo_UniPadova.png" alt="University of Padova"
-                            class="h-14 w-auto object-contain logo-on-light">
-                        <div class="flex flex-col items-end">
-                            <span class="text-base font-medium text-primary-dark tracking-tight">University of Padova</span>
-                            <span class="text-xs text-neutral-gray font-mono-tech tracking-wide">Dept. General Psychology</span>
-                        </div>
-                    </a>
-
                     <!-- Neural canvas — the "Perceptron Star" -->
-                    <div id="neural-network-bg" class="w-full lg:w-[820px] h-[420px] lg:h-[600px] relative mt-8 lg:mt-28"></div>
+                    <div id="neural-network-bg" class="w-full lg:w-[820px] h-[420px] lg:h-[600px] relative mt-8 lg:mt-0"></div>
 
                 </div>
             </div>
@@ -207,7 +203,7 @@
     </section>
 
     <!-- ===================== ABOUT ===================== -->
-    <section id="about" class="py-16 md:py-24 bg-white border-t border-surface-border section-container">
+    <section id="about" class="section-y bg-white border-t border-surface-border section-container">
         <div class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16">
 
             <!-- Section label -->
@@ -219,7 +215,7 @@
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
                 <!-- Left: Text -->
                 <div>
-                    <h2 class="font-display text-3xl md:text-4xl lg:text-5xl font-bold mb-8 leading-snug">
+                    <h2 class="t-h2 font-display font-bold mb-8 leading-snug">
                         Computational models of<br>
                         <span class="italic text-accent-red">human cognition</span>
                     </h2>
@@ -233,8 +229,8 @@
                         The lab is involved in multidisciplinary research at the frontiers between cognitive science, neuroscience and computer science. The focus is on the (neuro)computational mechanisms underlying human cognition, from development to skilled performance and breakdowns of processing in neurological or neurodevelopmental disorders.
                     </p>
 
-                    <a href="research.html" class="cta-link cta-link-red text-sm font-semibold tracking-wide uppercase">
-                        Research overview
+                    <a href="people.html" class="cta-link cta-link-red text-sm font-semibold tracking-wide uppercase">
+                        Meet the team
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
                         </svg>
@@ -246,11 +242,11 @@
                     <!-- Photos -->
                     <div class="grid grid-cols-2 gap-3">
                         <div class="relative group overflow-hidden">
-                            <img src="Assets/CCNL_team.jpg" alt="CCNL Team"
+                            <img loading="lazy" decoding="async" width="640" height="480" src="Assets/CCNL_team.jpg" alt="CCNL Team"
                                 class="h-48 lg:h-56 w-full border border-surface-border object-cover transition-transform duration-500 group-hover:scale-103 people-photo brightness-105">
                         </div>
                         <div class="relative group overflow-hidden">
-                            <img src="Assets/Lab_Psico2.jpg" alt="Lab Space"
+                            <img loading="lazy" decoding="async" width="1000" height="563" src="Assets/Lab_Psico2.jpg" alt="Lab Space"
                                 class="h-48 lg:h-56 w-full border border-surface-border object-cover transition-transform duration-500 group-hover:scale-103 people-photo">
                         </div>
                     </div>
@@ -274,14 +270,19 @@
     </section>
 
     <!-- ===================== FUNDING / PARTNERS ===================== -->
-    <section class="py-10 bg-surface border-y border-surface-border overflow-hidden">
+    <section class="section-y-tight bg-surface border-y border-surface-border overflow-hidden">
         <div class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16">
-            <p class="font-mono-tech text-xs text-neutral-gray uppercase tracking-widest mb-8">
+            <p class="font-mono-tech text-xs text-accent-red uppercase tracking-widest mb-8 flex items-center gap-2">
+                <span class="inline-block w-8 h-px bg-accent-red"></span>
                 Funding &amp; Partners
             </p>
 
             <!-- Carousel -->
             <div id="partners-carousel" class="partners-carousel-container relative">
+                <!-- WCAG 2.2.2: motion that runs longer than 5s needs a pause
+                     control that does not depend on a pointer being present. -->
+                <button type="button" id="partners-pause" class="carousel-pause-btn"
+                    aria-pressed="false">Pause</button>
                 <button class="carousel-nav-btn prev" aria-label="Previous" id="partners-prev">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
@@ -300,59 +301,59 @@
                 <div class="partners-carousel-track flex items-center gap-12">
                     <!-- Set 1 -->
                     <a href="https://erc.europa.eu/" target="_blank" rel="noopener noreferrer" class="partner-logo-wrapper flex-shrink-0">
-                        <img src="Assets/Funding_and_Partners/European_Research_Council_logo.svg.png" alt="European Research Council" class="partner-logo" title="European Research Council">
+                        <img loading="lazy" decoding="async" width="1280" height="1286" src="Assets/Funding_and_Partners/European_Research_Council_logo.svg.png" alt="European Research Council" class="partner-logo" title="European Research Council">
                     </a>
                     <a href="https://ec.europa.eu/" target="_blank" rel="noopener noreferrer" class="partner-logo-wrapper flex-shrink-0">
-                        <img src="Assets/Funding_and_Partners/European_Commission_logo.png" alt="European Commission" class="partner-logo" title="European Commission">
+                        <img loading="lazy" decoding="async" width="538" height="194" src="Assets/Funding_and_Partners/European_Commission_logo.png" alt="European Commission" class="partner-logo" title="European Commission">
                     </a>
                     <a href="https://fondazionecariparo.it/" target="_blank" rel="noopener noreferrer" class="partner-logo-wrapper flex-shrink-0">
-                        <img src="Assets/Funding_and_Partners/Cariparo_Fundation.png" alt="Cariparo Foundation" class="partner-logo" title="Cariparo Foundation">
+                        <img loading="lazy" decoding="async" width="600" height="195" src="Assets/Funding_and_Partners/Cariparo_Fundation.png" alt="Cariparo Foundation" class="partner-logo" title="Cariparo Foundation">
                     </a>
                     <a href="https://www.compagniadisanpaolo.it/" target="_blank" rel="noopener noreferrer" class="partner-logo-wrapper flex-shrink-0">
-                        <img src="Assets/Funding_and_Partners/Compagnia_di_San_Paolo.png" alt="Compagnia di San Paolo" class="partner-logo" title="Compagnia di San Paolo">
+                        <img loading="lazy" decoding="async" width="3508" height="1485" src="Assets/Funding_and_Partners/Compagnia_di_San_Paolo.png" alt="Compagnia di San Paolo" class="partner-logo" title="Compagnia di San Paolo">
                     </a>
                     <a href="https://www.salute.gov.it/" target="_blank" rel="noopener noreferrer" class="partner-logo-wrapper flex-shrink-0">
-                        <img src="Assets/Funding_and_Partners/Ministry_Health_Italy.png" alt="Italian Ministry of Health" class="partner-logo" title="Italian Ministry of Health">
+                        <img loading="lazy" decoding="async" width="264" height="247" src="Assets/Funding_and_Partners/Ministry_Health_Italy.png" alt="Italian Ministry of Health" class="partner-logo" title="Italian Ministry of Health">
                     </a>
                     <a href="https://www.mur.gov.it/" target="_blank" rel="noopener noreferrer" class="partner-logo-wrapper flex-shrink-0">
-                        <img src="Assets/Funding_and_Partners/Italy_Ministery_Research_Education.png" alt="Italian Ministry of Education" class="partner-logo" title="Italian Ministry of Education">
+                        <img loading="lazy" decoding="async" width="320" height="320" src="Assets/Funding_and_Partners/Italy_Ministery_Research_Education.png" alt="Italian Ministry of Education" class="partner-logo" title="Italian Ministry of Education">
                     </a>
                     <a href="https://pnc.unipd.it/" target="_blank" rel="noopener noreferrer" class="partner-logo-wrapper flex-shrink-0">
-                        <img src="Assets/Funding_and_Partners/Padova_Neuroscience_Center.png" alt="Padova Neuroscience Center" class="partner-logo" title="Padova Neuroscience Center">
+                        <img loading="lazy" decoding="async" width="1024" height="351" src="Assets/Funding_and_Partners/Padova_Neuroscience_Center.png" alt="Padova Neuroscience Center" class="partner-logo" title="Padova Neuroscience Center">
                     </a>
                     <a href="https://www.hsancamillo.it/" target="_blank" rel="noopener noreferrer" class="partner-logo-wrapper flex-shrink-0">
-                        <img src="Assets/Funding_and_Partners/San_Camillo_Hospital.png" alt="San Camillo Research Hospital" class="partner-logo" title="San Camillo Research Hospital">
+                        <img loading="lazy" decoding="async" width="1277" height="535" src="Assets/Funding_and_Partners/San_Camillo_Hospital.png" alt="San Camillo Research Hospital" class="partner-logo" title="San Camillo Research Hospital">
                     </a>
                     <a href="https://www.fondationlejeune.org/" target="_blank" rel="noopener noreferrer" class="partner-logo-wrapper flex-shrink-0">
-                        <img src="Assets/Funding_and_Partners/jerome lejeun.png" alt="Fondation Jérôme Lejeune" class="partner-logo" style="mix-blend-mode: multiply;" title="Fondation Jérôme Lejeune">
+                        <img loading="lazy" decoding="async" width="400" height="120" src="Assets/Funding_and_Partners/jerome lejeun.png" alt="Fondation Jérôme Lejeune" class="partner-logo" style="mix-blend-mode: multiply;" title="Fondation Jérôme Lejeune">
                     </a>
                     <!-- Set 2 (duplicate for loop) -->
                     <a href="https://erc.europa.eu/" target="_blank" rel="noopener noreferrer" class="partner-logo-wrapper flex-shrink-0">
-                        <img src="Assets/Funding_and_Partners/European_Research_Council_logo.svg.png" alt="European Research Council" class="partner-logo">
+                        <img loading="lazy" decoding="async" width="1280" height="1286" src="Assets/Funding_and_Partners/European_Research_Council_logo.svg.png" alt="European Research Council" class="partner-logo">
                     </a>
                     <a href="https://ec.europa.eu/" target="_blank" rel="noopener noreferrer" class="partner-logo-wrapper flex-shrink-0">
-                        <img src="Assets/Funding_and_Partners/European_Commission_logo.png" alt="European Commission" class="partner-logo">
+                        <img loading="lazy" decoding="async" width="538" height="194" src="Assets/Funding_and_Partners/European_Commission_logo.png" alt="European Commission" class="partner-logo">
                     </a>
                     <a href="https://fondazionecariparo.it/" target="_blank" rel="noopener noreferrer" class="partner-logo-wrapper flex-shrink-0">
-                        <img src="Assets/Funding_and_Partners/Cariparo_Fundation.png" alt="Cariparo Foundation" class="partner-logo">
+                        <img loading="lazy" decoding="async" width="600" height="195" src="Assets/Funding_and_Partners/Cariparo_Fundation.png" alt="Cariparo Foundation" class="partner-logo">
                     </a>
                     <a href="https://www.compagniadisanpaolo.it/" target="_blank" rel="noopener noreferrer" class="partner-logo-wrapper flex-shrink-0">
-                        <img src="Assets/Funding_and_Partners/Compagnia_di_San_Paolo.png" alt="Compagnia di San Paolo" class="partner-logo">
+                        <img loading="lazy" decoding="async" width="3508" height="1485" src="Assets/Funding_and_Partners/Compagnia_di_San_Paolo.png" alt="Compagnia di San Paolo" class="partner-logo">
                     </a>
                     <a href="https://www.salute.gov.it/" target="_blank" rel="noopener noreferrer" class="partner-logo-wrapper flex-shrink-0">
-                        <img src="Assets/Funding_and_Partners/Ministry_Health_Italy.png" alt="Italian Ministry of Health" class="partner-logo">
+                        <img loading="lazy" decoding="async" width="264" height="247" src="Assets/Funding_and_Partners/Ministry_Health_Italy.png" alt="Italian Ministry of Health" class="partner-logo">
                     </a>
                     <a href="https://www.mur.gov.it/" target="_blank" rel="noopener noreferrer" class="partner-logo-wrapper flex-shrink-0">
-                        <img src="Assets/Funding_and_Partners/Italy_Ministery_Research_Education.png" alt="Italian Ministry of Education" class="partner-logo">
+                        <img loading="lazy" decoding="async" width="320" height="320" src="Assets/Funding_and_Partners/Italy_Ministery_Research_Education.png" alt="Italian Ministry of Education" class="partner-logo">
                     </a>
                     <a href="https://pnc.unipd.it/" target="_blank" rel="noopener noreferrer" class="partner-logo-wrapper flex-shrink-0">
-                        <img src="Assets/Funding_and_Partners/Padova_Neuroscience_Center.png" alt="Padova Neuroscience Center" class="partner-logo">
+                        <img loading="lazy" decoding="async" width="1024" height="351" src="Assets/Funding_and_Partners/Padova_Neuroscience_Center.png" alt="Padova Neuroscience Center" class="partner-logo">
                     </a>
                     <a href="https://www.hsancamillo.it/" target="_blank" rel="noopener noreferrer" class="partner-logo-wrapper flex-shrink-0">
-                        <img src="Assets/Funding_and_Partners/San_Camillo_Hospital.png" alt="San Camillo Research Hospital" class="partner-logo">
+                        <img loading="lazy" decoding="async" width="1277" height="535" src="Assets/Funding_and_Partners/San_Camillo_Hospital.png" alt="San Camillo Research Hospital" class="partner-logo">
                     </a>
                     <a href="https://www.fondationlejeune.org/" target="_blank" rel="noopener noreferrer" class="partner-logo-wrapper flex-shrink-0">
-                        <img src="Assets/Funding_and_Partners/jerome lejeun.png" alt="Fondation Jérôme Lejeune" class="partner-logo" style="mix-blend-mode: multiply;">
+                        <img loading="lazy" decoding="async" width="400" height="120" src="Assets/Funding_and_Partners/jerome lejeun.png" alt="Fondation Jérôme Lejeune" class="partner-logo" style="mix-blend-mode: multiply;">
                     </a>
                 </div>
             </div>
@@ -360,7 +361,7 @@
     </section>
 
     <!-- ===================== CONTACT ===================== -->
-    <section id="contact" class="py-16 md:py-24 bg-white section-container border-t border-surface-border">
+    <section id="contact" class="section-y bg-white section-container border-t border-surface-border">
         <div class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16">
 
             <p class="font-mono-tech text-xs text-accent-red uppercase tracking-widest mb-6 flex items-center gap-2">
@@ -368,34 +369,41 @@
                 Get in Touch
             </p>
 
-            <h2 class="font-display text-3xl md:text-4xl lg:text-5xl font-bold mb-12 leading-snug">Contact the Lab</h2>
+            <h2 class="t-h2 font-display font-bold mb-12 leading-snug">Contact the Lab</h2>
 
             <div class="grid lg:grid-cols-2 gap-12 lg:gap-20">
                 <!-- Contact Form -->
                 <div class="card-editorial p-8 md:p-10">
-                    <form class="space-y-5">
+                    <form class="space-y-5" data-mailto="info@ccnl.psy.unipd.it" data-subject="CCNL website enquiry">
                         <div>
-                            <label for="name" class="block text-xs font-mono-tech uppercase tracking-widest text-neutral-gray mb-2">Name</label>
-                            <input type="text" id="name"
-                                class="w-full bg-surface border border-surface-border px-4 py-3 text-sm text-primary-dark placeholder-neutral-gray/50 focus:outline-none focus:border-accent-red transition-colors"
+                            <label for="idx-name" class="block text-xs font-mono-tech uppercase tracking-widest text-neutral-gray mb-2">Name</label>
+                            <input type="text" id="idx-name" name="name" required autocomplete="name"
+                                aria-describedby="idx-name-error"
+                                class="w-full bg-surface border border-surface-border px-4 py-3 text-sm text-primary-dark placeholder-neutral-gray/50 focus:border-accent-red transition-colors"
                                 placeholder="Your full name">
+                            <p class="field-error" id="idx-name-error"></p>
                         </div>
                         <div>
-                            <label for="email" class="block text-xs font-mono-tech uppercase tracking-widest text-neutral-gray mb-2">Email</label>
-                            <input type="email" id="email"
-                                class="w-full bg-surface border border-surface-border px-4 py-3 text-sm text-primary-dark placeholder-neutral-gray/50 focus:outline-none focus:border-accent-red transition-colors"
+                            <label for="idx-email" class="block text-xs font-mono-tech uppercase tracking-widest text-neutral-gray mb-2">Email</label>
+                            <input type="email" id="idx-email" name="email" required autocomplete="email"
+                                aria-describedby="idx-email-error"
+                                class="w-full bg-surface border border-surface-border px-4 py-3 text-sm text-primary-dark placeholder-neutral-gray/50 focus:border-accent-red transition-colors"
                                 placeholder="your@email.com">
+                            <p class="field-error" id="idx-email-error"></p>
                         </div>
                         <div>
-                            <label for="message" class="block text-xs font-mono-tech uppercase tracking-widest text-neutral-gray mb-2">Message</label>
-                            <textarea id="message" rows="5"
-                                class="w-full bg-surface border border-surface-border px-4 py-3 text-sm text-primary-dark placeholder-neutral-gray/50 focus:outline-none focus:border-accent-red transition-colors resize-none"
+                            <label for="idx-message" class="block text-xs font-mono-tech uppercase tracking-widest text-neutral-gray mb-2">Message</label>
+                            <textarea id="idx-message" name="message" rows="5" required
+                                aria-describedby="idx-message-error"
+                                class="w-full bg-surface border border-surface-border px-4 py-3 text-sm text-primary-dark placeholder-neutral-gray/50 focus:border-accent-red transition-colors resize-none"
                                 placeholder="How can we help?"></textarea>
+                            <p class="field-error" id="idx-message-error"></p>
                         </div>
-                        <button type="button"
+                        <button type="submit"
                             class="btn-primary w-full px-8 py-3.5 bg-accent-red text-white text-sm font-semibold tracking-wide uppercase hover:bg-accent-red-hover transition-all duration-200">
-                            Send Message
+                            Send by email
                         </button>
+                        <div class="form-status" role="status" aria-live="polite"></div>
                     </form>
                 </div>
 
@@ -447,53 +455,44 @@
         </div>
     </section>
 
-    <!-- ===================== FOOTER ===================== -->
-    <footer id="footer" class="bg-surface-alt py-12 border-t border-surface-border">
-        <div class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16">
-            <div class="grid md:grid-cols-4 gap-8 md:gap-12 mb-8">
+    </main>
 
-                <!-- Logo & Description -->
-                <div class="md:col-span-2">
-                    <img src="Assets/Logo_and_text.png" alt="CCN Lab" class="h-10 mb-4 logo-on-light opacity-70">
+    <!-- ===================== FOOTER ===================== -->
+    <footer class="site-footer bg-surface-alt py-12 border-t border-surface-border">
+        <div class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16">
+            <div class="grid md:grid-cols-3 gap-8 md:gap-12 mb-8">
+                <div>
+                    <img loading="lazy" decoding="async" width="1408" height="792" src="Assets/Logo_and_text.png" alt="CCN Lab" class="h-10 mb-4 logo-on-light opacity-70 w-auto">
                     <p class="text-neutral-gray text-sm leading-relaxed max-w-sm">
                         The Computational Cognitive Neuroscience Lab at the University of Padova, exploring the computational mechanisms underlying human cognition since 2000.
                     </p>
                 </div>
-
-                <!-- Quick Links -->
                 <div>
-                    <h4 class="font-mono-tech text-xs text-primary-dark uppercase tracking-widest mb-4">Quick Links</h4>
+                    <h4 class="t-eyebrow font-mono-tech text-primary-dark uppercase tracking-widest mb-4">Quick Links</h4>
                     <ul class="space-y-2">
-                        <li><a href="#about"        class="text-neutral-gray hover:text-accent-red transition-colors text-sm">About</a></li>
+                        <li><a href="#about" class="text-neutral-gray hover:text-accent-red transition-colors text-sm">About</a></li>
                         <li><a href="research.html" class="text-neutral-gray hover:text-accent-red transition-colors text-sm">Research</a></li>
-                        <li><a href="people.html"   class="text-neutral-gray hover:text-accent-red transition-colors text-sm">People</a></li>
+                        <li><a href="people.html" class="text-neutral-gray hover:text-accent-red transition-colors text-sm">People</a></li>
                         <li><a href="playground.html" class="text-neutral-gray hover:text-accent-red transition-colors text-sm">Playground</a></li>
-                        <li><a href="news.html"     class="text-neutral-gray hover:text-accent-red transition-colors text-sm">News</a></li>
-                        <li><a href="join-us.html"  class="text-neutral-gray hover:text-accent-red transition-colors text-sm">Join Us</a></li>
+                        <li><a href="news.html" class="text-neutral-gray hover:text-accent-red transition-colors text-sm">News</a></li>
+                        <li><a href="software.html" class="text-neutral-gray hover:text-accent-red transition-colors text-sm">Software</a></li>
+                        <li><a href="join-us.html" class="text-neutral-gray hover:text-accent-red transition-colors text-sm">Join us</a></li>
                     </ul>
                 </div>
-
-                <!-- Affiliations -->
                 <div>
-                    <h4 class="font-mono-tech text-xs text-primary-dark uppercase tracking-widest mb-4">Affiliations</h4>
+                    <h4 class="t-eyebrow font-mono-tech text-primary-dark uppercase tracking-widest mb-4">Affiliations</h4>
                     <ul class="space-y-2 text-sm text-neutral-gray">
-                        <li><a href="http://www.unipd.it"      class="hover:text-accent-red transition-colors">University of Padova</a></li>
-                        <li><a href="http://dpg.psy.unipd.it"  class="hover:text-accent-red transition-colors">Dept. of General Psychology</a></li>
-                        <li><a href="http://pnc.unipd.it/"     class="hover:text-accent-red transition-colors">Padova Neuroscience Center</a></li>
-                        <li><a href="https://hsancamillo.it"   class="hover:text-accent-red transition-colors">San Camillo Research Hospital</a></li>
+                        <li><a href="http://www.unipd.it"     class="hover:text-accent-red transition-colors">University of Padova</a></li>
+                        <li><a href="http://dpg.psy.unipd.it" class="hover:text-accent-red transition-colors">Dept. of General Psychology</a></li>
+                        <li><a href="http://pnc.unipd.it/"    class="hover:text-accent-red transition-colors">Padova Neuroscience Center</a></li>
+                        <li><a href="https://hsancamillo.it"  class="hover:text-accent-red transition-colors">San Camillo Research Hospital</a></li>
                     </ul>
                 </div>
             </div>
-
             <hr class="section-rule mb-6">
-
             <div class="flex flex-col md:flex-row justify-between items-center gap-3">
-                <p class="font-mono-tech text-xs text-neutral-gray">
-                    © 2000–2026 Computational Cognitive Neuroscience Lab · University of Padova
-                </p>
-                <p class="font-mono-tech text-xs text-neutral-gray/50">
-                    Dept. General Psychology · Via Venezia 8 · 35131 Padova, IT
-                </p>
+                <p class="font-mono-tech text-xs text-neutral-gray">© 2000–2026 Computational Cognitive Neuroscience Lab · University of Padova</p>
+                <p class="font-mono-tech text-xs text-neutral-gray">Dept. General Psychology · Via Venezia 8 · 35131 Padova, IT</p>
             </div>
         </div>
     </footer>
@@ -506,28 +505,8 @@
         mobileMenuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
         mobileMenu.querySelectorAll('a').forEach(l => l.addEventListener('click', () => mobileMenu.classList.add('hidden')));
 
-        // Header scroll shrink
-        const header     = document.getElementById('header');
-        const navInner   = document.getElementById('nav-inner');
-        const headerLogo = document.getElementById('header-logo');
+// Header expand/compact + logo lockup swap: see js/site-nav.js
 
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                header.classList.add('shadow-md');
-                navInner.classList.replace('h-14', 'h-12');
-                navInner.classList.replace('lg:h-16', 'lg:h-14');
-                headerLogo.src = 'Assets/Logo.png';
-                headerLogo.classList.replace('h-10', 'h-8');
-                headerLogo.classList.replace('lg:h-12', 'lg:h-10');
-            } else {
-                header.classList.remove('shadow-md');
-                navInner.classList.replace('h-12', 'h-14');
-                navInner.classList.replace('lg:h-14', 'lg:h-16');
-                headerLogo.src = 'Assets/Logo_and_text.png';
-                headerLogo.classList.replace('h-8', 'h-10');
-                headerLogo.classList.replace('lg:h-10', 'lg:h-12');
-            }
-        });
 
         // Scroll to top on refresh
         if (history.scrollRestoration) history.scrollRestoration = 'manual';
@@ -545,12 +524,41 @@
             const btnPrev = document.getElementById('partners-prev');
             const btnNext = document.getElementById('partners-next');
 
+            const btnPause = document.getElementById('partners-pause');
+            const reduceMotion =
+                window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
             let currentX = 0, isPaused = false, isManualMoving = false, isDragging = false;
+            // Held separately from the hover pause so a mouse leaving the strip
+            // cannot restart motion the visitor explicitly stopped.
+            let isUserPaused = reduceMotion;
             let startX, scrollStartX;
             const speed = 1.4;
 
+            function syncPauseBtn() {
+                btnPause.textContent = isUserPaused ? 'Play' : 'Pause';
+                btnPause.setAttribute('aria-pressed', isUserPaused ? 'true' : 'false');
+            }
+            btnPause.addEventListener('click', () => {
+                isUserPaused = !isUserPaused;
+                syncPauseBtn();
+            });
+            syncPauseBtn();
+
+            // Same reasoning as the hero figure: no point holding a 60fps loop
+            // open for a strip that is not on screen.
+            let inView = true;
+            if ('IntersectionObserver' in window) {
+                new IntersectionObserver((e) => {
+                    const now = e[0].isIntersecting;
+                    if (now && !inView) { inView = true; requestAnimationFrame(animate); }
+                    else inView = now;
+                }, { rootMargin: '100px' }).observe(container);
+            }
+
             function animate() {
-                if (!isPaused && !isManualMoving && !isDragging) {
+                if (!inView) return;
+                if (!isPaused && !isUserPaused && !isManualMoving && !isDragging) {
                     currentX -= speed;
                     const halfWidth = track.offsetWidth / 2;
                     if (Math.abs(currentX) >= halfWidth) currentX = 0;
@@ -627,12 +635,15 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const metricEls = document.querySelectorAll('.metric-value');
+            const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
             const animateVal = (el, start, end, dur) => {
                 let ts = null;
                 const step = t => {
                     if (!ts) ts = t;
                     const p = Math.min((t - ts) / dur, 1);
-                    el.textContent = Math.floor(p * (end - start) + start);
+                    // ease-out so the number lands on its real value quickly
+                    const eased = 1 - Math.pow(1 - p, 3);
+                    el.textContent = Math.round(eased * (end - start) + start);
                     if (p < 1) requestAnimationFrame(step);
                 };
                 requestAnimationFrame(step);
@@ -640,7 +651,9 @@
             const obs = new IntersectionObserver(entries => {
                 entries.forEach(e => {
                     if (e.isIntersecting) {
-                        animateVal(e.target, 0, parseInt(e.target.dataset.target), 2000);
+                        const target = parseInt(e.target.dataset.target);
+                        if (reduceMotion) e.target.textContent = target;
+                        else animateVal(e.target, 0, target, 1200);
                         obs.unobserve(e.target);
                     }
                 });
@@ -649,5 +662,7 @@
         });
     </script>
 
+    <script src="js/site-nav.js"></script>
+    <script src="js/site-forms.js"></script>
 </body>
 </html>

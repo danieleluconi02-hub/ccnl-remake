@@ -6,18 +6,65 @@
 /* ===== Google Fonts: Playfair Display + JetBrains Mono ===== */
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
+/* ===== Design Tokens =====
+   One source of truth for colour, type and vertical rhythm. Anything that needs
+   to stay consistent across 16 hand-written pages lives here rather than in a
+   Tailwind utility repeated per heading. */
+:root {
+    /* — Colour — */
+    --accent:          #b20839;
+    --accent-hover:    #8a0022;
+    /* The crimson is tuned for warm off-white; on the near-black demo surfaces
+       (#212121) it measures 2.29:1. One shared tint, 5.7:1 there, is used by
+       every dark panel instead of each component lightening on its own. */
+    --accent-on-dark:  #f2708a;
+    --text-primary:    #1a1a1a;
+    /* #6B7280 is 4.13:1 on the #eeedea footer surface — this is the darkest
+       neutral that clears 4.5:1 there (6.5:1) while still reading as grey. */
+    --text-secondary:  #4B5563;
+    --text-muted:      #6B7280;   /* 4.8:1 on white, 4.5:1 on #f8f7f4 */
+    --surface:         #f8f7f4;
+    --surface-alt:     #eeedea;
+    --surface-border:  #e2dfda;
+
+    /* — Type scale —
+       One modular scale. Only the display token is viewport-relative: fitting
+       the first screen is a hero-only problem, and a `vh` clamp on section
+       headings makes them jump on every device. */
+    --t-display: clamp(2.5rem, 6.6vh, 4.75rem);
+    --t-h1:      3rem;
+    --t-h2:      2rem;
+    --t-h3:      1.25rem;
+    --t-h4:      1rem;      /* card and list-item titles */
+    --t-eyebrow: 0.75rem;   /* mono section labels */
+
+    /* — Vertical rhythm — */
+    --section-y:       5rem;
+    --section-y-tight: 4rem;
+    --header-h:        64px;
+}
+
 /* ===== Base Layout ===== */
 html {
     scroll-behavior: smooth;
-    scroll-padding-top: 96px;
-    overflow-x: hidden;
+    /* Header is 56–64px tall; 80px leaves a small optical gap. This is the only
+       anchor offset on the site — `.section-container` used to add a second
+       96px on top of it, which overshot every in-page link by 192px. */
+    scroll-padding-top: 80px;
 }
 
 body {
-    overflow-x: hidden;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+}
+
+/* `overflow-x: hidden` on html/body turns them into scroll containers, which
+   silently breaks every `position: sticky` on the site. Clip horizontal spill
+   without creating a scroll container instead. */
+html,
+body {
+    overflow-x: clip;
 }
 
 /* ===== Manrope Font Family (Local) ===== */
@@ -87,6 +134,10 @@ body {
 .logo-on-light:hover {
     filter: brightness(0) saturate(100%) opacity(0.75);
 }
+/* The lockup is two stacked layers now, so the hover state belongs to the
+   container — otherwise only whichever layer the pointer lands on would dim. */
+.header-logo:hover .header-logo-full { filter: brightness(0) saturate(100%) opacity(0.75); }
+.header-logo:hover .header-logo-lab  { opacity: 0.75; }
 
 /* ===== Neural Network Hero — Responsive ===== */
 @media (max-width: 1023px) {
@@ -329,6 +380,15 @@ button:focus-visible {
     border-color: #b20839;
     box-shadow: 3px 3px 0 #f0c6cf;
 }
+/* Card that is itself a link — the title picks up the accent on hover */
+.card-link h4,
+.card-link h3 {
+    transition: color 0.2s ease;
+}
+.card-link:hover h4,
+.card-link:hover h3 {
+    color: #b20839;
+}
 
 /* ===== Research Index Entries ===== */
 .research-index-entry {
@@ -380,19 +440,35 @@ button:focus-visible {
     border-bottom: 1px solid #e2dfda;
     padding: 1.25rem 0;
     display: grid;
-    grid-template-columns: 9rem 1fr;
+    /* date · content · trailing icon — the icon needs its own track, otherwise
+       it wraps onto a second row underneath the date. */
+    grid-template-columns: 9rem 1fr 1.5rem;
     gap: 1.5rem;
     align-items: start;
     transition: background 0.12s ease, padding-left 0.15s ease;
     text-decoration: none;
     color: inherit;
 }
-.news-entry:first-of-type {
+/* The accent rule belongs to the list, not to whichever element happens to be
+   first — some years open with a non-linked <div> entry. */
+.news-list {
     border-top: 2px solid #b20839;
 }
 .news-entry:hover {
     background: #faf9f7;
     padding-left: 0.75rem;
+}
+/* Language of the piece — most coverage is Italian, so it is worth stating. */
+.news-lang-tag {
+    display: inline-block;
+    margin-left: 0.35rem;
+    padding: 0 0.3rem;
+    border: 1px solid #e2dfda;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.06em;
+    color: #6B7280;
+    vertical-align: 1px;
 }
 .news-date-label {
     font-family: 'JetBrains Mono', monospace;
@@ -549,6 +625,14 @@ button:focus-visible {
     width: auto;
     height: auto;
     object-fit: contain;
+    /* Six full-colour institutional logos at wildly different saturations read as
+       noise next to a crimson-and-neutral page. Desaturate at rest, restore the
+       real colours on hover so each mark is still verifiable. */
+    filter: grayscale(100%) opacity(0.62);
+    transition: filter 0.3s ease;
+}
+.partner-logo-wrapper:hover .partner-logo {
+    filter: grayscale(0%) opacity(1);
 }
 
 @media (max-width: 768px) {
@@ -581,5 +665,604 @@ button:focus-visible {
     .hero-text { text-align: left; }
 }
 
-/* ===== Section Overrides ===== */
-.section-container { scroll-margin-top: 96px; }
+/* ===== Section Overrides =====
+   No `scroll-margin-top` here: it stacked with `html { scroll-padding-top }`. */
+
+
+/* ===== Metadata Chips =====
+   One chip system for the whole site. Previously these were arbitrary Tailwind
+   hues (blue / purple / green / yellow / red) which read as six unrelated
+   colours next to the crimson brand. Accent = the thing itself (model, version);
+   neutral = a qualifier (language, platform). */
+.chip {
+    display: inline-block;
+    padding: 0.2rem 0.55rem;
+    border: 1px solid #e2dfda;
+    border-radius: 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.04em;
+    line-height: 1.5;
+    color: #6B7280;
+    background: transparent;
+    white-space: nowrap;
+}
+/* Label-style chip: uppercase, for hero tags and category markers. Left off the
+   base class so spec chips can keep their real casing (fMRI, MATLAB, …). */
+.chip-label {
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+.chip-accent {
+    border-color: rgba(178, 8, 57, 0.35);
+    color: #b20839;
+    background: rgba(178, 8, 57, 0.05);
+}
+
+/* ===== Hero: fit the whole composition on the first screen =====
+   The hero's height is driven by the *text* column (~710px), not by the canvas,
+   so shrinking only the figure would not help: the section would still be taller
+   than a laptop viewport and the network — and its caption — would sit below the
+   fold. Both columns therefore scale with viewport height. Every value clamps to
+   the original desktop size at the top end, so tall screens are unchanged. */
+@media (min-width: 1024px) {
+    #hero .hero-grid {
+        padding-top: clamp(1rem, 3.4vh, 4rem);
+        padding-bottom: clamp(1rem, 3.4vh, 4rem);
+    }
+    #hero .hero-eyebrow  { margin-bottom: clamp(0.75rem, 2.4vh, 2rem); }
+
+    #hero .hero-headline { margin-bottom: clamp(0.75rem, 2.4vh, 2rem); }
+    /* The hero must stay the largest type on the site: section headings are 32px
+       (`--t-h2`), so the display token's floor of 44px keeps the H1 strictly
+       larger at every viewport while still letting the composition fit a 640px
+       screen. Height is bought back with tighter leading, not a smaller face. */
+    #hero .hero-headline h1 {
+        font-size: var(--t-display);
+        /* Quattro parole, una per riga: con l'interlinea normale il blocco si
+           sfilaccia. A 1.0 le righe si compattano in un lockup, ed e' anche lo
+           spazio verticale che finanzia il corpo piu' grande. */
+        line-height: 1.0;
+    }
+
+    #hero .hero-lead {
+        font-size: clamp(1rem, 1.9vh, 1.125rem);
+        margin-bottom: clamp(1rem, 3.6vh, 3rem);
+    }
+    #hero .hero-metrics {
+        margin-top: clamp(1rem, 3vh, 3.5rem);
+        padding-top: clamp(0.75rem, 2.2vh, 2rem);
+    }
+
+    /* The figure tracks the same scale so it stays optically paired with the
+       headline instead of overshooting the text column. */
+    #hero #neural-network-bg {
+        height: clamp(300px, 56vh, 600px);
+        width: clamp(480px, 44vw, 820px);
+    }
+
+    /* Pinned to the masthead line, scaled so it never collides with the figure. */
+    #hero .hero-masthead { top: clamp(1rem, 3vh, 2.5rem); }
+}
+
+/* ===================================================
+   Accessibility & shared behaviour (Round 2)
+   =================================================== */
+
+/* ===== Skip link =====
+   Every page opens with 13 header links before the first word of content. */
+.skip-link {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 200;
+    padding: 0.75rem 1.25rem;
+    background: var(--accent);
+    color: #ffffff;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transform: translateY(-120%);
+    transition: transform 0.15s ease;
+}
+.skip-link:focus {
+    transform: translateY(0);
+    outline: 2px solid var(--text-primary);
+    outline-offset: 2px;
+}
+
+/* ===== Focus states =====
+   `a` and `button` already had a visible ring; form controls used
+   `focus:outline-none` with only a 1px border tint, which is not a focus
+   signal at all. Same treatment for everything focusable. */
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+summary:focus-visible,
+[tabindex]:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+/* Tailwind's `focus:outline-none` is applied inline on most inputs and wins on
+   specificity order, so restate the ring at the same specificity it uses. */
+input.focus\:outline-none:focus-visible,
+textarea.focus\:outline-none:focus-visible,
+select.focus\:outline-none:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+/* On the dark demo panels the crimson ring is invisible. */
+.panel-dark input:focus-visible,
+.panel-dark textarea:focus-visible,
+.panel-dark select:focus-visible,
+.panel-dark a:focus-visible,
+.panel-dark button:focus-visible,
+.panel-dark [tabindex]:focus-visible {
+    outline-color: var(--accent-on-dark);
+}
+
+/* ===== Dropdown: keyboard reachable =====
+   Hover alone left four nav destinations unreachable without a mouse. */
+.dropdown-container:focus-within .dropdown-menu,
+.dropdown-container.is-open .dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+/* Escape sets this so the menu can be dismissed while the trigger keeps focus. */
+.dropdown-container.is-dismissed .dropdown-menu {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(8px);
+}
+.dropdown-item:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: -2px;
+    color: var(--accent);
+}
+
+/* ===== Type scale =====
+   Applied as classes so the scale can be changed in one place. Heading elements
+   carrying these must not also carry a Tailwind `text-*` size utility. */
+.t-display { font-size: var(--t-display); line-height: 1.06; }
+.t-h1      { font-size: var(--t-h1);      line-height: 1.1;  }
+.t-h2      { font-size: var(--t-h2);      line-height: 1.18; }
+.t-h3      { font-size: var(--t-h3);      line-height: 1.35; }
+.t-h4      { font-size: var(--t-h4);      line-height: 1.45; }
+/* Two heading tokens below H2 is deliberate: the site marks up both subsection
+   headings and card/list-item titles as <h3>/<h4>. One shared size for both made
+   news headlines and people-card names the same weight as a section heading. */
+.t-eyebrow { font-size: var(--t-eyebrow); line-height: 1.5; }
+@media (max-width: 767px) {
+    :root {
+        --t-h1: 2.25rem;
+        --t-h2: 1.625rem;
+        --t-h3: 1.125rem;
+    }
+}
+
+/* ===== Section rhythm ===== */
+/* One page-hero rhythm for all 15 subpages. Was 88px + 40px inner on 7 pages
+   and 80/128px on 8 others, none of which matched the 64px header. */
+.page-hero {
+    padding-top: calc(var(--header-h) + var(--section-y-tight));
+    padding-bottom: var(--section-y-tight);
+}
+.section-y       { padding-top: var(--section-y);       padding-bottom: var(--section-y); }
+.section-y-tight { padding-top: var(--section-y-tight); padding-bottom: var(--section-y-tight); }
+@media (max-width: 767px) {
+    :root { --section-y: 3rem; --section-y-tight: 2.5rem; }
+}
+
+/* ===== Reduced motion =====
+   Decorative motion (carousel, keyframe entrances, canvas idle loops) is
+   suppressed; the demo animations shorten to their end state instead of
+   stepping through it. JS reads the same query via `prefersReducedMotion()`. */
+@media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+        scroll-behavior: auto !important;
+    }
+    .animate-fade-in-up,
+    .animate-fade-in,
+    .animate-slide-in-left-delayed { opacity: 1 !important; transform: none !important; }
+}
+
+/* ===== Contrast repairs ===== */
+/* #9CA3AF at 11px measured 2.54:1 on white. */
+.research-entry-keywords,
+.news-date-label { color: var(--text-muted); }
+.metric-label    { color: var(--text-secondary); }
+/* The footer sits on #eeedea, where #6B7280 is 4.13:1. */
+.site-footer .text-neutral-gray,
+.site-footer .font-mono-tech { color: var(--text-secondary); }
+
+/* ===== Range sliders =====
+   `outline: none` with no replacement, and a 3px-tall hit area. The visible
+   track stays thin; the control itself is padded out to a 44px touch target. */
+input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    background: transparent;
+    height: 44px;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+}
+input[type="range"]::-webkit-slider-runnable-track {
+    height: 4px;
+    background: var(--surface-border);
+}
+input[type="range"]::-moz-range-track {
+    height: 4px;
+    background: var(--surface-border);
+}
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    margin-top: -7px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 2px solid #ffffff;
+}
+input[type="range"]::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 2px solid #ffffff;
+}
+input[type="range"]:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+.panel-dark input[type="range"]::-webkit-slider-runnable-track { background: #3a3a3a; }
+.panel-dark input[type="range"]::-moz-range-track              { background: #3a3a3a; }
+.panel-dark input[type="range"]::-webkit-slider-thumb {
+    background: var(--accent-on-dark);
+    border-color: #212121;
+}
+.panel-dark input[type="range"]::-moz-range-thumb {
+    background: var(--accent-on-dark);
+    border-color: #212121;
+}
+
+/* ===== Form validation states =====
+   The forms are not wired to a backend. Validation is real; the outcome message
+   says plainly that nothing was transmitted and hands over to email. */
+.field-error {
+    display: none;
+    margin-top: 0.35rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.03em;
+    color: var(--accent);
+}
+.field-error.is-visible { display: block; }
+input[aria-invalid="true"],
+textarea[aria-invalid="true"],
+select[aria-invalid="true"] {
+    border-color: var(--accent) !important;
+}
+.form-status {
+    display: none;
+    margin-top: 1.25rem;
+    padding: 0.9rem 1.1rem;
+    border: 1px solid var(--surface-border);
+    border-left: 3px solid var(--accent);
+    background: #ffffff;
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: var(--text-primary);
+}
+.form-status.is-visible { display: block; }
+.form-status a {
+    color: var(--accent);
+    border-bottom: 1px solid var(--accent);
+}
+
+/* ===== Horizontal overflow escape hatch =====
+   `overflow-x: clip` on html/body stops the page scrolling sideways, but it also
+   silently truncated MathML and wide code blocks at 390px. Wide content gets its
+   own scroller. */
+.scroll-x {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    max-width: 100%;
+}
+
+/* ===== Dark demo surfaces =====
+   Accent on #212121 must come from the dark token, never the base crimson. */
+.panel-dark { color-scheme: dark; }
+.text-accent-dark { color: var(--accent-on-dark); }
+.border-accent-dark { border-color: var(--accent-on-dark); }
+
+/* ===== Measure cap =====
+   Two-column sections with unequal content left 300–700px dead columns because
+   the text column had no maximum. */
+.measure { max-width: 72ch; }
+
+/* ===== Mobile menu: backdrop + scroll lock ===== */
+.mobile-menu-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 40;
+    background: rgba(26, 26, 26, 0.45);
+}
+.mobile-menu-backdrop[hidden] { display: none; }
+html.nav-open { overflow: hidden; }
+@media (min-width: 768px) {
+    .mobile-menu-backdrop { display: none; }
+    html.nav-open { overflow: clip; }
+}
+
+/* ===== Reading-route encoding (research-cdp / research-deeplearning) =====
+   The lexical / sublexical / competition distinction was carried by
+   blue / green / purple, which measured 1.43–1.81:1 on the warm off-white.
+   It is re-encoded on the crimson→neutral ramp and separated by rule style and
+   weight rather than hue, so the three stay distinguishable at 7:1 or better. */
+.route-card {
+    border: 1px solid var(--surface-border);
+    border-left-width: 3px;
+    background: #ffffff;
+}
+.route-card--lexical     { border-left-color: var(--accent); }
+.route-card--sublexical  { border-left-color: var(--text-primary); }
+.route-card--competition { border-left-style: dashed; border-left-color: var(--text-muted); }
+
+.route-dot { width: 0.5rem; height: 0.5rem; border-radius: 50%; flex-shrink: 0; }
+.route-card--lexical     .route-dot { background: var(--accent); }
+.route-card--sublexical  .route-dot { background: var(--text-primary); }
+.route-card--competition .route-dot { background: transparent; border: 1px solid var(--text-muted); }
+
+/* Same three levels, reused in the ASCII route diagram above the cards. */
+.route-lex  { color: var(--accent);         font-weight: 700; }
+.route-sub  { color: var(--text-primary);   font-weight: 500; }
+.route-out  { color: var(--text-secondary); font-weight: 600; }
+.route-lex-sub  { color: var(--accent); opacity: 0.85; font-weight: 400; }
+.route-sub-sub  { color: var(--text-secondary); font-weight: 400; }
+
+/* ===== Partners carousel: pause control ===== */
+.carousel-pause-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 26;
+    padding: 0.3rem 0.7rem;
+    border: 1px solid var(--surface-border);
+    background: #ffffff;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    cursor: pointer;
+}
+.carousel-pause-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+}
+/* The prev/next buttons were hover-only, so a keyboard user could reach them
+   but never see where focus was. */
+.partners-carousel-container:focus-within .carousel-nav-btn,
+.carousel-nav-btn:focus-visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* ===== People card =====
+   One component for the directory grid, the PI entry and contact.html's key
+   contacts. `--featured` changes layout only — type, links and interaction are
+   identical. The Profile/Email links are always visible: they used to live in
+   an `opacity: 0 → group-hover` chain, which is unreachable on touch and put
+   24 of the page's 46 focusable elements behind an invisible hover state. */
+.person-card {
+    display: flex;
+    flex-direction: column;
+}
+.person-name {
+    font-size: var(--t-h4);
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.15rem;
+}
+.person-card--featured .person-name {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: var(--t-h3);
+    font-weight: 700;
+}
+.person-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 1rem;
+    margin-top: auto;
+    padding-top: 0.85rem;
+}
+.person-links a {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding-bottom: 2px;
+    border-bottom: 1px solid;
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+    transition: color 0.2s ease, border-color 0.2s ease;
+}
+.person-links a + a {
+    color: var(--text-muted);
+    border-bottom-color: #c9c5be;
+}
+.person-links a:hover,
+.person-links a + a:hover {
+    color: var(--accent-hover);
+    border-bottom-color: var(--accent-hover);
+}
+
+/* ===== Dead-column caps (R2-30) =====
+   Several two-column sections stretched to the 1920px container while their
+   content stopped less than half way across, so the trailing element (the
+   news ↗) sat hundreds of pixels from the text it belonged to. Cap the line
+   length instead of the container. */
+.news-list { max-width: 58rem; }
+
+/* Wide content that cannot reflow gets its own scroller, because `overflow-x:
+   clip` on html/body means anything spilling past the viewport is simply gone. */
+table,
+pre,
+.katex-display {
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+/* ===================================================
+   Header: expanded ⇄ compact
+   ===================================================
+   One `.is-compact` class on <header> drives every property, each with its own
+   transition on one shared curve. The previous version swapped four Tailwind
+   height utilities from a scroll handler, so the bar, the logo and the wordmark
+   settled at slightly different moments and the logo's `w-auto` width reflowed
+   the flex row while it animated — which is what made it feel loose. */
+:root {
+    --header-bar-h:          64px;   /* must stay in sync with --header-h */
+    --header-bar-h-compact:  48px;
+    --header-logo-h:         40px;
+    --logo-mark-fit:         0.919;  /* mark ink height → lockup glyph ink height */
+    --logo-scale-compact:    0.8;    /* tracks the bar: 52/64 */
+    --header-ease:           cubic-bezier(0.4, 0, 0.2, 1);
+    --header-dur:            0.3s;
+}
+@media (min-width: 1024px) {
+    :root {
+        --header-logo-h:        46px;
+        --header-bar-h-compact: 52px;
+    }
+}
+
+/* Animating box-shadow repaints the whole bar each frame; fading a gradient
+   layer below it is a compositor-only opacity change. */
+#header::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 100%;
+    height: 10px;
+    pointer-events: none;
+    opacity: 0;
+    background: linear-gradient(to bottom, rgba(26, 26, 26, 0.09), rgba(26, 26, 26, 0));
+    transition: opacity var(--header-dur) var(--header-ease);
+}
+#header.is-compact::after { opacity: 1; }
+
+#nav-inner {
+    height: var(--header-bar-h);
+    transition: height var(--header-dur) var(--header-ease);
+}
+#header.is-compact #nav-inner {
+    height: var(--header-bar-h-compact);
+}
+
+/* The logo box is a FIXED frame — its width and height never animate. Only
+   `transform` and `opacity` change, so the whole swap runs on the compositor
+   and cannot be stalled by the hero canvas's requestAnimationFrame loop on the
+   main thread. (Animating the box width instead made the flex row re-lay-out
+   every frame, and `width: auto` on the images forced the intrinsic ratio to be
+   re-resolved on top of that — that is what made it feel loose.)
+
+   Nothing sits to the right of the logo (the nav is right-aligned), so the frame
+   can stay at its expanded width in the compact state without leaving a visible
+   hole.
+
+   Both PNGs carry transparent padding, by different amounts. Measured ink:
+     Logo_and_text.png  1408×792, ink x 5–1224, y 51–742  (glyph ends at x 739)
+     Logo.png           1394×1394, ink x 194–1201, y 35–1360
+   `transform-origin` is pinned to each one's ink left edge, so scaling never
+   moves it, and a constant translate brings that edge to x = 0. */
+.header-logo {
+    position: relative;
+    display: block;
+    flex-shrink: 0;
+    height: var(--header-logo-h);
+    /* 1.7778 aspect × 0.8657 ink width */
+    width: calc(var(--header-logo-h) * 1.539);
+}
+.header-logo img,
+.header-logo-lab {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    height: 100%;
+    width: auto;
+    /* The frame is narrower than the lockup (it crops the baked-in right
+       padding); Tailwind's preflight `img { max-width: 100% }` would squash the
+       mark horizontally instead. */
+    max-width: none;
+    will-change: transform, opacity;
+    /* Linear opacity so the two marks cross-fade without a dip in the middle;
+       the small delay keeps the overlap short and centred in the motion. */
+    transition: opacity 0.18s linear 0.06s,
+                transform var(--header-dur) var(--header-ease);
+}
+/* The lockup is drawn as two complementary slices of the same PNG, split at
+   x = 892/1408 = 63.35% — the empty column run between "CCN" and "Lab"
+   (ink stops at 880, resumes at 904), so the cut crosses no letter.
+
+   This restores a distinction the artwork always had and the CSS was throwing
+   away: in the source file the mark and "CCN" are white while "Lab" is
+   #F1C40F, the lab's legacy gold. `filter: brightness(0)` flattened both to
+   black. The gold token was retired from the codebase in round 2, so "Lab"
+   picks up the current crimson instead. */
+.header-logo-full {
+    clip-path: inset(0 36.65% 0 0);          /* mark + "CCN" */
+    transform-origin: 0.36% center;          /* 5/1408 */
+    transform: translate(-0.36%, -50%) scale(1);
+}
+.header-logo-lab {
+    /* Painted, not filtered: the PNG's own alpha is the stencil, so the colour
+       is exactly the site accent rather than something a filter chain
+       approximates. */
+    aspect-ratio: 1408 / 792;
+    background-color: var(--accent);
+    -webkit-mask-image: url('Assets/Logo_and_text.png');
+    mask-image: url('Assets/Logo_and_text.png');
+    -webkit-mask-size: 100% 100%;
+    mask-size: 100% 100%;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    clip-path: inset(0 0 0 63.35%);          /* "Lab" */
+    pointer-events: none;
+    transform-origin: 0.36% center;
+    transform: translate(-0.36%, -50%) scale(1);
+}
+.header-logo-mark {
+    opacity: 0;
+    transform-origin: 13.92% center;         /* 194/1394 */
+    /* 0.919 makes the mark's ink exactly as tall as the lockup's glyph, so the
+       two register through the cross-fade instead of popping. */
+    transform: translate(-13.92%, -50%) scale(var(--logo-mark-fit));
+}
+#header.is-compact .header-logo-full,
+#header.is-compact .header-logo-lab {
+    opacity: 0;
+    transform: translate(-0.36%, -50%) scale(var(--logo-scale-compact));
+}
+#header.is-compact .header-logo-mark {
+    opacity: 1;
+    transform: translate(-13.92%, -50%)
+               scale(calc(var(--logo-mark-fit) * var(--logo-scale-compact)));
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #nav-inner,
+    .header-logo,
+    .header-logo img { transition: none; }
+}

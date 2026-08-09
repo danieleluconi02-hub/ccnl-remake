@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Deep Unsupervised Learning | CCNLab</title>
+    <title>Generative Deep Learning | CCNLab · University of Padova</title>
     <link rel="icon" type="image/png" href="Assets/Logo.png">
     <meta name="description"
         content="Deep Belief Networks for cognitive modeling — GPU implementations, datasets, and source code from the Computational Cognitive Neuroscience Lab.">
@@ -25,8 +25,6 @@
                         'primary-light':    '#FFFFFF',
                         'accent-red':       '#b20839',
                         'accent-red-hover': '#8a0022',
-                        'accent-gold':      '#b20839',
-                        'accent-gold-hover':'#8a0022',
                         'neutral-gray':     '#6B7280',
                         'light-gray':       '#F3F4F6',
                         'surface':          '#f8f7f4',
@@ -49,85 +47,70 @@
 
 <body class="font-manrope bg-surface text-primary-dark antialiased">
 
+    <a href="#main" class="skip-link">Skip to content</a>
+
     <!-- Header / Navigation -->
-    <header id="header" class="fixed top-0 left-0 right-0 z-50 bg-white border-b border-surface-border shadow-sm transition-all duration-300">
+    <header id="header" class="fixed top-0 left-0 right-0 z-50 bg-white border-b border-surface-border">
         <nav class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16">
-            <div class="flex items-center justify-between h-16 lg:h-20 transition-all duration-300" id="nav-inner">
-
-                <!-- Logo -->
-                <a href="index.html" class="flex items-center gap-4 group">
-                    <img src="Assets/Logo_and_text.png" alt="CCN Lab Logo" id="header-logo"
-                        class="h-10 lg:h-12 object-contain -ml-2 transition-all duration-300 logo-on-light">
+            <div class="flex items-center justify-between" id="nav-inner">
+                <a href="index.html" class="flex items-center gap-3 group">
+                    <span class="header-logo" id="header-logo">
+                        <img loading="eager" decoding="async" width="1408" height="792"
+                            src="Assets/Logo_and_text.png" alt="CCN Lab"
+                            class="header-logo-full logo-on-light">
+                        <span class="header-logo-lab" aria-hidden="true"></span>
+                        <img loading="eager" decoding="async" width="1394" height="1394"
+                            src="Assets/Logo.png" alt="" aria-hidden="true"
+                            class="header-logo-mark logo-on-light">
+                    </span>
                 </a>
-
-                <!-- Desktop Navigation -->
-                <div class="hidden md:flex items-center gap-4 lg:gap-8">
-                    <a href="index.html#about"
-                        class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-base font-medium">About</a>
+                <div class="hidden md:flex items-center gap-4 lg:gap-7">
+                    <a href="index.html#about" class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-sm font-medium">About</a>
                     <div class="dropdown-container">
-                        <a href="research.html"
-                            class="nav-link text-accent-gold hover:text-primary-dark transition-colors duration-200 text-base font-medium">Research</a>
-                        <div class="dropdown-menu">
-                            <a href="research.html#research" class="dropdown-item">Research areas</a>
-                            <a href="research.html#facilities" class="dropdown-item">Lab facilities</a>
+                        <a href="research.html" class="nav-link text-primary-dark font-semibold transition-colors duration-200 text-sm active-page" aria-haspopup="true" aria-expanded="false" aria-controls="research-menu">Research</a>
+                        <div class="dropdown-menu" id="research-menu">
+                            <a href="research.html#research"     class="dropdown-item">Research areas</a>
+                            <a href="research.html#facilities"   class="dropdown-item">Lab facilities</a>
                             <a href="research.html#publications" class="dropdown-item">Publications</a>
-                            <a href="software.html" class="dropdown-item">Software &amp; Downloads</a>
+                            <a href="software.html"               class="dropdown-item">Software &amp; Downloads</a>
                         </div>
                     </div>
-                    <a href="people.html"
-                        class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-base font-medium">People</a>
-                    <a href="playground.html"
-                        class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-base font-medium">Playground</a>
-                    <a href="news.html"
-                        class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-base font-medium">News</a>
-                    <a href="join-us.html"
-                        class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-base font-medium">Join us</a>
-                    <a href="index.html#contact"
-                        class="btn-primary px-5 py-2.5 bg-accent-gold text-white font-semibold rounded-none hover:bg-accent-red-hover transition-all duration-200 hover:shadow-lg hover:shadow-accent-gold/20 text-base">
-                        Contact us
-                    </a>
+                    <a href="people.html"     class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-sm font-medium">People</a>
+                    <a href="playground.html" class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-sm font-medium">Playground</a>
+                    <a href="news.html"       class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-sm font-medium">News</a>
+                    <a href="join-us.html"    class="nav-link text-neutral-gray hover:text-primary-dark transition-colors duration-200 text-sm font-medium">Join us</a>
+                    <a href="index.html#contact" class="btn-primary px-5 py-2 bg-accent-red text-white text-sm font-semibold hover:bg-accent-red-hover transition-all duration-200">Contact</a>
                 </div>
-
-                <!-- Mobile Menu Button -->
-                <button id="mobile-menu-btn"
-                    class="md:hidden p-2 text-neutral-gray hover:text-accent-red transition-colors"
-                    aria-label="Open menu">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M4 6h16M4 12h16M4 18h16" />
+                <button id="mobile-menu-btn" type="button" class="md:hidden inline-flex items-center justify-center w-11 h-11 -mr-2 text-neutral-gray hover:text-accent-red transition-colors" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
                     </svg>
                 </button>
             </div>
         </nav>
-
-        <!-- Mobile Menu -->
         <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-surface-border">
-            <div class="px-6 py-4 space-y-4">
-                <a href="index.html#about"
-                    class="block text-neutral-gray hover:text-accent-red transition-colors py-2">About</a>
-                <a href="research.html"
-                    class="block text-neutral-gray hover:text-accent-red transition-colors py-2">Research</a>
-                <a href="people.html"
-                    class="block text-neutral-gray hover:text-accent-red transition-colors py-2">People</a>
-                <a href="playground.html"
-                    class="block text-neutral-gray hover:text-accent-red transition-colors py-2">Playground</a>
-                <a href="news.html"
-                    class="block text-neutral-gray hover:text-accent-red transition-colors py-2">News</a>
-                <a href="join-us.html"
-                    class="block text-neutral-gray hover:text-accent-red transition-colors py-2">Join us</a>
-                <a href="index.html#contact"
-                    class="block w-fit mx-auto text-center px-5 py-2 bg-accent-red text-white font-semibold rounded-none hover:bg-accent-red-hover transition-colors">
-                    Contact us
-                </a>
+            <div class="px-6 py-4 space-y-1">
+                <a href="index.html" class="block text-neutral-gray hover:text-accent-red py-2.5 text-sm border-b border-surface-border">Home</a>
+                <a href="index.html#about" class="block text-neutral-gray hover:text-accent-red py-2.5 text-sm border-b border-surface-border">About</a>
+                <a href="research.html" class="block text-accent-red font-semibold py-2.5 text-sm border-b border-surface-border" aria-current="page">Research</a>
+                <a href="research.html#research" class="block text-neutral-gray hover:text-accent-red py-2.5 pl-4 text-sm border-b border-surface-border">Research areas</a>
+                <a href="research.html#facilities" class="block text-neutral-gray hover:text-accent-red py-2.5 pl-4 text-sm border-b border-surface-border">Lab facilities</a>
+                <a href="research.html#publications" class="block text-neutral-gray hover:text-accent-red py-2.5 pl-4 text-sm border-b border-surface-border">Publications</a>
+                <a href="software.html" class="block text-neutral-gray hover:text-accent-red py-2.5 pl-4 text-sm border-b border-surface-border">Software &amp; Downloads</a>
+                <a href="people.html" class="block text-neutral-gray hover:text-accent-red py-2.5 text-sm border-b border-surface-border">People</a>
+                <a href="playground.html" class="block text-neutral-gray hover:text-accent-red py-2.5 text-sm border-b border-surface-border">Playground</a>
+                <a href="news.html" class="block text-neutral-gray hover:text-accent-red py-2.5 text-sm border-b border-surface-border">News</a>
+                <a href="join-us.html" class="block text-neutral-gray hover:text-accent-red py-2.5 text-sm border-b border-surface-border">Join us</a>
+                <a href="index.html#contact" class="block w-fit mt-3 px-5 py-2 bg-accent-red text-white text-sm font-semibold">Contact</a>
             </div>
         </div>
-
-        <!-- Gold accent line -->
         <div class="h-px bg-accent-red"></div>
     </header>
 
+    <main id="main">
+
     <!-- Hero -->
-    <section class="pt-20 pb-10 md:pt-32 md:pb-16 bg-surface border-b border-surface-border">
+    <section class="page-hero bg-surface border-b border-surface-border">
         <div class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16">
 
             <!-- Breadcrumb -->
@@ -142,12 +125,12 @@
             <!-- Title block -->
             <div class="max-w-4xl">
                 <div class="flex items-center gap-3 mb-6">
-                    <span class="font-mono-tech text-xs text-neutral-gray uppercase tracking-widest border border-surface-border px-2 py-0.5">Generative Model</span>
-                    <span class="font-mono-tech text-xs text-accent-red uppercase tracking-widest border border-accent-red/30 px-2 py-0.5">Nature Neuroscience 2012</span>
+                    <span class="chip chip-label">Generative Model</span>
+                    <span class="chip chip-accent chip-label">Nature Neuroscience 2012</span>
                 </div>
-                <h1 class="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 text-primary-dark">
+                <h1 class="t-h1 font-display font-bold leading-tight mb-6 text-primary-dark">
                     Deep Unsupervised Learning<br>
-                    <span class="text-accent-gold">on Graphic Processors</span>
+                    <span class="italic text-accent-red">on Graphic Processors</span>
                 </h1>
                 <p class="text-xl text-neutral-gray font-light leading-relaxed max-w-3xl">
                     Building hierarchies of progressively complex distributed representations of sensory data through
@@ -158,7 +141,7 @@
             <!-- Quick action buttons -->
             <div class="flex flex-wrap gap-4 mt-10">
                 <a href="playground.html#dbn-explorer"
-                    class="inline-flex items-center gap-2 px-6 py-3 bg-accent-red text-white font-semibold rounded-none hover:bg-accent-red-hover transition-all duration-200 hover:shadow-lg hover:shadow-accent-gold/20">
+                    class="inline-flex items-center gap-2 px-6 py-3 bg-accent-red text-white font-semibold rounded-none hover:bg-accent-red-hover transition-all duration-200 hover:shadow-lg hover:shadow-accent-red/20">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
                     </svg>
@@ -179,9 +162,9 @@
     <div class="h-px bg-surface-border"></div>
 
     <!-- Main Content -->
-    <main class="py-12 md:py-20 bg-white border-t border-surface-border">
+    <section class="section-y bg-white border-t border-surface-border">
         <div class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16">
-            <div class="grid lg:grid-cols-3 gap-16">
+            <div class="grid lg:grid-cols-3 gap-16 max-w-[1400px]">
 
                 <!-- Left column: main article -->
                 <article class="lg:col-span-2 prose-reading">
@@ -190,7 +173,7 @@
                     <section class="mb-16">
                         <div class="flex items-center gap-3 mb-6">
                             <div class="w-1 h-8 bg-accent-red"></div>
-                            <h2 class="text-2xl font-bold">Overview</h2>
+                            <h2 class="t-h2 font-display font-bold text-primary-dark">Overview</h2>
                         </div>
                         <div class="space-y-5 text-neutral-gray leading-relaxed">
                             <p>
@@ -320,17 +303,17 @@
                     <section class="mb-16">
                         <div class="flex items-center gap-3 mb-6">
                             <div class="w-1 h-8 bg-accent-red"></div>
-                            <h2 class="text-2xl font-bold">Key Findings</h2>
+                            <h2 class="t-h2 font-display font-bold text-primary-dark">Key Findings</h2>
                         </div>
 
                         <!-- Finding card 1 -->
                         <div class="mb-8 p-6 rounded-none border border-surface-border bg-surface">
                             <div class="flex items-start gap-4">
-                                <div class="flex-shrink-0 w-10 h-10 rounded-none bg-blue-500/15 flex items-center justify-center">
-                                    <svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14"/></svg>
+                                <div class="flex-shrink-0 w-10 h-10 rounded-none bg-accent-red/10 flex items-center justify-center">
+                                    <svg class="w-5 h-5 text-accent-red" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14"/></svg>
                                 </div>
                                 <div>
-                                    <h3 class="font-semibold text-primary-dark mb-2">Emergent Numerosity Perception</h3>
+                                    <h3 class="t-h4 font-semibold text-primary-dark mb-2">Emergent Numerosity Perception</h3>
                                     <p class="text-neutral-gray text-sm leading-relaxed">
                                         A DBN trained on images of dot patterns with varying numbers of elements spontaneously develops
                                         internal representations that are selective for numerosity — mirroring the numerical tuning
@@ -347,11 +330,11 @@
                         <!-- Finding card 2 -->
                         <div class="mb-8 p-6 rounded-none border border-surface-border bg-surface">
                             <div class="flex items-start gap-4">
-                                <div class="flex-shrink-0 w-10 h-10 rounded-none bg-purple-500/15 flex items-center justify-center">
-                                    <svg class="w-5 h-5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"/></svg>
+                                <div class="flex-shrink-0 w-10 h-10 rounded-none bg-primary-dark/10 flex items-center justify-center">
+                                    <svg class="w-5 h-5 text-primary-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"/></svg>
                                 </div>
                                 <div>
-                                    <h3 class="font-semibold text-primary-dark mb-2">Visual Word-Form Representations</h3>
+                                    <h3 class="t-h4 font-semibold text-primary-dark mb-2">Visual Word-Form Representations</h3>
                                     <p class="text-neutral-gray text-sm leading-relaxed">
                                         DBNs trained on printed letters and words develop features analogous to those found in the
                                         Visual Word Form Area of the human brain — from oriented edge detectors in lower layers to
@@ -368,11 +351,11 @@
                         <!-- Finding card 3 -->
                         <div class="mb-8 p-6 rounded-none border border-surface-border bg-surface">
                             <div class="flex items-start gap-4">
-                                <div class="flex-shrink-0 w-10 h-10 rounded-none bg-green-500/15 flex items-center justify-center">
-                                    <span class="text-green-400 text-lg">⚡</span>
+                                <div class="flex-shrink-0 w-10 h-10 rounded-none bg-neutral-gray/15 flex items-center justify-center">
+                                    <span class="text-neutral-gray text-lg">⚡</span>
                                 </div>
                                 <div>
-                                    <h3 class="font-semibold text-primary-dark mb-2">The iDBN Algorithm</h3>
+                                    <h3 class="t-h4 font-semibold text-primary-dark mb-2">The iDBN Algorithm</h3>
                                     <p class="text-neutral-gray text-sm leading-relaxed">
                                         Standard layer-wise DBN pre-training freezes lower layers before training higher ones.
                                         The iterative DBN (iDBN) instead performs joint updates across all layers simultaneously,
@@ -388,7 +371,7 @@
                     <section class="mb-16">
                         <div class="flex items-center gap-3 mb-6">
                             <div class="w-1 h-8 bg-accent-red"></div>
-                            <h2 class="text-2xl font-bold">Architecture & Training</h2>
+                            <h2 class="t-h2 font-display font-bold text-primary-dark">Architecture & Training</h2>
                         </div>
                         <div class="space-y-5 text-neutral-gray leading-relaxed">
                             <p>
@@ -420,7 +403,7 @@
                     <section class="mb-16">
                         <div class="flex items-center gap-3 mb-6">
                             <div class="w-1 h-8 bg-accent-red"></div>
-                            <h2 class="text-2xl font-bold">GENMOD — ERC-Funded Project</h2>
+                            <h2 class="t-h2 font-display font-bold text-primary-dark">GENMOD — ERC-Funded Project</h2>
                         </div>
                         <div class="p-6 rounded-none border-l-2 border-accent-red bg-surface mb-6">
                             <p class="text-neutral-gray text-sm leading-relaxed">
@@ -443,7 +426,7 @@
                     <section class="mb-16">
                         <div class="flex items-center gap-3 mb-6">
                             <div class="w-1 h-8 bg-accent-red"></div>
-                            <h2 class="text-2xl font-bold">Key References</h2>
+                            <h2 class="t-h2 font-display font-bold text-primary-dark">Key References</h2>
                         </div>
                         <div class="space-y-4">
                             <div class="p-5 rounded-none border border-surface-border bg-surface">
@@ -483,7 +466,7 @@
                     <!-- Try the Demo -->
                     <div class="sticky top-28">
                         <div class="p-6 rounded-none border border-surface-border bg-surface mb-6">
-                            <h3 class="font-semibold text-primary-dark mb-3 flex items-center gap-2">
+                            <h3 class="t-h4 font-semibold text-primary-dark mb-3 flex items-center gap-2">
                                 <svg class="w-5 h-5 text-accent-red" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                 </svg>
@@ -501,7 +484,7 @@
 
                         <!-- Downloads -->
                         <div class="p-6 rounded-none border border-surface-border bg-surface mb-6">
-                            <h3 class="font-semibold text-primary-dark mb-4">Source Code & Datasets</h3>
+                            <h3 class="t-h4 font-semibold text-primary-dark mb-4">Source Code & Datasets</h3>
                             <ul class="space-y-3">
                                 <li>
                                     <a href="https://github.com/CCNL-UniPD/iDBN" target="_blank" rel="noopener"
@@ -530,7 +513,7 @@
 
                         <!-- Available datasets -->
                         <div class="p-6 rounded-none border border-surface-border bg-surface">
-                            <h3 class="font-semibold text-primary-dark mb-4">Datasets & Tools</h3>
+                            <h3 class="t-h4 font-semibold text-primary-dark mb-4">Datasets & Tools</h3>
                             <ul class="space-y-2 text-sm text-neutral-gray">
                                 <li class="flex items-start gap-2">
                                     <span class="text-accent-red mt-1">›</span>
@@ -563,12 +546,12 @@
                 </aside>
             </div>
         </div>
-    </main>
+    </section>
 
     <!-- Related / Next Research -->
-    <section class="py-16 border-t border-surface-border">
+    <section class="section-y border-t border-surface-border">
         <div class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16">
-            <h2 class="text-xl font-bold mb-8 text-neutral-gray">Related Research</h2>
+            <h2 class="t-h2 font-display font-bold text-primary-dark mb-8">Related Research</h2>
             <div class="grid md:grid-cols-2 gap-6 max-w-3xl">
                 <a href="research-cdp.html"
                     class="flex items-start gap-4 p-5 rounded-none border border-surface-border hover:border-accent-red transition-all duration-200 group">
@@ -579,10 +562,10 @@
                     </div>
                 </a>
                 <a href="playground.html#dbn-explorer"
-                    class="flex items-start gap-4 p-5 rounded-none border border-neutral-gray/15 hover:border-blue-400/40 transition-all duration-200 group">
-                    <svg class="w-6 h-6 mt-1 flex-shrink-0 text-blue-400/60 group-hover:text-blue-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"/></svg>
+                    class="flex items-start gap-4 p-5 rounded-none border border-neutral-gray/15 hover:border-accent-red/40 transition-all duration-200 group">
+                    <svg class="w-6 h-6 mt-1 flex-shrink-0 text-neutral-gray/60 group-hover:text-accent-red transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"/></svg>
                     <div>
-                        <p class="font-semibold text-primary-dark group-hover:text-blue-400 transition-colors mb-1">DBN Explorer</p>
+                        <p class="font-semibold text-primary-dark group-hover:text-accent-red transition-colors mb-1">DBN Explorer</p>
                         <p class="text-sm text-neutral-gray">Train and visualize a Deep Belief Network interactively in the browser.</p>
                     </div>
                 </a>
@@ -590,40 +573,44 @@
         </div>
     </section>
 
+    </main>
+
     <!-- Footer -->
-    <footer id="footer" class="bg-surface-alt py-12 border-t border-surface-border">
+    <footer class="site-footer bg-surface-alt py-12 border-t border-surface-border">
         <div class="max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16">
-            <div class="grid md:grid-cols-4 gap-8 md:gap-12 mb-8 md:mb-12">
-                <div class="md:col-span-2">
-                    <img src="Assets/Logo_and_text.png" alt="CCN Lab" class="h-14 mb-4 logo-on-light">
-                    <p class="text-neutral-gray text-sm leading-relaxed max-w-md">
-                        The Computational Cognitive Neuroscience Lab at the University of Padova, exploring the
-                        computational mechanisms underlying human cognition since 2000.
+            <div class="grid md:grid-cols-3 gap-8 md:gap-12 mb-8">
+                <div>
+                    <img loading="lazy" decoding="async" width="1408" height="792" src="Assets/Logo_and_text.png" alt="CCN Lab" class="h-10 mb-4 logo-on-light opacity-70 w-auto">
+                    <p class="text-neutral-gray text-sm leading-relaxed max-w-sm">
+                        The Computational Cognitive Neuroscience Lab at the University of Padova, exploring the computational mechanisms underlying human cognition since 2000.
                     </p>
                 </div>
                 <div>
-                    <h4 class="font-semibold mb-4 text-primary-dark">Quick Links</h4>
+                    <h4 class="t-eyebrow font-mono-tech text-primary-dark uppercase tracking-widest mb-4">Quick Links</h4>
                     <ul class="space-y-2">
                         <li><a href="index.html#about" class="text-neutral-gray hover:text-accent-red transition-colors text-sm">About</a></li>
                         <li><a href="research.html" class="text-neutral-gray hover:text-accent-red transition-colors text-sm">Research</a></li>
                         <li><a href="people.html" class="text-neutral-gray hover:text-accent-red transition-colors text-sm">People</a></li>
                         <li><a href="playground.html" class="text-neutral-gray hover:text-accent-red transition-colors text-sm">Playground</a></li>
+                        <li><a href="news.html" class="text-neutral-gray hover:text-accent-red transition-colors text-sm">News</a></li>
+                        <li><a href="software.html" class="text-neutral-gray hover:text-accent-red transition-colors text-sm">Software</a></li>
+                        <li><a href="join-us.html" class="text-neutral-gray hover:text-accent-red transition-colors text-sm">Join us</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h4 class="font-semibold mb-4 text-primary-dark">Affiliations</h4>
+                    <h4 class="t-eyebrow font-mono-tech text-primary-dark uppercase tracking-widest mb-4">Affiliations</h4>
                     <ul class="space-y-2 text-sm text-neutral-gray">
-                        <li><a href="http://www.unipd.it" class="hover:text-accent-red transition-colors">University of Padova</a></li>
+                        <li><a href="http://www.unipd.it"     class="hover:text-accent-red transition-colors">University of Padova</a></li>
                         <li><a href="http://dpg.psy.unipd.it" class="hover:text-accent-red transition-colors">Dept. of General Psychology</a></li>
-                        <li><a href="http://pnc.unipd.it/" class="hover:text-accent-red transition-colors">Padova Neuroscience Center</a></li>
-                        <li><a href="https://hsancamillo.it" class="hover:text-accent-red transition-colors">San Camillo Research Hospital</a></li>
+                        <li><a href="http://pnc.unipd.it/"    class="hover:text-accent-red transition-colors">Padova Neuroscience Center</a></li>
+                        <li><a href="https://hsancamillo.it"  class="hover:text-accent-red transition-colors">San Camillo Research Hospital</a></li>
                     </ul>
                 </div>
             </div>
-            <div class="pt-8 border-t border-neutral-gray/20 flex flex-col md:flex-row justify-between items-center gap-4">
-                <p class="text-neutral-gray text-xs">
-                    © 2000–2026 Computational Cognitive Neuroscience Lab. All rights reserved.
-                </p>
+            <hr class="section-rule mb-6">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-3">
+                <p class="font-mono-tech text-xs text-neutral-gray">© 2000–2026 Computational Cognitive Neuroscience Lab · University of Padova</p>
+                <p class="font-mono-tech text-xs text-neutral-gray">Dept. General Psychology · Via Venezia 8 · 35131 Padova, IT</p>
             </div>
         </div>
     </footer>
@@ -638,27 +625,10 @@
             });
         }
 
-        const header    = document.getElementById('header');
-        const navInner  = document.getElementById('nav-inner');
-        const headerLogo = document.getElementById('header-logo');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                header.classList.add('shadow-md');
-                navInner.classList.remove('h-16', 'lg:h-20');
-                navInner.classList.add('h-12', 'lg:h-14');
-                headerLogo.src = 'Assets/Logo.png';
-                headerLogo.classList.remove('h-10', 'lg:h-12');
-                headerLogo.classList.add('h-8', 'lg:h-10');
-            } else {
-                header.classList.remove('shadow-md');
-                navInner.classList.add('h-16', 'lg:h-20');
-                navInner.classList.remove('h-12', 'lg:h-14');
-                headerLogo.src = 'Assets/Logo_and_text.png';
-                headerLogo.classList.add('h-10', 'lg:h-12');
-                headerLogo.classList.remove('h-8', 'lg:h-10');
-            }
-        });
+// Header expand/compact + logo lockup swap: see js/site-nav.js
+
     </script>
 
+    <script src="js/site-nav.js"></script>
 </body>
 </html>

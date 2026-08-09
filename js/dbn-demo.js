@@ -468,13 +468,23 @@ class DBNDemo {
         this.momentum     = 0.5;
         this._updatePhaseLabel();
 
+        /* Training is the point of the demo, so it still runs — but under
+           reduced motion the visualisation is repainted ~4x/s instead of every
+           frame, which removes the flicker without removing the information. */
+        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        let lastPaint = 0;
+
         const step = () => {
             if (!this.isTraining) return;
             // Multiple train steps per animation frame for speed
             let cont = true;
             for (let i = 0; i < 5 && cont; i++) cont = this._trainStep();
             this._forwardPass();
-            this._renderAll();
+            const now = performance.now();
+            if (!reduceMotion || now - lastPaint > 250 || !cont) {
+                lastPaint = now;
+                this._renderAll();
+            }
             if (!cont || this.trainingPhase === 'done') {
                 this.isTraining = false;
                 this._setTrainBtnState(false);
@@ -556,23 +566,23 @@ class DBNDemo {
                 <!-- Hyperparameter Sliders -->
                 <div class="dbn-sliders-panel">
                     <div class="dbn-slider-row">
-                        <label class="dbn-slider-label">Learning rate η</label>
-                        <input type="range" class="dbn-slider" id="dbn-lr" min="0.001" max="0.3" step="0.001" value="0.05">
+                        <label class="dbn-slider-label" for="dbn-lr">Learning rate η</label>
+                        <input type="range" class="dbn-slider" id="dbn-lr" aria-describedby="dbn-lr-val" min="0.001" max="0.3" step="0.001" value="0.05">
                         <span class="dbn-slider-val" id="dbn-lr-val">0.050</span>
                     </div>
                     <div class="dbn-slider-row">
-                        <label class="dbn-slider-label">Momentum</label>
-                        <input type="range" class="dbn-slider" id="dbn-mom" min="0" max="0.95" step="0.05" value="0.5">
+                        <label class="dbn-slider-label" for="dbn-mom">Momentum</label>
+                        <input type="range" class="dbn-slider" id="dbn-mom" aria-describedby="dbn-mom-val" min="0" max="0.95" step="0.05" value="0.5">
                         <span class="dbn-slider-val" id="dbn-mom-val">0.50</span>
                     </div>
                     <div class="dbn-slider-row">
-                        <label class="dbn-slider-label">CD-k steps</label>
-                        <input type="range" class="dbn-slider" id="dbn-cdk" min="1" max="10" step="1" value="1">
+                        <label class="dbn-slider-label" for="dbn-cdk">CD-k steps</label>
+                        <input type="range" class="dbn-slider" id="dbn-cdk" aria-describedby="dbn-cdk-val" min="1" max="10" step="1" value="1">
                         <span class="dbn-slider-val" id="dbn-cdk-val">1</span>
                     </div>
                     <div class="dbn-slider-row">
-                        <label class="dbn-slider-label">Weight decay λ</label>
-                        <input type="range" class="dbn-slider" id="dbn-wd" min="0" max="0.001" step="0.00005" value="0.0001">
+                        <label class="dbn-slider-label" for="dbn-wd">Weight decay λ</label>
+                        <input type="range" class="dbn-slider" id="dbn-wd" aria-describedby="dbn-wd-val" min="0" max="0.001" step="0.00005" value="0.0001">
                         <span class="dbn-slider-val" id="dbn-wd-val">0.0001</span>
                     </div>
                 </div>
@@ -774,10 +784,40 @@ class DBNDemo {
         this._updateUI();
     }
 
+    /* Every canvas here drew at CSS-pixel resolution on a 2x display, and
+       #dbn-network was additionally squeezed by a non-integer 0.747 factor,
+       which put its layer labels at ~7px effective. Size the backing store to
+       devicePixelRatio, map the fixed design box onto the real one, and return
+       the design-unit -> CSS-pixel scale so text can be sized in screen px. */
+    _fitCanvas(canvas, designW, designH, pinCss) {
+        const dpr  = Math.min(window.devicePixelRatio || 1, 2);
+        /* The two drawing grids take their layout size from the width/height
+           attributes, so raising the backing store would otherwise double their
+           on-screen size. Pin the CSS box for those; the fluid canvases
+           (network, histogram) keep their own width rules. */
+        if (pinCss) {
+            canvas.style.width  = pinCss + 'px';
+            canvas.style.height = pinCss + 'px';
+        }
+        const cssW = canvas.clientWidth  || designW;   // excludes borders
+        const cssH = canvas.clientHeight || designH;
+        const bw = Math.round(cssW * dpr), bh = Math.round(cssH * dpr);
+        if (canvas.width !== bw || canvas.height !== bh) {
+            canvas.width = bw; canvas.height = bh;
+        }
+        const s = Math.min(cssW / designW, cssH / designH);
+        const ctx = canvas.getContext('2d');
+        ctx.setTransform(dpr * s, 0, 0, dpr * s,
+                         dpr * (cssW - designW * s) / 2,
+                         dpr * (cssH - designH * s) / 2);
+        return s;
+    }
+
     _renderGrid() {
         const ctx  = this.gridCtx;
         if (!ctx) return;
         const size = 150;
+        this._fitCanvas(this.gridCanvas, size, size, 154);
         const cell = size / this.gridSize;
         ctx.clearRect(0, 0, size, size);
 
@@ -785,8 +825,9 @@ class DBNDemo {
             for (let x = 0; x < this.gridSize; x++) {
                 const v = this.inputPixels[y * this.gridSize + x];
                 if (v > 0.01) {
-                    const b = Math.floor(v * 255);
-                    ctx.fillStyle = `rgb(${100 + b * 0.4}, ${150 + b * 0.3}, 255)`;
+                    // Input: crimson ramp (dark crimson -> bright tint).
+                    const t = Math.min(1, v);
+                    ctx.fillStyle = `rgb(${Math.round(90 + 165 * t)}, ${Math.round(10 + 102 * t)}, ${Math.round(30 + 108 * t)})`;
                 } else {
                     ctx.fillStyle = 'rgba(255,255,255,0.03)';
                 }
@@ -804,8 +845,9 @@ class DBNDemo {
     _renderReconPreview() {
         const canvas = this.container.querySelector('#dbn-recon');
         if (!canvas) return;
-        const ctx  = canvas.getContext('2d');
         const size = 150;
+        this._fitCanvas(canvas, size, size, 154);
+        const ctx  = canvas.getContext('2d');
         const cell = size / this.gridSize;
         ctx.clearRect(0, 0, size, size);
 
@@ -824,8 +866,10 @@ class DBNDemo {
         for (let y = 0; y < this.gridSize; y++) {
             for (let x = 0; x < this.gridSize; x++) {
                 const v = vr[y * this.gridSize + x];
-                const b = Math.floor(v * 255);
-                ctx.fillStyle = `rgb(${Math.floor(b * 0.4 + 50)}, ${Math.floor(b * 0.5 + 80)}, ${b})`;
+                // Reconstruction: neutral ramp — same shape, no second hue.
+                const t = Math.min(1, v);
+                const g = Math.round(38 + 200 * t);
+                ctx.fillStyle = `rgb(${g}, ${g}, ${Math.round(g * 0.99)})`;
                 ctx.fillRect(x * cell + 1, y * cell + 1, cell - 2, cell - 2);
             }
         }
@@ -840,8 +884,9 @@ class DBNDemo {
     _renderNetwork() {
         const canvas = this.container.querySelector('#dbn-network');
         if (!canvas || canvas.style.display === 'none') return;
+        const W = 520, H = 320;                       // design box
+        const scale = this._fitCanvas(canvas, W, H);
         const ctx = canvas.getContext('2d');
-        const W = canvas.width, H = canvas.height;
         ctx.clearRect(0, 0, W, H);
 
         const layerX   = [100, 260, 420];
@@ -886,29 +931,30 @@ class DBNDemo {
                 }
                 ctx.beginPath();
                 ctx.arc(x, y, 5, 0, Math.PI * 2);
-                const b = Math.floor(act * 255);
-                ctx.fillStyle = `rgb(${30 + b * 0.8},${50 + b * 0.6},${80 + b * 0.7})`;
+                // Inactive neutral -> active crimson. One ramp, no hue jump.
+                const t = Math.min(1, act);
+                ctx.fillStyle = `rgb(${Math.round(70 + 172 * t)},${Math.round(70 + 42 * t)},${Math.round(70 + 68 * t)})`;
                 ctx.fill();
                 ctx.strokeStyle = act > 0.5 ? `rgba(178,8,57,${act})` : 'rgba(255,255,255,0.15)';
                 ctx.lineWidth = act > 0.5 ? 1.5 : 0.5;
                 ctx.stroke();
             }
             if (this.layers[l] > maxShow[l]) {
-                ctx.fillStyle = 'rgba(255,255,255,0.3)';
-                ctx.font = '10px Manrope, sans-serif';
+                ctx.fillStyle = 'rgba(255,255,255,0.55)';
+                ctx.font = `${(11 / scale).toFixed(1)}px Manrope, sans-serif`;
                 ctx.textAlign = 'center';
                 ctx.fillText(`+${this.layers[l] - maxShow[l]} more`, layerX[l], yStart + n * 13 + 8);
             }
-            ctx.fillStyle = 'rgba(255,255,255,0.5)';
-            ctx.font = '600 10px Manrope, sans-serif';
+            ctx.fillStyle = 'rgba(255,255,255,0.85)';
+            ctx.font = `600 ${(12 / scale).toFixed(1)}px Manrope, sans-serif`;
             ctx.textAlign = 'center';
             const lines = labels[l].split('\n');
             ctx.fillText(lines[0], layerX[l], 18);
-            if (lines[1]) { ctx.fillStyle = 'rgba(255,255,255,0.3)'; ctx.font = '10px Manrope, sans-serif'; ctx.fillText(lines[1], layerX[l], 30); }
+            if (lines[1]) { ctx.fillStyle = 'rgba(255,255,255,0.6)'; ctx.font = `${(11 / scale).toFixed(1)}px Manrope, sans-serif`; ctx.fillText(lines[1], layerX[l], 32); }
         }
 
-        ctx.fillStyle = 'rgba(255,255,255,0.2)';
-        ctx.font = '600 9px Manrope, sans-serif';
+        ctx.fillStyle = 'rgba(255,255,255,0.55)';
+        ctx.font = `600 ${(11 / scale).toFixed(1)}px Manrope, sans-serif`;
         ctx.textAlign = 'center';
         ctx.fillText('RBM₁  (CD-k)', (layerX[0] + layerX[1]) / 2, H - 10);
         ctx.fillText('RBM₂  (CD-k)', (layerX[1] + layerX[2]) / 2, H - 10);
@@ -939,13 +985,17 @@ class DBNDemo {
                 for (let x = 0; x < this.gridSize; x++) {
                     const wv   = w[(y * this.gridSize + x) * nH + j];
                     const norm = (wv - minW) / range;
-                    // Signed diverging colormap: blue=negative, yellow=positive
+                    /* Signed diverging ramp on the site palette:
+                       near-black (negative) -> mid grey (zero) -> crimson
+                       (positive). Lightness carries the magnitude, so it stays
+                       readable without a second hue. */
                     if (norm < 0.5) {
                         const t = norm * 2;
-                        ctx.fillStyle = `rgb(${Math.floor(30*t)},${Math.floor(80*t)},${Math.floor(200*(1-t)+50)})`;
+                        const g = Math.round(22 + 98 * t);
+                        ctx.fillStyle = `rgb(${g},${g},${g + 4})`;
                     } else {
                         const t = (norm - 0.5) * 2;
-                        ctx.fillStyle = `rgb(${Math.floor(200*t+30)},${Math.floor(160*t+40)},${Math.floor(50*(1-t))})`;
+                        ctx.fillStyle = `rgb(${Math.round(120 + 122*t)},${Math.round(124 - 12*t)},${Math.round(124 + 14*t)})`;
                     }
                     ctx.fillRect(x, y, 1, 1);
                 }
@@ -957,8 +1007,9 @@ class DBNDemo {
     _renderHistogram() {
         const canvas = this.container.querySelector('#dbn-hist-canvas');
         if (!canvas) return;
+        const W = 480, H = 200;                       // design box
+        this._fitCanvas(canvas, W, H);
         const ctx = canvas.getContext('2d');
-        const W = canvas.width, H = canvas.height;
         ctx.clearRect(0, 0, W, H);
 
         const w    = this.weights[0];
@@ -991,7 +1042,7 @@ class DBNDemo {
         ctx.fillStyle = 'rgba(255,255,255,0.45)';
         ctx.font = '600 10px Manrope, sans-serif';
         ctx.textAlign = 'center';
-        ctx.fillText('Weight distribution (RBM₁) — slate = negative, red = positive', W / 2, 14);
+        ctx.fillText('Weight distribution (RBM₁) — grey = negative, crimson = positive', W / 2, 14);
 
         // ── Grid lines + Y-axis labels ────────────────────────────────────────
         ctx.strokeStyle = 'rgba(255,255,255,0.08)';

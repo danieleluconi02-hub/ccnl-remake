@@ -46,7 +46,7 @@
     letter-spacing: 0.05em;
     text-transform: uppercase;
 }
-.dbn-btn:hover { border-color: #b20839; background: rgba(178,8,57,0.12); color: #b20839; }
+.dbn-btn:hover { border-color: var(--accent-on-dark); background: rgba(178,8,57,0.12); color: var(--accent-on-dark); }
 
 .dbn-btn-primary { background: #b20839; color: #fff; border-color: #b20839; }
 .dbn-btn-primary:hover { background: #8a0022; border-color: #8a0022; color: #fff; }
@@ -59,7 +59,7 @@
     gap: 10px;
     background: rgba(255,255,255,0.03);
     border: 1px solid rgba(255,255,255,0.07);
-    border-left: 3px solid #b20839;
+    border-left: 3px solid var(--accent-on-dark);
     border-radius: 0;
     padding: 10px 16px;
 }
@@ -76,7 +76,7 @@
 .dbn-phase-badge {
     font-size: 0.75rem;
     font-weight: 700;
-    color: #b20839;
+    color: var(--accent-on-dark);
     flex-shrink: 0;
 }
 
@@ -98,8 +98,8 @@
     transition: all 0.3s;
 }
 .dbn-phase-step.active {
-    border-color: #b20839;
-    color: #b20839;
+    border-color: var(--accent-on-dark);
+    color: var(--accent-on-dark);
     background: rgba(178,8,57,0.12);
 }
 
@@ -168,7 +168,7 @@
 .dbn-slider-val {
     font-size: 0.7rem;
     font-weight: 700;
-    color: #b20839;
+    color: var(--accent-on-dark);
     width: 46px;
     flex-shrink: 0;
     text-align: right;
@@ -230,7 +230,7 @@
     transition: all 0.2s;
     font-family: 'JetBrains Mono', monospace;
 }
-.dbn-preset-btn:hover { border-color: #b20839; background: rgba(178,8,57,0.12); color: #b20839; }
+.dbn-preset-btn:hover { border-color: var(--accent-on-dark); background: rgba(178,8,57,0.12); color: var(--accent-on-dark); }
 
 /* ── Network Panel ──────────────────────────────────────────────────────── */
 .dbn-network-panel {
@@ -272,7 +272,7 @@
 .dbn-info-value {
     font-size: 1.15rem;
     font-weight: 800;
-    color: #b20839;
+    color: var(--accent-on-dark);
 }
 
 .dbn-info-desc {
@@ -338,20 +338,20 @@
     text-transform: uppercase;
 }
 .dbn-layer-tab:last-child { border-right: none; }
-.dbn-layer-tab.active { background: rgba(178,8,57,0.15); color: #b20839; }
+.dbn-layer-tab.active { background: rgba(178,8,57,0.15); color: var(--accent-on-dark); }
 
 /* ── Explanation ────────────────────────────────────────────────────────── */
 .dbn-explanation {
     background: rgba(178,8,57,0.06);
     border: 1px solid rgba(178,8,57,0.18);
-    border-left: 3px solid #b20839;
+    border-left: 3px solid var(--accent-on-dark);
     border-radius: 0;
     padding: 14px 16px;
     font-size: 0.75rem;
     line-height: 1.65;
     color: rgba(255,255,255,0.65);
 }
-.dbn-explanation strong { color: #b20839; }
+.dbn-explanation strong { color: var(--accent-on-dark); }
 
 /* ── Responsive ─────────────────────────────────────────────────────────── */
 @media (max-width: 700px) {

@@ -79,7 +79,7 @@ class GaraEngine {
                 <button id="gara-music"  class="gara-btn-ctrl" title="${this.t('toggleMusic')}">🎵</button>
                 <button id="gara-help"   class="gara-btn-ctrl" title="${this.t('howToPlay')}">❓</button>
                 <button id="gara-lang"   class="gara-btn-ctrl" title="Language">
-                    ${GARA_I18N.currentLang === 'it' ? '🇮🇹' : '🇬🇧'}
+                    ${GARA_I18N.currentLang === 'it' ? 'IT' : 'EN'}
                 </button>
                 <button id="gara-fs"     class="gara-btn-ctrl" title="${this.t('fullscreen')}">⛶</button>
             </div>
@@ -101,7 +101,7 @@ class GaraEngine {
         document.getElementById('gara-lang').onclick = () => {
             const next = GARA_I18N.currentLang === 'it' ? 'en' : 'it';
             GARA_I18N.setLang(next);
-            document.getElementById('gara-lang').textContent = next === 'it' ? '🇮🇹' : '🇬🇧';
+            document.getElementById('gara-lang').textContent = next === 'it' ? 'IT' : 'EN';
             // Re-render current screen in new language
             if (this.state === 'title')       this.showTitleScreen();
             else if (this.state === 'themeChoice') this.showThemeChoice();

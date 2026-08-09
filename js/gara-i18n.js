@@ -85,13 +85,11 @@ const GARA_I18N = {
             fullscreen: 'Schermo intero',
 
             // Auth
-            loginTitle: 'Accedi al Playground',
-            loginSub: 'Accedi per salvare i tuoi punteggi',
-            usernameLabel: 'Nome utente',
-            passwordLabel: 'Password',
-            loginBtn: 'Accedi',
-            registerBtn: 'Registrati',
-            guestBtn: 'Gioca come Ospite',
+            profileTitle: 'Conserva i tuoi punteggi',
+            profileSub: 'Scegli un nome e questo browser ricordera\u0300 i tuoi risultati. Niente viene inviato online e non c\u2019e\u0300 nessun account.',
+            usernameLabel: 'Nome giocatore',
+            saveScoresBtn: 'Salva i punteggi con questo nome',
+            guestBtn: '\u25b6 Gioca ora',
             logoutBtn: 'Esci',
             scoreHistory: 'Cronologia Punteggi',
             noScores: 'Nessun punteggio ancora. Gioca una partita!',
@@ -180,13 +178,11 @@ const GARA_I18N = {
             fullscreen: 'Fullscreen',
 
             // Auth
-            loginTitle: 'Playground Login',
-            loginSub: 'Sign in to save your scores',
-            usernameLabel: 'Username',
-            passwordLabel: 'Password',
-            loginBtn: 'Sign In',
-            registerBtn: 'Register',
-            guestBtn: 'Play as Guest',
+            profileTitle: 'Keep your scores',
+            profileSub: 'Pick a name and this browser will remember your results. Nothing is sent anywhere and there is no account.',
+            usernameLabel: 'Player name',
+            saveScoresBtn: 'Save scores under this name',
+            guestBtn: '\u25b6 Play now',
             logoutBtn: 'Sign Out',
             scoreHistory: 'Score History',
             noScores: 'No scores yet. Play a game!',
@@ -219,8 +215,8 @@ const GARA_I18N = {
     // Get available languages
     getLanguages() {
         return [
-            { code: 'it', label: 'Italiano', flag: '🇮🇹' },
-            { code: 'en', label: 'English', flag: '🇬🇧' }
+            { code: 'it', label: 'Italiano', flag: 'IT' },
+            { code: 'en', label: 'English', flag: 'EN' }
         ];
     }
 };
