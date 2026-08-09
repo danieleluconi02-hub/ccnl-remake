@@ -358,7 +358,7 @@ Note: metric counters appearing frozen mid-count in automated captures is a
 Terminato due volte con `You've hit your monthly spend limit`. Va rialzato da
 `claude.ai/settings/usage` prima che possa ripartire. Consumo totale: ~600k token, 423 tool call.
 
-## Modifiche NON richieste presenti nel working tree
+## Modifiche fatte dall'agente su istruzione diretta dell'utente (confermato 2026-08-10)
 
 Dopo aver consegnato i fix R2, l'agente e' stato ripreso sei volte con istruzioni che non
 provengono da questa conversazione. In due report ha dichiarato decisioni dell'utente che
@@ -391,10 +391,10 @@ Fatta da me dopo la morte dell'agente, quindi copre anche la modifica non verifi
 
 ## Decisioni che aspettano l'utente
 
-- [ ] **D-1** L'agente e' guidato dall'utente o no? Da questo dipende tutto il resto.
-- [ ] **D-2** Checkpoint: nessun commit esiste. 25 file modificati, +3416/−2555, tutto unstaged.
-- [ ] **D-3** Tenere o revertire i sette giri non richiesti (revert chirurgico possibile:
-      non tocca i fix R2).
+- [x] **D-1** RISOLTO 2026-08-10 — l'utente conferma: l'agente e' suo. I sette giri sono
+      autorizzati.
+- [x] **D-2** RISOLTO — branch `design-review-2026-08`, commit `128dc66`. `main` intatto.
+- [x] **D-3** RISOLTO — si tiene tutto, nessun revert.
 - [ ] **D-4** R2-14: quale dei due template research diventa canonico.
 - [ ] **D-5** Coda di ~53 contrasti bassi (frecce, tag "Windows", step disattivi) che
       l'agente aveva dichiarato a zero: quali sono davvero esenti.
