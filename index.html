@@ -112,22 +112,11 @@
     <main id="main">
 
     <!-- ===================== HERO ===================== -->
-    <section id="hero" class="pt-16 min-h-screen flex items-center relative overflow-hidden bg-surface hero-pattern">
+    <section id="hero" class="pt-16 min-h-[92vh] flex items-center relative overflow-hidden bg-surface hero-pattern">
 
         <div class="relative z-10 max-w-[1920px] mx-auto px-6 lg:px-12 xl:px-16 w-full">
 
-            <!-- University branding — pinned to the hero masthead, desktop only -->
-            <a href="https://www.dpg.unipd.it/" target="_blank" rel="noopener noreferrer"
-                class="hero-masthead hidden lg:flex flex-row-reverse items-center gap-4 absolute right-6 lg:right-12 xl:right-16 z-20 transition-opacity hover:opacity-70">
-                <img loading="eager" decoding="async" width="940" height="946" src="Assets/Logo_UniPadova.png" alt="University of Padova"
-                    class="h-12 w-auto object-contain logo-on-light">
-                <div class="flex flex-col items-end">
-                    <span class="text-base font-medium text-primary-dark tracking-tight">University of Padova</span>
-                    <span class="text-xs text-neutral-gray font-mono-tech tracking-wide">Dept. General Psychology</span>
-                </div>
-            </a>
-
-            <div class="hero-grid grid grid-cols-1 lg:grid-cols-[1fr_58%] gap-8 lg:gap-0 items-center min-h-[calc(100vh-64px)] py-12 lg:py-16">
+            <div class="hero-grid grid grid-cols-1 lg:grid-cols-[1fr_58%] gap-8 lg:gap-0 items-center min-h-[calc(92vh-64px)] py-12 lg:py-16">
 
                 <!-- Left: Headline text -->
                 <div class="hero-text-col animate-fade-in-up">
@@ -135,7 +124,7 @@
                     <!-- Lab identifier (monospace) -->
                     <p class="hero-eyebrow font-mono-tech text-xs text-accent-red uppercase tracking-widest mb-8 flex items-center gap-2">
                         <span class="inline-block w-8 h-px bg-accent-red"></span>
-                        Est. 2000 · Padova, Italy
+                        Established in 2000 · Padova, Italy
                     </p>
 
                     <!-- Main headline in Playfair Display -->
@@ -255,13 +244,24 @@
                     <div class="grid grid-cols-2 gap-3">
                         <div class="card-hard p-4">
                             <p class="font-mono-tech text-xs text-accent-red uppercase tracking-wider mb-1">Primary Affiliation</p>
-                            <p class="text-sm font-medium text-primary-dark">University of Padova</p>
-                            <p class="text-xs text-neutral-gray">Dept. of General Psychology</p>
+                            <div class="flex items-center gap-2">
+                                <img loading="lazy" decoding="async" width="940" height="946" src="Assets/Logo_UniPadova.png" alt=""
+                                    class="h-7 w-auto object-contain logo-on-light flex-shrink-0">
+                                <div>
+                                    <p class="text-sm font-medium text-primary-dark">University of Padova</p>
+                                    <p class="text-xs text-neutral-gray">Dept. of General Psychology</p>
+                                </div>
+                            </div>
                         </div>
                         <div class="card-hard p-4">
                             <p class="font-mono-tech text-xs text-accent-red uppercase tracking-wider mb-1">Clinical Partner</p>
-                            <p class="text-sm font-medium text-primary-dark">San Camillo Hospital</p>
-                            <p class="text-xs text-neutral-gray">Computational Neuroimaging Lab</p>
+                            <div class="flex items-center gap-2">
+                                <div class="sc-logo-crop" aria-hidden="true"></div>
+                                <div>
+                                    <p class="text-sm font-medium text-primary-dark">San Camillo Hospital</p>
+                                    <p class="text-xs text-neutral-gray">Computational Neuroimaging Lab</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -279,10 +279,6 @@
 
             <!-- Carousel -->
             <div id="partners-carousel" class="partners-carousel-container relative">
-                <!-- WCAG 2.2.2: motion that runs longer than 5s needs a pause
-                     control that does not depend on a pointer being present. -->
-                <button type="button" id="partners-pause" class="carousel-pause-btn"
-                    aria-pressed="false">Pause</button>
                 <button class="carousel-nav-btn prev" aria-label="Previous" id="partners-prev">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
@@ -524,26 +520,18 @@
             const btnPrev = document.getElementById('partners-prev');
             const btnNext = document.getElementById('partners-next');
 
-            const btnPause = document.getElementById('partners-pause');
             const reduceMotion =
                 window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
             let currentX = 0, isPaused = false, isManualMoving = false, isDragging = false;
-            // Held separately from the hover pause so a mouse leaving the strip
-            // cannot restart motion the visitor explicitly stopped.
+            // Respects prefers-reduced-motion; no manual pause control anymore.
             let isUserPaused = reduceMotion;
             let startX, scrollStartX;
             const speed = 1.4;
 
-            function syncPauseBtn() {
-                btnPause.textContent = isUserPaused ? 'Play' : 'Pause';
-                btnPause.setAttribute('aria-pressed', isUserPaused ? 'true' : 'false');
-            }
-            btnPause.addEventListener('click', () => {
-                isUserPaused = !isUserPaused;
-                syncPauseBtn();
-            });
-            syncPauseBtn();
+            // Momentum after a flick — velocity carries into a decelerating coast
+            // instead of the strip just stopping dead where the pointer let go.
+            let isMomentum = false, momentumVX = 0, lastMomentumTs = null, dragHistory = [];
 
             // Same reasoning as the hero figure: no point holding a 60fps loop
             // open for a strip that is not on screen.
@@ -558,7 +546,7 @@
 
             function animate() {
                 if (!inView) return;
-                if (!isPaused && !isUserPaused && !isManualMoving && !isDragging) {
+                if (!isPaused && !isUserPaused && !isManualMoving && !isDragging && !isMomentum) {
                     currentX -= speed;
                     const halfWidth = track.offsetWidth / 2;
                     if (Math.abs(currentX) >= halfWidth) currentX = 0;
@@ -574,7 +562,7 @@
             const shiftAmount = (200 + 48) * 2; // item width + gap
 
             function handleNav(dir) {
-                if (isManualMoving || isDragging) return;
+                if (isManualMoving || isDragging || isMomentum) return;
                 isManualMoving = true; isPaused = true;
                 let targetX = dir === 'next' ? currentX - shiftAmount : currentX + shiftAmount;
                 track.style.transition = 'transform 0.55s cubic-bezier(0.25,1,0.5,1)';
@@ -600,11 +588,12 @@
             // Drag
             const startDrag = e => {
                 if (isManualMoving) return;
-                isDragging = true; isPaused = true;
+                isDragging = true; isPaused = true; isMomentum = false;
                 container.style.cursor = 'grabbing';
                 startX = e.pageX || e.touches[0].pageX;
                 scrollStartX = currentX;
                 track.style.transition = 'none';
+                dragHistory = [{ x: currentX, t: performance.now() }];
             };
             const moveDrag = e => {
                 if (!isDragging) return;
@@ -615,13 +604,60 @@
                 while (newX > 0)  newX -= h;
                 currentX = newX;
                 track.style.transform = `translateX(${currentX}px)`;
+
+                // Velocity is read from a short window, not just the last two
+                // events, so a single jittery sample can't skew the flick.
+                const now = performance.now();
+                dragHistory.push({ x: currentX, t: now });
+                while (dragHistory.length > 2 && now - dragHistory[0].t > 100) dragHistory.shift();
             };
             const stopDrag = () => {
                 if (!isDragging) return;
                 isDragging = false;
                 container.style.cursor = 'grab';
-                if (!container.matches(':hover')) isPaused = false;
+
+                let vx = 0; // px/ms
+                if (dragHistory.length >= 2) {
+                    const first = dragHistory[0], last = dragHistory[dragHistory.length - 1];
+                    const dt = last.t - first.t;
+                    if (dt > 0) vx = (last.x - first.x) / dt;
+                }
+
+                if (!reduceMotion && Math.abs(vx) > 0.02) {
+                    isMomentum = true;
+                    momentumVX = vx;
+                    lastMomentumTs = null;
+                    requestAnimationFrame(momentumStep);
+                } else if (!container.matches(':hover')) {
+                    isPaused = false;
+                }
             };
+
+            // Coast at the release velocity and decay it — the same exponential
+            // constant (0.998/ms) iOS uses for scroll deceleration — instead of
+            // snapping straight back to the constant autoplay speed.
+            function momentumStep(ts) {
+                if (!isMomentum) return;
+                if (lastMomentumTs === null) lastMomentumTs = ts;
+                const dt = ts - lastMomentumTs;
+                lastMomentumTs = ts;
+
+                momentumVX *= Math.pow(0.998, dt);
+
+                let newX = currentX + momentumVX * dt;
+                const h = track.offsetWidth / 2;
+                while (newX <= -h) newX += h;
+                while (newX > 0)  newX -= h;
+                currentX = newX;
+                track.style.transform = `translateX(${currentX}px)`;
+
+                if (Math.abs(momentumVX) < 0.02) {
+                    isMomentum = false;
+                    if (!container.matches(':hover')) isPaused = false;
+                    return;
+                }
+                requestAnimationFrame(momentumStep);
+            }
             container.addEventListener('mousedown', startDrag);
             window.addEventListener('mousemove', moveDrag);
             window.addEventListener('mouseup', stopDrag);
